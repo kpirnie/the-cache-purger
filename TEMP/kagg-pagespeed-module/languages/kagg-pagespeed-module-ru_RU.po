@@ -1,0 +1,98 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PageSpeed Module\n"
+"POT-Creation-Date: 2017-11-08 18:06+0200\n"
+"PO-Revision-Date: 2017-11-08 18:06+0200\n"
+"Last-Translator: \n"
+"Language-Team: KAGG Design\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.4\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;esc_html__;esc_attr__\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: includes/class-mod-pagespeed.php:60 includes/class-mod-pagespeed.php:61
+msgid "PageSpeed"
+msgstr "PageSpeed"
+
+#: includes/class-mod-pagespeed.php:80
+msgid "PageSpeed Plugin Options"
+msgstr "Настройки плагина PageSpeed"
+
+#: includes/class-mod-pagespeed.php:99
+msgid "Purge Cache"
+msgstr "Очистить кэш"
+
+#: includes/class-mod-pagespeed.php:102 includes/class-mod-pagespeed.php:152
+msgid "Development Mode"
+msgstr "Режим разработки"
+
+#: includes/class-mod-pagespeed.php:111 includes/class-mod-pagespeed.php:113
+msgid "Purge Styles"
+msgstr "Очистить стили"
+
+#: includes/class-mod-pagespeed.php:112
+msgid ""
+"Clear cached version of current WordPress theme style.css file.<br><br>This "
+"is useful when styles were changed."
+msgstr ""
+"Очистить кэшированную версию файла стилей style.css активной темы WordPress."
+"<br><br>Это полезно после изменения стилей."
+
+#: includes/class-mod-pagespeed.php:116 includes/class-mod-pagespeed.php:118
+msgid "Purge Entire Cache"
+msgstr "Очистить кэш полностью"
+
+#: includes/class-mod-pagespeed.php:117
+msgid ""
+"Clear entire PageSpeed cache on site. This action fetches fresh versions of "
+"all pages, images, and scripts on your web site.<br><br>Please note that "
+"PageSpeed module will take some time to re-create cache after several page "
+"visits."
+msgstr ""
+"Очистить PageSpeed кэш сайта полностью. Это действие подхватит свежие версии "
+"всех страниц, изображений и скриптов на вашем веб сайте.<br><br>Пожалуйста, "
+"обратите внимание, что модулю PageSpeed понадобится некоторое время для "
+"воссоздания кэша после нескольких визитов на страницы."
+
+#: includes/class-mod-pagespeed.php:153
+msgid ""
+"When development mode is on, all PageSpeed cache is bypassed.<br><br>This is "
+"done by adding ?ModPagespeed=off agrument to every site url."
+msgstr ""
+"Когда включен режим разработки, все кэши PageSpeed обходятся.<br><br>Это "
+"достигается добавлением аргумента ?ModPagespeed=off каждому url сайта."
+
+#: includes/class-mod-pagespeed.php:207
+msgid "Bad nonce!"
+msgstr "Плохой nonce!"
+
+#: includes/class-mod-pagespeed.php:225
+msgid "Development mode is on"
+msgstr "Режим разработки включен"
+
+#: includes/class-mod-pagespeed.php:227
+msgid "Development mode is off"
+msgstr "Режим разработки выключен"
+
+#: includes/class-mod-pagespeed.php:233
+msgid "Unknown error"
+msgstr "Неизвестная ошибка"
+
+#: includes/class-mod-pagespeed.php:253
+msgid "PageSpeed Module is not installed on your server. Plugin is useless."
+msgstr "Модуль PageSpeed не установлен на вашем сервере. Плагин бесполезен."
+
+#: includes/class-mod-pagespeed.php:330
+msgid "View PageSpeed Module settings"
+msgstr "Посмотреть настройки PageSpeed Module"
+
+#: includes/class-mod-pagespeed.php:330
+msgid "Settings"
+msgstr "Настройки"

@@ -1,0 +1,90 @@
+@font-face {
+  font-family: 'blizhost_logo';
+  src:  url('blizhost_logo.eot?xwmby7');
+  src:  url('blizhost_logo.eot?xwmby7#iefix') format('embedded-opentype'),
+    url('blizhost_logo.ttf?xwmby7') format('truetype'),
+    url('blizhost_logo.woff?xwmby7') format('woff'),
+    url('blizhost_logo.svg?xwmby7#blizhost_logo') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="blizicon-"], [class*=" blizicon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'blizhost_logo' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.blizicon-logo_blizhost:before {
+  content: "\e900";
+}
+.blizicon-symbol_blizhost:before {
+  content: "\e901";
+}
+.blizicon-symbol_blizhost_bg:before {
+  content: "\e906";
+}
+.blizicon-symbol_16px:before {
+  content: "\e907";
+}
+.blizicon-logo_blizhost_mc .path1:before {
+  content: "\e902";
+  color: rgb(37, 39, 43);
+}
+.blizicon-logo_blizhost_mc .path2:before {
+  content: "\e903";
+  margin-left: -3.75em;
+  color: rgb(253, 67, 38);
+}
+.blizicon-logo_blizhost_mc .path3:before {
+  content: "\e904";
+  margin-left: -3.75em;
+  color: rgb(37, 39, 43);
+}
+.blizicon-logo_blizhost_mc .path4:before {
+  content: "\e905";
+  margin-left: -3.75em;
+  color: rgb(253, 67, 38);
+}
+.blizicon-symbol_blizhost_mc .path1:before {
+  content: "\e908";
+  color: rgb(253, 67, 38);
+}
+.blizicon-symbol_blizhost_mc .path2:before {
+  content: "\e909";
+  margin-left: -0.970703125em;
+  color: rgb(37, 39, 43);
+}
+.blizicon-symbol_blizhost_bg_mc .path1:before {
+  content: "\e90a";
+  color: rgb(253, 67, 38);
+}
+.blizicon-symbol_blizhost_bg_mc .path2:before {
+  content: "\e90b";
+  margin-left: -0.970703125em;
+  color: rgb(255, 255, 255);
+}
+.blizicon-symbol_blizhost_bg_mc .path3:before {
+  content: "\e90c";
+  margin-left: -0.970703125em;
+  color: rgb(255, 255, 255);
+}
+.blizicon-symbol_16px_mc .path1:before {
+  content: "\e90d";
+  color: rgb(253, 67, 38);
+}
+.blizicon-symbol_16px_mc .path2:before {
+  content: "\e90e";
+  margin-left: -1em;
+  color: rgb(37, 39, 43);
+}
+

@@ -1,0 +1,42 @@
+# Copyright (C) 2020 
+# This file is distributed under the same license as the Server-Side Cache AutoPurge plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Server-Side Cache AutoPurge 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/surecache-autopurge\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-11-12T12:16:45+02:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: surecache-autopurge\n"
+
+#. Plugin Name of the plugin
+msgid "Server-Side Cache AutoPurge"
+msgstr ""
+
+#. Description of the plugin
+msgid "Server-Side Cache Integration for WordPress."
+msgstr ""
+
+#: includes/admin.php:35
+#: includes/admin.php:37
+msgid "Purge Server-Side Cache"
+msgstr ""
+
+#: includes/admin.php:59
+#: includes/wp-cli.php:30
+msgid "The Server-Side Cache was purged successfully."
+msgstr ""
+
+#: includes/admin.php:62
+#: includes/wp-cli.php:33
+msgid "The Server-Side Cache could not be purged!"
+msgstr ""
+
+#: includes/purge-queue.php:74
+msgid "Could not purge Server-Side Cache: %s"
+msgstr ""

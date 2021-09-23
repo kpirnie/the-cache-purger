@@ -1,0 +1,17 @@
+.kpsh-half-field {
+    flex: 50%;
+}
+.kpf-nav-background, .kpf-tab-item, .kpf-theme-dark .kpf-nav ul li a,
+.kpf-theme-dark .kpf-header-inner, .kpf-theme-dark .kpf-footer {
+    background: #01123c !important;
+}
+.kpf-save, .kpf-tab-expanded, .kpf-nav ul li a.kpf-active, .kpf-theme-dark .kpf-search input,
+.kpf-theme-dark .kpf-expand-all {
+    background: #2d7696 !important;
+}
+.kpf-theme-dark .kpf-header-inner h1 small {
+    color: #2d7696 !important;
+}
+.kpf-theme-dark .kpf-search input, .kpf-theme-dark .kpf-search input::placeholder {
+    color:#fff !important;
+}

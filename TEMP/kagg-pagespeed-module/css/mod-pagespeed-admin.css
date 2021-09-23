@@ -1,0 +1,123 @@
+.ps-menu-image {
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.ps-menu-title {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.settings_page_page-speed h2 {
+    padding-top: 20px;
+}
+
+section.ps-card {
+    border-radius: 2px;
+    margin-bottom: 20px;
+    border: 1px solid #dedede;
+}
+
+.ps-card-section {
+    display: table;
+    float: none;
+    width: 100%;
+}
+
+.ps-card-content {
+    display: table-cell;
+    vertical-align: middle;
+    width: 67%;
+    padding: 25px;
+    background: #ffffff;
+}
+
+h3.ps-card-title {
+    font-size: 1.2em;
+}
+
+.ps-card-control {
+    display: table-cell;
+    vertical-align: middle;
+    width: 33%;
+    text-align: center;
+}
+
+button.ps-btn {
+    padding: 10px;
+    background-color: #0073aa;
+    color: #ffffff;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+#ps-success {
+    color: #ffffff;
+    background: #8BC34A;
+    padding: 10px 25px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 10000;
+    border: 1px solid #4CAF50;
+    display: none;
+}
+
+#ps-error {
+    color: #ffffff;
+    background: #FF9800;
+    padding: 10px 25px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 10000;
+    border: 1px solid #FF5722;
+    display: none;
+}
+
+label.ps-toggle {
+    display: block;
+    position: relative;
+    margin: auto;
+    height: 2.26667rem;
+    width: 5.334rem;
+    border-radius: 2px;
+    border: 1px solid #aaa;
+    cursor: pointer;
+}
+
+.ps-toggle:after, .ps-toggle:before {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    line-height: 2.26667rem;
+    text-align: center;
+}
+
+.ps-toggle:before {
+    content: "On";
+    left: 0;
+    color: #fff;
+    background: #ffffff;
+}
+
+label.ps-toggle.active:before {
+    background: #8BC34A;
+}
+
+.ps-toggle:after {
+    content: "Off";
+    right: 0;
+    color: #fff;
+    background: gray;
+}
+
+label.ps-toggle.active:after {
+    background: #ffffff;
+}

@@ -1,0 +1,72 @@
+# Blizhost Cache Purge
+# This file is distributed under the same license as the Plugins - Blizhost Cache Purge
+#, fuzzy
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.4\n"
+
+#. Plugin Name of the plugin/theme
+msgid "Blizhost CloudCache Purge"
+msgstr ""
+
+#: blizhost-cache-purge.php
+msgid "Purge CloudCache"
+msgstr ""
+
+#: blizhost-cache-purge.php
+msgid "Purge Entire Cache (All Pages)"
+msgstr ""
+
+#: blizhost-cache-purge.php
+msgid "Purge Entire Cache"
+msgstr ""
+
+#: blizhost-cache-purge.php
+msgid "Blizhost CloudCache"
+msgstr ""
+
+#: blizhost-cache-purge.php
+msgid "All CloudCache has been purged!"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Blizhost"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Purge CloudCache for Blizhost costumers when the content on your WordPress website is modified. And improves the compatibility with CloudCache."
+msgstr ""
+
+#: blizhost-cache-purge.php
+msgid "You do not have permission to purge the cache for the whole site. Please contact your administrator."
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://www.blizhost.com.br/"
+msgstr ""
+
+#: blizhost-cache-purge.php
+msgid "Press the button below to force a cleanup of the entire cache:"
+msgstr ""
+
+#: blizhost-cache-purge.php
+msgid "<a href=\"%1$s\" target=\"_blank\">Blizhost CloudCache Purge</a> automatically clears the cache for Blizhost customers when a post is created or changed."
+msgstr ""
+
+#: blizhost-cache-purge.php
+msgid "Blizhost CloudCache Purge requires you to use custom permalinks. Please go to the <a href=\"%1$s\">Permalinks Options Page</a> to configure them."
+msgstr ""
+
+#: blizhost-cache-purge.php
+msgid "Blizhost CloudCache Purge requires <a href=\"https://wordpress.org/plugins/jetpack/\" target=\"_blank\">Jetpack-connected</a> plugin to use WordPress Image CDN. Please install and connect this plugin to automatically use this feature. <a href=\"%1$s\">Do not show again.</a>"
+msgstr ""
