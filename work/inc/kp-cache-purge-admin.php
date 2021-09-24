@@ -63,7 +63,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'sticky_header' => false,  
                     'ajax_save' => false,           
                     'framework_title' => __( 'The Cache Purger <small>by Kevin C. Pirnie</small>' ),
-                    'footer_credit' => null
+                    'footer_credit' => __( '<a href="https://kevinpirnie.com/" target="_blank">Kevin C. Pirnie</a>' )
                 ) );
 
                 // Settings
@@ -116,8 +116,23 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
         */
         private function kpcp_settings( ) : array {
 
+            // hold the returnable array
+            $_ret = array( );
+
+            // hold the temp array
+            $_tmp = [];
+
             // return the array of fields
-            return array(
+            $_ret = array(
+
+                // purge on setting/options
+                array(
+                    'id' => 'kpcp_purge_on_settings',
+                    'type' => 'switcher',
+                    'title' => __( 'Purge on Settings/Options Save?' ),
+                    'desc' => __( 'This will attempt to purge all caches for settings/options updates or saves.' ),
+                    'default' => false,
+                ),
                 
                 // purge on post
                 array(
@@ -126,6 +141,19 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'title' => __( 'Purge on Post Save?' ),
                     'desc' => __( 'This will attempt to purge all caches for every post update or save.' ),
                     'default' => false,
+                ),
+
+                // post exclusions
+                array(
+                    'id' => 'kpcp_purge_on_post_exclude',
+                    'type' => 'select',
+                    'multiple' => true,
+                    'title' => __( 'Excluded Posts' ),
+                    'placeholder' => __( 'Please select the exclusions...' ),
+                    'desc' => __( 'Posts to exclude from the purger.' ),
+                    'options' => KP_Cache_Purge_Common::get_posts_for_select( 'posts' ),
+                    'default' => 0,
+                    'dependency' => array( 'kpcp_purge_on_post', '==', true ),
                 ),
 
                 // purge on page
@@ -137,22 +165,126 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'default' => false,
                 ),
 
-                // purge on CPT
+                // page exclusions
+                array(
+                    'id' => 'kpcp_purge_on_page_exclude',
+                    'type' => 'select',
+                    'multiple' => true,
+                    'title' => __( 'Excluded Pages' ),
+                    'placeholder' => __( 'Please select the exclusions...' ),
+                    'desc' => __( 'Pages to exclude from the purger.' ),
+                    'options' => KP_Cache_Purge_Common::get_posts_for_select( 'pages' ),
+                    'default' => 0,
+                    'dependency' => array( 'kpcp_purge_on_page', '==', true ),
+                ),
 
+                // purge on CPT
+                array(
+                    'id' => 'kpcp_purge_on_cpt',
+                    'type' => 'switcher',
+                    'title' => __( 'Purge on Custom Post Type Save?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every custom post type update or save.' ),
+                    'default' => false,
+                ),
+
+                // cpt exclusions
+                array(
+                    'id' => 'kpcp_purge_on_cpt_exclude',
+                    'type' => 'select',
+                    'multiple' => true,
+                    'title' => __( 'Excluded CPTs' ),
+                    'placeholder' => __( 'Please select the exclusions...' ),
+                    'desc' => __( 'CPTs to exclude from the purger.' ),
+                    'options' => KP_Cache_Purge_Common::get_posts_for_select( 'cpts' ),
+                    'default' => 0,
+                    'dependency' => array( 'kpcp_purge_on_cpt', '==', true ),
+                ),
 
                 // purge on taxonomy
-
+                array(
+                    'id' => 'kpcp_purge_on_taxonomy',
+                    'type' => 'switcher',
+                    'title' => __( 'Purge on Taxonomy/Term Save?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every taxonomy/term update or save.' ),
+                    'default' => false,
+                ),
 
                 // purge on category
+                array(
+                    'id' => 'kpcp_purge_on_category',
+                    'type' => 'switcher',
+                    'title' => __( 'Purge on Category Save?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every category update or save.' ),
+                    'default' => false,
+                ),
 
-
-                // purge on GF Form
-
-
-                // purge on ACF
-
+                // purge on widget
+                array(
+                    'id' => 'kpcp_purge_on_widget',
+                    'type' => 'switcher',
+                    'title' => __( 'Purge on Widget Save?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every widget update or save.' ),
+                    'default' => false,
+                ),
 
             );
+
+            // if gravity forms is installed and activated
+            if( class_exists( 'GFAPI' ) ) {
+
+                // purge on form field
+                $_tmp[] = array(
+                        'id' => 'kpcp_purge_on_form',
+                        'type' => 'switcher',
+                        'title' => __( 'Purge on Form Save?' ),
+                        'desc' => __( 'This will attempt to purge all caches for every form update or save.' ),
+                        'default' => false,
+                    );
+
+                // for exclusions
+                $_tmp[] = array(
+                    'id' => 'kpcp_purge_on_form_exclude',
+                    'type' => 'select',
+                    'multiple' => true,
+                    'title' => __( 'Excluded Forms' ),
+                    'placeholder' => __( 'Please select the exclusions...' ),
+                    'desc' => __( 'Forms to exclude from the purger.' ),
+                    'options' => $this -> get_our_forms( ),
+                    'default' => 0,
+                    'dependency' => array( 'kpcp_purge_on_form', '==', true ),
+                );
+
+            }
+
+            // if ACF is installed and activated
+            if( class_exists('ACF') ) {
+
+                // purge on form field
+                $_tmp[] = array(
+                    'id' => 'kpcp_purge_on_acf',
+                    'type' => 'switcher',
+                    'title' => __( 'Purge on ACF Save?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every "advanced custom field" group update or save.' ),
+                    'default' => false,
+                );
+
+                // for exclusions
+                $_tmp[] = array(
+                    'id' => 'kpcp_purge_on_form_exclude',
+                    'type' => 'select',
+                    'multiple' => true,
+                    'title' => __( 'Excluded Field Groups' ),
+                    'placeholder' => __( 'Please select the exclusions...' ),
+                    'desc' => __( 'Forms to exclude from the purger.' ),
+                    'options' => $this -> get_our_field_groups( ),
+                    'default' => 0,
+                    'dependency' => array( 'kpcp_purge_on_acf', '==', true ),
+                );
+
+            }
+
+            // return the merged arrays
+            return array_merge( $_ret, $_tmp );
 
         }
 
@@ -177,6 +309,97 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'content' => '<h1>THE DOCS</h1>',
                 ),
             );
+
+        }
+
+
+        /** 
+         * get_forms
+         * 
+         * Private method pull all forms
+         * 
+         * @since 7.3
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return array Returns an array representing the forms created for the site
+         * 
+        */
+        private function get_our_forms( ) : array {
+
+            // setup a returnable array
+            $_ret = array( );
+
+            // populate the NONE
+            $_ret[0] = __( ' -- None -- ' );
+
+            // get all forms
+            $_forms = GFAPI::get_forms( );
+
+            // if there are some
+            if( $_forms ) {
+
+                // get a count
+                $_fCt = count( $_forms );
+
+                // loop over them
+                for( $_i = 0; $_i < $_fCt; ++$_i ) {
+
+                    // setup the return array
+                    $_ret[$_forms[$_i]['id']] = $_forms[$_i]['title'];
+
+                }
+
+            }
+
+            // return
+            return $_ret;
+
+        }
+
+        /** 
+         * get_field_groups
+         * 
+         * Private method pull all ACF field groups
+         * 
+         * @since 7.3
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return array Returns an array representing the field groups created for the site
+         * 
+        */
+        private function get_our_field_groups( ) : array {
+
+            // setup a returnable array
+            $_ret = array( );
+
+            // populate the NONE
+            $_ret[0] = __( ' -- None -- ' );
+
+            // get all field groups
+            $_fgs = acf_get_field_groups( );
+
+            // make sure we have a return
+            if( $_fgs ) {
+
+                // get a count
+                $_fCt = count( $_fgs );
+
+                // loop over them
+                for( $_i = 0; $_i < $_fCt; ++$_i ) {
+
+                    // add to the array
+                    $_ret[$_fgs[$_i]['ID']] = $_fgs[$_i]['title'];
+
+                }
+
+            }
+
+            // return
+            return $_ret;
 
         }
 
