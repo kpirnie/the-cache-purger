@@ -294,66 +294,6 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
         }
 
         /** 
-         * purge_memcached_caches
-         * 
-         * This method attempts to purge memcached caches
-         * if they exist
-         * 
-         * @since 7.3
-         * @access private
-         * @author Kevin Pirnie <me@kpirnie.com>
-         * @package The Cache Purger
-         * 
-         * @return void This method does not return anything
-         * 
-        */
-        private function purge_memcached_caches( ) : void {
-
-
-
-        }
-
-        /** 
-         * purge_redis_caches
-         * 
-         * This method attempts to purge redis caches
-         * if they exist
-         * 
-         * @since 7.3
-         * @access private
-         * @author Kevin Pirnie <me@kpirnie.com>
-         * @package The Cache Purger
-         * 
-         * @return void This method does not return anything
-         * 
-        */
-        private function purge_redis_caches( ) : bool {
-
-
-
-        }
-
-        /** 
-         * purge_varnish_caches
-         * 
-         * This method attempts to purge varnish caches
-         * if they exist
-         * 
-         * @since 7.3
-         * @access private
-         * @author Kevin Pirnie <me@kpirnie.com>
-         * @package The Cache Purger
-         * 
-         * @return void This method does not return anything
-         * 
-        */
-        private function purge_varnish_caches( ) : bool {
-
-
-
-        }
-
-        /** 
          * purge_php_caches
          * 
          * This method attempts to purge php based caches
@@ -432,6 +372,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
         */
         private function purge_nginx_caches( ) : void {
+
+            // let's utilize wordpress's filesystem global
+            global $wp_filesystem;
 
             // hold the cache location, we'll need to try a few locations
             $_cache_path = '';
@@ -521,9 +464,26 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 // hash it
                 $_hash = md5( $_scheme . 'GET' . $_host . $_requesturi );
 
-                // try to delete it
-                @unlink( $_cache_path . substr( $_hash, -1 ) . '/' . substr( $_hash, -3 ,2 ) . '/' . $_hash );
+                // now setup the full path
+                $_path = $_cache_path . substr( $_hash, -1 ) . '/' . substr( $_hash, -3 ,2 ) . '/' . $_hash;
 
+                // if it's a directory
+                if( $wp_filesystem -> is_dir( $_path ) ) {
+
+                    // try to delete it recursively
+                    $wp_filesystem -> delete( $_path, true, 'd' );
+
+                    // for my own OCDness, let's then recreate it
+                    $wp_filesystem -> mkdir( $_path );
+
+                // otherwise it's a file
+                } else {
+
+                    // try to delete it
+                    $wp_filesystem -> delete( $_path, false, 'f' );
+
+                }
+                
             }
 
         }
@@ -542,6 +502,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
         */
         private function purge_file_caches( ) : void {
+
+            // let's utilize wordpress's filesystem global
+            global $wp_filesystem;
 
             // hold our built cache path variable
             $_cache_path = '';
@@ -573,18 +536,19 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                     if( @is_readable( $_file ) ) {
 
                         // if it's a directory
-                        if( is_dir( $_file ) ) {
+                        if( $wp_filesystem -> is_dir( $_file ) ) {
+
+                            // try to delete it recursively
+                            $wp_filesystem -> delete( $_file, true, 'd' );
+
+                            // for my own OCDness, let's then recreate the path
+                            $wp_filesystem -> mkdir( $_file );
+
+                        // otherwise it's a file
+                        } else {
 
                             // try to delete it
-                            @rmdir( $_file );
-
-                        }
-
-                        // if it's a regular file
-                        if( is_file( $_file ) ) {
-
-                            // try to delete it
-                            @unlink( $_file );
+                            $wp_filesystem -> delete( $_file, false, 'f' );
 
                         }
 
