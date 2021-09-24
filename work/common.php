@@ -53,13 +53,16 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
         $_path = TCP_PATH . '/work/inc/' . $_class . '.php';
 
         // if the file exists
-        if( is_readable( $_path ) ) {
+        if( @is_readable( $_path ) ) {
 
             // include it once
             include $_path;
         }
 
-    } );   
+    } );
+
+    // set us up a class alias for the common class
+    class_alias( 'KP_Cache_Purge_Common', 'KPCPC' );
 
     // let's see if the main framework class exists
     if( ! class_exists( 'KPF' ) ) {
@@ -93,5 +96,14 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
         wp_enqueue_style( 'kpcp_css' );
         
     }, PHP_INT_MAX );
+
+    // fire up the processor class
+    $_processor = new KP_Cache_Purge_Processor( );
+
+    // run the processing
+    $_processor -> process( );
+
+    // clean up
+    unset( $_processor );
 
 }

@@ -125,125 +125,139 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
             // return the array of fields
             $_ret = array(
 
-                // purge on setting/options
+                // purge on menu
                 array(
-                    'id' => 'kpcp_purge_on_settings',
+                    'id' => 'on_menu',
                     'type' => 'switcher',
-                    'title' => __( 'Purge on Settings/Options Save?' ),
-                    'desc' => __( 'This will attempt to purge all caches for settings/options updates or saves.' ),
+                    'title' => __( 'Purge on Menu Save/Delete?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every menu update, save, or delete.' ),
                     'default' => false,
                 ),
                 
                 // purge on post
                 array(
-                    'id' => 'kpcp_purge_on_post',
+                    'id' => 'on_post',
                     'type' => 'switcher',
-                    'title' => __( 'Purge on Post Save?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every post update or save.' ),
+                    'title' => __( 'Purge on Post Save/Delete?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every post update, save, or delete.' ),
                     'default' => false,
                 ),
 
                 // post exclusions
                 array(
-                    'id' => 'kpcp_purge_on_post_exclude',
+                    'id' => 'on_post_exclude',
                     'type' => 'select',
                     'multiple' => true,
                     'title' => __( 'Excluded Posts' ),
                     'placeholder' => __( 'Please select the exclusions...' ),
                     'desc' => __( 'Posts to exclude from the purger.' ),
-                    'options' => KP_Cache_Purge_Common::get_posts_for_select( 'posts' ),
+                    'options' => KPCPC::get_posts_for_select( 'posts' ),
                     'default' => 0,
-                    'dependency' => array( 'kpcp_purge_on_post', '==', true ),
+                    'dependency' => array( 'on_post', '==', true ),
                 ),
 
                 // purge on page
                 array(
-                    'id' => 'kpcp_purge_on_page',
+                    'id' => 'on_page',
                     'type' => 'switcher',
-                    'title' => __( 'Purge on Page Save?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every page update or save.' ),
+                    'title' => __( 'Purge on Page Save/Delete?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every page update, save, or delete.' ),
                     'default' => false,
                 ),
 
                 // page exclusions
                 array(
-                    'id' => 'kpcp_purge_on_page_exclude',
+                    'id' => 'on_page_exclude',
                     'type' => 'select',
                     'multiple' => true,
                     'title' => __( 'Excluded Pages' ),
                     'placeholder' => __( 'Please select the exclusions...' ),
                     'desc' => __( 'Pages to exclude from the purger.' ),
-                    'options' => KP_Cache_Purge_Common::get_posts_for_select( 'pages' ),
+                    'options' => KPCPC::get_posts_for_select( 'pages' ),
                     'default' => 0,
-                    'dependency' => array( 'kpcp_purge_on_page', '==', true ),
+                    'dependency' => array( 'on_page', '==', true ),
                 ),
 
                 // purge on CPT
                 array(
-                    'id' => 'kpcp_purge_on_cpt',
+                    'id' => 'on_cpt',
                     'type' => 'switcher',
-                    'title' => __( 'Purge on Custom Post Type Save?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every custom post type update or save.' ),
+                    'title' => __( 'Purge on Custom Post Type Save/Delete?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every custom post type update, save, or delete.' ),
                     'default' => false,
                 ),
 
                 // cpt exclusions
                 array(
-                    'id' => 'kpcp_purge_on_cpt_exclude',
+                    'id' => 'on_cpt_exclude',
                     'type' => 'select',
                     'multiple' => true,
                     'title' => __( 'Excluded CPTs' ),
                     'placeholder' => __( 'Please select the exclusions...' ),
                     'desc' => __( 'CPTs to exclude from the purger.' ),
-                    'options' => KP_Cache_Purge_Common::get_posts_for_select( 'cpts' ),
+                    'options' => KPCPC::get_posts_for_select( 'cpts' ),
                     'default' => 0,
-                    'dependency' => array( 'kpcp_purge_on_cpt', '==', true ),
+                    'dependency' => array( 'on_cpt', '==', true ),
                 ),
 
                 // purge on taxonomy
                 array(
-                    'id' => 'kpcp_purge_on_taxonomy',
+                    'id' => 'on_taxonomy',
                     'type' => 'switcher',
-                    'title' => __( 'Purge on Taxonomy/Term Save?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every taxonomy/term update or save.' ),
+                    'title' => __( 'Purge on Taxonomy/Term Save/Delete?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every taxonomy/term update, save, or delete.' ),
                     'default' => false,
                 ),
 
                 // purge on category
                 array(
-                    'id' => 'kpcp_purge_on_category',
+                    'id' => 'on_category',
                     'type' => 'switcher',
-                    'title' => __( 'Purge on Category Save?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every category update or save.' ),
+                    'title' => __( 'Purge on Category Save/Delete?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every category update, save, or delete.' ),
                     'default' => false,
                 ),
 
                 // purge on widget
                 array(
-                    'id' => 'kpcp_purge_on_widget',
+                    'id' => 'on_widget',
                     'type' => 'switcher',
-                    'title' => __( 'Purge on Widget Save?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every widget update or save.' ),
+                    'title' => __( 'Purge on Widget Save/Delete?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every widget update, save, or delete.' ),
                     'default' => false,
                 ),
 
             );
+
+            // if woocommerce is installed and activated
+            if( class_exists( 'woocommerce' ) ) {
+
+                // purge on update
+                $_tmp[] = array(
+                    'id' => 'on_woo',
+                    'type' => 'switcher',
+                    'title' => __( 'Purge on WooCommerce Save/Delete?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every WooCommerce update, save, or delete.' ),
+                    'default' => false,
+                );
+                
+            }
 
             // if gravity forms is installed and activated
             if( class_exists( 'GFAPI' ) ) {
 
                 // purge on form field
                 $_tmp[] = array(
-                        'id' => 'kpcp_purge_on_form',
+                        'id' => 'on_form',
                         'type' => 'switcher',
-                        'title' => __( 'Purge on Form Save?' ),
-                        'desc' => __( 'This will attempt to purge all caches for every form update or save.' ),
+                        'title' => __( 'Purge on Form Save/Delete?' ),
+                        'desc' => __( 'This will attempt to purge all caches for every form update, save, or delete.' ),
                         'default' => false,
                     );
 
                 // for exclusions
                 $_tmp[] = array(
-                    'id' => 'kpcp_purge_on_form_exclude',
+                    'id' => 'on_form_exclude',
                     'type' => 'select',
                     'multiple' => true,
                     'title' => __( 'Excluded Forms' ),
@@ -251,7 +265,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'desc' => __( 'Forms to exclude from the purger.' ),
                     'options' => $this -> get_our_forms( ),
                     'default' => 0,
-                    'dependency' => array( 'kpcp_purge_on_form', '==', true ),
+                    'dependency' => array( 'on_form', '==', true ),
                 );
 
             }
@@ -261,24 +275,24 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
 
                 // purge on form field
                 $_tmp[] = array(
-                    'id' => 'kpcp_purge_on_acf',
+                    'id' => 'on_acf',
                     'type' => 'switcher',
-                    'title' => __( 'Purge on ACF Save?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every "advanced custom field" group update or save.' ),
+                    'title' => __( 'Purge on ACF Save/Delete?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every "advanced custom field" group update, save, or delete.' ),
                     'default' => false,
                 );
 
                 // for exclusions
                 $_tmp[] = array(
-                    'id' => 'kpcp_purge_on_form_exclude',
+                    'id' => 'on_acf_exclude',
                     'type' => 'select',
                     'multiple' => true,
                     'title' => __( 'Excluded Field Groups' ),
                     'placeholder' => __( 'Please select the exclusions...' ),
-                    'desc' => __( 'Forms to exclude from the purger.' ),
+                    'desc' => __( 'Field Groups to exclude from the purger.' ),
                     'options' => $this -> get_our_field_groups( ),
                     'default' => 0,
-                    'dependency' => array( 'kpcp_purge_on_acf', '==', true ),
+                    'dependency' => array( 'on_acf', '==', true ),
                 );
 
             }

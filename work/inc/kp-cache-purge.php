@@ -66,6 +66,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // now we'll try to purge php based caches
             $this -> purge_php_caches( );
 
+            // now we'll try to purge pagespeed mod caches
+            $this -> purge_pagespeed_caches( );
+
             // now we'll try to purge nginx caches
             $this -> purge_nginx_caches( );
 
@@ -352,6 +355,91 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                 // try to clear it's user cache
                 apc_clear_cache( 'user' );
+
+            }
+
+        }
+
+        /** 
+         * purge_php_caches
+         * 
+         * This method attempts to purge the PageSpeed Mod caches
+         * 
+         * @since 7.3
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        private function purge_pagespeed_caches( ) : void {
+
+            // hold possible pagespeed headers
+            $_ps_headers = array( 'x-mod-pagespeed', 'x-page-speed' );
+
+            // make a remote request to the site
+		    $_res = wp_remote_request( site_url( ) );
+
+            // check if there's an error
+            if ( is_wp_error( $result ) ) {
+                
+                // there was.  this means we cannot purge this cache, so dump out of the method
+                return;
+            }
+
+            // we made it this far, check for the headers from the response
+            $_res_headers = wp_remote_retrieve_headers( $_res );
+
+            // check if our pagespeed headers are in the response headers
+            if( ! in_array( $_ps_headers, $_res_headers ) ) {
+
+                // the are not, this means the pagespeed module is not installed on the server, and we can dump out of this method
+                return;
+
+            }
+
+            // hold a "is cloudflare" flag
+            $_is_cf = ( isset( $_res_headers['server'] ) && ( strpos( $_res_headers['server'], 'cloudflare' ) !== false ) );
+
+            // hold our default request arguments
+            $_args = array(
+                'method' => 'PURGE',
+                'redirection' => 0,
+            );
+
+            // get the server IP
+            $_server_ip = filter_input( INPUT_SERVER, 'SERVER_ADDR', FILTER_VALIDATE_IP );
+
+            // get our URL list
+            $_urls = KPCPC::get_urls( );
+
+            // make sure we have some returned
+            if( $_urls ) {
+
+                // loop them
+                foreach( $_urls as $_url ) {
+
+                    // if it is run through cloudflare
+                    if( $_is_cf ) {
+
+                        // parse the url
+                        $_link = wp_parse_url( $_url );
+
+                        // rebuild the URL
+                        $_url = $_link['scheme'] . '://' . $_server_ip . $_link['path'];
+
+                        // set some more arguments
+                        $_args['redirection'] = 5; // -L
+                        $_args['sslverify'] = false; // -k
+                        $_args['headers'] = 'host: ' . $_link['host'];
+
+                    }
+
+                    // make the remote PURGE request
+                    wp_remote_request( $_url, $_args );
+
+                }
 
             }
 
