@@ -94,6 +94,23 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     )
                 );
 
+                // on settings save, clear cache if we are configured to do so
+                add_action( 'kpf_' . $_cp_settings_id . '_save_after', function( ) use( $_cp_settings_id ) : void {
+
+                    // setup the cache purger
+                    $_cp = new KP_Cache_Purge( );
+
+                    // purge
+                    $_cp -> kp_do_purge( );
+
+                    // log the purge
+                    KPCPC::write_log( "Settings Cache Cleared on: " . 'kpf_' . $_cp_settings_id . '_save_after' );
+
+                    // clean it up
+                    unset( $_cp );
+
+                }, PHP_INT_MAX );
+
                 // add a button to the admin bar for purging manually
 
 
@@ -124,6 +141,15 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
 
             // return the array of fields
             $_ret = array(
+
+                // log the purge actions
+                array(
+                    'id' => 'should_log',
+                    'type' => 'switcher',
+                    'title' => __( 'Log Purge Actions?' ),
+                    'desc' => __( 'This will attempt to write a log of all purge actions performed.<br />The file location is: <code>' . ABSPATH . 'wp-content/purge.log</code>' ),
+                    'default' => false,
+                ),
 
                 // purge on menu
                 array(
@@ -227,21 +253,16 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'default' => false,
                 ),
 
-            );
-
-            // if woocommerce is installed and activated
-            if( class_exists( 'woocommerce' ) ) {
-
-                // purge on update
-                $_tmp[] = array(
-                    'id' => 'on_woo',
+                // purge on customizer
+                array(
+                    'id' => 'on_customizer',
                     'type' => 'switcher',
-                    'title' => __( 'Purge on WooCommerce Save/Delete?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every WooCommerce update, save, or delete.' ),
+                    'title' => __( 'Purge on Customizer Save?' ),
+                    'desc' => __( 'This will attempt to purge all caches for every customizer update or save.' ),
                     'default' => false,
-                );
+                ),
                 
-            }
+            );
 
             // if gravity forms is installed and activated
             if( class_exists( 'GFAPI' ) ) {

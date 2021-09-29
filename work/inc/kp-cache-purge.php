@@ -40,6 +40,23 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // get the current site ID
             $this -> site_id = get_current_blog_id( );
 
+            // log
+            KPCPC::write_log( "------------------------------------" );
+            KPCPC::write_log( "STARTING THE PURGE" );
+            KPCPC::write_log( "------------------------------------" );
+
+        }
+
+        // clean us up --- probably not necessary, but whatever...
+        public function __destruct( ) { 
+
+            // release our properties
+            unset( $this -> site_id );
+
+            // log
+            KPCPC::write_log( "------------------------------------" );
+            KPCPC::write_log( "ENDING THE PURGE" );
+            KPCPC::write_log( "------------------------------------\n" );
         }
 
         /** 
@@ -57,23 +74,172 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
         */
         public function kp_do_purge( ) : void {
 
-            // let's take care of plugin purges first
+            // log the purge
+            KPCPC::write_log( "\tHOSTING PURGE" );
+            // let's take care of the hosting caches first
+            $this -> purge_hosting_caches( );
+
+            // log the purge
+            KPCPC::write_log( "\tPLUGIN PURGE" );
+            // now we'll try plugin purges
             $this -> purge_plugin_caches( );
 
+            // log the purge
+            KPCPC::write_log( "\tWP PURGE" );
             // now we'll try Wordpress's internal cache purges
             $this -> purge_wordpress_caches( );
 
+            // log the purge
+            KPCPC::write_log( "\tPHP PURGE" );
             // now we'll try to purge php based caches
             $this -> purge_php_caches( );
 
+            // log the purge
+            KPCPC::write_log( "\tPAGESPEED PURGE" );
             // now we'll try to purge pagespeed mod caches
             $this -> purge_pagespeed_caches( );
 
+            // log the purge
+            KPCPC::write_log( "\tNGINX PURGE" );
             // now we'll try to purge nginx caches
             $this -> purge_nginx_caches( );
 
+            // log the purge
+            KPCPC::write_log( "\tFILE PURGE" );
             // let's attempt to clear out file based caches
             $this -> purge_file_caches( );
+
+        }
+
+        /** 
+         * purge_hosting_caches
+         * 
+         * This method attempts to utilize the purge methods 
+         * of the most common hosting environments
+         * 
+         * @since 7.3
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        private function purge_hosting_caches( ) : void {
+
+            // WPEngine
+            if( class_exists( 'WpeCommon' ) ) {
+
+                // clear memcached
+                if ( method_exists( 'WpeCommon', 'purge_memcached' ) ) {
+                    WpeCommon::purge_memcached( );
+                }
+
+                // clear cdn
+                if ( method_exists( 'WpeCommon', 'clear_maxcdn_cache' ) ) {
+                    WpeCommon::clear_maxcdn_cache( );
+                }
+
+                // clear varnish
+                if ( method_exists( 'WpeCommon', 'purge_varnish_cache' ) ) {
+                    WpeCommon::purge_varnish_cache( );
+                }
+
+                // log the purge
+                KPCPC::write_log( "\t\tWPEngine Cache" );
+
+            }
+
+            // Kinsta Cache.
+            if( class_exists( 'Kinsta\Cache' ) ) {
+
+                // $kinsta_cache object already created by Kinsta cache.php file.
+                global $kinsta_cache;
+                $kinsta_cache->kinsta_cache_purge -> purge_complete_full_page_cache( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tKinsta Cache" );
+
+            }
+
+            // GoDaddy
+            if( class_exists( '\WPaaS\Cache' ) ) {
+
+                // purge and ban the GoDaddy Cache
+                remove_action( 'shutdown', [ '\WPaaS\Cache', 'purge' ], PHP_INT_MAX );
+                add_action( 'shutdown', [ '\WPaaS\Cache', 'ban' ], PHP_INT_MAX );
+
+                // log the purge
+                KPCPC::write_log( "\t\tGoDaddy Cache" );
+
+            }
+
+            // Media Temple
+
+
+            // Pantheon
+            if( function_exists( 'pantheon_clear_edge_all' ) ) {
+
+                // purge all caches
+                pantheon_clear_edge_all( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tPantheon Cache" );
+
+            }
+
+            // Cloudflare - even though it's not a host
+            if ( class_exists( '\CF\WordPress\Hooks' ) ) {
+
+                // Initiliaze Hooks class which contains WordPress hook functions from Cloudflare plugin.
+                $_cf_hooks = new \CF\WordPress\Hooks( );
+                
+                // If we have an instantiated class.
+                if ( $_cf_hooks ) {
+                
+                    // Purge all cache.
+                    $_cf_hooks -> purgeCacheEverything( );
+                
+                }
+
+                // log the purge
+                KPCPC::write_log( "\t\tCloudflare Cache" );
+            }
+
+            // Sucuri - even though it's not a host, we'll need to rely on the sucuri plugin being installed
+            if( class_exists( 'SucuriScanFirewall' ) ) {
+
+                // get the sucuri api key
+                $_key = SucuriScanFirewall::getKey( );
+
+                // fireoff the cache clearing ajax method
+                SucuriScanFirewall::clearCache( $_key );
+
+                // log the purge
+                KPCPC::write_log( "\t\tSucuri Cache" );
+
+            }
+
+            // RunCloud - this will only work if the RunCloud Hub is installed
+            if( class_exists( 'RunCloud_Hub' ) ) {
+
+                // if the site is a multisite
+                if( is_multisite( ) ) {
+                    
+                    // purge all sites caches
+                    @RunCloud_Hub::purge_cache_all_sites( );
+                
+                // we're not
+                } else {
+
+                    // purge the sites caches
+                    @RunCloud_Hub::purge_cache_all();
+                }
+
+                // log the purge
+                KPCPC::write_log( "\t\tRunCloud Cache" );
+
+            }
 
         }
 
@@ -93,75 +259,93 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
         */
         private function purge_plugin_caches( ) : void {
 
-            // WPEngine
-            if ( class_exists( 'WpeCommon' ) ) {
-
-                // clear memcached
-                if ( method_exists( 'WpeCommon', 'purge_memcached' ) ) {
-                    WpeCommon::purge_memcached( );
-                }
-
-                // clear cdn
-                if ( method_exists( 'WpeCommon', 'clear_maxcdn_cache' ) ) {
-                    WpeCommon::clear_maxcdn_cache( );
-                }
-
-                // clear varnish
-                if ( method_exists( 'WpeCommon', 'purge_varnish_cache' ) ) {
-                    WpeCommon::purge_varnish_cache( );
-                }
-            }
-
             // SG Optimizer.
             if ( class_exists( 'SiteGround_Optimizer\Supercacher\Supercacher' ) ) {
-                SiteGround_Optimizer\Supercacher\Supercacher::purge_cache( );
-            }
 
-            // Kinsta Cache.
-            if ( class_exists( 'Kinsta\Cache' ) ) {
-                // $kinsta_cache object already created by Kinsta cache.php file.
-                global $kinsta_cache;
-                $kinsta_cache->kinsta_cache_purge -> purge_complete_full_page_cache( );
+                // clear siteground cache
+                SiteGround_Optimizer\Supercacher\Supercacher::purge_cache( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tSiteGround Cache" );
+
             }
 
             // Nginx helper Plugin (Gridpane and others)
             if ( class_exists( 'Nginx_Helper' ) ) {
+
+                // clear nginx helper cache
                 do_action( 'rt_nginx_helper_purge_all' );
+
+                // log the purge
+                KPCPC::write_log( "\t\tNginx Helper Cache" );
             }
 
             // LiteSpeed Cache.
             if ( class_exists( 'LiteSpeed_Cache_Purge' ) ) {
+
+                // litespeed
                 LiteSpeed_Cache_Purge::all( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tLiteSpeed Cache" );
             }
 
             // Clear Cachify Cache
             if ( has_action('cachify_flush_cache') ) {
+
+                // clear cachify
                 do_action( 'cachify_flush_cache' );
+
+                // log the purge
+                KPCPC::write_log( "\t\tCachify Cache" );
             }
 
             // Autoptimize
             if( class_exists( 'autoptimizeCache' ) ) {
+
+                // autoptimize
                 autoptimizeCache::clearall_actionless( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tAutoptimize Cache" );
             }
 
             // Fast Velocity Minify
             if( function_exists( 'fvm_purge_all' ) ) {
+
+                // fmv purge
                 fvm_purge_all( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tFast Velocity Minify Cache" );
             }
 
             // WPRocket
             if( function_exists( 'rocket_clean_domain' ) ) {
+
+                // wp rocker cache
                 rocket_clean_domain( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tWPRocket Cache" );
             }
 
             // Swift Performance
             if( class_exists( 'Swift_Performance_Cache' ) ) {
+
+                // swift cache
                 Swift_Performance_Cache::clear_all_cache( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tSwift Performance Cache" );
             }
 
             // Comet Cache.
             if ( class_exists( 'comet_cache' ) ) {
                 comet_cache::clear( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tComet Cache" );
             }
 
             // Hummingbird.
@@ -169,17 +353,26 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                 // I would use Hummingbird\WP_Hummingbird::flush_cache( true, false ) instead, but it's disabling the page cache option in Hummingbird settings.
                 Hummingbird\Core\Filesystem::instance( ) -> clean_up( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tHummingbird Cache" );
             }
 
             // WP Fastest Cache
             if( class_exists( 'WpFastestCache' ) ) {
                 $wpfc = new WpFastestCache( );
                 $wpfc -> deleteCache( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tWP Fastest Cache" );
             }
         
             // WP Fastest Cache 2
             if ( isset( $GLOBALS['wp_fastest_cache'] ) && method_exists( $GLOBALS['wp_fastest_cache'], 'deleteCache' ) ) {
                 $GLOBALS['wp_fastest_cache'] -> deleteCache( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tWP Fastest 2 Cache" );
             }
 
             // WP Super Cache
@@ -190,22 +383,34 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                     
                     wp_cache_clear_cache( );
                 }
+
+                // log the purge
+                KPCPC::write_log( "\t\tWP Super Cache" );
             }
 
             // W3 Total Cache
             if( function_exists( 'w3tc_flush_all' ) ) {
                 w3tc_flush_all( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tW3 Total Cache" );
             }
 
             // Hyper Cache
             if( class_exists( 'HyperCache' ) ) {
                 $hypercache = new HyperCache( );
                 $hypercache -> clean( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tHyper Cache" );
             }
 
             // WP Optimize
             if( function_exists( 'wpo_cache_flush' ) ) {
                 wpo_cache_flush( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tWP Optimize Cache" );
             }
 
             // WP-Optimize 2
@@ -213,6 +418,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                 // This function returns a response, so I'm assigning it to a variable to prevent unexpected output to the screen.
                 $response = WP_Optimize_Cache_Commands::purge_page_cache( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tWP Optimize 2 Cache" );
             }
             
             // WP-Optimize minification files have a different cache.
@@ -220,26 +428,17 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                 // This function returns a response, so I'm assigning it to a variable to prevent unexpected output to the screen.
                 $response = WP_Optimize_Minify_Cache_Functions::purge( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tWP Optimize Minify Cache" );
             }
 
             // Cache Enabler
             if( class_exists( 'Cache_Enabler' ) ) {
                 Cache_Enabler::clear_total_cache( );
-            }
 
-            // Cloudflare
-            if ( class_exists( '\CF\WordPress\Hooks' ) ) {
-
-                // Initiliaze Hooks class which contains WordPress hook functions from Cloudflare plugin.
-                $_cf_hooks = new \CF\WordPress\Hooks( );
-                
-                // If we have an instantiated class.
-                if ( $_cf_hooks ) {
-                
-                    // Purge all cache.
-                    $_cf_hooks -> purgeCacheEverything( );
-                
-                }
+                // log the purge
+                KPCPC::write_log( "\t\tCache Enabler Cache" );
             }
 
         }
@@ -266,6 +465,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // try to clear Wordpress's built-in object cache
             wp_cache_flush( );
 
+            // log the purge
+            KPCPC::write_log( "\t\tWP Cache" );
+
             // now try to delete the wp object cache
             if( function_exists( 'wp_cache_delete' ) ) {
 
@@ -283,16 +485,25 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                 // clear the plugin object cache for the parent site in a multisite install
                 wp_cache_delete( $this -> site_id . '-active_sitewide_plugins', 'site-options' );
+
+                // log the purge
+                KPCPC::write_log( "\t\tWP Object Cache" );
             }
 
             // delete the transients
             $wpdb -> query( "DELETE FROM `$wpdb->options` WHERE `option_name` LIKE '_transient_files_%'" );
+
+            // log the purge
+            KPCPC::write_log( "\t\tWP Transient Cache" );
 
             // probably overkill, but let's fire off the rest of the builtin cache flushing mechanisms
             global $wp_object_cache;
 
             // try to flush the object cache
             $wp_object_cache -> flush( 0 );
+
+            // log the purge
+            KPCPC::write_log( "\t\tWP Object 2 Cache" );
 
         }
 
@@ -317,6 +528,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                 // clear it
                 wincache_ucache_clear( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tPHP Win Cache" );
 
             }
 
@@ -343,6 +557,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                     }
 
+                    // log the purge
+                    KPCPC::write_log( "\t\tPHP Zend OpCache" );
+
                 }
 
             }
@@ -356,12 +573,15 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 // try to clear it's user cache
                 apc_clear_cache( 'user' );
 
+                // log the purge
+                KPCPC::write_log( "\t\tPHP APC Cache" );
+
             }
 
         }
 
         /** 
-         * purge_php_caches
+         * purge_pagespeed_caches
          * 
          * This method attempts to purge the PageSpeed Mod caches
          * 
@@ -382,7 +602,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 		    $_res = wp_remote_request( site_url( ) );
 
             // check if there's an error
-            if ( is_wp_error( $result ) ) {
+            if ( is_wp_error( $_res ) ) {
                 
                 // there was.  this means we cannot purge this cache, so dump out of the method
                 return;
@@ -391,8 +611,12 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // we made it this far, check for the headers from the response
             $_res_headers = wp_remote_retrieve_headers( $_res );
 
+            // cast it as an array, and reset the index
+            // NOTE: we have to do this, because the WP Dev page lies, this is not returned as an array, it's returned as a object(Requests_Utility_CaseInsensitiveDictionary)
+            $_headers = array_values( ( array ) $_res_headers );
+
             // check if our pagespeed headers are in the response headers
-            if( ! in_array( $_ps_headers, $_res_headers ) ) {
+            if( ! in_array( $_ps_headers, $_headers ) ) {
 
                 // the are not, this means the pagespeed module is not installed on the server, and we can dump out of this method
                 return;
@@ -441,6 +665,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                 }
 
+                // log the purge
+                KPCPC::write_log( "\t\tPagespeed Cache" );
+
             }
 
         }
@@ -463,6 +690,17 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             // let's utilize wordpress's filesystem global
             global $wp_filesystem;
+
+            // if we do not have the global yet
+            if( empty( $wp_filesystem ) ) {
+
+                // require the file
+                require_once ABSPATH . '/wp-admin/includes/file.php';
+
+                // initialize the wordpress filesystem
+                WP_Filesystem( );
+
+            }
 
             // hold the cache location, we'll need to try a few locations
             $_cache_path = '';
@@ -515,7 +753,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // now make sure we get a post object for each item returned
             $_rs = $_qry -> get_posts( );
 
-            // if we do not have anything throw an error
+            // if we have results
             if( $_rs ) {
 
                 // loop over the return
@@ -534,45 +772,54 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // we can dump the query here
             unset( $_rs, $_qry, $_post_types );
 
-            // loop over the page array
-            foreach( $_pages as $_page ) {
+            // make sure we have pages
+            if( $_pages ) {
 
-                // parse the URL
-                $_url = parse_url( $_page );
+                // loop over the page array
+                foreach( $_pages as $_page ) {
 
-                // get the scheme
-                $_scheme = $_url['scheme'];
+                    // parse the URL
+                    $_url = parse_url( $_page );
 
-                // get the host
-                $_host = $_url['host'];
+                    // get the scheme
+                    $_scheme = $_url['scheme'];
 
-                // the uri
-                $_requesturi = $_url['path'];
+                    // get the host
+                    $_host = $_url['host'];
 
-                // hash it
-                $_hash = md5( $_scheme . 'GET' . $_host . $_requesturi );
+                    // the uri
+                    $_requesturi = $_url['path'];
 
-                // now setup the full path
-                $_path = $_cache_path . substr( $_hash, -1 ) . '/' . substr( $_hash, -3 ,2 ) . '/' . $_hash;
+                    // hash it
+                    $_hash = md5( $_scheme . 'GET' . $_host . $_requesturi );
 
-                // if it's a directory
-                if( $wp_filesystem -> is_dir( $_path ) ) {
+                    // now setup the full path
+                    $_path = $_cache_path . substr( $_hash, -1 ) . '/' . substr( $_hash, -3 ,2 ) . '/' . $_hash;
 
-                    // try to delete it recursively
-                    $wp_filesystem -> delete( $_path, true, 'd' );
+                    // if it's a directory
+                    if( $wp_filesystem -> is_dir( $_path ) ) {
 
-                    // for my own OCDness, let's then recreate it
-                    $wp_filesystem -> mkdir( $_path );
+                        // try to delete it recursively
+                        $wp_filesystem -> delete( $_path, true, 'd' );
 
-                // otherwise it's a file
-                } else {
+                        // for my own OCDness, let's then recreate it
+                        $wp_filesystem -> mkdir( $_path );
 
-                    // try to delete it
-                    $wp_filesystem -> delete( $_path, false, 'f' );
+                    // otherwise it's a file
+                    } else {
 
+                        // try to delete it
+                        $wp_filesystem -> delete( $_path, false, 'f' );
+
+                    }
+                    
                 }
-                
+
+                // log the purge
+                KPCPC::write_log( "\t\tNginx Cache" );
+
             }
+
 
         }
 
@@ -593,6 +840,17 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             // let's utilize wordpress's filesystem global
             global $wp_filesystem;
+
+            // if we do not have the global yet
+            if( empty( $wp_filesystem ) ) {
+
+                // require the file
+                require_once ABSPATH . '/wp-admin/includes/file.php';
+
+                // initialize the wordpress filesystem
+                WP_Filesystem( );
+
+            }
 
             // hold our built cache path variable
             $_cache_path = '';
@@ -643,6 +901,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                     }
 
                 }
+
+                // log the purge
+                KPCPC::write_log( "\t\tFile Cache" );
 
             }
 

@@ -241,25 +241,24 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
          * 
-         * @return object Returns an object of categorized actions
+         * @return array Returns an array of categorized action objects
          * 
         */
-        public static function get_actions( ) : object {
+        public static function get_actions( ) : array {
 
             // return the array
-            return ( object ) array(
+            return array(
                 'menu' => array( 'wp_update_nav_menu', 'wp_delete_nav_menu' ),
-                'post' => array( 'save_post', 'deleted_post', 'trashed_post' ),
-                'page' => array( 'save_post', 'deleted_post', 'trashed_post' ),
-                'cpt' => array( 'save_post', 'deleted_post', 'trashed_post' ),
+                'post' => array( 'save_post', 'trashed_post' ),
+                'page' => array( 'save_post', 'trashed_post' ),
+                'cpt' => array( 'save_post', 'trashed_post' ),
                 'tax' => array( 'saved_term', 'delete_term' ),
                 'cat' => array( 'saved_category', 'delete_category' ),
                 'widget' => array( 'wp_ajax_save-widget', 'wp_ajax_widgets-order', 'sidebar_admin_setup' ),
                 'customizer' => array( 'customize_save_after' ),
-                'gf' => array( 'gform_after_save_form', 'gform_after_delete_form' ),
-                'acf' => array( 'acf/update_field_group', 'acf/delete_field_group' ),
-                'woo' => array( 'woocommerce_settings_saved' ), 
-                'settings' => array( 'pre_set_transient_settings_errors', 'updated_option' ), // no matter what, we'll purge on this
+                'gf' => array( 'gform_after_save_form', 'gform_post_form_trashed' ),
+                'acf' => array( 'acf/update_field_group', 'acf/trash_field_group' ),
+                'settings' => array( 'woocommerce_settings_saved', 'pre_set_transient_settings_errors' ), // no matter what, we'll purge on this
                 'plugin' => array( 'activated_plugin', 'deactivated_plugin' ), // no matter what, we'll purge on this
                 'updates' => array( 'upgrader_process_complete', '_core_updated_successfully' ), // no matter what, we'll purge on this
             );
@@ -267,6 +266,45 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
             // this is if there's no ajax saving of the widgets
             //if ( !empty( $_POST ) && ( isset($_POST['savewidget']) || isset($_POST['removewidget']) ) ) {
 
+        }
+
+        /** 
+         * write_log
+         * 
+         * Public method to write to a cache purge log
+         * 
+         * @since 7.3
+         * @access public
+         * @static
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        public static function write_log( string $_msg ) : void {
+
+            // get our setting
+            $_should_log = filter_var( ( KPCPC::get_options( ) -> should_log ) ?? false, FILTER_VALIDATE_BOOLEAN );
+
+            // let's make sure we should be logging
+            if( $_should_log ) {
+                
+                // set a path to hold the purge log
+                $_path = ABSPATH . 'wp-content/purge.log';
+
+                // I want to append a timestamp to the message
+                $_message = '[' . current_time( 'mysql' ) . ']: ' . $_msg . PHP_EOL;
+
+
+                // unfortunately we cannot use wp's builtin filesystem hanlders for this
+                // the put_contents method only writes/overwrites contents, and does not append
+
+                // append the message to the purge log file
+                file_put_contents( $_path, $_message, FILE_APPEND | LOCK_EX );
+                
+            }
+            
         }
 
     }
