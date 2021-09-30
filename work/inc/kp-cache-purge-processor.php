@@ -368,12 +368,35 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
                             // hook into the actions in the highest priority
                             add_action( 'save_post', function( $_id, $_post, $_update ) use( $_type, $_the_exclusions ) : void {
 
-                                // if this is a revision or auto-save
-                                if( wp_is_post_revision( $_id ) || wp_is_post_autosave( $_id ) ) {
+                                // if this is a revision
+                                if( wp_is_post_revision( $_id ) ) {
 
                                     // we dont need this to run, so just return
                                     return;
 
+                                }
+
+                                // if this is an autosave
+                                if( wp_is_post_autosave( $_id ) ) {
+
+                                    // we dont need this to run, so just return
+                                    return;
+
+                                }
+
+                                // if this is an autosave check 2
+                                if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+
+                                    // we dont need this to run, so just return
+                                    return;
+
+                                }
+
+                                // make sure this isn't fired on the rest request
+                                if( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+
+                                    // we dont need this to run, so just return
+                                    return;
                                 }
 
                                 // if the posts ID is in the exclusions
