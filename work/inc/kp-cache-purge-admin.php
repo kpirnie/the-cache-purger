@@ -221,7 +221,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'title' => __( 'Excluded CPTs' ),
                     'placeholder' => __( 'Please select the exclusions...' ),
                     'desc' => __( 'CPTs to exclude from the purger.' ),
-                    'options' => KPCPC::get_posts_for_select( 'cpts' ),
+                    'options' => KPCPC::get_post_types_for_select( ),
                     'default' => 0,
                     'dependency' => array( 'on_cpt', '==', true ),
                 ),

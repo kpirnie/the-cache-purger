@@ -293,6 +293,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
                                     KPCPC::write_log( "\t" );
                                     KPCPC::write_log( "\tACTION PURGE" );
                                     KPCPC::write_log( "\t\tgf Cache Cleared on: gform_after_save_form" );
+                                    KPCPC::write_log( "\t\tID: " . $_form['ID'] );
 
                                     // clean it up
                                     unset( $_cp );
@@ -322,6 +323,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
                                     KPCPC::write_log( "\t" );
                                     KPCPC::write_log( "\tACTION PURGE" );
                                     KPCPC::write_log( "\t\tgf Cache Cleared on: gform_post_form_trashed" );
+                                    KPCPC::write_log( "\t\tID: $_id" );
 
                                     // clean it up
                                     unset( $_cp );
@@ -351,6 +353,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
                                 KPCPC::write_log( "\t" );
                                 KPCPC::write_log( "\tACTION PURGE" );
                                 KPCPC::write_log( "\t\tacf Cache Cleared on: $_action" );
+                                KPCPC::write_log( "\t\tID: " . $_fg['ID'] );
 
                                 // clean it up
                                 unset( $_cp );
@@ -359,8 +362,8 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
 
                         }, PHP_INT_MAX, 1 );
 
-                    // if we're processing a post, page, or cpt
-                    } elseif( in_array( $_type, array( 'post', 'page', 'cpt' ) ) ) {
+                    // if we're processing a post or page
+                    } elseif( in_array( $_type, array( 'post', 'page' ) ) ) {
 
                         // if the action is save
                         if( $_action === 'save_post' ) {
@@ -399,6 +402,14 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
                                     return;
                                 }
 
+                                // make sure this isn't fired when saving a post as trash
+                                if ( 'trash' === $_post -> post_status ) {
+
+                                    // we dont need this to run, so just return
+                                    return;
+
+                                }
+
                                 // if the posts ID is in the exclusions
                                 if( in_array( $_id, $_the_exclusions ) ) {
 
@@ -421,6 +432,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
                                         KPCPC::write_log( "\t" );
                                         KPCPC::write_log( "\tACTION PURGE" );
                                         KPCPC::write_log( "\t\t$_type Cache Cleared on: save_post" );
+                                        KPCPC::write_log( "\t\tID: $_id" );
 
                                         // clean it up
                                         unset( $_cp );  
@@ -435,29 +447,49 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
                         } else {
 
                             // hook into the actions in the highest priority
-                            add_action( $_action, function( $_id ) use( $_type, $_action, $_the_exclusions ) : void {
+                            add_action( 'trashed_post', function( $_id ) use( $_type, $_the_exclusions ) : void {
 
-                                if( ! in_array( $_id, $_the_exclusions ) ) {
+                                // if the posts ID is in the exclusions
+                                if( in_array( $_id, $_the_exclusions ) ) {
 
-                                    // fire up the purge class
-                                    $_cp = new KP_Cache_Purge( );
+                                    // we don't need this to run, so just return
+                                    return;
 
-                                    // purge the caches
-                                    $_cp -> kp_do_purge( );
+                                // otherwise, go for it
+                                } else {
 
-                                    // log the purge
-                                    KPCPC::write_log( "\t" );
-                                    KPCPC::write_log( "\tACTION PURGE" );
-                                    KPCPC::write_log( "\t\t$_type Cache Cleared on: $_action" );
+                                    // get the post type
+                                    $_post_type = get_post_type( $_id );
 
-                                    // clean it up
-                                    unset( $_cp );  
-                                    
+                                    // check the current post type against the type
+                                    if( $_post_type == $_type ) {
+
+                                        // fire up the purge class
+                                        $_cp = new KP_Cache_Purge( );
+
+                                        // purge the caches
+                                        $_cp -> kp_do_purge( );
+
+                                        // log the purge
+                                        KPCPC::write_log( "\t" );
+                                        KPCPC::write_log( "\tACTION PURGE" );
+                                        KPCPC::write_log( "\t\t$_type Cache Cleared on: trashed_post" );
+                                        KPCPC::write_log( "\t\tID: $_id" );
+
+                                        // clean it up
+                                        unset( $_cp );  
+
+                                    }
+
                                 }
 
                             }, PHP_INT_MAX, 1 );
 
                         }
+
+                    } elseif( $_type === 'cpt' ) {
+
+
 
                     }
 

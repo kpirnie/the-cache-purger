@@ -56,6 +56,55 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
         }
 
         /** 
+         * get_post_types_for_select
+         * 
+         * Public method pull to gather all public post types for a select box
+         * 
+         * @since 7.3
+         * @access public
+         * @static
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return array Returns an array of posts types
+         * 
+        */
+        public static function get_post_types_for_select( ) : array {
+
+            // setup a return array
+            $_ret = array( );
+
+            // the first item needs to be NONE
+            $_ret[0] = __( ' -- None -- ' );
+
+            // see if we've already got this in cache
+            $_post_types = false;//wp_cache_get( 'kpcp_post_types', 'kpcp_post_types' );
+
+            // check if we're already cached
+            if( $_post_types ) {
+
+                // we are, so return the object
+                return $_post_types;
+
+            // we aren't cached yet
+            } else {
+
+                // get the inherent post types
+                $_the_pts = get_post_types( array( '_builtin' => false, 'public' => true, ), 'names' );
+
+                //var_dump($_the_pts);
+                
+                // set the array to the cache for 1 hour
+                //wp_cache_add( 'kpcp_post_types', $_ret, 'kpcp_post_types', HOUR_IN_SECONDS );
+
+            }
+
+            // return the array
+            return ( is_array( $_ret ) ) ? $_ret : array( );
+            
+        }
+
+        /** 
          * get_posts_for_select
          * 
          * Public method pull to gather all posts for a select box
@@ -158,8 +207,6 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
                 }
 
             }
-
-
 
             // return the array
             return $_ret;
