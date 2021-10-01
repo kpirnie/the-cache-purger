@@ -75,10 +75,10 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
             $_ret = array( );
 
             // the first item needs to be NONE
-            $_ret[0] = __( ' -- None -- ' );
+            $_ret['none'] = __( ' -- None -- ' );
 
             // see if we've already got this in cache
-            $_post_types = false;//wp_cache_get( 'kpcp_post_types', 'kpcp_post_types' );
+            $_post_types = wp_cache_get( 'kpcp_post_types', 'kpcp_post_types' );
 
             // check if we're already cached
             if( $_post_types ) {
@@ -92,10 +92,44 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
                 // get the inherent post types
                 $_the_pts = get_post_types( array( '_builtin' => false, 'public' => true, ), 'names' );
 
-                //var_dump($_the_pts);
-                
+                // check if we have any
+                if( empty( $_the_pts ) ) {
+
+                    // we don't yet because they aren't registered as of this point, we'll need to try to get them from the existing posts
+
+                    // fire up the wpdb global
+                    global $wpdb;
+
+                    // run a query to get all post types
+                    $_pts = $wpdb -> get_results( "SELECT DISTINCT post_type FROM $wpdb->posts WHERE post_status = 'publish' AND post_type NOT IN ( 'nav_menu_item', 'page', 'post', 'acf-field-group', 'attachment', 'custom_css', 'customize_changeset' ) ORDER BY post_type ASC;", ARRAY_A );
+
+                    // make sure we have some
+                    if( $_pts ) {
+
+                        // loop over them
+                        foreach( $_pts as $_pt ) {
+
+                            // add the post type to the returnable array
+                            $_ret[ $_pt['post_type'] ] = ucwords( __( str_replace( '_', ' ', $_pt['post_type'] ) ) );
+
+                        }
+
+                    }
+
+                } else {
+
+                    // loop over them
+                    foreach( $_the_pts as $_pt ) {
+
+                            // add the post type to the returnable array
+                            $_ret[ $_pt ] = ucwords( __( str_replace( '_', ' ', $_pt ) ) );
+
+                    }
+
+                }
+
                 // set the array to the cache for 1 hour
-                //wp_cache_add( 'kpcp_post_types', $_ret, 'kpcp_post_types', HOUR_IN_SECONDS );
+                wp_cache_add( 'kpcp_post_types', $_ret, 'kpcp_post_types', HOUR_IN_SECONDS );
 
             }
 
@@ -309,9 +343,6 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
                 'plugin' => array( 'activated_plugin', 'deactivated_plugin' ), // no matter what, we'll purge on this
                 'updates' => array( 'upgrader_process_complete', '_core_updated_successfully' ), // no matter what, we'll purge on this
             );
-
-            // this is if there's no ajax saving of the widgets
-            //if ( !empty( $_POST ) && ( isset($_POST['savewidget']) || isset($_POST['removewidget']) ) ) {
 
         }
 

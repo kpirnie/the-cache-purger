@@ -78,7 +78,12 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 KPF::createSection( $_cp_settings_id, 
                     array(
                         'title'  => __( 'Documentation' ),
-                        'fields' => $this -> kpcp_docs( ),
+                        'fields' => array(
+                            array(
+                                'type' => 'content',
+                                'content' => $this -> kpcp_docs( ),
+                            )
+                        ),
                     )
                 );
 
@@ -137,7 +142,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
             $_ret = array( );
 
             // hold the temp array
-            $_tmp = [];
+            $_tmp = array( );
 
             // return the array of fields
             $_ret = array(
@@ -333,17 +338,36 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
          * 
-         * @return array Returns an array representing the documentation fields
+         * @return string Returns the string content of the documentation file
          * 
         */
-        private function kpcp_docs( ) : array {
+        private function kpcp_docs( ) : string {
 
-            return array(
-                array(
-                    'type' => 'content',
-                    'content' => '<h1>THE DOCS</h1>',
-                ),
-            );
+            // hold the return
+            $_ret = '';
+
+            // setup the path
+            $_path = TCP_PATH . "/work/doc.php";
+
+            // if the file exists
+            if( @is_readable( $_path ) ) {
+
+                // start the output buffer
+                ob_start( );
+                
+                // include the doc file
+                include $_path;
+                
+                // include the documentation
+                $_ret = ob_get_contents();
+                
+                // clean and end the output buffer
+                ob_end_clean( );
+
+            }
+
+            // return it
+            return $_ret;
 
         }
 

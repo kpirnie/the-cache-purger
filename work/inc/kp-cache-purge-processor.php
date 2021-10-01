@@ -207,14 +207,6 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
 
                     }
 
-                    // if we need to process on woo
-                    if( ( $_cat == 'woo' ) && $_on_woo ) {
-
-                        // purge on woo
-                        $this -> purge_on_action( 'woo', $_actions );
-
-                    }
-
                     // we need to process on settings
                     if( $_cat == 'settings' ) {
 
@@ -365,137 +357,261 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
                     // if we're processing a post or page
                     } elseif( in_array( $_type, array( 'post', 'page' ) ) ) {
 
-                        // if the action is save
-                        if( $_action === 'save_post' ) {
-
-                            // hook into the actions in the highest priority
-                            add_action( 'save_post', function( $_id, $_post, $_update ) use( $_type, $_the_exclusions ) : void {
-
-                                // if this is a revision
-                                if( wp_is_post_revision( $_id ) ) {
-
-                                    // we dont need this to run, so just return
-                                    return;
-
-                                }
-
-                                // if this is an autosave
-                                if( wp_is_post_autosave( $_id ) ) {
-
-                                    // we dont need this to run, so just return
-                                    return;
-
-                                }
-
-                                // if this is an autosave check 2
-                                if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-
-                                    // we dont need this to run, so just return
-                                    return;
-
-                                }
-
-                                // make sure this isn't fired on the rest request
-                                if( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-
-                                    // we dont need this to run, so just return
-                                    return;
-                                }
-
-                                // make sure this isn't fired when saving a post as trash
-                                if ( 'trash' === $_post -> post_status ) {
-
-                                    // we dont need this to run, so just return
-                                    return;
-
-                                }
-
-                                // if the posts ID is in the exclusions
-                                if( in_array( $_id, $_the_exclusions ) ) {
-
-                                    // we don't need this to run, so just return
-                                    return;
-
-                                // otherwise, go for it
-                                } else {
-
-                                    // check our post type against the type
-                                    if( $_post -> post_type == $_type ) {
-
-                                        // fire up the purge class
-                                        $_cp = new KP_Cache_Purge( );
-
-                                        // purge the caches
-                                        $_cp -> kp_do_purge( );
-
-                                        // log the purge
-                                        KPCPC::write_log( "\t" );
-                                        KPCPC::write_log( "\tACTION PURGE" );
-                                        KPCPC::write_log( "\t\t$_type Cache Cleared on: save_post" );
-                                        KPCPC::write_log( "\t\tID: $_id" );
-
-                                        // clean it up
-                                        unset( $_cp );  
-
-                                    }
-                                    
-                                }
-
-                            }, PHP_INT_MAX, 3 );
+                        // process the post
+                        $this -> process_post( $_action, $_type, $_the_exclusions );
                         
-                        // otherwise it's trashed
-                        } else {
-
-                            // hook into the actions in the highest priority
-                            add_action( 'trashed_post', function( $_id ) use( $_type, $_the_exclusions ) : void {
-
-                                // if the posts ID is in the exclusions
-                                if( in_array( $_id, $_the_exclusions ) ) {
-
-                                    // we don't need this to run, so just return
-                                    return;
-
-                                // otherwise, go for it
-                                } else {
-
-                                    // get the post type
-                                    $_post_type = get_post_type( $_id );
-
-                                    // check the current post type against the type
-                                    if( $_post_type == $_type ) {
-
-                                        // fire up the purge class
-                                        $_cp = new KP_Cache_Purge( );
-
-                                        // purge the caches
-                                        $_cp -> kp_do_purge( );
-
-                                        // log the purge
-                                        KPCPC::write_log( "\t" );
-                                        KPCPC::write_log( "\tACTION PURGE" );
-                                        KPCPC::write_log( "\t\t$_type Cache Cleared on: trashed_post" );
-                                        KPCPC::write_log( "\t\tID: $_id" );
-
-                                        // clean it up
-                                        unset( $_cp );  
-
-                                    }
-
-                                }
-
-                            }, PHP_INT_MAX, 1 );
-
-                        }
-
                     } elseif( $_type === 'cpt' ) {
 
+                        // get our CPTs
+                        $_cpts = KPCPC::get_post_types_for_select( );
 
+                        // make sure we have a return
+                        if( $_cpts ) {
+
+                            // loop them
+                            foreach( $_cpts as $_cpt => $_name ) {
+
+                                // check if we're not none and not excluded
+                                if( $_cpt != 'none' && ! in_array( $_cpt, $_the_exclusions ) ) {
+
+                                    // process the post
+                                    $this -> process_post( $_action, $_cpt, $_the_exclusions );
+
+                                }
+
+                            }
+
+                        }
+                        
+                    } elseif( $_type === 'menu' ) {
+
+                        // process the purge
+                        $this -> process_other( $_action, 'menu' );
+
+                    } elseif( $_type === 'tax' ) {
+
+                        // process the purge
+                        $this -> process_other( $_action, 'tax' );
+
+                    } elseif( $_type === 'cat' ) {
+
+                        // process the purge
+                        $this -> process_other( $_action, 'cat' );
+
+                    } elseif( $_type === 'widget' ) {
+
+                        // process the purge
+                        $this -> process_other( $_action, 'widget' );
+
+                    } elseif( $_type === 'customizer' ) {
+
+                        // process the purge
+                        $this -> process_other( $_action, 'customizer' );
+
+                    } elseif( $_type === 'settings' ) {
+
+                        // process the purge
+                        $this -> process_other( $_action, 'settings' );
+
+                    } elseif( $_type === 'plugin' ) {
+
+                        // process the purge
+                        $this -> process_other( $_action, 'plugin' );
+
+                    } elseif( $_type === 'updates' ) {
+
+                        // process the purge
+                        $this -> process_other( $_action, 'updates' );
 
                     }
 
                 }
 
             }
+
+        }
+
+        /** 
+         * process_post
+         * 
+         * Private method for processing the post
+         * 
+         * @since 7.3
+         * @access public
+         * @static
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @param string $_type The category type we're running this on
+         * @param array $_action The WP action we need to run it on
+         * @param array $_the_exclusions The exclusions array
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        private function process_post( string $_action, string $_type, array $_the_exclusions ) : void {
+
+            // if the action is save
+            if( $_action === 'save_post' ) {
+
+                // hook into the actions in the highest priority
+                add_action( 'save_post', function( $_id, $_post, $_update ) use( $_type, $_the_exclusions ) : void {
+
+                    // if this is a revision
+                    if( wp_is_post_revision( $_id ) ) {
+
+                        // we dont need this to run, so just return
+                        return;
+
+                    }
+
+                    // if this is an autosave
+                    if( wp_is_post_autosave( $_id ) ) {
+
+                        // we dont need this to run, so just return
+                        return;
+
+                    }
+
+                    // if this is an autosave check 2
+                    if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+
+                        // we dont need this to run, so just return
+                        return;
+
+                    }
+
+                    // make sure this isn't fired on the rest request
+                    if( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+
+                        // we dont need this to run, so just return
+                        return;
+                    }
+
+                    // make sure this isn't fired when saving a post as trash
+                    if ( 'trash' === $_post -> post_status ) {
+
+                        // we dont need this to run, so just return
+                        return;
+
+                    }
+
+                    // if the posts ID is in the exclusions
+                    if( in_array( $_id, $_the_exclusions ) ) {
+
+                        // we don't need this to run, so just return
+                        return;
+
+                    // otherwise, go for it
+                    } else {
+
+                        // check our post type against the type
+                        if( $_post -> post_type == $_type ) {
+
+                            // fire up the purge class
+                            $_cp = new KP_Cache_Purge( );
+
+                            // purge the caches
+                            $_cp -> kp_do_purge( );
+
+                            // log the purge
+                            KPCPC::write_log( "\t" );
+                            KPCPC::write_log( "\tACTION PURGE" );
+                            KPCPC::write_log( "\t\t$_type Cache Cleared on: save_post" );
+                            KPCPC::write_log( "\t\tID: $_id" );
+
+                            // clean it up
+                            unset( $_cp );  
+
+                        }
+                        
+                    }
+
+                }, PHP_INT_MAX, 3 );
+
+            // otherwise it's trashed
+            } else {
+
+                // hook into the actions in the highest priority
+                add_action( 'trashed_post', function( $_id ) use( $_type, $_the_exclusions ) : void {
+
+                    // if the posts ID is in the exclusions
+                    if( in_array( $_id, $_the_exclusions ) ) {
+
+                        // we don't need this to run, so just return
+                        return;
+
+                    // otherwise, go for it
+                    } else {
+
+                        // get the post type
+                        $_post_type = get_post_type( $_id );
+
+                        // check the current post type against the type
+                        if( $_post_type == $_type ) {
+
+                            // fire up the purge class
+                            $_cp = new KP_Cache_Purge( );
+
+                            // purge the caches
+                            $_cp -> kp_do_purge( );
+
+                            // log the purge
+                            KPCPC::write_log( "\t" );
+                            KPCPC::write_log( "\tACTION PURGE" );
+                            KPCPC::write_log( "\t\t$_type Cache Cleared on: trashed_post" );
+                            KPCPC::write_log( "\t\tID: $_id" );
+
+                            // clean it up
+                            unset( $_cp );  
+
+                        }
+
+                    }
+
+                }, PHP_INT_MAX, 1 );
+
+            }
+
+        }
+
+        /** 
+         * process_other
+         * 
+         * Private method for processing other cache flushing necessities
+         * 
+         * @since 7.3
+         * @access public
+         * @static
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @param string $_action The WP actions we need to run it on
+         * @param string $_type The type we are processing on
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        private function process_other( string $_action, string $_type ) : void {
+
+            // hook into the necessary action at the latest possible moments
+            add_action( $_action, function( ) use( $_type, $_action ) : void {
+
+                // fire up the purge class
+                $_cp = new KP_Cache_Purge( );
+
+                // purge the caches
+                $_cp -> kp_do_purge( );
+
+                // log the purge
+                KPCPC::write_log( "\t" );
+                KPCPC::write_log( "\tACTION PURGE" );
+                KPCPC::write_log( "\t\t$_type Cache Cleared on: $_action" );
+
+                // clean it up
+                unset( $_cp );                  
+
+            }, PHP_INT_MAX );
 
         }
 

@@ -70,6 +70,7 @@ if ( ! class_exists( 'KPF' ) ) {
       add_action( 'after_setup_theme', array( 'KPF', 'setup' ) );
       add_action( 'init', array( 'KPF', 'setup' ) );
       add_action( 'switch_theme', array( 'KPF', 'setup' ) );
+      
       add_action( 'admin_enqueue_scripts', array( 'KPF', 'add_admin_enqueue_scripts' ) );
       add_action( 'wp_enqueue_scripts', array( 'KPF', 'add_typography_enqueue_styles' ), 80 );
       add_action( 'wp_head', array( 'KPF', 'add_custom_css' ), 80 );

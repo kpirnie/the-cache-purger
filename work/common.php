@@ -36,7 +36,7 @@ register_activation_hook( $_pi_path, function( ) : void {
 // Plugin De-Activation
 register_deactivation_hook( $_pi_path, function( ) : void {
 
-
+    // nothing to do here because we want to be able to keep settings on deactivate
 
 } );
 
@@ -52,6 +52,14 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
         // pull in our classes based on the file path
         $_path = TCP_PATH . '/work/inc/' . $_class . '.php';
 
+        // check if it's our field framework
+        if( $_cls === 'KPF' ) {
+
+            // setup the proper path
+            $_path = TCP_PATH . '/vendor/custom-fields/classes/setup.class.php';
+
+        }
+        
         // if the file exists
         if( @is_readable( $_path ) ) {
 
@@ -64,13 +72,13 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
     // set us up a class alias for the common class
     class_alias( 'KP_Cache_Purge_Common', 'KPCPC' );
 
-    // let's see if the main framework class exists
-    if( ! class_exists( 'KPF' ) ) {
+    // hook into the plugins loaded action
+    add_action( 'plugins_loaded', function( ) : void {
 
-        // it does not, include the setup class
-        require_once plugin_dir_path( TCP_PATH . '/' . TCP_FILENAME ) .'/vendor/custom-fields/classes/setup.class.php';
-        
-    }
+        // initialize the field framework
+        KPF::init( );
+
+    }, PHP_INT_MAX );
     
     // hook into the custom fields loaded
     add_action( 'kpf_loaded', function( ) : void {
