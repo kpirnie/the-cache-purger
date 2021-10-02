@@ -737,40 +737,8 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             }
 
-            // hold a pages array
-            $_pages = array( );
-
-            // all we're concerned with is internal posts and pages, so let's use WP_Query to grab us an array of the URL's
-            $_post_types = get_post_types( 
-                array(
-                    'public' => true,
-                ), 
-            'names' );
-
-            // now run a query to get all posts with these post types and are published
-            $_qry = new WP_Query( array( 'post_type' => $_post_types, 'posts_per_page' => -1, 'post_status' => 'publish' ) );
-
-            // now make sure we get a post object for each item returned
-            $_rs = $_qry -> get_posts( );
-
-            // if we have results
-            if( $_rs ) {
-
-                // loop over the return
-                foreach( $_rs as $_post ) {
-
-                    // we only need the permalink for this
-                    $_pages[] = get_permalink( $_post -> ID );
-
-                }
-
-                // reset the query
-                wp_reset_query( );
-                
-            }
-
-            // we can dump the query here
-            unset( $_rs, $_qry, $_post_types );
+            // get our URL list
+            $_pages = KPCPC::get_urls( );
 
             // make sure we have pages
             if( $_pages ) {

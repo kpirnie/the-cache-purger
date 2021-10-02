@@ -23,4 +23,4 @@ define( 'TCP_DIRNAME', basename( dirname( __FILE__ ) ) );
 define( 'TCP_FILENAME', basename( __FILE__ ) );
 
 // Include our "work"
-require dirname( __FILE__ ) . '/work/common.php';
+require TCP_PATH . '/work/common.php';

@@ -105,7 +105,7 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
         
     }, PHP_INT_MAX );
 
-    // fire up the processor class
+    // fire up the processor class here.  Inside it are the proper hooks where the purging will take place
     $_processor = new KP_Cache_Purge_Processor( );
 
     // run the processing

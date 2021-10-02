@@ -374,9 +374,9 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
                 // I want to append a timestamp to the message
                 $_message = '[' . current_time( 'mysql' ) . ']: ' . $_msg . PHP_EOL;
 
-
                 // unfortunately we cannot use wp's builtin filesystem hanlders for this
                 // the put_contents method only writes/overwrites contents, and does not append
+                // we need this to append the content
 
                 // append the message to the purge log file
                 file_put_contents( $_path, $_message, FILE_APPEND | LOCK_EX );
