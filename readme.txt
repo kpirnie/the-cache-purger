@@ -40,6 +40,7 @@ Purges are configurable in the settings, and include the following saves/updates
 == Installation ==
 1. Download the plugin, unzip it, and upload to your sites `/wp-content/plugins/` directory
     1. You can also upload it directly to your Plugins admin
+	2. Or install it from the Wordpress Plugin Repository
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
@@ -61,6 +62,8 @@ Even if you don't, there are still some server based caches that need to be purg
 = 0.3.98 =
 Build purging methods
 Build out settings
+Build out documentation
+Build out export/import settings
 
 = 0.1.01 =
 * INITIAL

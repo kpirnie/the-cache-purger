@@ -16,4 +16,8 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) || ! WP_UNINSTALL_PLUGIN ||
 	exit;
 }
 
+// remove our settings
+unregister_setting( 'kpcp_settings', 'kpcp_settings' );
 
+// delete the option
+delete_option( 'kpcp_settings' );

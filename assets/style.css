@@ -15,3 +15,8 @@
 .kpf-theme-dark .kpf-search input, .kpf-theme-dark .kpf-search input::placeholder {
     color:#fff !important;
 }
+.kpfw-doc-content ul {
+    margin:10px 25px;
+}
+.kpfw-doc-content h2 {font-size:1.7em;}
+.kpfw-doc-content h3 {font-size:1.25em;}
