@@ -55,8 +55,7 @@ Even if you don't, there are still some server based caches that need to be purg
 2. Settings 2
 3. Settings 3 - Showing GravityForms Activated
 4. Settings 4 - Showing ACF Activated
-5. Documentation
-6. Logged Purged Object
+5. Logged Purged Object
 
 == Changelog ==
 = 0.3.98 =
