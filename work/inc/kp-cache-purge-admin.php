@@ -13,6 +13,10 @@
 // We don't want to allow direct access to this
 defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
 
+// let's pull in the Carbon Fields Namespaces we're going to need
+use Carbon_Fields\Container;
+use Carbon_Fields\Field;
+
 // check if this class already exists
 if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
 
@@ -29,6 +33,15 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
     */
     class KP_Cache_Purge_Admin {
 
+
+        // fire us up
+        public function __construct( ) {
+
+            // include the field datastore serializer
+            include_once TCP_PATH . '/vendor/field-serializer.php';
+
+        }
+
         /** 
          * kpcp_admin
          * 
@@ -44,82 +57,77 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
         */
         public function kpcp_admin( ) : void {
 
-            // make sure our field framework actually exists
-            if( class_exists( 'KPF' ) ) {
+            // create the settings page
+			$_main = Container::make( 'theme_options', __( 'The Cache Purge' ) )
+                -> set_page_menu_title( __( 'The Cache Purge' ) )
+                -> set_page_file( 'kpcp_settings' )
+                -> set_icon( 'dashicons-layout' )
+                -> set_datastore( new KPCP_Serialized_Datastore( ) )
+                -> where( 'current_user_role', 'IN', array( 'contributor', 'author', 'editor', 'administrator', 'super-admin' ) )
+                -> add_fields( $this -> kpcp_settings( ) );
 
-                // hold out settings id
-                $_cp_settings_id = 'kpcp_settings';
-
-                // create the main options page
-                KPF::createOptions( $_cp_settings_id, array(
-                    'menu_title' => __( 'The Cache Purge' ),
-                    'menu_slug'  => 'kpcp_settings',
-                    'menu_capability' => 'activate_plugins',
-                    'menu_icon' => 'dashicons-layout',
-                    'show_in_network' => false,
-                    'show_reset_all' => false,
-                    'show_reset_section' => false,  
-                    'show_bar_menu' => false, 
-                    'sticky_header' => false,  
-                    'ajax_save' => false,           
-                    'framework_title' => __( 'The Cache Purger <small>by Kevin C. Pirnie</small>' ),
-                    'footer_credit' => __( '<a href="https://kevinpirnie.com/" target="_blank">Kevin C. Pirnie</a>' )
+            // create the documentation page
+			Container::make( 'theme_options', __( 'The Cache Purge Documentation' ) )
+                -> set_page_menu_title( __( 'Documentation' ) )
+                -> set_page_file( 'kpcp_documentation' )
+                -> set_page_parent( $_main )
+                -> where( 'current_user_role', 'IN', array( 'contributor', 'author', 'editor', 'administrator', 'super-admin' ) )
+                -> add_fields( array(
+                    Field::make( 'html', 'kpcp_doc', __( '' ) )
+                        -> set_html( $this -> kpcp_docs( ) ),
                 ) );
 
-                // Settings
-                KPF::createSection( $_cp_settings_id, 
-                    array(
-                        'title'  => __( 'Settings' ),
-                        'fields' => $this -> kpcp_settings( ),
-                    )
-                );
+            // on settings save, clear cache if we are configured to do so
+            add_filter( 'carbon_fields_theme_options_container_saved', function( ) : void {
 
-                // Documentation
-                KPF::createSection( $_cp_settings_id, 
-                    array(
-                        'title'  => __( 'Documentation' ),
-                        'fields' => array(
-                            array(
-                                'type' => 'content',
-                                'content' => $this -> kpcp_docs( ),
-                            )
-                        ),
-                    )
-                );
+                // setup the cache purger
+                $_cp = new KP_Cache_Purge( );
 
-                // Export/Import Settings
-                KPF::createSection( $_cp_settings_id, 
-                    array(
-                        'title'  => __( 'Export/Import Settings' ),
-                        'fields' => array(
-                            array(
-                                'type' => 'backup',
-                            ),
-                        ),
-                    )
-                );
+                // purge
+                $_cp -> kp_do_purge( );
 
-                // on settings save, clear cache if we are configured to do so
-                add_action( 'kpf_' . $_cp_settings_id . '_save_after', function( ) use( $_cp_settings_id ) : void {
+                // log the purge
+                KPCPC::write_log( "Settings Cache Cleared on: " . 'kpf_' . $_cp_settings_id . '_save_after' );
 
-                    // setup the cache purger
-                    $_cp = new KP_Cache_Purge( );
+                // clean it up
+                unset( $_cp );
+        
+            } );
 
-                    // purge
-                    $_cp -> kp_do_purge( );
+            // hook into the current screen and change the settings button
+			add_action( 'current_screen', function( ) : void { 
 
-                    // log the purge
-                    KPCPC::write_log( "Settings Cache Cleared on: " . 'kpf_' . $_cp_settings_id . '_save_after' );
+                // get the current screen
+				global $current_screen;
 
-                    // clean it up
-                    unset( $_cp );
+                // if we're on the settings page
+				if( $current_screen -> base == 'toplevel_page_kpcp_settings' ) {
 
-                }, PHP_INT_MAX );
+					// change the save button content
+					add_action( 'admin_footer', function( ) : void {
 
-                // add a button to the admin bar for purging manually
+						// utilize jquery to replace the text in the button
+						echo '<script type="text/javascript">jQuery(".button-large").val("Update Your Settings");</script><style type="text/css">.kpja-half-field {width:50% !important; flex:none !important;}.kpja-third-field {width:33% !important; flex:none !important;}</style>';
+					} );
 
+				}
 
-            }
+				// if we're on the documentation page
+				if( $current_screen -> base == 'the-cache-purge_page_kpcp_documentation' ) {
+
+					// remove the metabox
+					add_action( 'admin_footer', function( ) : void {
+
+						// utilize jquery to replace the text in the button
+						echo '<script type="text/javascript">jQuery("#postbox-container-1").remove( );</script><style type="text/css">.columns-2 {margin-right:0px !important;}</style>';
+					} );
+
+				}
+
+            }, PHP_INT_MAX );
+
+            // add a button to the admin bar for purging manually
+
 
         }
 
@@ -147,179 +155,106 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
             // return the array of fields
             $_ret = array(
 
-                // log the purge actions
-                array(
-                    'id' => 'should_log',
-                    'type' => 'switcher',
-                    'title' => __( 'Log Purge Actions?' ),
-                    'desc' => __( 'This will attempt to write a log of all purge actions performed.<br />The file location is: <code>' . ABSPATH . 'wp-content/purge.log</code>' ),
-                    'default' => false,
-                ),
+                // should log
+                Field::make( 'checkbox', 'should_log', __( 'Log Purge Actions?' ) )
+                    -> set_option_value( 'yes' )
+                    -> help_text( __( 'This will attempt to write a log of all purge actions performed.<br />The file location is: <code>' . ABSPATH . 'wp-content/purge.log</code>' ) ),
 
-                // purge on menu
-                array(
-                    'id' => 'on_menu',
-                    'type' => 'switcher',
-                    'title' => __( 'Purge on Menu Save/Delete?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every menu update, save, or delete.' ),
-                    'default' => false,
-                ),
-                
-                // purge on post
-                array(
-                    'id' => 'on_post',
-                    'type' => 'switcher',
-                    'title' => __( 'Purge on Post Save/Delete?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every post update, save, or delete.' ),
-                    'default' => false,
-                ),
+                // on menu
+                Field::make( 'checkbox', 'on_menu', __( 'Purge on Menu Save/Delete?' ) )
+                    -> set_option_value( 'yes' )
+                    -> help_text( __( 'This will attempt to purge all caches for every menu update, save, or delete.' ) ),
+
+                // on post
+                Field::make( 'checkbox', 'on_post', __( 'Purge on Post Save/Delete?' ) )
+                    -> set_option_value( 'yes' )
+                    -> help_text( __( 'This will attempt to purge all caches for every post update, save, or delete.' ) ),
 
                 // post exclusions
-                array(
-                    'id' => 'on_post_exclude',
-                    'type' => 'select',
-                    'multiple' => true,
-                    'title' => __( 'Excluded Posts' ),
-                    'placeholder' => __( 'Please select the exclusions...' ),
-                    'desc' => __( 'Posts to exclude from the purger.' ),
-                    'options' => KPCPC::get_posts_for_select( 'posts' ),
-                    'default' => 0,
-                    'dependency' => array( 'on_post', '==', true ),
-                ),
+                Field::make( 'multiselect', 'on_post_exclude', __( 'Excluded Posts' ) )
+                    -> help_text( __( 'Posts to exclude from the purger.' ) )
+                    -> set_options( KPCPC::get_posts_for_select( 'posts' ) )
+                    -> set_default_value( 0 )
+                    -> set_conditional_logic( array( array( 'field' => 'on_post', 'value' => true, ) ) ),
 
-                // purge on page
-                array(
-                    'id' => 'on_page',
-                    'type' => 'switcher',
-                    'title' => __( 'Purge on Page Save/Delete?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every page update, save, or delete.' ),
-                    'default' => false,
-                ),
+                // on page
+                Field::make( 'checkbox', 'on_page', __( 'Purge on Page Save/Delete?' ) )
+                    -> set_option_value( 'yes' )
+                    -> help_text( __( 'This will attempt to purge all caches for every page update, save, or delete.' ) ),
 
                 // page exclusions
-                array(
-                    'id' => 'on_page_exclude',
-                    'type' => 'select',
-                    'multiple' => true,
-                    'title' => __( 'Excluded Pages' ),
-                    'placeholder' => __( 'Please select the exclusions...' ),
-                    'desc' => __( 'Pages to exclude from the purger.' ),
-                    'options' => KPCPC::get_posts_for_select( 'pages' ),
-                    'default' => 0,
-                    'dependency' => array( 'on_page', '==', true ),
-                ),
+                Field::make( 'multiselect', 'on_page_exclude', __( 'Excluded Pages' ) )
+                    -> help_text( __( 'Page to exclude from the purger.' ) )
+                    -> set_options( KPCPC::get_posts_for_select( 'pages' ) )
+                    -> set_default_value( 0 )
+                    -> set_conditional_logic( array( array( 'field' => 'on_page', 'value' => true, ) ) ),
 
-                // purge on CPT
-                array(
-                    'id' => 'on_cpt',
-                    'type' => 'switcher',
-                    'title' => __( 'Purge on Custom Post Type Save/Delete?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every custom post type update, save, or delete.' ),
-                    'default' => false,
-                ),
+                // on cpt
+                Field::make( 'checkbox', 'on_cpt', __( 'Purge on Custom Post Type Save/Delete?' ) )
+                    -> set_option_value( 'yes' )
+                    -> help_text( __( 'This will attempt to purge all caches for every custom post type update, save, or delete.' ) ),
 
                 // cpt exclusions
-                array(
-                    'id' => 'on_cpt_exclude',
-                    'type' => 'select',
-                    'multiple' => true,
-                    'title' => __( 'Excluded CPTs' ),
-                    'placeholder' => __( 'Please select the exclusions...' ),
-                    'desc' => __( 'CPTs to exclude from the purger.' ),
-                    'options' => KPCPC::get_post_types_for_select( ),
-                    'default' => 0,
-                    'dependency' => array( 'on_cpt', '==', true ),
-                ),
+                Field::make( 'multiselect', 'on_cpt_exclude', __( 'Excluded CPTs' ) )
+                    -> help_text( __( 'CPTs to exclude from the purger.' ) )
+                    -> set_options( KPCPC::get_post_types_for_select( ) )
+                    -> set_default_value( 'none' )
+                    -> set_conditional_logic( array( array( 'field' => 'on_cpt', 'value' => true, ) ) ),
 
-                // purge on taxonomy
-                array(
-                    'id' => 'on_taxonomy',
-                    'type' => 'switcher',
-                    'title' => __( 'Purge on Taxonomy/Term Save/Delete?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every taxonomy/term update, save, or delete.' ),
-                    'default' => false,
-                ),
-
-                // purge on category
-                array(
-                    'id' => 'on_category',
-                    'type' => 'switcher',
-                    'title' => __( 'Purge on Category Save/Delete?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every category update, save, or delete.' ),
-                    'default' => false,
-                ),
-
-                // purge on widget
-                array(
-                    'id' => 'on_widget',
-                    'type' => 'switcher',
-                    'title' => __( 'Purge on Widget Save/Delete?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every widget update, save, or delete.' ),
-                    'default' => false,
-                ),
-
-                // purge on customizer
-                array(
-                    'id' => 'on_customizer',
-                    'type' => 'switcher',
-                    'title' => __( 'Purge on Customizer Save?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every customizer update or save.' ),
-                    'default' => false,
-                ),
+                // on taxonomy
+                Field::make( 'checkbox', 'on_taxonomy', __( 'Purge on Taxonomy/Term Save/Delete?' ) )
+                    -> set_option_value( 'yes' )
+                    -> help_text( __( 'This will attempt to purge all caches for every taxonomy/term update, save, or delete.' ) ),
+                  
+                // on category
+                Field::make( 'checkbox', 'on_category', __( 'Purge on Category Save/Delete?' ) )
+                    -> set_option_value( 'yes' )
+                    -> help_text( __( 'This will attempt to purge all caches for every category update, save, or delete.' ) ),
+                    
+                // on widget
+                Field::make( 'checkbox', 'on_widget', __( 'Purge on Widget Save/Delete?' ) )
+                    -> set_option_value( 'yes' )
+                    -> help_text( __( 'This will attempt to purge all caches for every widget update, save, or delete.' ) ),
+                    
+                // on customizer
+                Field::make( 'checkbox', 'on_customizer', __( 'Purge on Customizer Save/Delete?' ) )
+                    -> set_option_value( 'yes' )
+                    -> help_text( __( 'This will attempt to purge all caches for every customizer update, save, or delete.' ) ),
+                    
                 
             );
 
             // if gravity forms is installed and activated
             if( class_exists( 'GFAPI' ) ) {
 
-                // purge on form field
-                $_tmp[] = array(
-                        'id' => 'on_form',
-                        'type' => 'switcher',
-                        'title' => __( 'Purge on Form Save/Delete?' ),
-                        'desc' => __( 'This will attempt to purge all caches for every form update, save, or delete.' ),
-                        'default' => false,
-                    );
+                // add the checkbox field to the temp array
+                $_tmp[] = Field::make( 'checkbox', 'on_form', __( 'Purge on Form Save/Delete?' ) )
+                    -> set_option_value( 'yes' )
+                    -> help_text( __( 'This will attempt to purge all caches for every form update, save, or delete.' ) );
 
-                // for exclusions
-                $_tmp[] = array(
-                    'id' => 'on_form_exclude',
-                    'type' => 'select',
-                    'multiple' => true,
-                    'title' => __( 'Excluded Forms' ),
-                    'placeholder' => __( 'Please select the exclusions...' ),
-                    'desc' => __( 'Forms to exclude from the purger.' ),
-                    'options' => $this -> get_our_forms( ),
-                    'default' => 0,
-                    'dependency' => array( 'on_form', '==', true ),
-                );
+                // now we can add the exclusions field to the temp array
+                $_tmp[] = Field::make( 'multiselect', 'on_form_exclude', __( 'Excluded Forms' ) )
+                    -> help_text( __( 'Forms to exclude from the purger.' ) )
+                    -> set_options( $this -> get_our_forms( ) )
+                    -> set_default_value( 0 )
+                    -> set_conditional_logic( array( array( 'field' => 'on_form', 'value' => true, ) ) );
 
             }
 
             // if ACF is installed and activated
             if( class_exists('ACF') ) {
 
-                // purge on form field
-                $_tmp[] = array(
-                    'id' => 'on_acf',
-                    'type' => 'switcher',
-                    'title' => __( 'Purge on ACF Save/Delete?' ),
-                    'desc' => __( 'This will attempt to purge all caches for every "advanced custom field" group update, save, or delete.' ),
-                    'default' => false,
-                );
+                // add the checkbox field to the temp array
+                $_tmp[] = Field::make( 'checkbox', 'on_acf', __( 'Purge on ACF Save/Delete?' ) )
+                    -> set_option_value( 'yes' )
+                    -> help_text( __( 'This will attempt to purge all caches for every "advanced custom field" group update, save, or delete.' ) );
 
-                // for exclusions
-                $_tmp[] = array(
-                    'id' => 'on_acf_exclude',
-                    'type' => 'select',
-                    'multiple' => true,
-                    'title' => __( 'Excluded Field Groups' ),
-                    'placeholder' => __( 'Please select the exclusions...' ),
-                    'desc' => __( 'Field Groups to exclude from the purger.' ),
-                    'options' => $this -> get_our_field_groups( ),
-                    'default' => 0,
-                    'dependency' => array( 'on_acf', '==', true ),
-                );
+                // now we can add the exclusions field to the temp array
+                $_tmp[] = Field::make( 'multiselect', 'on_acf_exclude', __( 'Excluded Field Groups' ) )
+                    -> help_text( __( 'Field Groups to exclude from the purger.' ) )
+                    -> set_options( $this -> get_our_field_groups( ) )
+                    -> set_default_value( 0 )
+                    -> set_conditional_logic( array( array( 'field' => 'on_acf', 'value' => true, ) ) );
 
             }
 

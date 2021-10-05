@@ -51,14 +51,6 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
 
         // pull in our classes based on the file path
         $_path = TCP_PATH . '/work/inc/' . $_class . '.php';
-
-        // check if it's our field framework
-        if( $_cls === 'KPF' ) {
-
-            // setup the proper path
-            $_path = TCP_PATH . '/vendor/custom-fields/classes/setup.class.php';
-
-        }
         
         // if the file exists
         if( @is_readable( $_path ) ) {
@@ -72,16 +64,17 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
     // set us up a class alias for the common class
     class_alias( 'KP_Cache_Purge_Common', 'KPCPC' );
 
-    // hook into the plugins loaded action
-    add_action( 'plugins_loaded', function( ) : void {
+    // after the theme is setup we can use it
+    add_action( 'after_setup_theme', function( ) : void {
 
-        // initialize the field framework
-        KPF::init( );
-
+        // require the field framework
+        require_once( TCP_PATH . '/vendor/autoload.php' );
+        \Carbon_Fields\Carbon_Fields::boot( );
+    
     }, PHP_INT_MAX );
     
     // hook into the custom fields loaded
-    add_action( 'kpf_loaded', function( ) : void {
+    add_action( 'carbon_fields_register_fields', function( ) : void {
 
         // fire up the admin class
         $_cp_admin = new KP_Cache_Purge_Admin( );
