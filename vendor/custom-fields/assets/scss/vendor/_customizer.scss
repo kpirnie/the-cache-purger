@@ -1,0 +1,179 @@
+/**
+ * 05. Widget
+ */
+.control-section{
+
+  .kpf-field{
+    padding: 0;
+
+    .kpf-title{
+      float: none;
+      width: 100%;
+      margin-bottom: 6px;
+
+      h4{
+        display: block;
+        font-size: 13px;
+        line-height: 1;
+        font-weight: 600;
+        color: inherit;
+      }
+    }
+
+    .kpf-fieldset{
+      float: none;
+      width: 100%;
+    }
+  }
+
+  .kpf-help{
+    top: -5px;
+    right: -5px;
+  }
+
+  .kpf-field-select select{
+    width: 100%;
+  }
+
+  .kpf-field-heading{
+    color: inherit;
+    font-size: 14px;
+    line-height: 1em;
+    margin-right: -15px;
+    margin-left: -15px;
+    padding: 15px;
+  }
+
+  .kpf-field-subheading{
+    color: inherit;
+    font-size: 11px;
+    margin-right: -15px;
+    margin-left: -15px;
+    padding: 10px 15px;
+  }
+
+  .kpf-subtitle-text{
+    margin-top: 4px;
+    font-size: 12px;
+  }
+
+  .kpf-field-submessage .kpf-submessage{
+    margin-right: -15px;
+    margin-left: -15px;
+    padding: 15px;
+  }
+
+  .kpf-fieldset{
+
+    .kpf-field-submessage .kpf-submessage,
+    .kpf-field-heading,
+    .kpf-field-subheading{
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .kpf-field-date{
+
+    .kpf--to{
+      margin-left: 0;
+    }
+  }
+
+  .kpf-field-sorter{
+
+    ul li{
+      padding: 5px;
+    }
+
+    .kpf-modules{
+      float: none;
+      width: 100%;
+    }
+
+    .kpf-modules:first-child{
+      padding-right: 0;
+      padding-bottom: 15px;
+    }
+  }
+
+  .kpf-field-background{
+
+    .kpf--background-attributes{
+      flex-direction: column;
+    }
+  }
+
+  .kpf-field-spacing{
+    input{
+      width: 90px;
+    }
+  }
+
+  .kpf-field-border{
+
+    .kpf--input{
+      flex: 1 50%;
+    }
+
+    input,
+    select{
+      width: 100%;
+    }
+  }
+
+  .kpf-field-spinner{
+    input{
+      width: 50px;
+    }
+  }
+
+  .kpf-field-number{
+
+    .kpf--wrap{
+      width: 100%;
+    }
+  }
+
+  .kpf-field-backup{
+
+    .kpf-export-data{
+      display: none;
+    }
+  }
+
+  .kpf-field-fieldset{
+
+    .kpf-fieldset-content{
+      border-color: #e5e5e5;
+    }
+  }
+
+  .kpf-tabbed-content,
+  .kpf-sortable-content,
+  .kpf-repeater-content,
+  .kpf-fieldset-content,
+  .kpf-cloneable-content,
+  .kpf-accordion-content{
+
+    > .kpf-field{
+      padding: 10px;
+
+      .kpf-title{
+        margin-bottom: 5px;
+      }
+
+      h4{
+        font-size: 12px;
+      }
+    }
+  }
+
+  .kpf-depend-hidden.kpf-depend-on{
+    display: none !important;
+  }
+
+  .kpf-depend-visible.kpf-depend-on{
+    border-top: 0 !important;
+  }
+}

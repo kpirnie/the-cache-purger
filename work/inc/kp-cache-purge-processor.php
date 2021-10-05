@@ -255,7 +255,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
          * @return void This method does not return anything
          * 
         */
-        private function purge_on_action( string $_type, array $_actions, $_the_exclusions = array( ) ) : void {
+        private function purge_on_action( string $_type, array $_actions, array $_the_exclusions = array( ) ) : void {
 
             // make sure we actually have actions to run on
             if( $_actions ) {
@@ -449,7 +449,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
          * @return void This method does not return anything
          * 
         */
-        private function process_post( string $_action, string $_type, $_the_exclusions ) : void {
+        private function process_post( string $_action, string $_type, array $_the_exclusions ) : void {
 
             // if the action is save
             if( $_action === 'save_post' ) {

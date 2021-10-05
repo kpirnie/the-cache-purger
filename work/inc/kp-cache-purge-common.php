@@ -45,57 +45,14 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
         */
         public static function get_options( ) : ?object {
 
-            // hold the temp array
-            $_tmp_arr = array( );
+            // get the options
+            $_option = get_option( 'kpcp_settings' );
 
-            // setup the options to pull array
-            $_opt_set = array( 'should_log', 'on_menu', 'on_post', 'on_page', 'on_cpt', 'on_post_exclude', 'on_page_exclude', 
-                'on_cpt_exclude', 'on_taxonomy', 'on_category', 'on_widget', 'on_customizer', 'on_form', 'on_form_exclude',
-                'on_acf', 'on_acf_exclude' );
-
-            // loop over them
-            foreach( $_opt_set as $_opt ) {
-
-                // hold the true value
-                $_tru_val = null;
-
-                // unserialize the value
-                $_val = maybe_unserialize( get_option( "_$_opt" ) );
-
-                // get the count
-                $_ct = count( $_val );
-
-                // if the count is greater than 1 convert the array to be just the values
-                if( $_ct > 1 ) {
-
-                    // return
-                    $_tru_val = self::flatten_vals($_val);
-
-                // otherwise, just pull the value
-                } else {
-
-                    // return
-                    $_tru_val = $_val[0]['value'];
-
-                }
-
-                // add the unserialized option to the array
-                $_tmp_arr[ltrim( $_opt, '_' )] = $_tru_val;
-
-            }
+            // try to convert the value to an array
+            $_opts = maybe_unserialize( $_option );
 
             // return it or null
-            return ( object ) $_tmp_arr;
-        }
-
-        private static function flatten_vals( $_val ) {
-
-            $_v = [];
-            for( $_i = 0; $_i < count( $_val ); ++$_i ){
-                $_v[] = $_val[$_i]['value'];
-            }
-            return $_v;
-
+            return ( object ) $_opts;
         }
 
         /** 

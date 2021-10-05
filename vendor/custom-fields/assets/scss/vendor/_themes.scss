@@ -1,0 +1,303 @@
+/**
+ * 02. Themes
+ */
+
+/**
+ * 02. 01. Theme Dark
+ */
+.kpf-theme-dark{
+
+  .kpf-header-inner{
+    background-color: #050505;
+
+    h1{
+      color: #fff;
+
+      small{
+        color: #555;
+      }
+    }
+  }
+
+  .kpf-expand-all{
+    color: #999;
+    background-color: #222;
+
+    &:hover{
+      color: #fff;
+      background-color: #333;
+    }
+  }
+
+  .kpf-search{
+
+    input{
+      color: #fff;
+      background-color: #222;
+    }
+
+    &:focus{
+      background-color: #444;
+    }
+
+    &::-webkit-input-placeholder{
+      color: #666;
+    }
+  }
+
+  .kpf-nav{
+
+    ul{
+
+      li{
+
+        a{
+          color: #999;
+          border-color: #2f2f2f;
+          background-color: #222;
+
+          &:hover{
+            color: #fff;
+          }
+        }
+
+        .kpf-active{
+          color: #fff;
+          background-color: #111;
+        }
+      }
+
+      ul{
+
+        li{
+
+          a{
+            border-color: #2f2f2f;
+            background-color: #191919;
+          }
+
+          .kpf-active{
+            background-color: #101010;
+          }
+        }
+
+        &:before{
+          background-color: rgba(#222, 0.75);
+        }
+      }
+    }
+
+    > ul > li:last-child > a{
+      border: none;
+    }
+  }
+
+  .kpf-nav-normal{
+
+    ul{
+
+      li{
+
+        a{
+          border-bottom-width: 1px;
+          border-bottom-style: solid;
+        }
+
+        .kpf-active:after{
+          content: " ";
+          position: absolute;
+          right: 0;
+          top: 50%;
+          height: 0;
+          width: 0;
+          pointer-events: none;
+          border: solid transparent;
+          border-right-color: #fff;
+          border-width: 4px;
+          margin-top: -4px;
+        }
+      }
+    }
+  }
+
+  .kpf-nav-inline{
+    background-color: #222;
+
+    ul{
+
+      li{
+
+        a{
+          text-align: center;
+          border-right-width: 1px;
+          border-right-style: solid;
+        }
+
+        .kpf-active:after{
+          content: " ";
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          height: 0;
+          width: 0;
+          pointer-events: none;
+          border: solid transparent;
+          border-bottom-color: #fff;
+          border-width: 4px;
+          margin-left: -4px;
+        }
+      }
+    }
+  }
+
+  .kpf-nav-background{
+    background-color: #222;
+  }
+
+  .kpf-footer{
+    color: #555;
+    background-color: #050505;
+  }
+}
+
+/**
+ * 02. 02. Theme Light
+ */
+.kpf-theme-light{
+
+  .kpf-container{
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 0 15 rgba(0,0,0,0.04);
+  }
+
+  .kpf-header-inner{
+    border-bottom: 1px solid #ccd0d4;
+    background-color: #f5f5f5;
+    background: linear-gradient(#fefefe, #f5f5f5);
+
+    h1{
+
+      small{
+        color: #999;
+      }
+    }
+  }
+
+  .kpf-expand-all{
+    color: #999;
+    background-color: #eee;
+
+    &:hover{
+      color: #555;
+    }
+  }
+
+  .kpf-search{
+
+    input{
+      color: #555;
+      background-color: #eee;
+
+      &::-webkit-input-placeholder{
+        color: #999;
+      }
+    }
+  }
+
+  .kpf-nav{
+
+    ul{
+
+      li{
+
+        a{
+          font-weight: 500;
+          color: #444;
+          background-color: #f5f5f5;
+
+          &:hover{
+            color: #111;
+            background-color: #fff;
+          }
+        }
+
+        .kpf-active{
+          color: #111;
+          background-color: #fff;
+        }
+      }
+
+      ul{
+
+        li{
+
+          a{
+            background-color: #eee;
+          }
+        }
+      }
+    }
+  }
+
+  .kpf-nav-normal{
+
+    > ul{
+      margin-right: -1px;
+      margin-bottom: -1px;
+
+      li{
+
+        a{
+          border-bottom: 1px solid #ccd0d4;
+          border-right: 1px solid #ccd0d4;
+        }
+
+        .kpf-active{
+          border-right-color: #fff;
+        }
+      }
+    }
+  }
+
+  .kpf-nav-inline{
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ccd0d4;
+
+    > ul{
+      margin-bottom: -1px;
+
+      li{
+
+        a{
+          text-align: center;
+          border-right: 1px solid #ccd0d4;
+          border-bottom: 1px solid #ccd0d4;
+        }
+
+        .kpf-active{
+          border-bottom-color: #fff;
+        }
+      }
+
+      ul{
+        display: none !important
+      }
+    }
+
+    .kpf-arrow:after{
+      display: none;
+    }
+  }
+
+  .kpf-nav-background{
+    background-color: #f5f5f5;
+    border-right: 1px solid #ccd0d4;
+  }
+
+  .kpf-footer{
+    color: #555;
+    border-top: 1px solid #ccd0d4;
+    background-color: #f5f5f5;
+    background: linear-gradient(#fafafa, #f5f5f5);
+  }
+}

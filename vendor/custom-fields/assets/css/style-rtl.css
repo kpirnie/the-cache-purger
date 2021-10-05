@@ -1,0 +1,590 @@
+/**
+ *
+ * ---------------------------------------------------------
+ * KPF FRAMEWORK RTL CSS MAP
+ * ---------------------------------------------------------
+ *
+ * 01. Base
+ *     01. 01. Header
+ *     01. 02. Header Buttons
+ *     01. 03. Navigation
+ *     01. 04. Content
+ *     01. 05. Section
+ *     01. 06. Show All Settings
+ *     01. 07. Search Input
+ *     01. 08. Copyright
+ *     01. 09. Metabox
+ * 02. Fields
+ *     02. 01. Field: typography
+ *     02. 02. Field: checkbox, radio
+ *     02. 03. Field: switcher
+ *     02. 04. Field: upload
+ *     02. 05. Field: group
+ *     02. 06. Field: repeater
+ *     02. 07. Field: help
+ *     02. 08. Field: icon
+ *     02. 09. Field: gallery
+ *     02. 10. Field: sorter
+ *     02. 11. Field: tabbed
+ *     02. 12. Field: media
+ *     02. 13. Field: notice
+ *     02. 14. Field: border, spacing, dimensions
+ *     02. 15. Field: background
+ *     02. 16. Field: spinner
+ *     02. 17. Field: slider
+ *     02. 18. Field: button_set
+ *     02. 19. Field: link_color
+ *     02. 20. Field: color_group
+ *     02. 21. Field: palette
+ *     02. 22. Field: accordion
+ *     02. 23. Field: date
+ *     02. 24. Field: map
+ *     02. 25. Field: sortable
+ *     02. 26. Field: number
+ * 03. Taxonomy
+ * 04. Profile
+ * 05. Nav Menu
+ * 06. Modal
+ * 07. Customizer
+ * 08. Responsive
+ * 09. Others
+ *
+ * ---------------------------------------------------------
+ *
+ */
+/**
+ * 01. Base
+ */
+.kpf-options {
+  margin-left: 20px;
+  margin-right: 0;
+}
+
+/**
+ * 01. 01. Header
+ */
+.kpf-header h1 {
+  float: right;
+}
+.kpf-header fieldset {
+  float: left;
+}
+
+/**
+ * 01. 02. Header Buttons
+ */
+.kpf-buttons {
+  float: left;
+  direction: ltr;
+}
+
+.kpf-header-left {
+  float: right;
+}
+
+.kpf-header-right {
+  float: left;
+}
+
+/**
+ * 01. 03. Navigation
+ */
+.kpf-nav {
+  float: right;
+}
+.kpf-nav ul {
+  clear: right;
+}
+.kpf-nav ul li .kpf-active:after {
+  right: auto;
+  left: 0;
+  border-left-color: #fff;
+  border-right-color: transparent;
+}
+.kpf-nav ul li .kpf-arrow:after {
+  content: "\f053";
+  right: auto;
+  left: 10px;
+}
+.kpf-nav ul li.kpf-tab-expanded .kpf-arrow:after {
+  transform: rotate(-90deg);
+}
+.kpf-nav ul ul li a {
+  padding-right: 25px;
+  padding-left: 15px;
+}
+.kpf-nav ul ul:before {
+  left: auto;
+  right: 15px;
+}
+.kpf-nav .kpf-tab-icon {
+  margin-left: 5px;
+  margin-right: 0;
+}
+
+.kpf-nav-background {
+  left: auto;
+  right: 0;
+}
+
+/**
+ * 01. 04. Content
+ */
+.kpf-content {
+  margin-left: 0;
+  margin-right: 225px;
+}
+
+/**
+ * 01. 05. Section
+ */
+.kpf-sections {
+  float: right;
+}
+
+/**
+ * 01. 06. Show all options
+ */
+.kpf-show-all .kpf-content {
+  margin-right: 0;
+  overflow: hidden;
+}
+
+.kpf-expand-all {
+  float: right;
+  right: auto;
+  left: 40px;
+  margin-right: 0;
+  margin-left: 4px;
+}
+
+/**
+ * 01. 07. Search Input
+ */
+.kpf-search {
+  float: right;
+}
+.kpf-search input {
+  margin: 0 0 0 5px;
+}
+
+/**
+ * 01. 08. Copyright
+ */
+.kpf-copyright {
+  float: right;
+}
+
+/**
+ * 01. 09. Metabox
+ */
+.kpf-metabox {
+  margin: -6px -12px -12px -12px;
+}
+.kpf-metabox .kpf-section-title {
+  padding: 20px;
+}
+
+.kpf-section-title .kpf-section-icon {
+  margin-left: 5px;
+  margin-right: 0;
+}
+
+/**
+ * 02. Fields
+ */
+.kpf-field .kpf-title {
+  float: right;
+}
+.kpf-field .kpf-fieldset {
+  float: left;
+}
+
+.kpf-pseudo-field {
+  padding: 0 0 0 5px !important;
+}
+
+/**
+ * 02. 01. Field: typography
+ */
+.kpf-field-typography select {
+  margin: 0;
+  width: 100%;
+}
+.kpf-field-typography .kpf--blocks-inputs .kpf--blocks {
+  flex-direction: row-reverse;
+}
+.kpf-field-typography .kpf--unit {
+  left: 4px;
+  right: auto;
+}
+
+/**
+ * 02. 02. Field: checkbox, radio
+ */
+.kpf-field-checkbox ul ul li,
+.kpf-field-radio ul ul li {
+  margin-left: 0;
+  margin-right: 8px;
+}
+.kpf-field-checkbox ul ul li:first-child,
+.kpf-field-radio ul ul li:first-child {
+  margin-right: 0;
+}
+.kpf-field-checkbox .kpf--inline-list li,
+.kpf-field-radio .kpf--inline-list li {
+  margin-right: 0;
+  margin-left: 15px;
+}
+.kpf-field-checkbox .kpf--text,
+.kpf-field-radio .kpf--text {
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+/**
+ * 02. 03. Field: switcher
+ */
+.kpf-field-switcher .kpf--switcher {
+  float: right;
+}
+.kpf-field-switcher .kpf--label {
+  float: right;
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+/**
+ * 02. 04. Field: upload
+ */
+.kpf-field-upload .kpf--remove,
+.kpf-field-upload .kpf--button {
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+/**
+ * 02. 05. Field: group
+ */
+.kpf-field-group .kpf-cloneable-title {
+  padding: 15px 10px 15px 65px;
+}
+.kpf-field-group .kpf-cloneable-helper {
+  right: auto;
+  left: 10px;
+}
+
+/**
+ * 02. 06. Field: repeater
+ */
+.kpf-field-repeater .kpf-repeater-helper {
+  border-left: 0;
+  border-right: 1px solid #eee;
+}
+
+/**
+ * 02. 07. Field: help
+ */
+.kpf-help {
+  right: auto;
+  left: 5px;
+}
+
+/**
+ * 02. 08. Field: icon
+ */
+.kpf-field-icon .button {
+  margin-right: 0;
+  margin-left: 5px;
+}
+.kpf-field-icon .kpf-icon-preview i {
+  margin-right: 0;
+  margin-left: 5px;
+}
+
+/**
+ * 02. 09. Field: gallery
+ */
+.kpf-field-gallery ul li {
+  margin-right: 0;
+  margin-left: 5px;
+}
+.kpf-field-gallery .button {
+  margin-right: 0;
+  margin-left: 5px;
+}
+
+/**
+ * 02. 11. Field: tabbed
+ */
+.kpf-field-tabbed .kpf-tabbed-nav .kpf--icon {
+  padding-right: 0;
+  padding-left: 5px;
+}
+.kpf-field-tabbed .kpf-tabbed-nav a {
+  margin-right: 0;
+  margin-left: 5px;
+}
+
+/**
+ * 02. 12. Field: media
+ */
+.kpf-field-media .button {
+  margin-left: 0;
+  margin-right: 7px;
+}
+.kpf-field-media .hidden + .button {
+  margin-right: 0;
+}
+
+/**
+ * 02. 13. Field: notice
+ */
+.kpf-notice {
+  border-left: none;
+  border-right-style: solid;
+  border-right-width: 4px;
+}
+
+/**
+ * 02. 14. Field: border, spacing, dimensions
+ */
+.kpf-field-dimensions .kpf--input,
+.kpf-field-dimensions .kpf-fieldset,
+.kpf-field-spacing .kpf--input,
+.kpf-field-spacing .kpf-fieldset,
+.kpf-field-border .kpf--input,
+.kpf-field-border .kpf-fieldset {
+  direction: ltr;
+}
+.kpf-field-dimensions .kpf--inputs,
+.kpf-field-dimensions .kpf--color,
+.kpf-field-spacing .kpf--inputs,
+.kpf-field-spacing .kpf--color,
+.kpf-field-border .kpf--inputs,
+.kpf-field-border .kpf--color {
+  float: right;
+}
+.kpf-field-dimensions .kpf--color,
+.kpf-field-spacing .kpf--color,
+.kpf-field-border .kpf--color {
+  margin-right: 4px;
+  direction: rtl;
+}
+
+/**
+ * 02. 15. Field: background
+ */
+.kpf-field-background .kpf--block {
+  float: right;
+}
+.kpf-field-background .kpf--select,
+.kpf-field-background .kpf--media {
+  padding-right: 0;
+}
+.kpf-field-background .kpf--title {
+  margin-right: 0;
+  margin-left: 5px;
+}
+
+/**
+ * 02. 16. Field: spinner
+ */
+.kpf-field-spinner .kpf--spin {
+  float: right;
+  direction: ltr;
+}
+
+/**
+ * 02. 17. Field: slider
+ */
+.kpf-field-slider .kpf-slider-ui {
+  direction: ltr;
+  margin-right: 0;
+  margin-left: 15px;
+}
+.kpf-field-slider .kpf--input {
+  direction: ltr;
+}
+
+/**
+ * 02. 18. Field: button_set
+ */
+.kpf-field-button_set .kpf--button-group {
+  float: right;
+}
+
+/**
+ * 02. 19. Field: link_color
+ */
+.kpf-field-link_color .kpf--left {
+  float: right;
+  margin-right: 0;
+  margin-left: 10px;
+}
+
+/**
+ * 02. 20. Field: color_group
+ */
+.kpf-field-color_group .kpf--left {
+  float: right;
+  margin-right: 0;
+  margin-left: 10px;
+}
+
+/**
+ * 02. 21. Field: palette
+ */
+.kpf-field-palette .kpf--palette {
+  margin-right: 0;
+  margin-left: 10px;
+}
+
+/**
+ * 02. 22. Field: accordion
+ */
+.kpf-field-accordion .kpf--icon {
+  margin-right: 0;
+  margin-left: 2px;
+}
+
+/**
+ * 02. 23. Field: date
+ */
+.kpf-field-date .kpf--to {
+  margin-left: 0;
+  margin-right: 7px;
+}
+
+/**
+ * 02. 24. Field: map
+ */
+.kpf-field-map .kpf--map-input:last-child {
+  padding-left: 0;
+  padding-right: 10px;
+}
+
+/**
+ * 02. 25. Field: sortable
+ */
+.kpf-field-sortable .kpf-sortable-helper {
+  border-left: none;
+  border-right: 1px solid #eee;
+}
+
+/**
+ * 02. 26. Field: number
+ */
+.kpf-field-number .kpf--wrap {
+  float: right;
+}
+.kpf-field-number .kpf--unit {
+  left: 4px;
+  right: auto;
+}
+
+/**
+ * 03. Taxonomy
+ */
+.kpf-taxonomy-add-fields {
+  margin-right: 0;
+  margin-left: 30px;
+}
+.kpf-taxonomy-add-fields .kpf-field > .kpf-fieldset > .kpf-help {
+  left: -5px;
+  right: auto;
+}
+
+.kpf-taxonomy-edit-fields {
+  margin-right: 0;
+  margin-left: 35px;
+}
+.kpf-taxonomy-edit-fields .kpf-field > .kpf-fieldset > .kpf-help {
+  right: auto;
+  left: -5px;
+}
+
+/**
+ * 04. Profile
+ */
+.kpf-profile-options > h2 > .fa {
+  padding-right: 0;
+  padding-left: 7px;
+}
+.kpf-profile-options > .kpf-field > .kpf-fieldset > .kpf-help {
+  left: -5px;
+  right: auto;
+}
+
+/**
+ * 05. Nav Menu
+ */
+.kpf-nav-menu-options > .kpf-fields {
+  margin-left: 0;
+  margin-right: -10px;
+}
+
+.kpf-nav-menu-title {
+  padding-left: 14px;
+  padding-right: 12px;
+}
+
+.kpf-nav-menu-icon {
+  margin-right: 0;
+  margin-left: 5px;
+}
+
+/**
+ * 06. Modal
+ */
+.kpf-modal-content .kpf-field {
+  padding: 15px 15px 15px 30px;
+}
+
+.kpf-modal-title {
+  padding: 0 16px 0 36px;
+}
+
+.kpf-modal-close {
+  right: auto;
+  left: 0;
+}
+
+/**
+ * 07. Customizer
+ */
+.control-section .kpf-field .kpf-fieldset {
+  margin-right: 0;
+}
+
+/**
+ * 08. Responsive
+ */
+@media only screen and (max-width: 1200px) {
+  .kpf-metabox .kpf-field .kpf-fieldset {
+    margin-left: 0;
+  }
+}
+@media only screen and (max-width: 782px) {
+  .kpf .kpf-fieldset,
+  .kpf .kpf-content {
+    margin-right: 0;
+  }
+}
+/**
+ * 09. Others
+ */
+.kpf-field .kpf--transparent-slider {
+  margin-left: 0;
+  margin-right: 2px;
+}
+.kpf-field .kpf--transparent-slider .ui-slider-handle {
+  margin: 0 -11px;
+}
+.kpf-field .kpf--transparent-offset {
+  background-position: center right;
+}
+.kpf-field .kpf--transparent-text {
+  right: auto;
+  left: 10px;
+}
