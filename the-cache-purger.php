@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
 Plugin Name:  The Cache Purger
 Plugin URI:   https://kevinpirnie.com
 Description:  Plugin attemps to clear all plugin based and server based caches.
-Version:      0.3.98
+Version:      0.4.15
 Author:       Kevin C Pirnie
 License:      GPLv3
 License URI:  https://www.gnu.org/licenses/gpl-3.0.html

@@ -47,8 +47,11 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
             // make sure our field framework actually exists
             if( class_exists( 'KPF' ) ) {
 
-                // hold out settings id
+                // hold our settings id
                 $_cp_settings_id = 'kpcp_settings';
+
+                // hold the manual purge ID
+                $_cp_manual_purge = 'kpcp_manual_purge';
 
                 // create the main options page
                 KPF::createOptions( $_cp_settings_id, array(
@@ -117,7 +120,21 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 }, PHP_INT_MAX );
 
                 // add a button to the admin bar for purging manually
+                // for this we'll hook directly into the admin menu bar
+                add_action( 'admin_bar_menu', function( $_admin_bar ) : void {
 
+                    // set the arguments for this admin bar menu item
+                    $_args = array (
+                        'id' => 'book',
+                        'title' => '<span class="ab-icon dashicons-layout"></span> ' . __( 'Master Cache Purge' ),
+                        'href' => admin_url( 'admin.php?page=kpcp_settings&the_purge=true' ),
+                        'meta' => array( 'title' => _( 'Click here to purge all of your caches.' ) ),
+                    );
+                
+                    // add the node with the arguments above
+                    $_admin_bar -> add_node( $_args );
+
+                }, PHP_INT_MAX );
 
             }
 

@@ -5,7 +5,7 @@ Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.0
 Tested up to: 5.8.1
 Requires PHP: 7.3
-Stable tag: 0.3.98
+Stable tag: 0.4.15
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -58,6 +58,10 @@ Even if you don't, there are still some server based caches that need to be purg
 5. Logged Purged Object
 
 == Changelog ==
+= 0.4.15 = 
+Update: Settings
+New: Manual Cache Purge
+
 = 0.3.98 =
 Build purging methods
 Build out settings

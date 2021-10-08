@@ -105,6 +105,42 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
         
     }, PHP_INT_MAX );
 
+    // hook into the admin_init
+    add_action( 'admin_init', function( ) : void {
+
+        // get the querystring for the purge
+        $_do_purge = filter_var( ( isset( $_GET['the_purge'] ) ) ? sanitize_text_field( $_GET['the_purge'] ) : false, FILTER_VALIDATE_BOOLEAN );
+      
+        // if it's true
+        if( $_do_purge ) {
+
+            // setup the cache purger
+            $_cp = new KP_Cache_Purge( );
+
+            // purge
+            $_cp -> kp_do_purge( );
+
+            // log the purge
+            KPCPC::write_log( "Manual Cache Cleared" );
+
+            // clean it up
+            unset( $_cp );
+
+            // show an admin message
+            add_action( 'admin_notices', function( ) :void {
+
+                ?>
+                <div class="notice notice-success is-dismissible">
+                    <p><?php _e( "The cache purge has finished." ); ?></p>
+                </div>
+                <?php
+
+            }, PHP_INT_MAX );
+
+        }
+
+    }, PHP_INT_MAX );
+
     // fire up the processor class here.  Inside it are the proper hooks where the purging will take place
     $_processor = new KP_Cache_Purge_Processor( );
 
