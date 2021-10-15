@@ -57,7 +57,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 KPF::createOptions( $_cp_settings_id, array(
                     'menu_title' => __( 'The Cache Purge' ),
                     'menu_slug'  => 'kpcp_settings',
-                    'menu_capability' => 'activate_plugins',
+                    'menu_capability' => 'list_users',
                     'menu_icon' => 'dashicons-layout',
                     'show_in_network' => false,
                     'show_reset_all' => false,

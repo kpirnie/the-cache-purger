@@ -5,7 +5,7 @@ Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.0
 Tested up to: 5.8.1
 Requires PHP: 7.3
-Stable tag: 0.4.15
+Stable tag: 0.4.37
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,12 +38,14 @@ Purges are configurable in the settings, and include the following saves/updates
   WooCommerce Settings (if installed and activated)
 
 == Installation ==
+
 1. Download the plugin, unzip it, and upload to your sites `/wp-content/plugins/` directory
     1. You can also upload it directly to your Plugins admin
 	2. Or install it from the Wordpress Plugin Repository
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
+
 = Why would I need this plugin? =
 
 Do you need to manually clear your server-side caches everytime you modify your site?  If yes, then this is for you.  It automates this process for you.
@@ -51,6 +53,7 @@ Do you need to manually clear your server-side caches everytime you modify your 
 Even if you don't, there are still some server based caches that need to be purged that this plugin takes care of.
 
 == Screenshots ==
+
 1. Settings 1
 2. Settings 2
 3. Settings 3 - Showing GravityForms Activated
@@ -58,15 +61,21 @@ Even if you don't, there are still some server based caches that need to be purg
 5. Logged Purged Object
 
 == Changelog ==
+
+= 0.4.37 =
+* Fix: Tweak admin permissions
+    * found an issue where a subsite admin could not administer
+      the settings if the super-admin disabled Plugins in settings
+
 = 0.4.15 = 
-Update: Settings
-New: Manual Cache Purge
+* Update: Settings
+* New: Manual Cache Purge
 
 = 0.3.98 =
-Build purging methods
-Build out settings
-Build out documentation
-Build out export/import settings
+* Build purging methods
+* Build out settings
+* Build out documentation
+* Build out export/import settings
 
 = 0.1.01 =
 * INITIAL
