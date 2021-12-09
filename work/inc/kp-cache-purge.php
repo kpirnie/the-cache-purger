@@ -127,6 +127,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
         */
         private function purge_hosting_caches( ) : void {
 
+            // throw a hook here
+            do_action( 'tcp_pre_hosting_purge' );
+
             // WPEngine
             if( class_exists( 'WpeCommon' ) ) {
 
@@ -241,6 +244,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             }
 
+            // throw a hook here
+            do_action( 'tcp_post_hosting_purge' );
+
         }
 
         /** 
@@ -258,6 +264,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
         */
         private function purge_plugin_caches( ) : void {
+
+            // throw a hook here
+            do_action( 'tcp_pre_plugin_purge' );
 
             // SG Optimizer.
             if ( class_exists( 'SiteGround_Optimizer\Supercacher\Supercacher' ) ) {
@@ -441,6 +450,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 KPCPC::write_log( "\t\tCache Enabler Cache" );
             }
 
+            // throw a hook here
+            do_action( 'tcp_post_plugin_purge' );
+
         }
 
         /** 
@@ -458,6 +470,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
         */
         private function purge_wordpress_caches( ) : void {
+
+            // throw a hook here
+            do_action( 'tcp_pre_wp_purge' );
 
             // get our WPDB global
             global $wpdb;
@@ -505,6 +520,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // log the purge
             KPCPC::write_log( "\t\tWP Object 2 Cache" );
 
+            // throw a hook here
+            do_action( 'tcp_post_wp_purge' );
+
         }
 
         /** 
@@ -522,6 +540,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
         */
         private function purge_php_caches( ) : void {
+
+            // implement hook
+            do_action( 'tcp_pre_php_purge' );
 
             // if we're on a windows server
             if( function_exists( 'wincache_ucache_get' ) ) {
@@ -541,7 +562,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 $_status = opcache_get_status( );
 
                 // make sure it's enabled
-                if( $_status["opcache_enabled"] ) {
+                if( isset( $_status["opcache_enabled"] ) ) {
 
                     // attempt to reset it
                     opcache_reset( );
@@ -578,6 +599,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             }
 
+            // implement hook
+            do_action( 'tcp_post_php_purge' );
+
         }
 
         /** 
@@ -594,6 +618,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
         */
         private function purge_pagespeed_caches( ) : void {
+
+            // implement hook
+            do_action( 'tcp_pre_pagespeed_purge' );
 
             // hold possible pagespeed headers
             $_ps_headers = array( 'x-mod-pagespeed', 'x-page-speed' );
@@ -670,6 +697,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             }
 
+            // implement hook
+            do_action( 'tcp_post_pagespeed_purge' );
+
         }
 
         /** 
@@ -687,6 +717,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
         */
         private function purge_nginx_caches( ) : void {
+
+            // implement hook
+            do_shortcode( 'tcp_pre_nginx_purge' );
 
             // let's utilize wordpress's filesystem global
             global $wp_filesystem;
@@ -788,6 +821,8 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             }
 
+            // implement hook
+            do_action( 'tcp_post_nginx_purge' );
 
         }
 
@@ -805,6 +840,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
         */
         private function purge_file_caches( ) : void {
+
+            // implement hook
+            do_action( 'tcp_pre_file_purge' );
 
             // let's utilize wordpress's filesystem global
             global $wp_filesystem;
@@ -874,6 +912,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 KPCPC::write_log( "\t\tFile Cache" );
 
             }
+
+            // implement hook
+            do_action( 'tcp_post_file_purge' );
 
         }
 

@@ -41,6 +41,9 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
         // fire us up
         public function __construct( ) {
 
+            // throw an action here
+            do_action( 'tcp_pre_purge' );
+
             // set the options
             $this -> options = KPCPC::get_options( );
 
@@ -54,6 +57,9 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
 
             // release our properties
             unset( $this -> options, $this -> actions );
+
+            // throw an action here
+            do_action( 'tcp_pre_purge' );
 
         }
 

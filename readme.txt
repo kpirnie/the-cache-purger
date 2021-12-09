@@ -3,9 +3,9 @@ Contributors: kevp75
 Donate link: https://paypal.me/kevinpirnie
 Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.0
-Tested up to: 5.8.1
+Tested up to: 5.9
 Requires PHP: 7.3
-Stable tag: 0.4.37
+Stable tag: 0.5.57
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -57,10 +57,20 @@ Even if you don't, there are still some server based caches that need to be purg
 1. Settings 1
 2. Settings 2
 3. Settings 3 - Showing GravityForms Activated
-4. Settings 4 - Showing ACF Activated
+4. Settings 4 - Showing ACF Activated 
 5. Logged Purged Object
 
 == Changelog ==
+
+= 0.5.57 =
+* Verify: Core 5.9 Compatibility
+* Fix: Array index set check
+* Feature: Implement some new hooks
+  * NOTE: The actions fire off before and after each related section.  They should be self-explanatory, so I will just list them all:
+    * `tcp_pre_purge`, `tcp_post_purge`, `tcp_pre_hosting_purge`, `tcp_post_hosting_purge`, `tcp_pre_plugin_purge`, 
+    `tcp_post_plugin_purge`, `tcp_pre_wp_purge`, `tcp_post_wp_purge`, `tcp_pre_php_purge`, `tcp_post_php_purge`,
+    `tcp_pre_pagespeed_purge`, `tcp_post_pagespeed_purge`, `tcp_pre_nginx_purge`, `tcp_post_nginx_purge`, `tcp_pre_file_purge`,
+    `tcp_post_file_purge`
 
 = 0.4.37 =
 * Fix: Tweak admin permissions

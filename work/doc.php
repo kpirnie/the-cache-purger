@@ -209,9 +209,6 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
                     <li><em>This option is only available if you have Advanced Custom Fields installed and active on your site.</em></li>
                 </ul>
             </li>
-
-
-
         </ul>
         <h2 id="kpcp_in_the_works">In The Works</h2>
         <p class="kpcp_nav"><a href="#kpcp_top">TOP</a> | <a href="#kpcp_desc">DESCRIPTION</a> | <a href="#kpcp_features">FEATURES</a> | <a href="#kpcp_settings">SETTINGS</a> | <a href="#kpcp_in_the_works">IN THE WORKS</a></p>
