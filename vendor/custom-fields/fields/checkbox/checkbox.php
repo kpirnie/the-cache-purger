@@ -81,7 +81,7 @@ if ( ! class_exists( 'KPF_Field_checkbox' ) ) {
 
         echo '<label class="kpf-checkbox">';
         echo '<input type="hidden" name="'. esc_attr( $this->field_name() ) .'" value="'. $this->value .'" class="kpf--input"'. $this->field_attributes() .'/>';
-        echo '<input type="checkbox" name="_pseudo" class="kpf--checkbox"'. esc_attr( checked( $this->value, 1, false ) ) .'/>';
+        echo '<input type="checkbox" name="_pseudo" class="kpf--checkbox"'. esc_attr( checked( $this->value, 1, false ) ) . $this->field_attributes() .'/>';
         echo ( ! empty( $this->field['label'] ) ) ? '<span class="kpf--text">'. esc_attr( $this->field['label'] ) .'</span>' : '';
         echo '</label>';
 

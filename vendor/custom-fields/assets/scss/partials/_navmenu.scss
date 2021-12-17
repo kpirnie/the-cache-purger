@@ -1,0 +1,60 @@
+/**
+ * 08. Nav Menu
+ */
+.kpf-nav-menu-options{
+  clear: both;
+  float: left;
+  width: 100%;
+
+  > .kpf-fields{
+    margin-left: -10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+
+    > .kpf-field{
+      padding: 12px 14px 12px 12px;
+
+      .kpf-title{
+        float: none;
+        width: 100%;
+        margin-bottom: 5px;
+      }
+
+      .kpf-fieldset{
+        float: none;
+        width: 100%;
+      }
+    }
+  }
+
+  .kpf-field-text input{
+    width: 100%;
+  }
+
+  .kpf-field-notice .kpf-notice{
+    padding: 15px;
+  }
+}
+
+.kpf-nav-menu-title{
+  padding: 12px 14px 12px 12px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+
+  &:first-child{
+    border-top: 0;
+  }
+
+  h4{
+    margin: 0;
+    padding: 0;
+    color: #23282d;
+  }
+}
+
+.kpf-nav-menu-icon{
+  margin-right: 5px;
+}

@@ -5,7 +5,7 @@ Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.0
 Tested up to: 5.9
 Requires PHP: 7.3
-Stable tag: 0.5.57
+Stable tag: 0.6.02
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -61,6 +61,11 @@ Even if you don't, there are still some server based caches that need to be purg
 5. Logged Purged Object
 
 == Changelog ==
+= 0.6.02 =
+* Fixed: Admin bar menu show in for non-admin capabilities.
+* Improved: Usage anywhere framework fields.
+* Updated: JS libraries (codemirror, leaflet, etc).
+* Improved: Some js and css coding.
 
 = 0.5.57 =
 * Verify: Core 5.9 Compatibility

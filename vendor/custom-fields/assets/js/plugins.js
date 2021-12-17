@@ -1775,20 +1775,6 @@
           }
         }
 
-      } else if( condition === 'contains' ) {
-
-        if( $.isArray( val2 ) ) {
-          for (var i = val2.length - 1; i >= 0; i--) {
-            if( $.inArray( val2[i], val1.split(',') ) !== -1 ) {
-              return true;
-            }
-          }
-        } else {
-          if( $.inArray( val2, val1.split(',') ) !== -1 ) {
-            return true;
-          }
-        }
-
       }
 
       return false;
