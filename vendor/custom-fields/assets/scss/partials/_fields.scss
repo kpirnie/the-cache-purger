@@ -1,11 +1,11 @@
 /**
  * 03. Fields
  */
-.kpf-field{
+.kptcp-field{
   position: relative;
   padding: 30px;
 
-  + .kpf-field{
+  + .kptcp-field{
     border-top: 1px solid #eee;
   }
 
@@ -31,7 +31,7 @@
     margin-top: 0;
   }
 
-  .kpf-title{
+  .kptcp-title{
     position: relative;
     width: 20%;
     float: left;
@@ -42,17 +42,17 @@
     }
   }
 
-  .kpf-fieldset{
+  .kptcp-fieldset{
     float: right;
     width: calc(80% - 20px);
   }
 }
 
-.kpf-pseudo-field{
+.kptcp-pseudo-field{
   padding: 0 5px 0 0 !important;
   display: inline-block;
 
-  + .kpf-pseudo-field{
+  + .kptcp-pseudo-field{
     border: 0;
   }
 
@@ -64,9 +64,9 @@
 /**
  * 03. 02. Field: accordion
  */
-.kpf-field-accordion{
+.kptcp-field-accordion{
 
-  .kpf-accordion-item{
+  .kptcp-accordion-item{
     position: relative;
     margin-bottom: 5px;
 
@@ -79,7 +79,7 @@
     }
   }
 
-  .kpf-accordion-title{
+  .kptcp-accordion-title{
     display: block;
     cursor: pointer;
     position: relative;
@@ -100,19 +100,19 @@
       border-color: #999;
     }
 
-    .kpf--icon{
+    .kptcp--icon{
       width: 20px;
       text-align: center;
       margin-right: 2px;
     }
   }
 
-  .kpf-accordion-icon{
+  .kptcp-accordion-icon{
     width: 16px;
     text-align: center;
   }
 
-  .kpf-accordion-content{
+  .kptcp-accordion-content{
     display: none;
     padding: 0;
     border: 1px solid #ccd0d4;
@@ -120,12 +120,12 @@
     background-color: #fff;
     box-shadow: 0 1px 1px rgba(0,0,0,0.04);
 
-    > .kpf-field{
+    > .kptcp-field{
       padding: 15px;
     }
   }
 
-  .kpf-accordion-open{
+  .kptcp-accordion-open{
     display: block;
   }
 }
@@ -133,26 +133,26 @@
 /**
  * 03. 03. Field: background
  */
-.kpf-field-background{
+.kptcp-field-background{
 
-  .kpf-field{
+  .kptcp-field{
     border: 0 !important;
     padding: 0;
     margin-bottom: 6px;
     margin-right: 6px;
   }
 
-  .kpf--title{
+  .kptcp--title{
     color: #777;
     font-size: 12px;
   }
 
-  .kpf--background-colors{
+  .kptcp--background-colors{
     display: flex;
     flex-wrap: wrap;
   }
 
-  .kpf--background-attributes{
+  .kptcp--background-attributes{
     display: flex;
     flex-wrap: wrap;
 
@@ -161,12 +161,12 @@
       margin: 0;
     }
 
-    .kpf-field{
+    .kptcp-field{
       flex: 1;
     }
   }
 
-  .kpf--attributes-hidden{
+  .kptcp--attributes-hidden{
     display: none;
   }
 }
@@ -174,7 +174,7 @@
 /**
  * 03. 04. Field: backup
  */
-.kpf-field-backup{
+.kptcp-field-backup{
 
   textarea{
     width: 100%;
@@ -197,17 +197,17 @@
 /**
  * 03. 05. Field: border, spacing, dimensions
  */
-.kpf-field-border,
-.kpf-field-spacing,
-.kpf-field-dimensions{
+.kptcp-field-border,
+.kptcp-field-spacing,
+.kptcp-field-dimensions{
 
-  .kpf--inputs{
+  .kptcp--inputs{
     float: left;
     display: flex;
     flex-wrap: wrap;
   }
 
-  .kpf--input{
+  .kptcp--input{
     display: flex;
     padding-right: 6px;
     padding-bottom: 4px;
@@ -227,11 +227,11 @@
     }
   }
 
-  .kpf--color{
+  .kptcp--color{
     float: left;
   }
 
-  .kpf--label{
+  .kptcp--label{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -246,22 +246,22 @@
     background-color: #f5f5f5;
   }
 
-  .kpf--icon{
+  .kptcp--icon{
     border-right: 0;
     border-radius: 4px 0 0 4px;
   }
 
-  .kpf--icon + input{
+  .kptcp--icon + input{
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
   }
 
-  .kpf--unit{
+  .kptcp--unit{
     border-left: 0;
     border-radius: 0 4px 4px 0;
   }
 
-  .kpf--is-unit{
+  .kptcp--is-unit{
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
   }
@@ -270,13 +270,13 @@
 /**
  * 03. 06. Field: button_set
  */
-.kpf-field-button_set{
+.kptcp-field-button_set{
 
-  .kpf--buttons{
+  .kptcp--buttons{
     display: inline-block;
   }
 
-  .kpf--button{
+  .kptcp--button{
     position: relative;
     z-index: 1;
     float: left;
@@ -307,8 +307,8 @@
     }
   }
 
-  .kpf--active:hover,
-  .kpf--active{
+  .kptcp--active:hover,
+  .kptcp--active{
     z-index: 2;
     color: #fff;
     border-color: #006799;
@@ -323,8 +323,8 @@
 /**
  * 03. 07. Field: checkbox, radio
  */
-.kpf-field-checkbox,
-.kpf-field-radio{
+.kptcp-field-checkbox,
+.kptcp-field-radio{
 
   ul{
     margin: 0;
@@ -354,17 +354,17 @@
     margin: 0 1px;
   }
 
-  .kpf--inline-list li{
+  .kptcp--inline-list li{
     display: inline-block;
     margin-right: 15px;
   }
 
-  .kpf--text{
+  .kptcp--text{
     margin-left: 5px;
     vertical-align: middle;
   }
 
-  .kpf-checker{
+  .kptcp-checker{
     cursor: pointer;
   }
 }
@@ -372,7 +372,7 @@
 /**
  * 03. 08. Field: code_editor
  */
-.kpf-field-code_editor{
+.kptcp-field-code_editor{
 
   .CodeMirror{
     width: 100%;
@@ -392,7 +392,7 @@
 /**
  * 03. 09. Field: color
  */
-.kpf-field-color{
+.kptcp-field-color{
 
   > input{
     opacity: 0.75;
@@ -411,15 +411,15 @@
 /**
  * 03. 10. Field: color_group
  */
-.kpf-field-color_group{
+.kptcp-field-color_group{
 
-  .kpf--left{
+  .kptcp--left{
     float: left;
     margin-right: 10px;
     margin-bottom: 5px;
   }
 
-  .kpf--title{
+  .kptcp--title{
     color: #999;
     margin-bottom: 5px;
   }
@@ -428,19 +428,19 @@
 /**
  * 03. 11. Field: fieldset
  */
-.kpf-field-fieldset{
+.kptcp-field-fieldset{
 
-  .kpf-fieldset-content{
+  .kptcp-fieldset-content{
     border: 1px solid #ccd0d4;
     background-color: #fff;
     box-shadow: 0 1px 1px rgba(0,0,0,0.04);
 
-    > .kpf-field{
+    > .kptcp-field{
       padding: 15px;
     }
   }
 
-  .kpf-field-subheading{
+  .kptcp-field-subheading{
     font-size: 13px;
   }
 }
@@ -448,18 +448,18 @@
 /**
  * 03. 12. Field: date
  */
-.kpf-field-date{
+.kptcp-field-date{
 
   input{
     margin: 0;
   }
 
-  .kpf--to{
+  .kptcp--to{
     margin-left: 7px;
   }
 }
 
-.kpf-datepicker-wrapper{
+.kptcp-datepicker-wrapper{
   margin-top: 5px;
   width: auto;
   background-color: #fff;
@@ -614,7 +614,7 @@
 /**
  * 03. 13. Field: gallery
  */
-.kpf-field-gallery{
+.kptcp-field-gallery{
 
   ul{
     margin: 0;
@@ -648,17 +648,17 @@
 /**
  * 03. 14. Field: group
  */
-.kpf-field-group{
+.kptcp-field-group{
 
-  .kpf-cloneable-hidden{
+  .kptcp-cloneable-hidden{
     display: none !important;
   }
 
-  .kpf-cloneable-wrapper{
+  .kptcp-cloneable-wrapper{
     position: relative;
   }
 
-  .kpf-cloneable-item{
+  .kptcp-cloneable-item{
     display: none;
     position: relative;
     margin-bottom: 5px;
@@ -668,21 +668,21 @@
     }
   }
 
-  .ui-accordion .kpf-cloneable-item{
+  .ui-accordion .kptcp-cloneable-item{
     display: block;
   }
 
-  .kpf-cloneable-content{
+  .kptcp-cloneable-content{
     border: 1px solid #ccd0d4;
     background-color: #fff;
     box-shadow: 0 1px 1px rgba(0,0,0,0.04);
 
-    > .kpf-field{
+    > .kptcp-field{
       padding: 15px;
     }
   }
 
-  .kpf-cloneable-title{
+  .kptcp-cloneable-title{
     display: block;
     cursor: pointer;
     position: relative;
@@ -704,7 +704,7 @@
     }
   }
 
-  .kpf-cloneable-helper{
+  .kptcp-cloneable-helper{
     position: absolute;
     top: 12px;
     right: 10px;
@@ -724,17 +724,17 @@
     }
   }
 
-  .kpf-cloneable-content{
+  .kptcp-cloneable-content{
     padding: 0;
     border-top: 0;
   }
 
-  .kpf-cloneable-title-prefix,
-  .kpf-cloneable-title-number{
+  .kptcp-cloneable-title-prefix,
+  .kptcp-cloneable-title-number{
     margin-right: 5px;
   }
 
-  .kpf-cloneable-alert{
+  .kptcp-cloneable-alert{
     display: none;
     margin-bottom: 5px;
     padding: 10px 20px;
@@ -749,7 +749,7 @@
     background-color: #fffae4;
   }
 
-  .kpf-cloneable-header-icon{
+  .kptcp-cloneable-header-icon{
     display: inline-block;
     text-align: center;
     font-size: 14px;
@@ -758,7 +758,7 @@
     vertical-align: text-top;
   }
 
-  .kpf-cloneable-placeholder{
+  .kptcp-cloneable-placeholder{
     background-color: #ddd;
     margin-top: 4px;
     width: 100px;
@@ -774,21 +774,21 @@
 /**
  * 03. 15. Field: icon
  */
-.kpf-field-icon{
+.kptcp-field-icon{
 
   .button{
     margin-right: 5px;
   }
 
-  .kpf-icon-select{
+  .kptcp-icon-select{
     display: flex;
   }
 
-  .kpf-icon-preview:not(.hidden){
+  .kptcp-icon-preview:not(.hidden){
     display: flex;
   }
 
-  .kpf-icon-preview{
+  .kptcp-icon-preview{
 
     i{
       display: flex;
@@ -811,14 +811,14 @@
 /**
  * 03. 16. Field: image_select
  */
-.kpf-field-image_select{
+.kptcp-field-image_select{
 
-  .kpf--image{
+  .kptcp--image{
     display: inline-block;
     margin: 0 5px 5px 0;
   }
 
-  .kpf--inline-list .kpf--image{
+  .kptcp--inline-list .kptcp--image{
     display: block;
   }
 
@@ -853,7 +853,7 @@
     }
   }
 
-  .kpf--active figure{
+  .kptcp--active figure{
     border-color: #222;
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
 
@@ -876,15 +876,15 @@
 /**
  * 03. 17. Field: link_color
  */
-.kpf-field-link_color{
+.kptcp-field-link_color{
 
-  .kpf--left{
+  .kptcp--left{
     float: left;
     margin-right: 10px;
     margin-bottom: 5px;
   }
 
-  .kpf--title{
+  .kptcp--title{
     color: #777;
     margin-bottom: 5px;
   }
@@ -893,7 +893,7 @@
 /**
  * 03. 18. Field: map
  */
-.kpf-field-map{
+.kptcp-field-map{
 
   input{
     width: 100%;
@@ -903,11 +903,11 @@
     background-position-x: calc(100% - 5px);
   }
 
-  .kpf--map-search + .kpf--map-osm-wrap{
+  .kptcp--map-search + .kptcp--map-osm-wrap{
     margin-top: 10px;
   }
 
-  .kpf--map-osm-wrap{
+  .kptcp--map-osm-wrap{
     position: relative;
     padding: 5px;
     border: 1px solid #eee;
@@ -915,19 +915,19 @@
     box-shadow: 0 1px 1px rgba(0,0,0,.04);
   }
 
-  .kpf--map-osm{
+  .kptcp--map-osm{
     position: relative;
     z-index: 1;
     min-height: 250px;
   }
 
-  .kpf--map-inputs{
+  .kptcp--map-inputs{
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
   }
 
-  .kpf--map-input{
+  .kptcp--map-input{
     flex: 1;
 
     &:last-child{
@@ -943,7 +943,7 @@
   }
 }
 
-.kpf-map-ui-autocomplate{
+.kptcp-map-ui-autocomplate{
   z-index: 999999;
   border-radius: 4px;
   overflow: hidden;
@@ -953,9 +953,9 @@
 /**
  * 03. 19. Field: media
  */
-.kpf-field-media{
+.kptcp-field-media{
 
-  .kpf--placeholder{
+  .kptcp--placeholder{
     display: flex;
     align-items: flex-start;
 
@@ -973,7 +973,7 @@
     margin-left: 0;
   }
 
-  .kpf--preview{
+  .kptcp--preview{
     position: relative;
   }
 }
@@ -981,9 +981,9 @@
 /**
  * 03. 20. Field: palette
  */
-.kpf-field-palette{
+.kptcp-field-palette{
 
-  .kpf--palette{
+  .kptcp--palette{
     position: relative;
     display: inline-block;
     cursor: pointer;
@@ -1023,7 +1023,7 @@
     }
   }
 
-  .kpf--active{
+  .kptcp--active{
     border-color: #222;
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
 
@@ -1040,19 +1040,19 @@
 /**
  * 03. 21. Field: repeater
  */
-.kpf-field-repeater{
+.kptcp-field-repeater{
 
-  .kpf-field-text input{
+  .kptcp-field-text input{
     width: 100%;
   }
 
-  .kpf-repeater-hidden{
+  .kptcp-repeater-hidden{
     display: none !important;
   }
 
-  .kpf-repeater-wrapper{
+  .kptcp-repeater-wrapper{
 
-    .kpf-repeater-item{
+    .kptcp-repeater-item{
       display: table;
       width: 100%;
       margin-bottom: 5px;
@@ -1064,18 +1064,18 @@
     }
   }
 
-  .kpf-repeater-content{
+  .kptcp-repeater-content{
     width: 100%;
     display: table-cell;
     vertical-align: middle;
     background-color: #fff;
 
-    > .kpf-field{
+    > .kptcp-field{
       padding: 15px;
     }
   }
 
-  .kpf-repeater-helper{
+  .kptcp-repeater-helper{
     width: 100%;
     display: table-cell;
     vertical-align: middle;
@@ -1097,11 +1097,11 @@
     }
   }
 
-  .kpf-repeater-helper-inner{
+  .kptcp-repeater-helper-inner{
     width: 75px;
   }
 
-  .kpf-repeater-alert{
+  .kptcp-repeater-alert{
     display: none;
     margin-bottom: 5px;
     padding: 10px 20px;
@@ -1124,8 +1124,8 @@
     background-color: #eee !important;
     opacity: 0.5;
 
-    .kpf-repeater-helper,
-    .kpf-repeater-content{
+    .kptcp-repeater-helper,
+    .kptcp-repeater-content{
       display: none;
     }
   }
@@ -1134,13 +1134,13 @@
 /**
  * 03. 22. Field: select
  */
-.kpf-field-select{
+.kptcp-field-select{
 
-  .kpf-fieldset{
+  .kptcp-fieldset{
     min-height: 30px;
   }
 
-  .kpf-chosen{
+  .kptcp-chosen{
     display: none;
   }
 
@@ -1149,7 +1149,7 @@
     margin: 0;
   }
 
-  .kpf-hide-select{
+  .kptcp-hide-select{
     display: none !important;
   }
 }
@@ -1157,18 +1157,18 @@
 /**
  * 03. 23. Field: slider
  */
-.kpf-field-slider{
+.kptcp-field-slider{
 
-  .kpf--wrap{
+  .kptcp--wrap{
     display: flex;
     align-items: center;
   }
 
-  .kpf--input{
+  .kptcp--input{
     display: flex;
   }
 
-  .kpf--unit{
+  .kptcp--unit{
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -1183,7 +1183,7 @@
     background-color: #f5f5f5;
   }
 
-  .kpf-slider-ui{
+  .kptcp-slider-ui{
     margin-right: 15px;
   }
 
@@ -1195,7 +1195,7 @@
     text-align: center;
   }
 
-  .kpf--is-unit{
+  .kptcp--is-unit{
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
   }
@@ -1237,9 +1237,9 @@
 /**
  * 03. 24. Field: sortable
  */
-.kpf-field-sortable{
+.kptcp-field-sortable{
 
-  .kpf-field-text{
+  .kptcp-field-text{
 
     input{
       width: 100%;
@@ -1247,9 +1247,9 @@
     }
   }
 
-  .kpf-sortable{
+  .kptcp-sortable{
 
-    .kpf-sortable-item{
+    .kptcp-sortable-item{
       display: table;
       width: 100%;
       margin-bottom: 5px;
@@ -1261,18 +1261,18 @@
     }
   }
 
-  .kpf-sortable-content{
+  .kptcp-sortable-content{
     width: 100%;
     display: table-cell;
     vertical-align: middle;
     background-color: #fff;
 
-    > .kpf-field{
+    > .kptcp-field{
       padding: 15px;
     }
   }
 
-  .kpf-sortable-helper{
+  .kptcp-sortable-helper{
     width: 100%;
     display: table-cell;
     vertical-align: middle;
@@ -1308,8 +1308,8 @@
     background-color: #eee !important;
     opacity: 0.5;
 
-    .kpf-sortable-helper,
-    .kpf-sortable-content{
+    .kptcp-sortable-helper,
+    .kptcp-sortable-content{
       display: none;
     }
   }
@@ -1318,7 +1318,7 @@
 /**
  * 03. 25. Field: sorter
  */
-.kpf-field-sorter{
+.kptcp-field-sorter{
 
   .ui-sortable-placeholder{
     height: 20px;
@@ -1326,7 +1326,7 @@
     background-color: #fffae4;
   }
 
-  .kpf-modules{
+  .kptcp-modules{
     float: left;
     width: 50%;
     box-sizing: border-box;
@@ -1340,14 +1340,14 @@
     }
   }
 
-  .kpf-disabled,
-  .kpf-enabled{
+  .kptcp-disabled,
+  .kptcp-enabled{
     padding: 5px 15px;
     border: 1px dashed #ddd;
     background-color: #fff;
   }
 
-  .kpf-disabled{
+  .kptcp-disabled{
     li{
       opacity: 0.5;
       transition: opacity .15s;
@@ -1358,7 +1358,7 @@
     }
   }
 
-  .kpf-sorter-title{
+  .kptcp-sorter-title{
     font-size: 13px;
     font-weight: 600;
     padding: 10px;
@@ -1395,9 +1395,9 @@
 /**
  * 03. 26. Field: spinner
  */
-.kpf-field-spinner{
+.kptcp-field-spinner{
 
-  .kpf--spin{
+  .kptcp--spin{
     display: flex;
   }
 
@@ -1450,7 +1450,7 @@
     order: 2;
   }
 
-  .kpf--unit{
+  .kptcp--unit{
     order: 3;
     border-left: 0;
     user-select: none;
@@ -1486,9 +1486,9 @@
 /**
  * 03. 27. Field: switcher
  */
-.kpf-field-switcher{
+.kptcp-field-switcher{
 
-  .kpf--switcher{
+  .kptcp--switcher{
     float: left;
     cursor: pointer;
     position: relative;
@@ -1503,7 +1503,7 @@
     -webkit-user-select: none;
   }
 
-  .kpf--ball{
+  .kptcp--ball{
     position: absolute;
     top: 4px;
     left: 4px;
@@ -1515,8 +1515,8 @@
     box-shadow: 1px 1px 1px rgba(0,0,0,0.15);
   }
 
-  .kpf--on,
-  .kpf--off{
+  .kptcp--on,
+  .kptcp--off{
     position: absolute;
     top: 0;
     left: 0;
@@ -1533,30 +1533,30 @@
     transition: all .1s;
   }
 
-  .kpf--off{
+  .kptcp--off{
     padding-right: 0;
     padding-left: 28px;
     opacity: 1;
   }
 
-  .kpf--active{
+  .kptcp--active{
     background: #4fb845;
 
-    .kpf--on{
+    .kptcp--on{
       opacity: 1;
     }
 
-    .kpf--off{
+    .kptcp--off{
       opacity: 0;
     }
 
-    .kpf--ball{
+    .kptcp--ball{
       left: 100%;
       margin-left: -28px;
     }
   }
 
-  .kpf--label{
+  .kptcp--label{
     float: left;
     margin-top: 4px;
     margin-left: 8px;
@@ -1568,21 +1568,21 @@
 /**
  * 03. 28. Field: tabbed
  */
-.kpf-field-tabbed{
+.kptcp-field-tabbed{
 
-  .kpf-tabbed-content{
+  .kptcp-tabbed-content{
     border: 1px solid #ccd0d4;
     background-color: #fff;
     box-shadow: 0 1px 1px rgba(0,0,0,.04);
 
-    > .kpf-field{
+    > .kptcp-field{
       padding: 15px;
     }
   }
 
-  .kpf-tabbed-nav{
+  .kptcp-tabbed-nav{
 
-    .kpf--icon{
+    .kptcp--icon{
       padding-right: 5px;
     }
 
@@ -1604,7 +1604,7 @@
         background-color: #f9f9f9;
       }
 
-      &.kpf-tabbed-active{
+      &.kptcp-tabbed-active{
         background-color: #fff;
         border-bottom-color: #fff;
       }
@@ -1620,7 +1620,7 @@
 /**
  * 03. 29. Field: text
  */
-.kpf-field-text{
+.kptcp-field-text{
 
   input{
     width: 50%;
@@ -1632,7 +1632,7 @@
 /**
  * 03. 30. Field: textarea
  */
-.kpf-field-textarea{
+.kptcp-field-textarea{
 
   textarea{
     width: 100%;
@@ -1640,7 +1640,7 @@
     min-height: 125px;
   }
 
-  .kpf-shortcode-button{
+  .kptcp-shortcode-button{
     margin-bottom: 10px;
     margin-right: 5px;
   }
@@ -1649,7 +1649,7 @@
 /**
  * 03. 31. Field: typography
  */
-.kpf-field-typography{
+.kptcp-field-typography{
 
   textarea,
   select{
@@ -1658,7 +1658,7 @@
     max-width: 100%;
   }
 
-  .kpf--title{
+  .kptcp--title{
     color: #777;
     margin: 0 0 2px 0;
     font-size: 12px;
@@ -1668,28 +1668,28 @@
     }
   }
 
-  .kpf--blocks{
+  .kptcp--blocks{
     display: flex;
     flex-wrap: wrap;
   }
 
-  .kpf--block{
+  .kptcp--block{
     flex: 1;
     max-width: 100%;
     padding-right: 6px;
     padding-bottom: 6px;
   }
 
-  .kpf--input{
+  .kptcp--input{
     margin: 0;
     min-width: 100%;
   }
 
-  .kpf--input-wrap{
+  .kptcp--input-wrap{
     position: relative;
   }
 
-  .kpf--unit{
+  .kptcp--unit{
     position: absolute;
     z-index: 1;
     right: 4px;
@@ -1707,7 +1707,7 @@
     flex-direction: column;
   }
 
-  .kpf--preview{
+  .kptcp--preview{
     font-size: 16px;
     line-height: 20px;
     padding: 20px;
@@ -1720,7 +1720,7 @@
     transition: background-color .2s, border-color .2s;
   }
 
-  .kpf--block-preview{
+  .kptcp--block-preview{
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -1728,19 +1728,19 @@
     max-width: 100%;
   }
 
-  .kpf--black-background{
+  .kptcp--black-background{
     border-color: #000;
     background-color: #000;
   }
 
-  .kpf--toggle{
+  .kptcp--toggle{
     position: absolute;
     top: 5px;
     right: 10px;
     color: #999;
   }
 
-  .kpf--block-extra-styles{
+  .kptcp--block-extra-styles{
     margin-top: 5px;
   }
 }
@@ -1748,14 +1748,14 @@
 /**
  * 03. 32. Field: upload
  */
-.kpf-field-upload{
+.kptcp-field-upload{
 
   input{
     width: 100%;
     margin: 0;
   }
 
-  .kpf--wrap{
+  .kptcp--wrap{
     display: flex;
     align-items: flex-start;
   }
@@ -1764,7 +1764,7 @@
     margin-left: 5px;
   }
 
-  .kpf--preview{
+  .kptcp--preview{
     position: relative;
   }
 }
@@ -1772,9 +1772,9 @@
 /**
  * 03. 33. Field: wp_editor
  */
-.kpf-field-wp_editor{
+.kptcp-field-wp_editor{
 
-  .kpf-wp-editor{
+  .kptcp-wp-editor{
     float: left;
     width: 100%;
   }
@@ -1801,11 +1801,11 @@
     z-index: 1;
   }
 
-  .kpf-no-tinymce{
+  .kptcp-no-tinymce{
     border: 1px solid #e5e5e5;
   }
 
-  .kpf-no-quicktags{
+  .kptcp-no-quicktags{
 
     .wp-media-buttons{
       float: none;
@@ -1829,7 +1829,7 @@
 /**
  * 03. 34. Field: heading
  */
-.kpf-field-heading{
+.kptcp-field-heading{
   font-size: 1.5em;
   font-weight: bold;
   color: #23282d;
@@ -1839,7 +1839,7 @@
 /**
  * 03. 35. Field: subheading
  */
-.kpf-field-subheading{
+.kptcp-field-subheading{
   font-size: 14px;
   font-weight: bold;
   padding-top: 17px;
@@ -1851,47 +1851,47 @@
 /**
  * 03. 36. Field: submessage
  */
-.kpf-field-submessage{
+.kptcp-field-submessage{
   padding: 0 !important;
   border: 0 !important;
 
-  + .kpf-field{
+  + .kptcp-field{
     border-top: 0 !important;
   }
 }
 
-.kpf-submessage{
+.kptcp-submessage{
   font-size: 12px;
   padding: 17px 30px;
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent;
 }
 
-.kpf-submessage-success{
+.kptcp-submessage-success{
   color: #3c763d;
   border-color: #d6e9c6;
   background-color: #dff0d8;
 }
 
-.kpf-submessage-info{
+.kptcp-submessage-info{
   color: #31708f;
   border-color: #bce8f1;
   background-color: #d9edf7;
 }
 
-.kpf-submessage-warning{
+.kptcp-submessage-warning{
   color: #8a6d3b;
   border-color: #faebcc;
   background-color: #fcf8e3;
 }
 
-.kpf-submessage-danger{
+.kptcp-submessage-danger{
   color: #a94442;
   border-color: #ebccd1;
   background-color: #f2dede;
 }
 
-.kpf-submessage-normal{
+.kptcp-submessage-normal{
   color: #23282d;
   border-color: #eee;
   background-color: #f7f7f7;
@@ -1900,11 +1900,11 @@
 /**
  * 03. 37. Field: notice
  */
-.kpf-field-notice{
+.kptcp-field-notice{
   background-color: #f7f7f7;
 }
 
-.kpf-notice{
+.kptcp-notice{
   padding: 12px;
   background-color: #fff;
   border-left-style: solid;
@@ -1912,43 +1912,43 @@
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
-.kpf-notice-success{
+.kptcp-notice-success{
   border-color: #46b450;
 }
 
-.kpf-notice-info{
+.kptcp-notice-info{
   border-color: #339fd4;
 }
 
-.kpf-notice-warning{
+.kptcp-notice-warning{
   border-color: #ffbc00;
 }
 
-.kpf-notice-danger{
+.kptcp-notice-danger{
   border-color: #dc3232;
 }
 
-.kpf-notice-normal{
+.kptcp-notice-normal{
   border-color: #222;
 }
 
 /**
  * 03. 38. Field: number
  */
-.kpf-field-number{
+.kptcp-field-number{
 
   input{
     width: 100%;
     margin: 0;
   }
 
-  .kpf--wrap{
+  .kptcp--wrap{
     position: relative;
     float: left;
     width: 100px;
   }
 
-  .kpf--unit{
+  .kptcp--unit{
     position: absolute;
     z-index: 1;
     right: 4px;
@@ -1970,9 +1970,9 @@
 /**
  * 03. 39. Field: link
  */
-.kpf-field-link{
+.kptcp-field-link{
 
-  .kpf--result{
+  .kptcp--result{
     display: inline-block;
     font-size: 12px;
     line-height: 16px;
@@ -1985,13 +1985,13 @@
     world-break: break-word;
   }
 
-  .kpf--wrap{
+  .kptcp--wrap{
     position: relative;
     float: left;
     width: 100px;
   }
 
-  .kpf--unit{
+  .kptcp--unit{
     position: absolute;
     z-index: 1;
     right: 4px;
@@ -2013,7 +2013,7 @@
 /**
  * 03. 40. others
  */
-.kpf-help{
+.kptcp-help{
   cursor: help;
   position: absolute;
   top: 0;
@@ -2022,16 +2022,16 @@
   font-size: 13px;
   color: #aaa;
 
-  .kpf-help-text{
+  .kptcp-help-text{
     display: none;
   }
 }
 
-.kpf--preview{
+.kptcp--preview{
   max-width: 100%;
 }
 
-.kpf-image-preview{
+.kptcp-image-preview{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2091,14 +2091,14 @@
   }
 }
 
-.kpf-field-custom{
+.kptcp-field-custom{
 
-  .kpf-field{
+  .kptcp-field{
     padding: 0;
   }
 }
 
-.kpf-field{
+.kptcp-field{
 
   .chosen-container-single .chosen-single{
     height: 28px;
@@ -2209,7 +2209,7 @@
     }
   }
 
-  .kpf--transparent-wrap{
+  .kptcp--transparent-wrap{
     display: none;
     position: relative;
     top: -1px;
@@ -2220,11 +2220,11 @@
     background-color: #fff;
   }
 
-  .wp-picker-active .kpf--transparent-wrap{
+  .wp-picker-active .kptcp--transparent-wrap{
     display: block;
   }
 
-  .kpf--transparent-slider{
+  .kptcp--transparent-slider{
     position: absolute;
     width: 190px;
     margin-left: 2px;
@@ -2260,7 +2260,7 @@
     }
   }
 
-  .kpf--transparent-offset{
+  .kptcp--transparent-offset{
     height: 18px;
     width: 200px;
     background: url(../images/checkerboard.png) repeat-y center left scroll #fff;
@@ -2268,7 +2268,7 @@
     box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
   }
 
-  .kpf--transparent-text{
+  .kptcp--transparent-text{
     position: absolute;
     top: 12px;
     right: 10px;
@@ -2279,7 +2279,7 @@
     color: #999;
   }
 
-  .kpf--transparent-button{
+  .kptcp--transparent-button{
     cursor: pointer;
     user-select: none;
     margin-top: 10px;
@@ -2295,7 +2295,7 @@
     transition: background-color .2s, border-color .2s, color .2s;
   }
 
-  .kpf--transparent-active{
+  .kptcp--transparent-active{
 
     .wp-color-result{
       background-image: url(../images/checkerboard.png);
@@ -2304,7 +2304,7 @@
       background-color: transparent !important;
     }
 
-    .kpf--transparent-button{
+    .kptcp--transparent-button{
       color: #fff;
       border-color: #3ea032;
       background-color: #4fb845;

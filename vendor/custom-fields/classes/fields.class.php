@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Fields' ) ) {
-  abstract class KPF_Fields extends KPF_Abstract {
+if ( ! class_exists( 'KPTCP_Fields' ) ) {
+  abstract class KPTCP_Fields extends KPTCP_Abstract {
 
     public function __construct( $field = array(), $value = '', $unique = '', $where = '', $parent = '' ) {
       $this->field  = $field;
@@ -65,15 +65,15 @@ if ( ! class_exists( 'KPF_Fields' ) ) {
     }
 
     public function field_before() {
-      return ( ! empty( $this->field['before'] ) ) ? '<div class="kpf-before-text">'. $this->field['before'] .'</div>' : '';
+      return ( ! empty( $this->field['before'] ) ) ? '<div class="kptcp-before-text">'. $this->field['before'] .'</div>' : '';
     }
 
     public function field_after() {
 
-      $output  = ( ! empty( $this->field['after'] ) ) ? '<div class="kpf-after-text">'. $this->field['after'] .'</div>' : '';
-      $output .= ( ! empty( $this->field['desc'] ) ) ? '<div class="clear"></div><div class="kpf-desc-text">'. $this->field['desc'] .'</div>' : '';
-      $output .= ( ! empty( $this->field['help'] ) ) ? '<div class="kpf-help"><span class="kpf-help-text">'. $this->field['help'] .'</span><i class="fas fa-question-circle"></i></div>' : '';
-      $output .= ( ! empty( $this->field['_error'] ) ) ? '<div class="kpf-error-text">'. $this->field['_error'] .'</div>' : '';
+      $output  = ( ! empty( $this->field['after'] ) ) ? '<div class="kptcp-after-text">'. $this->field['after'] .'</div>' : '';
+      $output .= ( ! empty( $this->field['desc'] ) ) ? '<div class="clear"></div><div class="kptcp-desc-text">'. $this->field['desc'] .'</div>' : '';
+      $output .= ( ! empty( $this->field['help'] ) ) ? '<div class="kptcp-help"><span class="kptcp-help-text">'. $this->field['help'] .'</span><i class="fas fa-question-circle"></i></div>' : '';
+      $output .= ( ! empty( $this->field['_error'] ) ) ? '<div class="kptcp-error-text">'. $this->field['_error'] .'</div>' : '';
 
       return $output;
 

@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_link' ) ) {
-  class KPF_Field_link extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_link' ) ) {
+  class KPTCP_Field_link extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -17,9 +17,9 @@ if ( ! class_exists( 'KPF_Field_link' ) ) {
     public function render() {
 
       $args = wp_parse_args( $this->field, array(
-        'add_title'    => esc_html__( 'Add Link', 'kpf' ),
-        'edit_title'   => esc_html__( 'Edit Link', 'kpf' ),
-        'remove_title' => esc_html__( 'Remove Link', 'kpf' ),
+        'add_title'    => esc_html__( 'Add Link', 'kptcp' ),
+        'edit_title'   => esc_html__( 'Edit Link', 'kptcp' ),
+        'remove_title' => esc_html__( 'Remove Link', 'kptcp' ),
       ) );
 
       $default_values = array(
@@ -36,17 +36,17 @@ if ( ! class_exists( 'KPF_Field_link' ) ) {
 
       echo $this->field_before();
 
-      echo '<textarea readonly="readonly" class="kpf--link hidden"></textarea>';
+      echo '<textarea readonly="readonly" class="kptcp--link hidden"></textarea>';
 
-      echo '<div class="'. esc_attr( $maybe_hidden ) .'"><div class="kpf--result">'. sprintf( '{url:"%s", text:"%s", target:"%s"}', $value['url'], $value['text'], $value['target'] ) .'</div></div>';
+      echo '<div class="'. esc_attr( $maybe_hidden ) .'"><div class="kptcp--result">'. sprintf( '{url:"%s", text:"%s", target:"%s"}', $value['url'], $value['text'], $value['target'] ) .'</div></div>';
 
-      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[url]' ) ) .'" value="'. esc_attr( $value['url'] ) .'"'. $this->field_attributes( array( 'class' => 'kpf--url' ) ) .' />';
-      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[text]' ) ) .'" value="'. esc_attr( $value['text'] ) .'" class="kpf--text" />';
-      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[target]' ) ) .'" value="'. esc_attr( $value['target'] ) .'" class="kpf--target" />';
+      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[url]' ) ) .'" value="'. esc_attr( $value['url'] ) .'"'. $this->field_attributes( array( 'class' => 'kptcp--url' ) ) .' />';
+      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[text]' ) ) .'" value="'. esc_attr( $value['text'] ) .'" class="kptcp--text" />';
+      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[target]' ) ) .'" value="'. esc_attr( $value['target'] ) .'" class="kptcp--target" />';
 
-      echo '<a href="#" class="button button-primary kpf--add'. esc_attr( $hidden ) .'">'. $args['add_title'] .'</a> ';
-      echo '<a href="#" class="button kpf--edit'. esc_attr( $maybe_hidden ) .'">'. $args['edit_title'] .'</a> ';
-      echo '<a href="#" class="button kpf-warning-primary kpf--remove'. esc_attr( $maybe_hidden ) .'">'. $args['remove_title'] .'</a>';
+      echo '<a href="#" class="button button-primary kptcp--add'. esc_attr( $hidden ) .'">'. $args['add_title'] .'</a> ';
+      echo '<a href="#" class="button kptcp--edit'. esc_attr( $maybe_hidden ) .'">'. $args['edit_title'] .'</a> ';
+      echo '<a href="#" class="button kptcp-warning-primary kptcp--remove'. esc_attr( $maybe_hidden ) .'">'. $args['remove_title'] .'</a>';
 
       echo $this->field_after();
 

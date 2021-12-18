@@ -1,28 +1,28 @@
 /**
  * 06. Taxonomy
  */
-.kpf-taxonomy{
+.kptcp-taxonomy{
   max-width: 95%;
 
-  > .kpf-field{
+  > .kptcp-field{
     border-top: none !important;
   }
 
-  > .kpf-field-heading{
+  > .kptcp-field-heading{
     font-size: 1.1em;
     padding: 20px !important;
     border: 1px solid #ddd;
   }
 
-  > .kpf-field-subheading{
+  > .kptcp-field-subheading{
     font-size: 12px;
     padding: 15px !important;
     border: 1px solid #ddd;
   }
 
-  > .kpf-field-submessage{
+  > .kptcp-field-submessage{
 
-    .kpf-submessage{
+    .kptcp-submessage{
       padding: 15px;
       border-left-width: 1px;
       border-left-style: solid;
@@ -31,11 +31,11 @@
     }
   }
 
-  > .kpf-field-notice{
+  > .kptcp-field-notice{
     background-color: transparent;
   }
 
-  .kpf-section-title{
+  .kptcp-section-title{
     display: block;
     padding: 15px ;
     background-color: #f9f9f9;
@@ -44,12 +44,12 @@
   }
 }
 
-.kpf-taxonomy-add-fields{
+.kptcp-taxonomy-add-fields{
 
-  > .kpf-field{
+  > .kptcp-field{
     padding: 8px 0;
 
-    > .kpf-title{
+    > .kptcp-title{
       float: none;
       width: 100%;
       padding: 2px 2px 4px 0;
@@ -60,11 +60,11 @@
       }
     }
 
-    > .kpf-fieldset{
+    > .kptcp-fieldset{
       float: none;
       width: 100%;
 
-      > .kpf-help{
+      > .kptcp-help{
         right: -5px;
       }
     }
@@ -75,12 +75,12 @@
   }
 }
 
-.kpf-taxonomy-edit-fields{
+.kptcp-taxonomy-edit-fields{
 
-  > .kpf-field{
+  > .kptcp-field{
     padding: 20px 0;
 
-    > .kpf-title{
+    > .kptcp-title{
       width: 200px;
 
       h4{
@@ -92,22 +92,22 @@
       }
     }
 
-    > .kpf-fieldset{
+    > .kptcp-fieldset{
       width: calc(100% - 220px);
 
-      > .kpf-help{
+      > .kptcp-help{
         top: -5px;
         right: -5px;
       }
     }
   }
 
-  > .kpf-field-submessage{
+  > .kptcp-field-submessage{
     margin: 20px 0;
   }
 
-  > .kpf-field-subheading,
-  > .kpf-field-heading{
+  > .kptcp-field-subheading,
+  > .kptcp-field-heading{
     margin: 20px 0;
     border: 1px solid #ddd;
   }

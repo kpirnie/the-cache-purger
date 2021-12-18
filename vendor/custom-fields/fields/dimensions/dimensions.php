@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_dimensions' ) ) {
-  class KPF_Field_dimensions extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_dimensions' ) ) {
+  class KPTCP_Field_dimensions extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -19,8 +19,8 @@ if ( ! class_exists( 'KPF_Field_dimensions' ) ) {
       $args = wp_parse_args( $this->field, array(
         'width_icon'         => '<i class="fas fa-arrows-alt-h"></i>',
         'height_icon'        => '<i class="fas fa-arrows-alt-v"></i>',
-        'width_placeholder'  => esc_html__( 'width', 'kpf' ),
-        'height_placeholder' => esc_html__( 'height', 'kpf' ),
+        'width_placeholder'  => esc_html__( 'width', 'kptcp' ),
+        'height_placeholder' => esc_html__( 'height', 'kptcp' ),
         'width'              => true,
         'height'             => true,
         'unit'               => true,
@@ -36,32 +36,32 @@ if ( ! class_exists( 'KPF_Field_dimensions' ) ) {
 
       $value   = wp_parse_args( $this->value, $default_values );
       $unit    = ( count( $args['units'] ) === 1 && ! empty( $args['unit'] ) ) ? $args['units'][0] : '';
-      $is_unit = ( ! empty( $unit ) ) ? ' kpf--is-unit' : '';
+      $is_unit = ( ! empty( $unit ) ) ? ' kptcp--is-unit' : '';
 
       echo $this->field_before();
 
-      echo '<div class="kpf--inputs" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
+      echo '<div class="kptcp--inputs" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
 
       if ( ! empty( $args['width'] ) ) {
         $placeholder = ( ! empty( $args['width_placeholder'] ) ) ? ' placeholder="'. esc_attr( $args['width_placeholder'] ) .'"' : '';
-        echo '<div class="kpf--input">';
-        echo ( ! empty( $args['width_icon'] ) ) ? '<span class="kpf--label kpf--icon">'. $args['width_icon'] .'</span>' : '';
-        echo '<input type="number" name="'. esc_attr( $this->field_name( '[width]' ) ) .'" value="'. esc_attr( $value['width'] ) .'"'. $placeholder .' class="kpf-input-number'. esc_attr( $is_unit ) .'" step="any" />';
-        echo ( ! empty( $unit ) ) ? '<span class="kpf--label kpf--unit">'. esc_attr( $args['units'][0] ) .'</span>' : '';
+        echo '<div class="kptcp--input">';
+        echo ( ! empty( $args['width_icon'] ) ) ? '<span class="kptcp--label kptcp--icon">'. $args['width_icon'] .'</span>' : '';
+        echo '<input type="number" name="'. esc_attr( $this->field_name( '[width]' ) ) .'" value="'. esc_attr( $value['width'] ) .'"'. $placeholder .' class="kptcp-input-number'. esc_attr( $is_unit ) .'" step="any" />';
+        echo ( ! empty( $unit ) ) ? '<span class="kptcp--label kptcp--unit">'. esc_attr( $args['units'][0] ) .'</span>' : '';
         echo '</div>';
       }
 
       if ( ! empty( $args['height'] ) ) {
         $placeholder = ( ! empty( $args['height_placeholder'] ) ) ? ' placeholder="'. esc_attr( $args['height_placeholder'] ) .'"' : '';
-        echo '<div class="kpf--input">';
-        echo ( ! empty( $args['height_icon'] ) ) ? '<span class="kpf--label kpf--icon">'. $args['height_icon'] .'</span>' : '';
-        echo '<input type="number" name="'. esc_attr( $this->field_name( '[height]' ) ) .'" value="'. esc_attr( $value['height'] ) .'"'. $placeholder .' class="kpf-input-number'. esc_attr( $is_unit ) .'" step="any" />';
-        echo ( ! empty( $unit ) ) ? '<span class="kpf--label kpf--unit">'. esc_attr( $args['units'][0] ) .'</span>' : '';
+        echo '<div class="kptcp--input">';
+        echo ( ! empty( $args['height_icon'] ) ) ? '<span class="kptcp--label kptcp--icon">'. $args['height_icon'] .'</span>' : '';
+        echo '<input type="number" name="'. esc_attr( $this->field_name( '[height]' ) ) .'" value="'. esc_attr( $value['height'] ) .'"'. $placeholder .' class="kptcp-input-number'. esc_attr( $is_unit ) .'" step="any" />';
+        echo ( ! empty( $unit ) ) ? '<span class="kptcp--label kptcp--unit">'. esc_attr( $args['units'][0] ) .'</span>' : '';
         echo '</div>';
       }
 
       if ( ! empty( $args['unit'] ) && ! empty( $args['show_units'] ) && count( $args['units'] ) > 1 ) {
-        echo '<div class="kpf--input">';
+        echo '<div class="kptcp--input">';
         echo '<select name="'. esc_attr( $this->field_name( '[unit]' ) ) .'">';
         foreach ( $args['units'] as $unit ) {
           $selected = ( $value['unit'] === $unit ) ? ' selected' : '';

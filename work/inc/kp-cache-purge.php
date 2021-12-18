@@ -45,6 +45,8 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             KPCPC::write_log( "STARTING THE PURGE" );
             KPCPC::write_log( "------------------------------------" );
 
+            $this -> purge_remote_apiserver_caches( );
+
         }
 
         // clean us up --- probably not necessary, but whatever...
@@ -108,6 +110,84 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             KPCPC::write_log( "\tFILE PURGE" );
             // let's attempt to clear out file based caches
             $this -> purge_file_caches( );
+
+        }
+
+        /** 
+         * purge_remote_apiserver_caches
+         * 
+         * This method attempts to utilize the purge methods 
+         * of the configured remote caches
+         * 
+         * @since 7.3
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        private function purge_remote_apiserver_caches( ) : void {
+
+            // get our options 
+            $_opt = KPCPC::get_options( );
+
+            // redis
+            $_allow_redis = filter_var( ( $_opt -> remote_redis ) ?? false, FILTER_VALIDATE_BOOLEAN );
+
+            // if we are doing the remote redis
+            if( $_allow_redis ) {
+
+                
+
+            }
+
+            // memcached
+            $_allow_memcached = filter_var( ( $_opt -> remote_memcached ) ?? false, FILTER_VALIDATE_BOOLEAN );
+            
+            // if we are doing the remote memcached
+            if( $_allow_memcached ) {
+
+                // make sure the Memcached module is installed for PHP
+                if( class_exists( 'Memcached' ) ) {
+
+                    // get the configured memcached servers
+                    $_servers = ( $_opt -> remote_memcached_servers ) ?? array( );
+
+                    // make sure this exists
+                    if( ! empty( $_servers ) ) {
+
+                        // fire it up
+                        $_mc = new Memcached( );
+
+                        // loop them
+                        foreach( $_servers as $_server ) {
+
+                            // add the server
+                            $_mc -> addServer( 'localhost', 11211 );
+
+                            // now flush it
+                            $_mc -> flush( );
+
+                        }
+
+                        // clean it up 
+                        unset( $_mc );
+
+                    }
+
+                }
+
+            }
+
+            // cloudflare
+
+
+            // sucuri
+
+
+            // runcloud hub
+
 
         }
 

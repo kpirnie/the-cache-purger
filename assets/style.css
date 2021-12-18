@@ -1,22 +1,26 @@
-.kpsh-half-field {
-    flex: 50%;
-}
-.kpf-nav-background, .kpf-tab-item, .kpf-theme-dark .kpf-nav ul li a,
-.kpf-theme-dark .kpf-header-inner, .kpf-theme-dark .kpf-footer {
+
+.kptcp-half-field {
+    width:45% !important;
+    display:inline-block !important;
+} .kptcp-half-field input {width:100%;}
+.kptcp-half-field .kptcp-title{width:15%;}
+.kptcp-half-field .kptcp-fieldset{width:calc(85% - 20px);}
+.kptcp-nav-background, .kptcp-tab-item, .kptcp-theme-dark .kptcp-nav ul li a,
+.kptcp-theme-dark .kptcp-header-inner, .kptcp-theme-dark .kptcp-footer {
     background: #01123c !important;
 }
-.kpf-save, .kpf-tab-expanded, .kpf-nav ul li a.kpf-active, .kpf-theme-dark .kpf-search input,
-.kpf-theme-dark .kpf-expand-all {
+.kptcp-save, .kptcp-tab-expanded, .kptcp-nav ul li a.kptcp-active, .kptcp-theme-dark .kptcp-search input,
+.kptcp-theme-dark .kptcp-expand-all {
     background: #2d7696 !important;
 }
-.kpf-theme-dark .kpf-header-inner h1 small {
+.kptcp-theme-dark .kptcp-header-inner h1 small {
     color: #2d7696 !important;
 }
-.kpf-theme-dark .kpf-search input, .kpf-theme-dark .kpf-search input::placeholder {
+.kptcp-theme-dark .kptcp-search input, .kptcp-theme-dark .kptcp-search input::placeholder {
     color:#fff !important;
 }
-.kpfw-doc-content ul {
+.kptcp-doc-content ul {
     margin:10px 25px;
 }
-.kpfw-doc-content h2 {font-size:1.7em;}
-.kpfw-doc-content h3 {font-size:1.25em;}
+.kptcp-doc-content h2 {font-size:1.7em;}
+.kptcp-doc-content h3 {font-size:1.25em;}

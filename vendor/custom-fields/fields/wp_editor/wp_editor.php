@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_wp_editor' ) ) {
-  class KPF_Field_wp_editor extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_wp_editor' ) ) {
+  class KPTCP_Field_wp_editor extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -41,11 +41,11 @@ if ( ! class_exists( 'KPF_Field_wp_editor' ) ) {
 
       echo $this->field_before();
 
-      echo ( kpf_wp_editor_api() ) ? '<div class="kpf-wp-editor" data-editor-settings="'. esc_attr( json_encode( $editor_settings ) ) .'">' : '';
+      echo ( kptcp_wp_editor_api() ) ? '<div class="kptcp-wp-editor" data-editor-settings="'. esc_attr( json_encode( $editor_settings ) ) .'">' : '';
 
       echo '<textarea name="'. esc_attr( $this->field_name() ) .'"'. $this->field_attributes( $attributes ) . $editor_height .'>'. $this->value .'</textarea>';
 
-      echo ( kpf_wp_editor_api() ) ? '</div>' : '';
+      echo ( kptcp_wp_editor_api() ) ? '</div>' : '';
 
       echo $this->field_after();
 
@@ -53,7 +53,7 @@ if ( ! class_exists( 'KPF_Field_wp_editor' ) ) {
 
     public function enqueue() {
 
-      if ( kpf_wp_editor_api() && function_exists( 'wp_enqueue_editor' ) ) {
+      if ( kptcp_wp_editor_api() && function_exists( 'wp_enqueue_editor' ) ) {
 
         wp_enqueue_editor();
 
@@ -79,7 +79,7 @@ if ( ! class_exists( 'KPF_Field_wp_editor' ) ) {
       $media_buttons = ob_get_clean();
 
       echo '<script type="text/javascript">';
-      echo 'var kpf_media_buttons = '. json_encode( $media_buttons ) .';';
+      echo 'var kptcp_media_buttons = '. json_encode( $media_buttons ) .';';
       echo '</script>';
 
     }
@@ -87,17 +87,17 @@ if ( ! class_exists( 'KPF_Field_wp_editor' ) ) {
     // Setup wp editor settings
     public function setup_wp_editor_settings() {
 
-      if ( kpf_wp_editor_api() && class_exists( '_WP_Editors') ) {
+      if ( kptcp_wp_editor_api() && class_exists( '_WP_Editors') ) {
 
-        $defaults = apply_filters( 'kpf_wp_editor', array(
+        $defaults = apply_filters( 'kptcp_wp_editor', array(
           'tinymce' => array(
             'wp_skip_init' => true
           ),
         ) );
 
-        $setup = _WP_Editors::parse_settings( 'kpf_wp_editor', $defaults );
+        $setup = _WP_Editors::parse_settings( 'kptcp_wp_editor', $defaults );
 
-        _WP_Editors::editor_settings( 'kpf_wp_editor', $setup );
+        _WP_Editors::editor_settings( 'kptcp_wp_editor', $setup );
 
       }
 

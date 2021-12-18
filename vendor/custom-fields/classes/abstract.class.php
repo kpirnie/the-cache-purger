@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Abstract' ) ) {
-  abstract class KPF_Abstract {
+if ( ! class_exists( 'KPTCP_Abstract' ) ) {
+  abstract class KPTCP_Abstract {
 
     public $abstract   = '';
     public $output_css = '';
@@ -18,7 +18,7 @@ if ( ! class_exists( 'KPF_Abstract' ) ) {
       // Collect output css and typography
       if ( ! empty( $this->args['output_css'] ) || ! empty( $this->args['enqueue_webfont'] ) ) {
         add_action( 'wp_enqueue_scripts', array( $this, 'collect_output_css_and_typography' ), 10 );
-        KPF::$css = apply_filters( "kpf_{$this->unique}_output_css", KPF::$css, $this );
+        KPTCP::$css = apply_filters( "kptcp_{$this->unique}_output_css", KPTCP::$css, $this );
       }
 
     }
@@ -37,7 +37,7 @@ if ( ! class_exists( 'KPF_Abstract' ) ) {
           $field_type   = ( ! empty( $field['type'] ) ) ? $field['type'] : '';
           $field_output = ( ! empty( $field['output'] ) ) ? $field['output'] : '';
           $field_check  = ( $field_type === 'typography' || $field_output ) ? true : false;
-          $field_class  = 'KPF_Field_' . $field_type;
+          $field_class  = 'KPTCP_Field_' . $field_type;
 
           if ( $field_type && $field_id ) {
 
@@ -111,7 +111,7 @@ if ( ! class_exists( 'KPF_Abstract' ) ) {
 
                 // output css
                 if ( $field_output && $this->args['output_css'] ) {
-                  KPF::$css .= $instance->output();
+                  KPTCP::$css .= $instance->output();
                 }
 
                 unset( $instance );

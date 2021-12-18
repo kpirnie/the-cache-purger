@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_upload' ) ) {
-  class KPF_Field_upload extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_upload' ) ) {
+  class KPTCP_Field_upload extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -21,8 +21,8 @@ if ( ! class_exists( 'KPF_Field_upload' ) ) {
         'preview'        => false,
         'preview_width'  => '',
         'preview_height' => '',
-        'button_title'   => esc_html__( 'Upload', 'kpf' ),
-        'remove_title'   => esc_html__( 'Remove', 'kpf' ),
+        'button_title'   => esc_html__( 'Upload', 'kptcp' ),
+        'remove_title'   => esc_html__( 'Remove', 'kptcp' ),
       ) );
 
       echo $this->field_before();
@@ -40,18 +40,18 @@ if ( ! class_exists( 'KPF_Field_upload' ) ) {
         $preview_style  = ( ! empty( $preview_width ) || ! empty( $preview_height ) ) ? ' style="'. esc_attr( $preview_width . $preview_height ) .'"': '';
         $preview_hidden = ( empty( $preview_src ) ) ? ' hidden' : '';
 
-        echo '<div class="kpf--preview'. esc_attr( $preview_hidden ) .'">';
-        echo '<div class="kpf-image-preview"'. $preview_style .'>';
-        echo '<i class="kpf--remove fas fa-times"></i><span><img src="'. esc_url( $preview_src ) .'" class="kpf--src" /></span>';
+        echo '<div class="kptcp--preview'. esc_attr( $preview_hidden ) .'">';
+        echo '<div class="kptcp-image-preview"'. $preview_style .'>';
+        echo '<i class="kptcp--remove fas fa-times"></i><span><img src="'. esc_url( $preview_src ) .'" class="kptcp--src" /></span>';
         echo '</div>';
         echo '</div>';
 
       }
 
-      echo '<div class="kpf--wrap">';
+      echo '<div class="kptcp--wrap">';
       echo '<input type="text" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'"'. $this->field_attributes() .'/>';
-      echo '<a href="#" class="button button-primary kpf--button" data-library="'. esc_attr( $library ) .'">'. $args['button_title'] .'</a>';
-      echo '<a href="#" class="button button-secondary kpf-warning-primary kpf--remove'. esc_attr( $hidden ) .'">'. $args['remove_title'] .'</a>';
+      echo '<a href="#" class="button button-primary kptcp--button" data-library="'. esc_attr( $library ) .'">'. $args['button_title'] .'</a>';
+      echo '<a href="#" class="button button-secondary kptcp-warning-primary kptcp--remove'. esc_attr( $hidden ) .'">'. $args['remove_title'] .'</a>';
       echo '</div>';
 
       echo $this->field_after();

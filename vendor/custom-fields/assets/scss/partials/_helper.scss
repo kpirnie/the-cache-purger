@@ -1,13 +1,13 @@
 /**
  * 10. Helper
  */
-.kpf-subtitle-text{
+.kptcp-subtitle-text{
   margin-top: 6px;
   font-weight: 400;
   color: #999;
 }
 
-.kpf-desc-text{
+.kptcp-desc-text{
   clear: both;
   float: left;
   width: 100%;
@@ -16,32 +16,32 @@
   color: #999;
 }
 
-.kpf-error-text{
+.kptcp-error-text{
   margin-top: 6px;
   color: #d02c21;
 }
 
-.kpf-before-text{
+.kptcp-before-text{
   margin-bottom: 6px;
 }
 
-.kpf-after-text{
+.kptcp-after-text{
   margin-top: 6px;
 }
 
-.kpf-metabox-hide{
+.kptcp-metabox-hide{
   display: none !important;
 }
 
-.kpf-metabox-show{
+.kptcp-metabox-show{
   display: block !important;
 }
 
-.kpf-depend-hidden.kpf-depend-on{
+.kptcp-depend-hidden.kptcp-depend-on{
   display: none;
 }
 
-.kpf-depend-visible.kpf-depend-on{
+.kptcp-depend-visible.kptcp-depend-on{
   display: block;
   opacity: 0.75;
   filter: grayscale(1);
@@ -61,7 +61,7 @@
   }
 }
 
-.kpf-warning-primary{
+.kptcp-warning-primary{
   color: #fff !important;
   border-color: #dc3545 !important;
   background: #dc3545 !important;
@@ -82,7 +82,7 @@
   }
 }
 
-.kpf-form-result{
+.kptcp-form-result{
   display: none;
   float: left;
   padding: 0 8px;
@@ -93,21 +93,21 @@
   border-radius: 2px;
 }
 
-.kpf-form-show{
+.kptcp-form-show{
   display: block;
 }
 
-.kpf-form-success{
+.kptcp-form-success{
   color: #fff;
   background-color: #46b450;
 }
 
-.kpf-form-warning{
+.kptcp-form-warning{
   color: #8a6d3b;
   background-color: #faebcc;
 }
 
-.kpf-label-error{
+.kptcp-label-error{
   position: relative;
   top: -2px;
   display: inline-block;
@@ -124,23 +124,23 @@
   border-radius: 2px;
 }
 
-.kpf-no-option{
+.kptcp-no-option{
   padding: 30px;
 }
 
-.kpf-input-number{
+.kptcp-input-number{
   -moz-appearance:textfield;
 }
 
-.kpf-input-number::-webkit-inner-spin-button,
-.kpf-input-number::-webkit-outer-spin-button{
+.kptcp-input-number::-webkit-inner-spin-button,
+.kptcp-input-number::-webkit-outer-spin-button{
   -webkit-appearance: none;
   margin: 0;
 }
 
-.kpf-fa5-shims{
+.kptcp-fa5-shims{
 
-  .kpf{
+  .kptcp{
 
     .fas,
     .far,

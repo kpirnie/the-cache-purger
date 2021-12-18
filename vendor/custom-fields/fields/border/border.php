@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_border' ) ) {
-  class KPF_Field_border extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_border' ) ) {
+  class KPTCP_Field_border extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -22,11 +22,11 @@ if ( ! class_exists( 'KPF_Field_border' ) ) {
         'bottom_icon'        => '<i class="fas fa-long-arrow-alt-down"></i>',
         'right_icon'         => '<i class="fas fa-long-arrow-alt-right"></i>',
         'all_icon'           => '<i class="fas fa-arrows-alt"></i>',
-        'top_placeholder'    => esc_html__( 'top', 'kpf' ),
-        'right_placeholder'  => esc_html__( 'right', 'kpf' ),
-        'bottom_placeholder' => esc_html__( 'bottom', 'kpf' ),
-        'left_placeholder'   => esc_html__( 'left', 'kpf' ),
-        'all_placeholder'    => esc_html__( 'all', 'kpf' ),
+        'top_placeholder'    => esc_html__( 'top', 'kptcp' ),
+        'right_placeholder'  => esc_html__( 'right', 'kptcp' ),
+        'bottom_placeholder' => esc_html__( 'bottom', 'kptcp' ),
+        'left_placeholder'   => esc_html__( 'left', 'kptcp' ),
+        'all_placeholder'    => esc_html__( 'all', 'kptcp' ),
         'top'                => true,
         'left'               => true,
         'bottom'             => true,
@@ -48,15 +48,15 @@ if ( ! class_exists( 'KPF_Field_border' ) ) {
       );
 
       $border_props = array(
-        'solid'     => esc_html__( 'Solid', 'kpf' ),
-        'dashed'    => esc_html__( 'Dashed', 'kpf' ),
-        'dotted'    => esc_html__( 'Dotted', 'kpf' ),
-        'double'    => esc_html__( 'Double', 'kpf' ),
-        'inset'     => esc_html__( 'Inset', 'kpf' ),
-        'outset'    => esc_html__( 'Outset', 'kpf' ),
-        'groove'    => esc_html__( 'Groove', 'kpf' ),
-        'ridge'     => esc_html__( 'ridge', 'kpf' ),
-        'none'      => esc_html__( 'None', 'kpf' )
+        'solid'     => esc_html__( 'Solid', 'kptcp' ),
+        'dashed'    => esc_html__( 'Dashed', 'kptcp' ),
+        'dotted'    => esc_html__( 'Dotted', 'kptcp' ),
+        'double'    => esc_html__( 'Double', 'kptcp' ),
+        'inset'     => esc_html__( 'Inset', 'kptcp' ),
+        'outset'    => esc_html__( 'Outset', 'kptcp' ),
+        'groove'    => esc_html__( 'Groove', 'kptcp' ),
+        'ridge'     => esc_html__( 'ridge', 'kptcp' ),
+        'none'      => esc_html__( 'None', 'kptcp' )
       );
 
       $default_value = ( ! empty( $this->field['default'] ) ) ? wp_parse_args( $this->field['default'], $default_value ) : $default_value;
@@ -65,16 +65,16 @@ if ( ! class_exists( 'KPF_Field_border' ) ) {
 
       echo $this->field_before();
 
-      echo '<div class="kpf--inputs" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
+      echo '<div class="kptcp--inputs" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
 
       if ( ! empty( $args['all'] ) ) {
 
         $placeholder = ( ! empty( $args['all_placeholder'] ) ) ? ' placeholder="'. esc_attr( $args['all_placeholder'] ) .'"' : '';
 
-        echo '<div class="kpf--input">';
-        echo ( ! empty( $args['all_icon'] ) ) ? '<span class="kpf--label kpf--icon">'. $args['all_icon'] .'</span>' : '';
-        echo '<input type="number" name="'. esc_attr( $this->field_name( '[all]' ) ) .'" value="'. esc_attr( $value['all'] ) .'"'. $placeholder .' class="kpf-input-number kpf--is-unit" step="any" />';
-        echo ( ! empty( $args['unit'] ) ) ? '<span class="kpf--label kpf--unit">'. esc_attr( $args['unit'] ) .'</span>' : '';
+        echo '<div class="kptcp--input">';
+        echo ( ! empty( $args['all_icon'] ) ) ? '<span class="kptcp--label kptcp--icon">'. $args['all_icon'] .'</span>' : '';
+        echo '<input type="number" name="'. esc_attr( $this->field_name( '[all]' ) ) .'" value="'. esc_attr( $value['all'] ) .'"'. $placeholder .' class="kptcp-input-number kptcp--is-unit" step="any" />';
+        echo ( ! empty( $args['unit'] ) ) ? '<span class="kptcp--label kptcp--unit">'. esc_attr( $args['unit'] ) .'</span>' : '';
         echo '</div>';
 
       } else {
@@ -93,10 +93,10 @@ if ( ! class_exists( 'KPF_Field_border' ) ) {
 
           $placeholder = ( ! empty( $args[$property.'_placeholder'] ) ) ? ' placeholder="'. esc_attr( $args[$property.'_placeholder'] ) .'"' : '';
 
-          echo '<div class="kpf--input">';
-          echo ( ! empty( $args[$property.'_icon'] ) ) ? '<span class="kpf--label kpf--icon">'. $args[$property.'_icon'] .'</span>' : '';
-          echo '<input type="number" name="'. esc_attr( $this->field_name( '['. $property .']' ) ) .'" value="'. esc_attr( $value[$property] ) .'"'. $placeholder .' class="kpf-input-number kpf--is-unit" step="any" />';
-          echo ( ! empty( $args['unit'] ) ) ? '<span class="kpf--label kpf--unit">'. esc_attr( $args['unit'] ) .'</span>' : '';
+          echo '<div class="kptcp--input">';
+          echo ( ! empty( $args[$property.'_icon'] ) ) ? '<span class="kptcp--label kptcp--icon">'. $args[$property.'_icon'] .'</span>' : '';
+          echo '<input type="number" name="'. esc_attr( $this->field_name( '['. $property .']' ) ) .'" value="'. esc_attr( $value[$property] ) .'"'. $placeholder .' class="kptcp-input-number kptcp--is-unit" step="any" />';
+          echo ( ! empty( $args['unit'] ) ) ? '<span class="kptcp--label kptcp--unit">'. esc_attr( $args['unit'] ) .'</span>' : '';
           echo '</div>';
 
         }
@@ -104,7 +104,7 @@ if ( ! class_exists( 'KPF_Field_border' ) ) {
       }
 
       if ( ! empty( $args['style'] ) ) {
-        echo '<div class="kpf--input">';
+        echo '<div class="kptcp--input">';
         echo '<select name="'. esc_attr( $this->field_name( '[style]' ) ) .'">';
         foreach ( $border_props as $border_prop_key => $border_prop_value ) {
           $selected = ( $value['style'] === $border_prop_key ) ? ' selected' : '';
@@ -118,9 +118,9 @@ if ( ! class_exists( 'KPF_Field_border' ) ) {
 
       if ( ! empty( $args['color'] ) ) {
         $default_color_attr = ( ! empty( $default_value['color'] ) ) ? ' data-default-color="'. esc_attr( $default_value['color'] ) .'"' : '';
-        echo '<div class="kpf--color">';
-        echo '<div class="kpf-field-color">';
-        echo '<input type="text" name="'. esc_attr( $this->field_name( '[color]' ) ) .'" value="'. esc_attr( $value['color'] ) .'" class="kpf-color"'. $default_color_attr .' />';
+        echo '<div class="kptcp--color">';
+        echo '<div class="kptcp-field-color">';
+        echo '<input type="text" name="'. esc_attr( $this->field_name( '[color]' ) ) .'" value="'. esc_attr( $value['color'] ) .'" class="kptcp-color"'. $default_color_attr .' />';
         echo '</div>';
         echo '</div>';
       }

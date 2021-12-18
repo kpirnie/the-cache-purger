@@ -45,7 +45,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
         public function kpcp_admin( ) : void {
 
             // make sure our field framework actually exists
-            if( class_exists( 'KPF' ) ) {
+            if( class_exists( 'KPTCP' ) ) {
 
                 // hold our settings id
                 $_cp_settings_id = 'kpcp_settings';
@@ -54,7 +54,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 $_cp_manual_purge = 'kpcp_manual_purge';
 
                 // create the main options page
-                KPF::createOptions( $_cp_settings_id, array(
+                KPTCP::createOptions( $_cp_settings_id, array(
                     'menu_title' => __( 'The Cache Purge' ),
                     'menu_slug'  => 'kpcp_settings',
                     'menu_capability' => 'list_users',
@@ -70,15 +70,23 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 ) );
 
                 // Settings
-                KPF::createSection( $_cp_settings_id, 
+                KPTCP::createSection( $_cp_settings_id, 
                     array(
                         'title'  => __( 'Settings' ),
                         'fields' => $this -> kpcp_settings( ),
                     )
                 );
 
+                // API/Server Settings
+                KPTCP::createSection( $_cp_settings_id, 
+                    array(
+                        'title'  => __( 'API/Server Settings' ),
+                        'fields' => $this -> kpcp_apiserver_settings( ),
+                    )
+                );
+
                 // Documentation
-                KPF::createSection( $_cp_settings_id, 
+                KPTCP::createSection( $_cp_settings_id, 
                     array(
                         'title'  => __( 'Documentation' ),
                         'fields' => array(
@@ -91,7 +99,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 );
 
                 // Export/Import Settings
-                KPF::createSection( $_cp_settings_id, 
+                KPTCP::createSection( $_cp_settings_id, 
                     array(
                         'title'  => __( 'Export/Import Settings' ),
                         'fields' => array(
@@ -103,7 +111,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 );
 
                 // on settings save, clear cache if we are configured to do so
-                add_action( 'kpf_' . $_cp_settings_id . '_save_after', function( ) use( $_cp_settings_id ) : void {
+                add_action( 'kptcp_' . $_cp_settings_id . '_save_after', function( ) use( $_cp_settings_id ) : void {
 
                     // setup the cache purger
                     $_cp = new KP_Cache_Purge( );
@@ -112,7 +120,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     $_cp -> kp_do_purge( );
 
                     // log the purge
-                    KPCPC::write_log( "Settings Cache Cleared on: " . 'kpf_' . $_cp_settings_id . '_save_after' );
+                    KPCPC::write_log( "Settings Cache Cleared on: " . 'kptcp_' . $_cp_settings_id . '_save_after' );
 
                     // clean it up
                     unset( $_cp );
@@ -125,7 +133,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
 
                     // set the arguments for this admin bar menu item
                     $_args = array (
-                        'id' => 'book',
+                        'id' => 'tcpmp',
                         'title' => '<span class="ab-icon dashicons-layout"></span> ' . __( 'Master Cache Purge' ),
                         'href' => admin_url( 'admin.php?page=kpcp_settings&the_purge=true' ),
                         'meta' => array( 'title' => _( 'Click here to purge all of your caches.' ) ),
@@ -137,6 +145,171 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 }, PHP_INT_MAX );
 
             }
+
+        }
+
+        /** 
+         * kpcp_apiserver_settings
+         * 
+         * Private method pull together the api/server settings fields
+         * 
+         * @since 7.3
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return array Returns an array representing the settings fields
+         * 
+        */
+        private function kpcp_apiserver_settings( ) : array {
+
+            // hold the returnable array
+            $_ret = array(
+
+                // remote redis
+                array(
+                    'id' => 'remote_redis',
+                    'type' => 'switcher',
+                    'title' => __( 'Remote Redis server?' ),
+                    'desc' => __( 'Please only switch this on if you utilize a remote Redis Server.' ),
+                    'default' => false,
+                ),
+
+                // remote redis servers
+                array(
+                    'id' => 'remote_redis_servers',
+                    'type' => 'repeater',
+                    'title' => __( 'Redis Servers' ),
+                    'max' => 10,
+                    'class' => 'inlinable-container',
+                    'button_title' => __( 'Add New Server' ),
+                    'dependency' => array( 'remote_redis', '==', true ),
+                    'fields' => array(
+
+                        // redis server
+                        array(
+                            'id' => 'remote_redis_server',
+                            'title' => __( 'Server' ),
+                            'type' => 'text',
+                            'class' => 'kptcp-half-field',
+                            'desc' => __( 'Enter the IP address of the server.' ),
+                        ),
+
+                        // redis port
+                        array(
+                            'id' => 'remote_redis_port',
+                            'title' => __( 'Port' ),
+                            'type' => 'text',
+                            'class' => 'kptcp-half-field',
+                            'desc' => __( 'Enter the Port number of the server.' ),
+                        ),
+                    ),
+                ),
+
+                // remote memcached
+                array(
+                    'id' => 'remote_memcached',
+                    'type' => 'switcher',
+                    'title' => __( 'Remote Memcached server?' ),
+                    'desc' => __( 'Please only switch this on if you utilize a remote Memcached Server.' ),
+                    'default' => false,
+                ),
+                
+                // remote memcached servers
+                array(
+                    'id' => 'remote_memcached_servers',
+                    'type' => 'repeater',
+                    'title' => __( 'Memcached Servers' ),
+                    'max' => 10,
+                    'class' => 'inlinable-container',
+                    'button_title' => __( 'Add New Server' ),
+                    'dependency' => array( 'remote_memcached', '==', true ),
+                    'fields' => array(
+
+                        // redis server
+                        array(
+                            'id' => 'remote_memcached_server',
+                            'title' => __( 'Server' ),
+                            'type' => 'text',
+                            'class' => 'kptcp-half-field',
+                            'desc' => __( 'Enter the IP address of the server.' ),
+                        ),
+
+                        // redis port
+                        array(
+                            'id' => 'remote_memcached_port',
+                            'title' => __( 'Port' ),
+                            'type' => 'text',
+                            'class' => 'kptcp-half-field',
+                            'desc' => __( 'Enter the Port number of the server.' ),
+                        ),
+                    ),
+                ),
+
+                // api keys
+                array(
+                    'id' => 'service_api_keys',
+                    'type' => 'fieldset',
+                    'title' => __( 'Service API Keys' ),
+                    'subtitle' => __( 'These are all optional, and only necessary if you do not have the service\'s plugin installed on your site, but their caches are still used.<br /><br />Please consult with your hosting provider or IT Team if you do not know if they are in use.' ),
+                    'fields' => array(
+                        
+                        // cloudflare
+                        array(
+                            'id' => 'cloudflare_token',
+                            'type' => 'text',
+                            'title' => __( 'Cloudflare Token' ),
+                            'desc' => __( 'Enter your Cloudflare API Token. If you do not have one, you can create one here: <a href="https://dash.cloudflare.com/profile/api-tokens" target="_blank">https://dash.cloudflare.com/profile/api-tokens</a><br /><strong>NOTE: </strong>This is stored in plain-text.' ),
+                            'attributes'  => array( 'type' => 'password', ),
+                        ),
+
+                        // Sucuri Key
+                        array(
+                            'id' => 'sucuri_key',
+                            'type' => 'text',
+                            'title' => __( 'Sucuri Key' ),
+                            'desc' => __( 'Enter your Sucuri API Key. If you do not have one, you can find it in your site\'s Firewall here: <a href="https://waf.sucuri.net/" target="_blank">https://waf.sucuri.net/</a>. Click into your site, then Settings, then API.<br /><strong>NOTE: </strong>This is stored in plain-text.' ),
+                            'attributes'  => array( 'type' => 'password', ),
+                            'class' => 'kptcp-half-field',
+                        ),
+
+                        // Sucuri Secret
+                        array(
+                            'id' => 'sucuri_secret',
+                            'type' => 'text',
+                            'title' => __( 'Sucuri Secret' ),
+                            'desc' => __( 'Enter your Sucuri API Secret. If you do not have one, you can find it in your site\'s Firewall here: <a href="https://waf.sucuri.net/" target="_blank">https://waf.sucuri.net/</a>. Click into your site, then Settings, then API.<br /><strong>NOTE: </strong>This is stored in plain-text.' ),
+                            'attributes'  => array( 'type' => 'password', ),
+                            'class' => 'kptcp-half-field',
+                        ),
+
+                        // RunCloud Key
+                        array(
+                            'id' => 'runcloud_key',
+                            'type' => 'text',
+                            'title' => __( 'RunCloud Key' ),
+                            'desc' => __( 'Enter your RunCloud API Key. If you do not have one, you can find it here: <a href="https://manage.runcloud.io/settings/apikey" target="_blank">https://manage.runcloud.io/settings/apikey</a>.<br /><strong>NOTE: </strong>This is stored in plain-text.' ),
+                            'attributes'  => array( 'type' => 'password', ),
+                            'class' => 'kptcp-half-field',
+                        ),
+
+                        // RunCloud Secret
+                        array(
+                            'id' => 'runcloud_secret',
+                            'type' => 'text',
+                            'title' => __( 'RunCloud Secret' ),
+                            'desc' => __( 'Enter your RunCloud API Key. If you do not have one, you can find it here: <a href="https://manage.runcloud.io/settings/apikey" target="_blank">https://manage.runcloud.io/settings/apikey</a>.<br /><strong>NOTE: </strong>This is stored in plain-text.' ),
+                            'attributes'  => array( 'type' => 'password', ),
+                            'class' => 'kptcp-half-field',
+                        ),
+
+                    ),
+                ),
+
+            );
+
+            // return 
+            return $_ret;
 
         }
 
@@ -195,6 +368,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 array(
                     'id' => 'on_post_exclude',
                     'type' => 'select',
+                    'chosen' => true,
                     'multiple' => true,
                     'title' => __( 'Excluded Posts' ),
                     'placeholder' => __( 'Please select the exclusions...' ),
@@ -217,6 +391,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 array(
                     'id' => 'on_page_exclude',
                     'type' => 'select',
+                    'chosen' => true,
                     'multiple' => true,
                     'title' => __( 'Excluded Pages' ),
                     'placeholder' => __( 'Please select the exclusions...' ),
@@ -239,6 +414,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 array(
                     'id' => 'on_cpt_exclude',
                     'type' => 'select',
+                    'chosen' => true,
                     'multiple' => true,
                     'title' => __( 'Excluded CPTs' ),
                     'placeholder' => __( 'Please select the exclusions...' ),
@@ -302,6 +478,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 $_tmp[] = array(
                     'id' => 'on_form_exclude',
                     'type' => 'select',
+                    'chosen' => true,
                     'multiple' => true,
                     'title' => __( 'Excluded Forms' ),
                     'placeholder' => __( 'Please select the exclusions...' ),
@@ -329,6 +506,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 $_tmp[] = array(
                     'id' => 'on_acf_exclude',
                     'type' => 'select',
+                    'chosen' => true,
                     'multiple' => true,
                     'title' => __( 'Excluded Field Groups' ),
                     'placeholder' => __( 'Please select the exclusions...' ),

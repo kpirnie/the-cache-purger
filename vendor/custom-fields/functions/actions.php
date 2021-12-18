@@ -7,28 +7,28 @@
  * @version 1.0.0
  *
  */
-if ( ! function_exists( 'kpf_get_icons' ) ) {
-  function kpf_get_icons() {
+if ( ! function_exists( 'kptcp_get_icons' ) ) {
+  function kptcp_get_icons() {
 
     $nonce = ( ! empty( $_POST[ 'nonce' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'nonce' ] ) ) : '';
 
-    if ( ! wp_verify_nonce( $nonce, 'kpf_icon_nonce' ) ) {
-      wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'kpf' ) ) );
+    if ( ! wp_verify_nonce( $nonce, 'kptcp_icon_nonce' ) ) {
+      wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'kptcp' ) ) );
     }
 
     ob_start();
 
-    $icon_library = ( apply_filters( 'kpf_fa4', false ) ) ? 'fa4' : 'fa5';
+    $icon_library = ( apply_filters( 'kptcp_fa4', false ) ) ? 'fa4' : 'fa5';
 
-    KPF::include_plugin_file( 'fields/icon/'. $icon_library .'-icons.php' );
+    KPTCP::include_plugin_file( 'fields/icon/'. $icon_library .'-icons.php' );
 
-    $icon_lists = apply_filters( 'kpf_field_icon_add_icons', kpf_get_default_icons() );
+    $icon_lists = apply_filters( 'kptcp_field_icon_add_icons', kptcp_get_default_icons() );
 
     if ( ! empty( $icon_lists ) ) {
 
       foreach ( $icon_lists as $list ) {
 
-        echo ( count( $icon_lists ) >= 2 ) ? '<div class="kpf-icon-title">'. esc_attr( $list['title'] ) .'</div>' : '';
+        echo ( count( $icon_lists ) >= 2 ) ? '<div class="kptcp-icon-title">'. esc_attr( $list['title'] ) .'</div>' : '';
 
         foreach ( $list['icons'] as $icon ) {
           echo '<i title="'. esc_attr( $icon ) .'" class="'. esc_attr( $icon ) .'"></i>';
@@ -38,7 +38,7 @@ if ( ! function_exists( 'kpf_get_icons' ) ) {
 
     } else {
 
-      echo '<div class="kpf-error-text">'. esc_html__( 'No data available.', 'kpf' ) .'</div>';
+      echo '<div class="kptcp-error-text">'. esc_html__( 'No data available.', 'kptcp' ) .'</div>';
 
     }
 
@@ -47,7 +47,7 @@ if ( ! function_exists( 'kpf_get_icons' ) ) {
     wp_send_json_success( array( 'content' => $content ) );
 
   }
-  add_action( 'wp_ajax_kpf-get-icons', 'kpf_get_icons' );
+  add_action( 'wp_ajax_kptcp-get-icons', 'kptcp_get_icons' );
 }
 
 /**
@@ -58,18 +58,18 @@ if ( ! function_exists( 'kpf_get_icons' ) ) {
  * @version 1.0.0
  *
  */
-if ( ! function_exists( 'kpf_export' ) ) {
-  function kpf_export() {
+if ( ! function_exists( 'kptcp_export' ) ) {
+  function kptcp_export() {
 
     $nonce  = ( ! empty( $_GET[ 'nonce' ] ) ) ? sanitize_text_field( wp_unslash( $_GET[ 'nonce' ] ) ) : '';
     $unique = ( ! empty( $_GET[ 'unique' ] ) ) ? sanitize_text_field( wp_unslash( $_GET[ 'unique' ] ) ) : '';
 
-    if ( ! wp_verify_nonce( $nonce, 'kpf_backup_nonce' ) ) {
-      die( esc_html__( 'Error: Invalid nonce verification.', 'kpf' ) );
+    if ( ! wp_verify_nonce( $nonce, 'kptcp_backup_nonce' ) ) {
+      die( esc_html__( 'Error: Invalid nonce verification.', 'kptcp' ) );
     }
 
     if ( empty( $unique ) ) {
-      die( esc_html__( 'Error: Invalid key.', 'kpf' ) );
+      die( esc_html__( 'Error: Invalid key.', 'kptcp' ) );
     }
 
     // Export
@@ -84,7 +84,7 @@ if ( ! function_exists( 'kpf_export' ) ) {
     die();
 
   }
-  add_action( 'wp_ajax_kpf-export', 'kpf_export' );
+  add_action( 'wp_ajax_kptcp-export', 'kptcp_export' );
 }
 
 /**
@@ -95,23 +95,23 @@ if ( ! function_exists( 'kpf_export' ) ) {
  * @version 1.0.0
  *
  */
-if ( ! function_exists( 'kpf_import_ajax' ) ) {
-  function kpf_import_ajax() {
+if ( ! function_exists( 'kptcp_import_ajax' ) ) {
+  function kptcp_import_ajax() {
 
     $nonce  = ( ! empty( $_POST[ 'nonce' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'nonce' ] ) ) : '';
     $unique = ( ! empty( $_POST[ 'unique' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'unique' ] ) ) : '';
     $data   = ( ! empty( $_POST[ 'data' ] ) ) ? wp_kses_post_deep( json_decode( wp_unslash( trim( $_POST[ 'data' ] ) ), true ) ) : array();
 
-    if ( ! wp_verify_nonce( $nonce, 'kpf_backup_nonce' ) ) {
-      wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'kpf' ) ) );
+    if ( ! wp_verify_nonce( $nonce, 'kptcp_backup_nonce' ) ) {
+      wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'kptcp' ) ) );
     }
 
     if ( empty( $unique ) ) {
-      wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid key.', 'kpf' ) ) );
+      wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid key.', 'kptcp' ) ) );
     }
 
     if ( empty( $data ) || ! is_array( $data ) ) {
-      wp_send_json_error( array( 'error' => esc_html__( 'Error: The response is not a valid JSON response.', 'kpf' ) ) );
+      wp_send_json_error( array( 'error' => esc_html__( 'Error: The response is not a valid JSON response.', 'kptcp' ) ) );
     }
 
     // Success
@@ -120,7 +120,7 @@ if ( ! function_exists( 'kpf_import_ajax' ) ) {
     wp_send_json_success();
 
   }
-  add_action( 'wp_ajax_kpf-import', 'kpf_import_ajax' );
+  add_action( 'wp_ajax_kptcp-import', 'kptcp_import_ajax' );
 }
 
 /**
@@ -131,14 +131,14 @@ if ( ! function_exists( 'kpf_import_ajax' ) ) {
  * @version 1.0.0
  *
  */
-if ( ! function_exists( 'kpf_reset_ajax' ) ) {
-  function kpf_reset_ajax() {
+if ( ! function_exists( 'kptcp_reset_ajax' ) ) {
+  function kptcp_reset_ajax() {
 
     $nonce  = ( ! empty( $_POST[ 'nonce' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'nonce' ] ) ) : '';
     $unique = ( ! empty( $_POST[ 'unique' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'unique' ] ) ) : '';
 
-    if ( ! wp_verify_nonce( $nonce, 'kpf_backup_nonce' ) ) {
-      wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'kpf' ) ) );
+    if ( ! wp_verify_nonce( $nonce, 'kptcp_backup_nonce' ) ) {
+      wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'kptcp' ) ) );
     }
 
     // Success
@@ -147,7 +147,7 @@ if ( ! function_exists( 'kpf_reset_ajax' ) ) {
     wp_send_json_success();
 
   }
-  add_action( 'wp_ajax_kpf-reset', 'kpf_reset_ajax' );
+  add_action( 'wp_ajax_kptcp-reset', 'kptcp_reset_ajax' );
 }
 
 /**
@@ -158,33 +158,33 @@ if ( ! function_exists( 'kpf_reset_ajax' ) ) {
  * @version 1.0.0
  *
  */
-if ( ! function_exists( 'kpf_chosen_ajax' ) ) {
-  function kpf_chosen_ajax() {
+if ( ! function_exists( 'kptcp_chosen_ajax' ) ) {
+  function kptcp_chosen_ajax() {
 
     $nonce = ( ! empty( $_POST[ 'nonce' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'nonce' ] ) ) : '';
     $type  = ( ! empty( $_POST[ 'type' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'type' ] ) ) : '';
     $term  = ( ! empty( $_POST[ 'term' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'term' ] ) ) : '';
     $query = ( ! empty( $_POST[ 'query_args' ] ) ) ? wp_kses_post_deep( $_POST[ 'query_args' ] ) : array();
 
-    if ( ! wp_verify_nonce( $nonce, 'kpf_chosen_ajax_nonce' ) ) {
-      wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'kpf' ) ) );
+    if ( ! wp_verify_nonce( $nonce, 'kptcp_chosen_ajax_nonce' ) ) {
+      wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid nonce verification.', 'kptcp' ) ) );
     }
 
     if ( empty( $type ) || empty( $term ) ) {
-      wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid term ID.', 'kpf' ) ) );
+      wp_send_json_error( array( 'error' => esc_html__( 'Error: Invalid term ID.', 'kptcp' ) ) );
     }
 
-    $capability = apply_filters( 'kpf_chosen_ajax_capability', 'manage_options' );
+    $capability = apply_filters( 'kptcp_chosen_ajax_capability', 'manage_options' );
 
     if ( ! current_user_can( $capability ) ) {
-      wp_send_json_error( array( 'error' => esc_html__( 'Error: You do not have permission to do that.', 'kpf' ) ) );
+      wp_send_json_error( array( 'error' => esc_html__( 'Error: You do not have permission to do that.', 'kptcp' ) ) );
     }
 
     // Success
-    $options = KPF_Fields::field_data( $type, $term, $query );
+    $options = KPTCP_Fields::field_data( $type, $term, $query );
 
     wp_send_json_success( $options );
 
   }
-  add_action( 'wp_ajax_kpf-chosen', 'kpf_chosen_ajax' );
+  add_action( 'wp_ajax_kptcp-chosen', 'kptcp_chosen_ajax' );
 }

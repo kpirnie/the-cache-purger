@@ -1,41 +1,41 @@
 /**
  * 04. Widget
  */
-.kpf-widgets{
+.kptcp-widgets{
 
-  > .kpf-field{
+  > .kptcp-field{
     position: relative;
     top: -1px;
     margin-left: -15px;
     margin-right: -15px;
     padding: 12px 15px;
 
-    .kpf-title{
+    .kptcp-title{
       float: none;
       width: 100%;
       margin-bottom: 5px;
     }
 
-    .kpf-fieldset{
+    .kptcp-fieldset{
       float: none;
       width: 100%;
     }
   }
 
-  .kpf-field-text input{
+  .kptcp-field-text input{
     width: 100%;
   }
 
-  .kpf-field-notice .kpf-notice{
+  .kptcp-field-notice .kptcp-notice{
     padding: 15px;
   }
 }
 
 .control-section{
 
-  .kpf-widgets{
+  .kptcp-widgets{
 
-    > .kpf-field{
+    > .kptcp-field{
       margin-left: -10px;
       margin-right: -10px;
       padding: 10px 12px;
@@ -45,10 +45,10 @@
 
 .wp-block{
 
-  .kpf-widgets{
+  .kptcp-widgets{
     font-size: 13px;
 
-    > .kpf-field{
+    > .kptcp-field{
       margin-left: -10px;
       margin-right: -10px;
 
@@ -56,7 +56,7 @@
         color: #fff;
       }
 
-      > .kpf-title{
+      > .kptcp-title{
 
         > h4{
           font-size: 13px;

@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Shortcoder' ) ) {
-  class KPF_Shortcoder extends KPF_Abstract{
+if ( ! class_exists( 'KPTCP_Shortcoder' ) ) {
+  class KPTCP_Shortcoder extends KPTCP_Abstract{
 
     // constans
     public $unique       = '';
@@ -26,11 +26,11 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
       'defaults'         => array(),
       'class'            => '',
       'gutenberg'        => array(
-        'title'          => 'KPF Shortcodes',
-        'description'    => 'KPF Shortcode Block',
+        'title'          => 'KPTCP Shortcodes',
+        'description'    => 'KPTCP Shortcode Block',
         'icon'           => 'screenoptions',
         'category'       => 'widgets',
-        'keywords'       => array( 'shortcode', 'kpf', 'insert' ),
+        'keywords'       => array( 'shortcode', 'kptcp', 'insert' ),
         'placeholder'    => 'Write shortcode here...',
       ),
     );
@@ -39,23 +39,23 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
     public function __construct( $key, $params = array() ) {
 
       $this->unique       = $key;
-      $this->args         = apply_filters( "kpf_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
-      $this->sections     = apply_filters( "kpf_{$this->unique}_sections", $params['sections'], $this );
+      $this->args         = apply_filters( "kptcp_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
+      $this->sections     = apply_filters( "kptcp_{$this->unique}_sections", $params['sections'], $this );
       $this->pre_tabs     = $this->pre_tabs( $this->sections );
       $this->pre_sections = $this->pre_sections( $this->sections );
 
       add_action( 'admin_footer', array( $this, 'add_footer_modal_shortcode' ) );
       add_action( 'customize_controls_print_footer_scripts', array( $this, 'add_footer_modal_shortcode' ) );
-      add_action( 'wp_ajax_kpf-get-shortcode-'. $this->unique, array( $this, 'get_shortcode' ) );
+      add_action( 'wp_ajax_kptcp-get-shortcode-'. $this->unique, array( $this, 'get_shortcode' ) );
 
       if ( ! empty( $this->args['show_in_editor'] ) ) {
 
-        KPF::$shortcode_instances[$this->unique] = wp_parse_args( array( 'hash' => md5( $key ), 'modal_id' => $this->unique ), $this->args );
+        KPTCP::$shortcode_instances[$this->unique] = wp_parse_args( array( 'hash' => md5( $key ), 'modal_id' => $this->unique ), $this->args );
 
         // elementor editor support
-        if ( KPF::is_active_plugin( 'elementor/elementor.php' ) ) {
-          add_action( 'elementor/editor/before_enqueue_scripts', array( 'KPF', 'add_admin_enqueue_scripts' ) );
-          add_action( 'elementor/editor/footer', array( 'KPF_Field_icon', 'add_footer_modal_icon' ) );
+        if ( KPTCP::is_active_plugin( 'elementor/elementor.php' ) ) {
+          add_action( 'elementor/editor/before_enqueue_scripts', array( 'KPTCP', 'add_admin_enqueue_scripts' ) );
+          add_action( 'elementor/editor/footer', array( 'KPTCP_Field_icon', 'add_footer_modal_icon' ) );
           add_action( 'elementor/editor/footer', array( $this, 'add_footer_modal_shortcode' ) );
         }
 
@@ -125,28 +125,28 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
 
     public function add_footer_modal_shortcode() {
 
-      if( ! wp_script_is( 'kpf' ) ) {
+      if( ! wp_script_is( 'kptcp' ) ) {
         return;
       }
 
       $class        = ( $this->args['class'] ) ? ' '. esc_attr( $this->args['class'] ) : '';
       $has_select   = ( count( $this->pre_tabs ) > 1 ) ? true : false;
-      $single_usage = ( ! $has_select ) ? ' kpf-shortcode-single' : '';
+      $single_usage = ( ! $has_select ) ? ' kptcp-shortcode-single' : '';
       $hide_header  = ( ! $has_select ) ? ' hidden' : '';
 
     ?>
-      <div id="kpf-modal-<?php echo esc_attr( $this->unique ); ?>" class="wp-core-ui kpf-modal kpf-shortcode hidden<?php echo esc_attr( $single_usage . $class ); ?>" data-modal-id="<?php echo esc_attr( $this->unique ); ?>" data-nonce="<?php echo esc_attr( wp_create_nonce( 'kpf_shortcode_nonce' ) ); ?>">
-        <div class="kpf-modal-table">
-          <div class="kpf-modal-table-cell">
-            <div class="kpf-modal-overlay"></div>
-            <div class="kpf-modal-inner">
-              <div class="kpf-modal-title">
+      <div id="kptcp-modal-<?php echo esc_attr( $this->unique ); ?>" class="wp-core-ui kptcp-modal kptcp-shortcode hidden<?php echo esc_attr( $single_usage . $class ); ?>" data-modal-id="<?php echo esc_attr( $this->unique ); ?>" data-nonce="<?php echo esc_attr( wp_create_nonce( 'kptcp_shortcode_nonce' ) ); ?>">
+        <div class="kptcp-modal-table">
+          <div class="kptcp-modal-table-cell">
+            <div class="kptcp-modal-overlay"></div>
+            <div class="kptcp-modal-inner">
+              <div class="kptcp-modal-title">
                 <?php echo $this->args['button_title']; ?>
-                <div class="kpf-modal-close"></div>
+                <div class="kptcp-modal-close"></div>
               </div>
               <?php
 
-                echo '<div class="kpf-modal-header'. esc_attr( $hide_header ) .'">';
+                echo '<div class="kptcp-modal-header'. esc_attr( $hide_header ) .'">';
                 echo '<select>';
                 echo ( $has_select ) ? '<option value="">'. esc_attr( $this->args['select_title'] ) .'</option>' : '';
 
@@ -190,11 +190,11 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
                 echo '</div>';
 
               ?>
-              <div class="kpf-modal-content">
-                <div class="kpf-modal-loading"><div class="kpf-loading"></div></div>
-                <div class="kpf-modal-load"></div>
+              <div class="kptcp-modal-content">
+                <div class="kptcp-modal-loading"><div class="kptcp-loading"></div></div>
+                <div class="kptcp-modal-load"></div>
               </div>
-              <div class="kpf-modal-insert-wrapper hidden"><a href="#" class="button button-primary kpf-modal-insert"><?php echo $this->args['insert_title']; ?></a></div>
+              <div class="kptcp-modal-insert-wrapper hidden"><a href="#" class="button button-primary kptcp-modal-insert"><?php echo $this->args['insert_title']; ?></a></div>
             </div>
           </div>
         </div>
@@ -209,7 +209,7 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
       $nonce         = ( ! empty( $_POST[ 'nonce' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'nonce' ] ) ) : '';
       $shortcode_key = ( ! empty( $_POST[ 'shortcode_key' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'shortcode_key' ] ) ) : '';
 
-      if ( ! empty( $shortcode_key ) && wp_verify_nonce( $nonce, 'kpf_shortcode_nonce' ) ) {
+      if ( ! empty( $shortcode_key ) && wp_verify_nonce( $nonce, 'kptcp_shortcode_nonce' ) ) {
 
         $unallows  = array( 'group', 'repeater', 'sorter' );
         $section   = $this->pre_sections[$shortcode_key-1];
@@ -222,9 +222,9 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
           // View: normal
           if ( ! empty( $section['fields'] ) && $view !== 'repeater' ) {
 
-            echo '<div class="kpf-fields">';
+            echo '<div class="kptcp-fields">';
 
-            echo ( ! empty( $section['description'] ) ) ? '<div class="kpf-field kpf-section-description">'. $section['description'] .'</div>' : '';
+            echo ( ! empty( $section['description'] ) ) ? '<div class="kptcp-field kptcp-section-description">'. $section['description'] .'</div>' : '';
 
             foreach ( $section['fields'] as $field ) {
 
@@ -235,7 +235,7 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
 
               $field_default = ( isset( $field['id'] ) ) ? $this->get_default( $field ) : '';
 
-              KPF::field( $field, $field_default, $shortcode, 'shortcode' );
+              KPTCP::field( $field, $field_default, $shortcode, 'shortcode' );
 
             }
 
@@ -250,16 +250,16 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
 
           if ( ! empty( $repeatable_fields ) ) {
 
-            $button_title    = ( ! empty( $section['button_title'] ) ) ? ' '. $section['button_title'] : esc_html__( 'Add New', 'kpf' );
+            $button_title    = ( ! empty( $section['button_title'] ) ) ? ' '. $section['button_title'] : esc_html__( 'Add New', 'kptcp' );
             $inner_shortcode = ( ! empty( $section['group_shortcode'] ) ) ? $section['group_shortcode'] : $shortcode;
 
-            echo '<div class="kpf--repeatable">';
+            echo '<div class="kptcp--repeatable">';
 
-              echo '<div class="kpf--repeat-shortcode">';
+              echo '<div class="kptcp--repeat-shortcode">';
 
-                echo '<div class="kpf-repeat-remove fas fa-times"></div>';
+                echo '<div class="kptcp-repeat-remove fas fa-times"></div>';
 
-                echo '<div class="kpf-fields">';
+                echo '<div class="kptcp-fields">';
 
                 foreach ( $repeatable_fields as $field ) {
 
@@ -270,7 +270,7 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
 
                   $field_default = ( isset( $field['id'] ) ) ? $this->get_default( $field ) : '';
 
-                  KPF::field( $field, $field_default, $inner_shortcode.'[0]', 'shortcode' );
+                  KPTCP::field( $field, $field_default, $inner_shortcode.'[0]', 'shortcode' );
 
                 }
 
@@ -280,14 +280,14 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
 
             echo '</div>';
 
-            echo '<div class="kpf--repeat-button-block"><a class="button kpf--repeat-button" href="#"><i class="fas fa-plus-circle"></i> '. $button_title .'</a></div>';
+            echo '<div class="kptcp--repeat-button-block"><a class="button kptcp--repeat-button" href="#"><i class="fas fa-plus-circle"></i> '. $button_title .'</a></div>';
 
           }
 
         }
 
       } else {
-        echo '<div class="kpf-field kpf-error-text">'. esc_html__( 'Error: Invalid nonce verification.', 'kpf' ) .'</div>';
+        echo '<div class="kptcp-field kptcp-error-text">'. esc_html__( 'Error: Invalid nonce verification.', 'kptcp' ) .'</div>';
       }
 
       wp_send_json_success( array( 'content' => ob_get_clean() ) );
@@ -298,11 +298,11 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
     public static function once_editor_setup() {
 
       if ( function_exists( 'register_block_type' ) ) {
-        add_action( 'enqueue_block_editor_assets', array( 'KPF_Shortcoder', 'add_guteberg_blocks' ) );
+        // add_action( 'enqueue_block_editor_assets', array( 'KPTCP_Shortcoder', 'add_guteberg_blocks' ) );
       }
 
-      if ( kpf_wp_editor_api() ) {
-        add_action( 'media_buttons', array( 'KPF_Shortcoder', 'add_media_buttons' ) );
+      if ( kptcp_wp_editor_api() ) {
+        add_action( 'media_buttons', array( 'KPTCP_Shortcoder', 'add_media_buttons' ) );
       }
 
     }
@@ -318,14 +318,14 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
         $depends[] = 'wp-edit-post';
       }
 
-      wp_enqueue_script( 'kpf-gutenberg-block', KPF::include_plugin_url( 'assets/js/gutenberg.js' ), $depends );
+      wp_enqueue_script( 'kptcp-gutenberg-block', KPTCP::include_plugin_url( 'assets/js/gutenberg.js' ), $depends );
 
-      wp_localize_script( 'kpf-gutenberg-block', 'kpf_gutenberg_blocks', KPF::$shortcode_instances );
+      wp_localize_script( 'kptcp-gutenberg-block', 'kptcp_gutenberg_blocks', KPTCP::$shortcode_instances );
 
-      foreach ( KPF::$shortcode_instances as $value ) {
+      foreach ( KPTCP::$shortcode_instances as $value ) {
 
-        register_block_type( 'kpf-gutenberg-block/block-'. $value['hash'], array(
-          'editor_script' => 'kpf-gutenberg-block',
+        register_block_type( 'kptcp-gutenberg-block/block-'. $value['hash'], array(
+          'editor_script' => 'kptcp-gutenberg-block',
         ) );
 
       }
@@ -335,8 +335,8 @@ if ( ! class_exists( 'KPF_Shortcoder' ) ) {
     // Add media buttons
     public static function add_media_buttons( $editor_id ) {
 
-      foreach ( KPF::$shortcode_instances as $value ) {
-        echo '<a href="#" class="button button-primary kpf-shortcode-button" data-editor-id="'. esc_attr( $editor_id ) .'" data-modal-id="'. esc_attr( $value['modal_id'] ) .'">'. $value['button_title'] .'</a>';
+      foreach ( KPTCP::$shortcode_instances as $value ) {
+        echo '<a href="#" class="button button-primary kptcp-shortcode-button" data-editor-id="'. esc_attr( $editor_id ) .'" data-modal-id="'. esc_attr( $value['modal_id'] ) .'">'. $value['button_title'] .'</a>';
       }
 
     }

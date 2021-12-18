@@ -3,17 +3,17 @@
  */
 @media only screen and (max-width:1200px){
 
-  .kpf-metabox{
+  .kptcp-metabox{
 
-    .kpf-field{
+    .kptcp-field{
 
-      .kpf-title{
+      .kptcp-title{
         float: none;
         width: 100%;
         margin-bottom: 10px;
       }
 
-      .kpf-fieldset{
+      .kptcp-fieldset{
         float: none;
         width: 100%;
       }
@@ -23,7 +23,7 @@
 
 @media only screen and (max-width:782px){
 
-  .kpf-header-inner{
+  .kptcp-header-inner{
     text-align: center;
 
     h1{
@@ -32,67 +32,67 @@
     }
   }
 
-  .kpf-form-result{
+  .kptcp-form-result{
     float: none;
     margin-right: 0;
     margin-bottom: 10px;
   }
 
-  .kpf-search,
-  .kpf-header-right,
-  .kpf-header-left{
+  .kptcp-search,
+  .kptcp-header-right,
+  .kptcp-header-left{
     width: 100%;
   }
 
-  .kpf-search{
+  .kptcp-search{
     text-align: center;
     margin-bottom: 15px;
   }
 
-  .kpf-footer{
+  .kptcp-footer{
     text-align: center;
   }
 
-  .kpf-buttons{
+  .kptcp-buttons{
     float: none;
   }
 
-  .kpf-copyright{
+  .kptcp-copyright{
     float: none;
     margin-top: 10px;
   }
 
-  .kpf-nav,
-  .kpf-expand-all,
-  .kpf-reset-section,
-  .kpf-nav-background{
+  .kptcp-nav,
+  .kptcp-expand-all,
+  .kptcp-reset-section,
+  .kptcp-nav-background{
     display: none !important;
   }
 
-  .kpf-nav-normal + .kpf-content{
+  .kptcp-nav-normal + .kptcp-content{
     margin-left: 0;
   }
 
-  .kpf-section-title,
-  .kpf-section{
+  .kptcp-section-title,
+  .kptcp-section{
     display: block !important;
   }
 
-  .kpf-field{
+  .kptcp-field{
 
-    .kpf-title{
+    .kptcp-title{
       float: none;
       width: 100%;
       margin-bottom: 10px;
     }
 
-    .kpf-fieldset{
+    .kptcp-fieldset{
       float: none;
       width: 100%;
     }
   }
 
-  .kpf-field-color{
+  .kptcp-field-color{
 
     .button.wp-picker-clear{
       padding: 0 8px;
@@ -101,31 +101,31 @@
     }
   }
 
-  .kpf-profile-options,
-  .kpf-taxonomy-edit-fields{
+  .kptcp-profile-options,
+  .kptcp-taxonomy-edit-fields{
 
-    > .kpf-field{
+    > .kptcp-field{
 
-      > .kpf-title{
+      > .kptcp-title{
         float: none;
         width: 100%;
         margin-bottom: 10px;
       }
 
-      > .kpf-fieldset{
+      > .kptcp-fieldset{
         float: none;
         width: 100%;
       }
     }
   }
 
-  .kpf-nav-menu-options{
+  .kptcp-nav-menu-options{
 
-    > .kpf-fields{
+    > .kptcp-fields{
       margin-left: -10px;
       margin-right: -10px;
 
-      > .kpf-field{
+      > .kptcp-field{
         padding: 10px;
       }
     }
@@ -134,9 +134,9 @@
 
 @media only screen and (max-width: 782px) {
 
-  .kpf-modal{
+  .kptcp-modal{
 
-    .kpf-modal-inner{
+    .kptcp-modal-inner{
       width: 90%;
     }
   }
@@ -144,13 +144,13 @@
 
 @media only screen and (max-height: 750px) {
 
-  .kpf-modal{
+  .kptcp-modal{
 
-    .kpf-modal-inner{
+    .kptcp-modal-inner{
       height: auto;
     }
 
-    .kpf-modal-content{
+    .kptcp-modal-content{
       height: calc(100vh - 200px);
     }
   }

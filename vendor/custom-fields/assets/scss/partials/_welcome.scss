@@ -1,7 +1,7 @@
 /**
  * 11. Welcome Page
  */
-.kpf-welcome-wrap{
+.kptcp-welcome-wrap{
   position: relative;
   margin: 25px 40px 0 20px;
   font-size: 15px;
@@ -21,7 +21,7 @@
     font-weight: 400;
   }
 
-  .kpf-logo{
+  .kptcp-logo{
     position: absolute;
     overflow: hidden;
     top: 0;
@@ -31,7 +31,7 @@
     background-image: linear-gradient( 45deg, #2d67cb, #ad19f3);
     box-shadow: 0 1px 4px rgba(0,0,0,0.25), inset 0 0 0 4px rgba(0,0,0,0.25);
 
-    .kpf--effects i{
+    .kptcp--effects i{
       position: absolute;
       width: 200px;
       height: 100px;
@@ -39,33 +39,33 @@
       transform: rotate(-45deg);
     }
 
-    .kpf--effects i:nth-child(1){
+    .kptcp--effects i:nth-child(1){
       bottom: -20px;
       right: -70px;
     }
 
-    .kpf--effects i:nth-child(2){
+    .kptcp--effects i:nth-child(2){
       bottom: -35px;
       right: -80px;
     }
 
-    .kpf--effects i:nth-child(3){
+    .kptcp--effects i:nth-child(3){
       bottom: -50px;
       right: -90px;
     }
 
-    .kpf--effects i:nth-child(4){
+    .kptcp--effects i:nth-child(4){
       bottom: -65px;
       right: -100px;
     }
 
-    .kpf--wp-logos{
+    .kptcp--wp-logos{
       position: relative;
       padding-top: 25px;
       text-align: center;
     }
 
-    .kpf--wp-logo{
+    .kptcp--wp-logo{
       position: absolute;
       left: 20px;
       width: 20px;
@@ -75,7 +75,7 @@
       background-image: url(../images/wp-logo.svg);
     }
 
-    .kpf--wp-plugin-logo{
+    .kptcp--wp-plugin-logo{
       display: inline-block;
       width: 50px;
       height: 50px;
@@ -88,7 +88,7 @@
       vertical-align: middle;
     }
 
-    .kpf--text{
+    .kptcp--text{
       position: absolute;
       left: 0;
       right: 0;
@@ -102,7 +102,7 @@
       text-shadow: 1px 1px 0 rgba(0,0,0,0.25);
     }
 
-    .kpf--version{
+    .kptcp--version{
       top: auto;
       left: auto;
       right: 8px;
@@ -112,7 +112,7 @@
     }
   }
 
-  .kpf-about-text{
+  .kptcp-about-text{
     font-weight: 400;
     line-height: 1.6em;
     font-size: 19px;
@@ -120,7 +120,7 @@
     color: #555d66;
   }
 
-  .kpf-demo-button{
+  .kptcp-demo-button{
     margin: 1em 200px 2em 0;
   }
 
@@ -133,40 +133,40 @@
     padding-left: 15px;
   }
 
-  .kpf--col{
+  .kptcp--col{
     float: left;
     padding-right: 20px;
     box-sizing: border-box;
   }
 
-  .kpf--col-2{
+  .kptcp--col-2{
     width: 50%;
   }
 
-  .kpf--col-3{
+  .kptcp--col-3{
     width: 33.333%;
   }
 
-  .kpf--col-4{
+  .kptcp--col-4{
     width: 25%;
   }
 
-  .kpf--col-5{
+  .kptcp--col-5{
     width: 20%;
   }
 
-  .kpf--col-last{
+  .kptcp--col-last{
     padding-right: 0;
   }
 
-  .kpf--col-upgrade{
+  .kptcp--col-upgrade{
     padding: 10px 0;
     text-align: center;
     border-top: 1px solid #e5e5e5;
   }
 }
 
-.kpf--table-compare{
+.kptcp--table-compare{
 
   thead,
   tfoot{
@@ -205,7 +205,7 @@
   }
 }
 
-.kpf-welcome-cols{
+.kptcp-welcome-cols{
   clear: both;
   margin: 20px 0;
   background-color: #fff;
@@ -213,7 +213,7 @@
   border-radius: 2px;
   border: 1px solid #e5e5e5;
 
-  .kpf--col{
+  .kptcp--col{
     width: 33.333%;
     float: left;
     padding: 20px;
@@ -223,8 +223,8 @@
     border-right: 1px solid #e5e5e5;
   }
 
-  .kpf--left,
-  .kpf--block{
+  .kptcp--left,
+  .kptcp--block{
     float: left;
     width: 20%;
     padding: 0 30px;
@@ -232,23 +232,23 @@
     box-sizing: border-box;
   }
 
-  .kpf--block{
+  .kptcp--block{
     width: 80%;
   }
 
-  .kpf--col-first{
+  .kptcp--col-first{
     border-bottom: 1px solid #e5e5e5;
   }
 
-  .kpf--last{
+  .kptcp--last{
     border-right: none;
   }
 
-  .kpf--space{
+  .kptcp--space{
     height: 20px;
   }
 
-  .kpf--icon{
+  .kptcp--icon{
     display: inline-block;
     font-size: 20px;
     width: 30px;
@@ -261,15 +261,15 @@
     border-radius: 30px;
   }
 
-  .kpf--active{
+  .kptcp--active{
     background-color: #5cb85c;
   }
 
-  .kpf--deactive{
+  .kptcp--deactive{
     background-color: #e14d43;
   }
 
-  .kpf--title{
+  .kptcp--title{
     font-weight: bold;
     display: block;
   }
@@ -279,17 +279,17 @@
   }
 }
 
-.kpf-features-cols{
+.kptcp-features-cols{
 
-  .kpf--key-features{
+  .kptcp--key-features{
     width: 30%;
   }
-  .kpf--available-fields{
+  .kptcp--available-fields{
     width: 70%;
   }
 }
 
-.kpf-code-block{
+.kptcp-code-block{
   margin: 20px 0;
   padding: 5px 20px;
   background-color: #fff;
@@ -306,13 +306,13 @@
   }
 }
 
-.kpf--table-fields{
+.kptcp--table-fields{
   td{
     font-size: 14px;
   }
 }
 
-.kpf--upgrade a{
+.kptcp--upgrade a{
   color: #5cb85c;
   font-weight: bold;
 
@@ -326,8 +326,8 @@
 
 @media only screen and (max-width:782px){
 
-  .kpf-welcome-cols{
-    .kpf--col{
+  .kptcp-welcome-cols{
+    .kptcp--col{
       width: 100%;
       min-height: auto;
       border-right: none;
@@ -335,11 +335,11 @@
     }
   }
 
-  .kpf-features-cols{
-    .kpf--key-features{
+  .kptcp-features-cols{
+    .kptcp--key-features{
       width: 100%;
     }
-    .kpf--available-fields{
+    .kptcp--available-fields{
       width: 100%;
     }
   }

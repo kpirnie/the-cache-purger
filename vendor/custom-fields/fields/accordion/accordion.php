@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_accordion' ) ) {
-  class KPF_Field_accordion extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_accordion' ) ) {
+  class KPTCP_Field_accordion extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -20,20 +20,20 @@ if ( ! class_exists( 'KPF_Field_accordion' ) ) {
 
       echo $this->field_before();
 
-      echo '<div class="kpf-accordion-items" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
+      echo '<div class="kptcp-accordion-items" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
 
       foreach ( $this->field['accordions'] as $key => $accordion ) {
 
-        echo '<div class="kpf-accordion-item">';
+        echo '<div class="kptcp-accordion-item">';
 
-          $icon = ( ! empty( $accordion['icon'] ) ) ? 'kpf--icon '. $accordion['icon'] : 'kpf-accordion-icon fas fa-angle-right';
+          $icon = ( ! empty( $accordion['icon'] ) ) ? 'kptcp--icon '. $accordion['icon'] : 'kptcp-accordion-icon fas fa-angle-right';
 
-          echo '<h4 class="kpf-accordion-title">';
+          echo '<h4 class="kptcp-accordion-title">';
           echo '<i class="'. esc_attr( $icon ) .'"></i>';
           echo esc_html( $accordion['title'] );
           echo '</h4>';
 
-          echo '<div class="kpf-accordion-content">';
+          echo '<div class="kptcp-accordion-content">';
 
           foreach ( $accordion['fields'] as $field ) {
 
@@ -44,7 +44,7 @@ if ( ! class_exists( 'KPF_Field_accordion' ) ) {
             $field_value   = ( isset( $this->value[$field_id] ) ) ? $this->value[$field_id] : $field_default;
             $unique_id     = ( ! empty( $this->unique ) ) ? $this->unique .'['. $this->field['id'] .']' : $this->field['id'];
 
-            KPF::field( $field, $field_value, $unique_id, 'field/accordion' );
+            KPTCP::field( $field, $field_value, $unique_id, 'field/accordion' );
 
           }
 

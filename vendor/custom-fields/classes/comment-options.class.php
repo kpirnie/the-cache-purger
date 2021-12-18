@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Comment_Metabox' ) ) {
-  class KPF_Comment_Metabox extends KPF_Abstract{
+if ( ! class_exists( 'KPTCP_Comment_Metabox' ) ) {
+  class KPTCP_Comment_Metabox extends KPTCP_Abstract{
 
     // constans
     public $unique     = '';
@@ -31,8 +31,8 @@ if ( ! class_exists( 'KPF_Comment_Metabox' ) ) {
     public function __construct( $key, $params = array() ) {
 
       $this->unique     = $key;
-      $this->args       = apply_filters( "kpf_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
-      $this->sections   = apply_filters( "kpf_{$this->unique}_sections", $params['sections'], $this );
+      $this->args       = apply_filters( "kptcp_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
+      $this->sections   = apply_filters( "kptcp_{$this->unique}_sections", $params['sections'], $this );
       $this->pre_fields = $this->pre_fields( $this->sections );
 
       add_action( 'add_meta_boxes_comment', array( $this, 'add_comment_meta_box' ) );
@@ -119,25 +119,25 @@ if ( ! class_exists( 'KPF_Comment_Metabox' ) ) {
     public function add_comment_meta_box_content( $comment, $callback ) {
 
       $has_nav  = ( count( $this->sections ) > 1 ) ? true : false;
-      $show_all = ( ! $has_nav ) ? ' kpf-show-all' : '';
-      $errors   = ( is_object ( $comment ) ) ? get_comment_meta( $comment->comment_ID, '_kpf_errors_'. $this->unique, true ) : array();
+      $show_all = ( ! $has_nav ) ? ' kptcp-show-all' : '';
+      $errors   = ( is_object ( $comment ) ) ? get_comment_meta( $comment->comment_ID, '_kptcp_errors_'. $this->unique, true ) : array();
       $errors   = ( ! empty( $errors ) ) ? $errors : array();
-      $theme    = ( $this->args['theme'] ) ? ' kpf-theme-'. $this->args['theme'] : '';
+      $theme    = ( $this->args['theme'] ) ? ' kptcp-theme-'. $this->args['theme'] : '';
       $nav_type = ( $this->args['nav'] === 'inline' ) ? 'inline' : 'normal';
 
       if ( is_object( $comment ) && ! empty( $errors ) ) {
-        delete_comment_meta( $comment->comment_ID, '_kpf_errors_'. $this->unique );
+        delete_comment_meta( $comment->comment_ID, '_kptcp_errors_'. $this->unique );
       }
 
-      wp_nonce_field( 'kpf_comment_metabox_nonce', 'kpf_comment_metabox_nonce'. $this->unique );
+      wp_nonce_field( 'kptcp_comment_metabox_nonce', 'kptcp_comment_metabox_nonce'. $this->unique );
 
-      echo '<div class="kpf kpf-comment-metabox'. esc_attr( $theme ) .'">';
+      echo '<div class="kptcp kptcp-comment-metabox'. esc_attr( $theme ) .'">';
 
-        echo '<div class="kpf-wrapper'. esc_attr( $show_all ) .'">';
+        echo '<div class="kptcp-wrapper'. esc_attr( $show_all ) .'">';
 
           if ( $has_nav ) {
 
-            echo '<div class="kpf-nav kpf-nav-'. esc_attr( $nav_type ) .' kpf-nav-metabox">';
+            echo '<div class="kptcp-nav kptcp-nav-'. esc_attr( $nav_type ) .' kptcp-nav-metabox">';
 
               echo '<ul>';
 
@@ -145,8 +145,8 @@ if ( ! class_exists( 'KPF_Comment_Metabox' ) ) {
 
               foreach ( $this->sections as $section ) {
 
-                $tab_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="kpf-tab-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
-                $tab_error = ( ! empty( $errors['sections'][$tab_key] ) ) ? '<i class="kpf-label-error kpf-error">!</i>' : '';
+                $tab_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="kptcp-tab-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
+                $tab_error = ( ! empty( $errors['sections'][$tab_key] ) ) ? '<i class="kptcp-label-error kptcp-error">!</i>' : '';
 
                 echo '<li><a href="#">'. $tab_icon . $section['title'] . $tab_error .'</a></li>';
 
@@ -160,23 +160,23 @@ if ( ! class_exists( 'KPF_Comment_Metabox' ) ) {
 
           }
 
-          echo '<div class="kpf-content">';
+          echo '<div class="kptcp-content">';
 
-            echo '<div class="kpf-sections">';
+            echo '<div class="kptcp-sections">';
 
             $section_key = 1;
 
             foreach ( $this->sections as $section ) {
 
-              $section_onload = ( ! $has_nav ) ? ' kpf-onload' : '';
+              $section_onload = ( ! $has_nav ) ? ' kptcp-onload' : '';
               $section_class  = ( ! empty( $section['class'] ) ) ? ' '. $section['class'] : '';
               $section_title  = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
-              $section_icon   = ( ! empty( $section['icon'] ) ) ? '<i class="kpf-section-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
+              $section_icon   = ( ! empty( $section['icon'] ) ) ? '<i class="kptcp-section-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
 
-              echo '<div class="kpf-section hidden'. esc_attr( $section_onload . $section_class ) .'">';
+              echo '<div class="kptcp-section hidden'. esc_attr( $section_onload . $section_class ) .'">';
 
-              echo ( $section_title || $section_icon ) ? '<div class="kpf-section-title"><h3>'. $section_icon . $section_title .'</h3></div>' : '';
-              echo ( ! empty( $section['description'] ) ) ? '<div class="kpf-field kpf-section-description">'. $section['description'] .'</div>' : '';
+              echo ( $section_title || $section_icon ) ? '<div class="kptcp-section-title"><h3>'. $section_icon . $section_title .'</h3></div>' : '';
+              echo ( ! empty( $section['description'] ) ) ? '<div class="kptcp-field kptcp-section-description">'. $section['description'] .'</div>' : '';
 
               if ( ! empty( $section['fields'] ) ) {
 
@@ -190,13 +190,13 @@ if ( ! class_exists( 'KPF_Comment_Metabox' ) ) {
                     $field['default'] = $this->get_default( $field );
                   }
 
-                  KPF::field( $field, $this->get_meta_value( $comment->comment_ID, $field ), $this->unique, 'comment_metabox' );
+                  KPTCP::field( $field, $this->get_meta_value( $comment->comment_ID, $field ), $this->unique, 'comment_metabox' );
 
                 }
 
               } else {
 
-                echo '<div class="kpf-no-option">'. esc_html__( 'No data available.', 'kpf' ) .'</div>';
+                echo '<div class="kptcp-no-option">'. esc_html__( 'No data available.', 'kptcp' ) .'</div>';
 
               }
 
@@ -210,11 +210,11 @@ if ( ! class_exists( 'KPF_Comment_Metabox' ) ) {
 
             if ( ! empty( $this->args['show_restore'] ) || ! empty( $this->args['show_reset'] ) ) {
 
-              echo '<div class="kpf-sections-reset">';
+              echo '<div class="kptcp-sections-reset">';
               echo '<label>';
               echo '<input type="checkbox" name="'. esc_attr( $this->unique ) .'[_reset]" />';
-              echo '<span class="button kpf-button-reset">'. esc_html__( 'Reset', 'kpf' ) .'</span>';
-              echo '<span class="button kpf-button-cancel">'. sprintf( '<small>( %s )</small> %s', esc_html__( 'update post', 'kpf' ), esc_html__( 'Cancel', 'kpf' ) ) .'</span>';
+              echo '<span class="button kptcp-button-reset">'. esc_html__( 'Reset', 'kptcp' ) .'</span>';
+              echo '<span class="button kptcp-button-cancel">'. sprintf( '<small>( %s )</small> %s', esc_html__( 'update post', 'kptcp' ), esc_html__( 'Cancel', 'kptcp' ) ) .'</span>';
               echo '</label>';
               echo '</div>';
 
@@ -222,7 +222,7 @@ if ( ! class_exists( 'KPF_Comment_Metabox' ) ) {
 
           echo '</div>';
 
-          echo ( $has_nav && $nav_type === 'normal' ) ? '<div class="kpf-nav-background"></div>' : '';
+          echo ( $has_nav && $nav_type === 'normal' ) ? '<div class="kptcp-nav-background"></div>' : '';
 
           echo '<div class="clear"></div>';
 
@@ -238,10 +238,10 @@ if ( ! class_exists( 'KPF_Comment_Metabox' ) ) {
       $count    = 1;
       $data     = array();
       $errors   = array();
-      $noncekey = 'kpf_comment_metabox_nonce'. $this->unique;
+      $noncekey = 'kptcp_comment_metabox_nonce'. $this->unique;
       $nonce    = ( ! empty( $_POST[ $noncekey ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $noncekey ] ) ) : '';
 
-      if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, 'kpf_comment_metabox_nonce' ) ) {
+      if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, 'kptcp_comment_metabox_nonce' ) ) {
         return $comment_id;
       }
 
@@ -308,9 +308,9 @@ if ( ! class_exists( 'KPF_Comment_Metabox' ) ) {
 
       }
 
-      $data = apply_filters( "kpf_{$this->unique}_save", $data, $comment_id, $this );
+      $data = apply_filters( "kptcp_{$this->unique}_save", $data, $comment_id, $this );
 
-      do_action( "kpf_{$this->unique}_save_before", $data, $comment_id, $this );
+      do_action( "kptcp_{$this->unique}_save_before", $data, $comment_id, $this );
 
       if ( empty( $data ) || ! empty( $request['_reset'] ) ) {
 
@@ -333,14 +333,14 @@ if ( ! class_exists( 'KPF_Comment_Metabox' ) ) {
         }
 
         if ( ! empty( $errors ) ) {
-          update_comment_meta( $comment_id, '_kpf_errors_'. $this->unique, $errors );
+          update_comment_meta( $comment_id, '_kptcp_errors_'. $this->unique, $errors );
         }
 
       }
 
-      do_action( "kpf_{$this->unique}_saved", $data, $comment_id, $this );
+      do_action( "kptcp_{$this->unique}_saved", $data, $comment_id, $this );
 
-      do_action( "kpf_{$this->unique}_save_after", $data, $comment_id, $this );
+      do_action( "kptcp_{$this->unique}_save_after", $data, $comment_id, $this );
 
     }
   }

@@ -7,18 +7,18 @@
 *
 * MIT License
 *
-* Customized by Kpf
+* Customized by Kptcp
 *
 */
 (function($) {
 
-  function KPFAjaxChosen(element, options) {
+  function KPTCPAjaxChosen(element, options) {
     this.element = $(element);
     this.options = options;
     this.init();
   };
 
-  KPFAjaxChosen.prototype.init = function() {
+  KPTCPAjaxChosen.prototype.init = function() {
     this.element.chosen(this.options);
     this.container    = this.element.next('.chosen-container');
     this.search_field = this.container.find('.chosen-search-input');
@@ -28,7 +28,7 @@
     this.events();
   };
 
-  KPFAjaxChosen.prototype.events = function() {
+  KPTCPAjaxChosen.prototype.events = function() {
 
     var _this = this;
 
@@ -51,14 +51,14 @@
 
   };
 
-  KPFAjaxChosen.prototype.search_field_focused = function() {
+  KPTCPAjaxChosen.prototype.search_field_focused = function() {
     this.search_welcome_message();
     if ( this.options.min_length === 0 && this.search_field.val().length === 0 ) {
       this.update_list();
     }
   };
 
-  KPFAjaxChosen.prototype.search_welcome_message = function() {
+  KPTCPAjaxChosen.prototype.search_welcome_message = function() {
 
     var value   = $.trim(this.search_field.val());
     var results = this.container.find('.chosen-results');
@@ -69,7 +69,7 @@
 
   };
 
-  KPFAjaxChosen.prototype.update_list = function() {
+  KPTCPAjaxChosen.prototype.update_list = function() {
 
     var _this = this;
 
@@ -100,7 +100,7 @@
 
       _this.options.data['term'] = value;
 
-      _this.chosenXhr = window.wp.ajax.post('kpf-chosen', _this.options.data).done( function( response ) {
+      _this.chosenXhr = window.wp.ajax.post('kptcp-chosen', _this.options.data).done( function( response ) {
         _this.show_results( response );
       }).fail( function( response ) {
         _this.container.find('.no-results').text(response.error);
@@ -110,7 +110,7 @@
 
   };
 
-  KPFAjaxChosen.prototype.show_results = function( items ) {
+  KPTCPAjaxChosen.prototype.show_results = function( items ) {
 
     var _this = this;
 
@@ -147,10 +147,10 @@
 
     if( this.is_multiple ) {
 
-      var $hidden_select = this.element.parent().find('.kpf-hide-select');
+      var $hidden_select = this.element.parent().find('.kptcp-hide-select');
       var $hidden_value  = $hidden_select.val() || [];
 
-      this.element.KPFChosenOrder($hidden_value, true);
+      this.element.KPTCPChosenOrder($hidden_value, true);
       this.search_field.css('width', width_before_trigger);
 
     }
@@ -163,9 +163,9 @@
 
   };
 
-  $.fn.KPFAjaxChosen = function(chosenOptions) {
+  $.fn.KPTCPAjaxChosen = function(chosenOptions) {
     return this.each(function() {
-      new KPFAjaxChosen(this, chosenOptions);
+      new KPTCPAjaxChosen(this, chosenOptions);
     });
   };
 
@@ -175,20 +175,20 @@
 // Full source at https://github.com/tristanjahier/chosen-order
 // Copyright (c) 2013 - Tristan Jahier, http://tristan-jahier.fr
 (function() {
-  var $, KPFAbstractChosenOrder, _ref,
+  var $, KPTCPAbstractChosenOrder, _ref,
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  KPFAbstractChosenOrder = (function() {
+  KPTCPAbstractChosenOrder = (function() {
 
-    function KPFAbstractChosenOrder() {}
+    function KPTCPAbstractChosenOrder() {}
 
-    KPFAbstractChosenOrder.insertAt = function(node, index, parentNode) {
+    KPTCPAbstractChosenOrder.insertAt = function(node, index, parentNode) {
       return parentNode.insertBefore(node, parentNode.children[index].nextSibling);
     };
 
-    KPFAbstractChosenOrder.getFlattenedOptionsAndGroups = function(select) {
+    KPTCPAbstractChosenOrder.getFlattenedOptionsAndGroups = function(select) {
       var flattened_options, opt, options, sub_opt, sub_options, _i, _j, _len, _len1;
       options = Array.prototype.filter.call(select.childNodes, function(o) {
         var _ref;
@@ -211,11 +211,11 @@
       return flattened_options;
     };
 
-    KPFAbstractChosenOrder.isValidMultipleSelectElement = function(element) {
+    KPTCPAbstractChosenOrder.isValidMultipleSelectElement = function(element) {
       return element !== null && typeof element !== "undefined" && element.nodeName === "SELECT" && element.multiple;
     };
 
-    KPFAbstractChosenOrder.getChosenUIContainer = function(select) {
+    KPTCPAbstractChosenOrder.getChosenUIContainer = function(select) {
       if (select.id !== "") {
         return document.getElementById(select.id.replace(/-/g, "_") + "_chosen");
       } else {
@@ -223,11 +223,11 @@
       }
     };
 
-    KPFAbstractChosenOrder.isChosenified = function(select) {
+    KPTCPAbstractChosenOrder.isChosenified = function(select) {
       return this.getChosenUIContainer(select) != null;
     };
 
-    KPFAbstractChosenOrder.forceSelection = function(select, selection) {
+    KPTCPAbstractChosenOrder.forceSelection = function(select, selection) {
       var i, opt, options, _ref;
       options = this.getFlattenedOptionsAndGroups(select);
       i = 0;
@@ -245,7 +245,7 @@
       return this.triggerEvent(select, "chosen:updated");
     };
 
-    KPFAbstractChosenOrder.KPFChosenOrder = function(select, order, force) {
+    KPTCPAbstractChosenOrder.KPTCPChosenOrder = function(select, order, force) {
       var chosen_choices, chosen_options, chosen_ui, i, j, opt, opt_val, option, options, rel, relAttributeName, _i, _j, _len, _len1, _results;
       if (this.getDOMElement != null) {
         select = this.getDOMElement(select);
@@ -290,33 +290,33 @@
       }
     };
 
-    return KPFAbstractChosenOrder;
+    return KPTCPAbstractChosenOrder;
 
   })();
 
   $ = jQuery;
 
   $.fn.extend({
-    KPFChosenOrder: function(order, force) {
-      return _KPFChosenOrder.KPFChosenOrder(this, order, force);
+    KPTCPChosenOrder: function(order, force) {
+      return _KPTCPChosenOrder.KPTCPChosenOrder(this, order, force);
     }
   });
 
-  this._KPFChosenOrder = (function(_super) {
-    __extends(_KPFChosenOrder, _super);
+  this._KPTCPChosenOrder = (function(_super) {
+    __extends(_KPTCPChosenOrder, _super);
 
-    function _KPFChosenOrder() {
-      _ref = _KPFChosenOrder.__super__.constructor.apply(this, arguments);
+    function _KPTCPChosenOrder() {
+      _ref = _KPTCPChosenOrder.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
-    _KPFChosenOrder.relAttributeName = 'data-option-array-index';
+    _KPTCPChosenOrder.relAttributeName = 'data-option-array-index';
 
-    _KPFChosenOrder.isjQueryObject = function(obj) {
+    _KPTCPChosenOrder.isjQueryObject = function(obj) {
       return (typeof jQuery !== "undefined" && jQuery !== null) && obj instanceof jQuery;
     };
 
-    _KPFChosenOrder.getDOMElement = function(element) {
+    _KPTCPChosenOrder.getDOMElement = function(element) {
       if (this.isjQueryObject(element)) {
         return element.get(0);
       } else {
@@ -324,7 +324,7 @@
       }
     };
 
-    _KPFChosenOrder.searchChosenUIContainer = function(element) {
+    _KPTCPChosenOrder.searchChosenUIContainer = function(element) {
       if ($(element).data("chosen") != null) {
         return $(element).data("chosen").container[0];
       } else {
@@ -332,13 +332,13 @@
       }
     };
 
-    _KPFChosenOrder.triggerEvent = function(target, event_name) {
+    _KPTCPChosenOrder.triggerEvent = function(target, event_name) {
       return $(target).trigger(event_name);
     };
 
-    return _KPFChosenOrder;
+    return _KPTCPChosenOrder;
 
-  })(KPFAbstractChosenOrder);
+  })(KPTCPAbstractChosenOrder);
 
 }).call(this);
 ;(function() {
@@ -1694,7 +1694,7 @@
 * http://miohtama.github.com/jquery-interdependencies/
 * Copyright 2012-2013 Mikko Ohtamaa, others
 *
-* Customized by Kpf
+* Customized by Kptcp
 *
 */
 (function($) {
@@ -1876,7 +1876,7 @@
       if( result ) {
 
         $(controls).each(function() {
-          $(this).removeClass('kpf-depend-on');
+          $(this).removeClass('kptcp-depend-on');
         });
 
         $(this.rules).each(function() {
@@ -1886,7 +1886,7 @@
       } else {
 
         $(controls).each(function() {
-          $(this).addClass('kpf-depend-on');
+          $(this).addClass('kptcp-depend-on');
         });
 
         $(this.rules).each(function() {
@@ -1916,7 +1916,7 @@
     }
   });
 
-  $.kpf_deps = {
+  $.kptcp_deps = {
 
     createRuleset: function() {
       return new Ruleset();
@@ -1950,7 +1950,7 @@
  * @license BSD
  * @version 2.5.0
  *
- * Customized by Kpf
+ * Customized by Kptcp
  *
  */
 (function(root, factory) {
@@ -1976,7 +1976,7 @@
 }(this, function(exports, $) {
 
   //
-  // Kpf: Added custom patterns for spesific validate
+  // Kptcp: Added custom patterns for spesific validate
   //
   var patterns = {
     validate: /^(?!(_nonce|_pseudo))[a-zA-Z0-9_-]*(?:\[(?:\d*|(?!(_nonce|_pseudo))[a-zA-Z0-9_-]+)\])*$/i,
@@ -2078,12 +2078,12 @@
   };
 
   //
-  // Kpf: Renamed function names for avoid conflicts
+  // Kptcp: Renamed function names for avoid conflicts
   //
 
   if (typeof $.fn !== "undefined") {
-    $.fn.serializeObjectKPF = FormSerializer.serializeObject;
-    $.fn.serializeJSONKPF   = FormSerializer.serializeJSON;
+    $.fn.serializeObjectKPTCP = FormSerializer.serializeObject;
+    $.fn.serializeJSONKPTCP   = FormSerializer.serializeJSON;
   }
 
   exports.FormSerializer = FormSerializer;

@@ -1,18 +1,18 @@
 /**
  * 06. Profile
  */
-.kpf-profile-options{
+.kptcp-profile-options{
 
   > h2 > .fa {
     padding-right: 7px;
   }
 
-  > .kpf-field{
+  > .kptcp-field{
     max-width: 750px;
     padding: 15px 0;
     border-top: none !important;
 
-    > .kpf-title{
+    > .kptcp-title{
       width: 200px;
 
       h4{
@@ -24,35 +24,35 @@
       }
     }
 
-    > .kpf-fieldset{
+    > .kptcp-fieldset{
       width: calc(100% - 220px);
 
-      > .kpf-help{
+      > .kptcp-help{
         top: -15px;
         right: -5px;
       }
     }
   }
 
-  > .kpf-field-heading{
+  > .kptcp-field-heading{
     font-size: 1.1em;
   }
 
-  > .kpf-field-subheading{
+  > .kptcp-field-subheading{
     font-size: 12px;
   }
 
-  > .kpf-field-subheading,
-  > .kpf-field-heading{
+  > .kptcp-field-subheading,
+  > .kptcp-field-heading{
     margin: 10px 0;
     padding: 15px !important;
     border: 1px solid #ddd;
   }
 
-  > .kpf-field-submessage{
+  > .kptcp-field-submessage{
     margin: 20px 0;
 
-    .kpf-submessage{
+    .kptcp-submessage{
       padding: 10px;
       border-left-width: 1px;
       border-left-style: solid;
@@ -61,7 +61,7 @@
     }
   }
 
-  > .kpf-field-notice{
+  > .kptcp-field-notice{
     background-color: transparent;
   }
 }

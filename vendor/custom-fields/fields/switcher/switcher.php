@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_switcher' ) ) {
-  class KPF_Field_switcher extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_switcher' ) ) {
+  class KPTCP_Field_switcher extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -16,21 +16,21 @@ if ( ! class_exists( 'KPF_Field_switcher' ) ) {
 
     public function render() {
 
-      $active     = ( ! empty( $this->value ) ) ? ' kpf--active' : '';
-      $text_on    = ( ! empty( $this->field['text_on'] ) ) ? $this->field['text_on'] : esc_html__( 'On', 'kpf' );
-      $text_off   = ( ! empty( $this->field['text_off'] ) ) ? $this->field['text_off'] : esc_html__( 'Off', 'kpf' );
+      $active     = ( ! empty( $this->value ) ) ? ' kptcp--active' : '';
+      $text_on    = ( ! empty( $this->field['text_on'] ) ) ? $this->field['text_on'] : esc_html__( 'On', 'kptcp' );
+      $text_off   = ( ! empty( $this->field['text_off'] ) ) ? $this->field['text_off'] : esc_html__( 'Off', 'kptcp' );
       $text_width = ( ! empty( $this->field['text_width'] ) ) ? ' style="width: '. esc_attr( $this->field['text_width'] ) .'px;"': '';
 
       echo $this->field_before();
 
-      echo '<div class="kpf--switcher'. esc_attr( $active ) .'"'. $text_width .'>';
-      echo '<span class="kpf--on">'. esc_attr( $text_on ) .'</span>';
-      echo '<span class="kpf--off">'. esc_attr( $text_off ) .'</span>';
-      echo '<span class="kpf--ball"></span>';
+      echo '<div class="kptcp--switcher'. esc_attr( $active ) .'"'. $text_width .'>';
+      echo '<span class="kptcp--on">'. esc_attr( $text_on ) .'</span>';
+      echo '<span class="kptcp--off">'. esc_attr( $text_off ) .'</span>';
+      echo '<span class="kptcp--ball"></span>';
       echo '<input type="hidden" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'"'. $this->field_attributes() .' />';
       echo '</div>';
 
-      echo ( ! empty( $this->field['label'] ) ) ? '<span class="kpf--label">'. esc_attr( $this->field['label'] ) . '</span>' : '';
+      echo ( ! empty( $this->field['label'] ) ) ? '<span class="kptcp--label">'. esc_attr( $this->field['label'] ) . '</span>' : '';
 
       echo $this->field_after();
 

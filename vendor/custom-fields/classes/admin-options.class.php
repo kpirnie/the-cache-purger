@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Options' ) ) {
-  class KPF_Options extends KPF_Abstract {
+if ( ! class_exists( 'KPTCP_Options' ) ) {
+  class KPTCP_Options extends KPTCP_Abstract {
 
     // constans
     public $unique       = '';
@@ -23,7 +23,7 @@ if ( ! class_exists( 'KPF_Options' ) ) {
     public $args         = array(
 
       // framework title
-      'framework_title'         => 'Kpf Framework <small>by Kpf</small>',
+      'framework_title'         => 'Kptcp Framework <small>by Kptcp</small>',
       'framework_class'         => '',
 
       // menu settings
@@ -92,8 +92,8 @@ if ( ! class_exists( 'KPF_Options' ) ) {
     public function __construct( $key, $params = array() ) {
 
       $this->unique   = $key;
-      $this->args     = apply_filters( "kpf_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
-      $this->sections = apply_filters( "kpf_{$this->unique}_sections", $params['sections'], $this );
+      $this->args     = apply_filters( "kptcp_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
+      $this->sections = apply_filters( "kptcp_{$this->unique}_sections", $params['sections'], $this );
 
       // run only is admin panel options, avoid performance loss
       $this->pre_tabs     = $this->pre_tabs( $this->sections );
@@ -106,7 +106,7 @@ if ( ! class_exists( 'KPF_Options' ) ) {
 
       add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
       add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_menu' ), $this->args['admin_bar_menu_priority'] );
-      add_action( 'wp_ajax_kpf_'. $this->unique .'_ajax_save', array( $this, 'ajax_save' ) );
+      add_action( 'wp_ajax_kptcp_'. $this->unique .'_ajax_save', array( $this, 'ajax_save' ) );
 
       if ( $this->args['database'] === 'network' && ! empty( $this->args['show_in_network'] ) ) {
         add_action( 'network_admin_menu', array( $this, 'add_admin_menu' ) );
@@ -199,7 +199,7 @@ if ( ! class_exists( 'KPF_Options' ) ) {
         global $submenu;
 
         $menu_slug = $this->args['menu_slug'];
-        $menu_icon = ( ! empty( $this->args['admin_bar_menu_icon'] ) ) ? '<span class="kpf-ab-icon ab-icon '. esc_attr( $this->args['admin_bar_menu_icon'] ) .'"></span>' : '';
+        $menu_icon = ( ! empty( $this->args['admin_bar_menu_icon'] ) ) ? '<span class="kptcp-ab-icon ab-icon '. esc_attr( $this->args['admin_bar_menu_icon'] ) .'"></span>' : '';
 
         $wp_admin_bar->add_node( array(
           'id'    => $menu_slug,
@@ -227,7 +227,7 @@ if ( ! class_exists( 'KPF_Options' ) ) {
       $result = $this->set_options( true );
 
       if ( ! $result ) {
-        wp_send_json_error( array( 'error' => esc_html__( 'Error while saving the changes.', 'kpf' ) ) );
+        wp_send_json_error( array( 'error' => esc_html__( 'Error while saving the changes.', 'kptcp' ) ) );
       } else {
         wp_send_json_success( array( 'notice' => $this->notice, 'errors' => $this->errors ) );
       }
@@ -270,24 +270,24 @@ if ( ! class_exists( 'KPF_Options' ) ) {
 
       // Set variables.
       $data      = array();
-      $noncekey  = 'kpf_options_nonce'. $this->unique;
+      $noncekey  = 'kptcp_options_nonce'. $this->unique;
       $nonce     = ( ! empty( $response[$noncekey] ) ) ? $response[$noncekey] : '';
       $options   = ( ! empty( $response[$this->unique] ) ) ? $response[$this->unique] : array();
-      $transient = ( ! empty( $response['kpf_transient'] ) ) ? $response['kpf_transient'] : array();
+      $transient = ( ! empty( $response['kptcp_transient'] ) ) ? $response['kptcp_transient'] : array();
 
-      if ( wp_verify_nonce( $nonce, 'kpf_options_nonce' ) ) {
+      if ( wp_verify_nonce( $nonce, 'kptcp_options_nonce' ) ) {
 
         $importing  = false;
         $section_id = ( ! empty( $transient['section'] ) ) ? $transient['section'] : '';
 
-        if ( ! $ajax && ! empty( $response[ 'kpf_import_data' ] ) ) {
+        if ( ! $ajax && ! empty( $response[ 'kptcp_import_data' ] ) ) {
 
           // XSS ok.
           // No worries, This "POST" requests is sanitizing in the below foreach. see #L337 - #L341
-          $import_data  = json_decode( wp_unslash( trim( $response[ 'kpf_import_data' ] ) ), true );
+          $import_data  = json_decode( wp_unslash( trim( $response[ 'kptcp_import_data' ] ) ), true );
           $options      = ( is_array( $import_data ) && ! empty( $import_data ) ) ? $import_data : array();
           $importing    = true;
-          $this->notice = esc_html__( 'Settings successfully imported.', 'kpf' );
+          $this->notice = esc_html__( 'Settings successfully imported.', 'kptcp' );
 
         }
 
@@ -299,7 +299,7 @@ if ( ! class_exists( 'KPF_Options' ) ) {
             }
           }
 
-          $this->notice = esc_html__( 'Default settings restored.', 'kpf' );
+          $this->notice = esc_html__( 'Default settings restored.', 'kptcp' );
 
         } else if ( ! empty( $transient['reset_section'] ) && ! empty( $section_id ) ) {
 
@@ -315,7 +315,7 @@ if ( ! class_exists( 'KPF_Options' ) ) {
 
           $data = wp_parse_args( $data, $this->options );
 
-          $this->notice = esc_html__( 'Default settings restored.', 'kpf' );
+          $this->notice = esc_html__( 'Default settings restored.', 'kptcp' );
 
         } else {
 
@@ -375,18 +375,18 @@ if ( ! class_exists( 'KPF_Options' ) ) {
 
         }
 
-        $data = apply_filters( "kpf_{$this->unique}_save", $data, $this );
+        $data = apply_filters( "kptcp_{$this->unique}_save", $data, $this );
 
-        do_action( "kpf_{$this->unique}_save_before", $data, $this );
+        do_action( "kptcp_{$this->unique}_save_before", $data, $this );
 
         $this->options = $data;
 
         $this->save_options( $data );
 
-        do_action( "kpf_{$this->unique}_save_after", $data, $this );
+        do_action( "kptcp_{$this->unique}_save_after", $data, $this );
 
         if ( empty( $this->notice ) ) {
-          $this->notice = esc_html__( 'Settings saved.', 'kpf' );
+          $this->notice = esc_html__( 'Settings saved.', 'kptcp' );
         }
 
         return true;
@@ -410,7 +410,7 @@ if ( ! class_exists( 'KPF_Options' ) ) {
         update_option( $this->unique, $data );
       }
 
-      do_action( "kpf_{$this->unique}_saved", $data, $this );
+      do_action( "kptcp_{$this->unique}_saved", $data, $this );
 
     }
 
@@ -494,7 +494,7 @@ if ( ! class_exists( 'KPF_Options' ) ) {
     }
 
     public function add_admin_footer_text() {
-      $default = 'Thank you for creating with <a href="http://kpfframework.com/" target="_blank">Kpf Framework</a>';
+      $default = 'Thank you for creating with <a href="http://kptcpframework.com/" target="_blank">Kptcp Framework</a>';
       echo ( ! empty( $this->args['footer_credit'] ) ) ? $this->args['footer_credit'] : $default;
     }
 
@@ -506,7 +506,7 @@ if ( ! class_exists( 'KPF_Options' ) ) {
           foreach ( $sections['fields'] as $field ) {
             if ( ! empty( $field['id'] ) ) {
               if ( array_key_exists( $field['id'], $this->errors ) ) {
-                $err = '<span class="kpf-label-error">!</span>';
+                $err = '<span class="kptcp-label-error">!</span>';
               }
             }
           }
@@ -531,51 +531,51 @@ if ( ! class_exists( 'KPF_Options' ) ) {
     public function add_options_html() {
 
       $has_nav       = ( count( $this->pre_tabs ) > 1 ) ? true : false;
-      $show_all      = ( ! $has_nav ) ? ' kpf-show-all' : '';
-      $ajax_class    = ( $this->args['ajax_save'] ) ? ' kpf-save-ajax' : '';
-      $sticky_class  = ( $this->args['sticky_header'] ) ? ' kpf-sticky-header' : '';
+      $show_all      = ( ! $has_nav ) ? ' kptcp-show-all' : '';
+      $ajax_class    = ( $this->args['ajax_save'] ) ? ' kptcp-save-ajax' : '';
+      $sticky_class  = ( $this->args['sticky_header'] ) ? ' kptcp-sticky-header' : '';
       $wrapper_class = ( $this->args['framework_class'] ) ? ' '. $this->args['framework_class'] : '';
-      $theme         = ( $this->args['theme'] ) ? ' kpf-theme-'. $this->args['theme'] : '';
+      $theme         = ( $this->args['theme'] ) ? ' kptcp-theme-'. $this->args['theme'] : '';
       $class         = ( $this->args['class'] ) ? ' '. $this->args['class'] : '';
       $nav_type      = ( $this->args['nav'] === 'inline' ) ? 'inline' : 'normal';
       $form_action   = ( $this->args['form_action'] ) ? $this->args['form_action'] : '';
 
-      do_action( 'kpf_options_before' );
+      do_action( 'kptcp_options_before' );
 
-      echo '<div class="kpf kpf-options'. esc_attr( $theme . $class . $wrapper_class ) .'" data-slug="'. esc_attr( $this->args['menu_slug'] ) .'" data-unique="'. esc_attr( $this->unique ) .'">';
+      echo '<div class="kptcp kptcp-options'. esc_attr( $theme . $class . $wrapper_class ) .'" data-slug="'. esc_attr( $this->args['menu_slug'] ) .'" data-unique="'. esc_attr( $this->unique ) .'">';
 
-        echo '<div class="kpf-container">';
+        echo '<div class="kptcp-container">';
 
-        echo '<form method="post" action="'. esc_attr( $form_action ) .'" enctype="multipart/form-data" id="kpf-form" autocomplete="off" novalidate="novalidate">';
+        echo '<form method="post" action="'. esc_attr( $form_action ) .'" enctype="multipart/form-data" id="kptcp-form" autocomplete="off" novalidate="novalidate">';
 
-        echo '<input type="hidden" class="kpf-section-id" name="kpf_transient[section]" value="1">';
+        echo '<input type="hidden" class="kptcp-section-id" name="kptcp_transient[section]" value="1">';
 
-        wp_nonce_field( 'kpf_options_nonce', 'kpf_options_nonce'. $this->unique );
+        wp_nonce_field( 'kptcp_options_nonce', 'kptcp_options_nonce'. $this->unique );
 
-        echo '<div class="kpf-header'. esc_attr( $sticky_class ) .'">';
-        echo '<div class="kpf-header-inner">';
+        echo '<div class="kptcp-header'. esc_attr( $sticky_class ) .'">';
+        echo '<div class="kptcp-header-inner">';
 
-          echo '<div class="kpf-header-left">';
+          echo '<div class="kptcp-header-left">';
           echo '<h1>'. $this->args['framework_title'] .'</h1>';
           echo '</div>';
 
-          echo '<div class="kpf-header-right">';
+          echo '<div class="kptcp-header-right">';
 
-            $notice_class = ( ! empty( $this->notice ) ) ? 'kpf-form-show' : '';
+            $notice_class = ( ! empty( $this->notice ) ) ? 'kptcp-form-show' : '';
             $notice_text  = ( ! empty( $this->notice ) ) ? $this->notice : '';
 
-            echo '<div class="kpf-form-result kpf-form-success '. esc_attr( $notice_class ) .'">'. $notice_text .'</div>';
+            echo '<div class="kptcp-form-result kptcp-form-success '. esc_attr( $notice_class ) .'">'. $notice_text .'</div>';
 
-            echo ( $this->args['show_form_warning'] ) ? '<div class="kpf-form-result kpf-form-warning">'. esc_html__( 'You have unsaved changes, save your changes!', 'kpf' ) .'</div>' : '';
+            echo ( $this->args['show_form_warning'] ) ? '<div class="kptcp-form-result kptcp-form-warning">'. esc_html__( 'You have unsaved changes, save your changes!', 'kptcp' ) .'</div>' : '';
 
-            echo ( $has_nav && $this->args['show_all_options'] ) ? '<div class="kpf-expand-all" title="'. esc_html__( 'show all settings', 'kpf' ) .'"><i class="fas fa-outdent"></i></div>' : '';
+            echo ( $has_nav && $this->args['show_all_options'] ) ? '<div class="kptcp-expand-all" title="'. esc_html__( 'show all settings', 'kptcp' ) .'"><i class="fas fa-outdent"></i></div>' : '';
 
-            echo ( $this->args['show_search'] ) ? '<div class="kpf-search"><input type="text" name="kpf-search" placeholder="'. esc_html__( 'Search...', 'kpf' ) .'" autocomplete="off" /></div>' : '';
+            echo ( $this->args['show_search'] ) ? '<div class="kptcp-search"><input type="text" name="kptcp-search" placeholder="'. esc_html__( 'Search...', 'kptcp' ) .'" autocomplete="off" /></div>' : '';
 
-            echo '<div class="kpf-buttons">';
-            echo '<input type="submit" name="'. esc_attr( $this->unique ) .'[_nonce][save]" class="button button-primary kpf-top-save kpf-save'. esc_attr( $ajax_class ) .'" value="'. esc_html__( 'Save', 'kpf' ) .'" data-save="'. esc_html__( 'Saving...', 'kpf' ) .'">';
-            echo ( $this->args['show_reset_section'] ) ? '<input type="submit" name="kpf_transient[reset_section]" class="button button-secondary kpf-reset-section kpf-confirm" value="'. esc_html__( 'Reset Section', 'kpf' ) .'" data-confirm="'. esc_html__( 'Are you sure to reset this section options?', 'kpf' ) .'">' : '';
-            echo ( $this->args['show_reset_all'] ) ? '<input type="submit" name="kpf_transient[reset]" class="button kpf-warning-primary kpf-reset-all kpf-confirm" value="'. ( ( $this->args['show_reset_section'] ) ? esc_html__( 'Reset All', 'kpf' ) : esc_html__( 'Reset', 'kpf' ) ) .'" data-confirm="'. esc_html__( 'Are you sure you want to reset all settings to default values?', 'kpf' ) .'">' : '';
+            echo '<div class="kptcp-buttons">';
+            echo '<input type="submit" name="'. esc_attr( $this->unique ) .'[_nonce][save]" class="button button-primary kptcp-top-save kptcp-save'. esc_attr( $ajax_class ) .'" value="'. esc_html__( 'Save', 'kptcp' ) .'" data-save="'. esc_html__( 'Saving...', 'kptcp' ) .'">';
+            echo ( $this->args['show_reset_section'] ) ? '<input type="submit" name="kptcp_transient[reset_section]" class="button button-secondary kptcp-reset-section kptcp-confirm" value="'. esc_html__( 'Reset Section', 'kptcp' ) .'" data-confirm="'. esc_html__( 'Are you sure to reset this section options?', 'kptcp' ) .'">' : '';
+            echo ( $this->args['show_reset_all'] ) ? '<input type="submit" name="kptcp_transient[reset]" class="button kptcp-warning-primary kptcp-reset-all kptcp-confirm" value="'. ( ( $this->args['show_reset_section'] ) ? esc_html__( 'Reset All', 'kptcp' ) : esc_html__( 'Reset', 'kptcp' ) ) .'" data-confirm="'. esc_html__( 'Are you sure you want to reset all settings to default values?', 'kptcp' ) .'">' : '';
             echo '</div>';
 
           echo '</div>';
@@ -584,11 +584,11 @@ if ( ! class_exists( 'KPF_Options' ) ) {
           echo '</div>';
         echo '</div>';
 
-        echo '<div class="kpf-wrapper'. esc_attr( $show_all ) .'">';
+        echo '<div class="kptcp-wrapper'. esc_attr( $show_all ) .'">';
 
           if ( $has_nav ) {
 
-            echo '<div class="kpf-nav kpf-nav-'. esc_attr( $nav_type ) .' kpf-nav-options">';
+            echo '<div class="kptcp-nav kptcp-nav-'. esc_attr( $nav_type ) .' kptcp-nav-options">';
 
               echo '<ul>';
 
@@ -596,13 +596,13 @@ if ( ! class_exists( 'KPF_Options' ) ) {
 
                 $tab_id    = sanitize_title( $tab['title'] );
                 $tab_error = $this->error_check( $tab );
-                $tab_icon  = ( ! empty( $tab['icon'] ) ) ? '<i class="kpf-tab-icon '. esc_attr( $tab['icon'] ) .'"></i>' : '';
+                $tab_icon  = ( ! empty( $tab['icon'] ) ) ? '<i class="kptcp-tab-icon '. esc_attr( $tab['icon'] ) .'"></i>' : '';
 
                 if ( ! empty( $tab['subs'] ) ) {
 
-                  echo '<li class="kpf-tab-item">';
+                  echo '<li class="kptcp-tab-item">';
 
-                    echo '<a href="#tab='. esc_attr( $tab_id ) .'" data-tab-id="'. esc_attr( $tab_id ) .'" class="kpf-arrow">'. $tab_icon . $tab['title'] . $tab_error .'</a>';
+                    echo '<a href="#tab='. esc_attr( $tab_id ) .'" data-tab-id="'. esc_attr( $tab_id ) .'" class="kptcp-arrow">'. $tab_icon . $tab['title'] . $tab_error .'</a>';
 
                     echo '<ul>';
 
@@ -610,7 +610,7 @@ if ( ! class_exists( 'KPF_Options' ) ) {
 
                       $sub_id    = $tab_id .'/'. sanitize_title( $sub['title'] );
                       $sub_error = $this->error_check( $sub );
-                      $sub_icon  = ( ! empty( $sub['icon'] ) ) ? '<i class="kpf-tab-icon '. esc_attr( $sub['icon'] ) .'"></i>' : '';
+                      $sub_icon  = ( ! empty( $sub['icon'] ) ) ? '<i class="kptcp-tab-icon '. esc_attr( $sub['icon'] ) .'"></i>' : '';
 
                       echo '<li><a href="#tab='. esc_attr( $sub_id ) .'" data-tab-id="'. esc_attr( $sub_id ) .'">'. $sub_icon . $sub['title'] . $sub_error .'</a></li>';
 
@@ -622,7 +622,7 @@ if ( ! class_exists( 'KPF_Options' ) ) {
 
                 } else {
 
-                  echo '<li class="kpf-tab-item"><a href="#tab='. esc_attr( $tab_id ) .'" data-tab-id="'. esc_attr( $tab_id ) .'">'. $tab_icon . $tab['title'] . $tab_error .'</a></li>';
+                  echo '<li class="kptcp-tab-item"><a href="#tab='. esc_attr( $tab_id ) .'" data-tab-id="'. esc_attr( $tab_id ) .'">'. $tab_icon . $tab['title'] . $tab_error .'</a></li>';
 
                 }
 
@@ -634,22 +634,22 @@ if ( ! class_exists( 'KPF_Options' ) ) {
 
           }
 
-          echo '<div class="kpf-content">';
+          echo '<div class="kptcp-content">';
 
-            echo '<div class="kpf-sections">';
+            echo '<div class="kptcp-sections">';
 
             foreach ( $this->pre_sections as $section ) {
 
-              $section_onload = ( ! $has_nav ) ? ' kpf-onload' : '';
+              $section_onload = ( ! $has_nav ) ? ' kptcp-onload' : '';
               $section_class  = ( ! empty( $section['class'] ) ) ? ' '. $section['class'] : '';
-              $section_icon   = ( ! empty( $section['icon'] ) ) ? '<i class="kpf-section-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
+              $section_icon   = ( ! empty( $section['icon'] ) ) ? '<i class="kptcp-section-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
               $section_title  = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
               $section_parent = ( ! empty( $section['ptitle'] ) ) ? sanitize_title( $section['ptitle'] ) .'/' : '';
               $section_slug   = ( ! empty( $section['title'] ) ) ? sanitize_title( $section_title ) : '';
 
-              echo '<div class="kpf-section hidden'. esc_attr( $section_onload . $section_class ) .'" data-section-id="'. esc_attr( $section_parent . $section_slug ) .'">';
-              echo ( $has_nav ) ? '<div class="kpf-section-title"><h3>'. $section_icon . $section_title .'</h3></div>' : '';
-              echo ( ! empty( $section['description'] ) ) ? '<div class="kpf-field kpf-section-description">'. $section['description'] .'</div>' : '';
+              echo '<div class="kptcp-section hidden'. esc_attr( $section_onload . $section_class ) .'" data-section-id="'. esc_attr( $section_parent . $section_slug ) .'">';
+              echo ( $has_nav ) ? '<div class="kptcp-section-title"><h3>'. $section_icon . $section_title .'</h3></div>' : '';
+              echo ( ! empty( $section['description'] ) ) ? '<div class="kptcp-field kptcp-section-description">'. $section['description'] .'</div>' : '';
 
               if ( ! empty( $section['fields'] ) ) {
 
@@ -667,13 +667,13 @@ if ( ! class_exists( 'KPF_Options' ) ) {
 
                   $value = ( ! empty( $field['id'] ) && isset( $this->options[$field['id']] ) ) ? $this->options[$field['id']] : '';
 
-                  KPF::field( $field, $value, $this->unique, 'options' );
+                  KPTCP::field( $field, $value, $this->unique, 'options' );
 
                 }
 
               } else {
 
-                echo '<div class="kpf-no-option">'. esc_html__( 'No data available.', 'kpf' ) .'</div>';
+                echo '<div class="kptcp-no-option">'. esc_html__( 'No data available.', 'kptcp' ) .'</div>';
 
               }
 
@@ -687,21 +687,21 @@ if ( ! class_exists( 'KPF_Options' ) ) {
 
           echo '</div>';
 
-          echo ( $has_nav && $nav_type === 'normal' ) ? '<div class="kpf-nav-background"></div>' : '';
+          echo ( $has_nav && $nav_type === 'normal' ) ? '<div class="kptcp-nav-background"></div>' : '';
 
         echo '</div>';
 
         if ( ! empty( $this->args['show_footer'] ) ) {
 
-          echo '<div class="kpf-footer">';
+          echo '<div class="kptcp-footer">';
 
-          echo '<div class="kpf-buttons">';
-          echo '<input type="submit" name="kpf_transient[save]" class="button button-primary kpf-save'. esc_attr( $ajax_class ) .'" value="'. esc_html__( 'Save', 'kpf' ) .'" data-save="'. esc_html__( 'Saving...', 'kpf' ) .'">';
-          echo ( $this->args['show_reset_section'] ) ? '<input type="submit" name="kpf_transient[reset_section]" class="button button-secondary kpf-reset-section kpf-confirm" value="'. esc_html__( 'Reset Section', 'kpf' ) .'" data-confirm="'. esc_html__( 'Are you sure to reset this section options?', 'kpf' ) .'">' : '';
-          echo ( $this->args['show_reset_all'] ) ? '<input type="submit" name="kpf_transient[reset]" class="button kpf-warning-primary kpf-reset-all kpf-confirm" value="'. ( ( $this->args['show_reset_section'] ) ? esc_html__( 'Reset All', 'kpf' ) : esc_html__( 'Reset', 'kpf' ) ) .'" data-confirm="'. esc_html__( 'Are you sure you want to reset all settings to default values?', 'kpf' ) .'">' : '';
+          echo '<div class="kptcp-buttons">';
+          echo '<input type="submit" name="kptcp_transient[save]" class="button button-primary kptcp-save'. esc_attr( $ajax_class ) .'" value="'. esc_html__( 'Save', 'kptcp' ) .'" data-save="'. esc_html__( 'Saving...', 'kptcp' ) .'">';
+          echo ( $this->args['show_reset_section'] ) ? '<input type="submit" name="kptcp_transient[reset_section]" class="button button-secondary kptcp-reset-section kptcp-confirm" value="'. esc_html__( 'Reset Section', 'kptcp' ) .'" data-confirm="'. esc_html__( 'Are you sure to reset this section options?', 'kptcp' ) .'">' : '';
+          echo ( $this->args['show_reset_all'] ) ? '<input type="submit" name="kptcp_transient[reset]" class="button kptcp-warning-primary kptcp-reset-all kptcp-confirm" value="'. ( ( $this->args['show_reset_section'] ) ? esc_html__( 'Reset All', 'kptcp' ) : esc_html__( 'Reset', 'kptcp' ) ) .'" data-confirm="'. esc_html__( 'Are you sure you want to reset all settings to default values?', 'kptcp' ) .'">' : '';
           echo '</div>';
 
-          echo ( ! empty( $this->args['footer_text'] ) ) ? '<div class="kpf-copyright">'. $this->args['footer_text'] .'</div>' : '';
+          echo ( ! empty( $this->args['footer_text'] ) ) ? '<div class="kptcp-copyright">'. $this->args['footer_text'] .'</div>' : '';
 
           echo '<div class="clear"></div>';
           echo '</div>';
@@ -718,7 +718,7 @@ if ( ! class_exists( 'KPF_Options' ) ) {
 
       echo '</div>';
 
-      do_action( 'kpf_options_after' );
+      do_action( 'kptcp_options_after' );
 
     }
   }

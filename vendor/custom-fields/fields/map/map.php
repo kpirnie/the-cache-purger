@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_map' ) ) {
-  class KPF_Field_map extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_map' ) ) {
+  class KPTCP_Field_map extends KPTCP_Fields {
 
     public $version = '1.7.1';
     public $cdn_url = 'https://cdn.jsdelivr.net/npm/leaflet@';
@@ -20,9 +20,9 @@ if ( ! class_exists( 'KPF_Field_map' ) ) {
     public function render() {
 
       $args              = wp_parse_args( $this->field, array(
-        'placeholder'    => esc_html__( 'Search...', 'kpf' ),
-        'latitude_text'  => esc_html__( 'Latitude', 'kpf' ),
-        'longitude_text' => esc_html__( 'Longitude', 'kpf' ),
+        'placeholder'    => esc_html__( 'Search...', 'kptcp' ),
+        'latitude_text'  => esc_html__( 'Latitude', 'kptcp' ),
+        'longitude_text' => esc_html__( 'Longitude', 'kptcp' ),
         'address_field'  => '',
         'height'         => '',
       ) );
@@ -49,30 +49,30 @@ if ( ! class_exists( 'KPF_Field_map' ) ) {
       echo $this->field_before();
 
       if ( empty( $args['address_field'] ) ) {
-        echo '<div class="kpf--map-search">';
+        echo '<div class="kptcp--map-search">';
         echo '<input type="text" name="'. esc_attr( $this->field_name( '[address]' ) ) .'" value="'. esc_attr( $value['address'] ) .'"'. $this->field_attributes( $placeholder ) .' />';
         echo '</div>';
       } else {
-        echo '<div class="kpf--address-field" data-address-field="'. esc_attr( $args['address_field'] ) .'"></div>';
+        echo '<div class="kptcp--address-field" data-address-field="'. esc_attr( $args['address_field'] ) .'"></div>';
       }
 
-      echo '<div class="kpf--map-osm-wrap"><div class="kpf--map-osm" data-map="'. esc_attr( json_encode( $settings ) ) .'"'. $style_attr .'></div></div>';
+      echo '<div class="kptcp--map-osm-wrap"><div class="kptcp--map-osm" data-map="'. esc_attr( json_encode( $settings ) ) .'"'. $style_attr .'></div></div>';
 
-      echo '<div class="kpf--map-inputs">';
+      echo '<div class="kptcp--map-inputs">';
 
-        echo '<div class="kpf--map-input">';
+        echo '<div class="kptcp--map-input">';
         echo '<label>'. esc_attr( $args['latitude_text'] ) .'</label>';
-        echo '<input type="text" name="'. esc_attr( $this->field_name( '[latitude]' ) ) .'" value="'. esc_attr( $value['latitude'] ) .'" class="kpf--latitude" />';
+        echo '<input type="text" name="'. esc_attr( $this->field_name( '[latitude]' ) ) .'" value="'. esc_attr( $value['latitude'] ) .'" class="kptcp--latitude" />';
         echo '</div>';
 
-        echo '<div class="kpf--map-input">';
+        echo '<div class="kptcp--map-input">';
         echo '<label>'. esc_attr( $args['longitude_text'] ) .'</label>';
-        echo '<input type="text" name="'. esc_attr( $this->field_name( '[longitude]' ) ) .'" value="'. esc_attr( $value['longitude'] ) .'" class="kpf--longitude" />';
+        echo '<input type="text" name="'. esc_attr( $this->field_name( '[longitude]' ) ) .'" value="'. esc_attr( $value['longitude'] ) .'" class="kptcp--longitude" />';
         echo '</div>';
 
       echo '</div>';
 
-      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[zoom]' ) ) .'" value="'. esc_attr( $value['zoom'] ) .'" class="kpf--zoom" />';
+      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[zoom]' ) ) .'" value="'. esc_attr( $value['zoom'] ) .'" class="kptcp--zoom" />';
 
       echo $this->field_after();
 
@@ -80,12 +80,12 @@ if ( ! class_exists( 'KPF_Field_map' ) ) {
 
     public function enqueue() {
 
-      if ( ! wp_script_is( 'kpf-leaflet' ) ) {
-        wp_enqueue_script( 'kpf-leaflet', esc_url( $this->cdn_url . $this->version .'/dist/leaflet.js' ), array( 'kpf' ), $this->version, true );
+      if ( ! wp_script_is( 'kptcp-leaflet' ) ) {
+        wp_enqueue_script( 'kptcp-leaflet', esc_url( $this->cdn_url . $this->version .'/dist/leaflet.js' ), array( 'kptcp' ), $this->version, true );
       }
 
-      if ( ! wp_style_is( 'kpf-leaflet' ) ) {
-        wp_enqueue_style( 'kpf-leaflet', esc_url( $this->cdn_url . $this->version .'/dist/leaflet.css' ), array(), $this->version );
+      if ( ! wp_style_is( 'kptcp-leaflet' ) ) {
+        wp_enqueue_style( 'kptcp-leaflet', esc_url( $this->cdn_url . $this->version .'/dist/leaflet.css' ), array(), $this->version );
       }
 
       if ( ! wp_script_is( 'jquery-ui-autocomplete' ) ) {

@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_link_color' ) ) {
-  class KPF_Field_link_color extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_link_color' ) ) {
+  class KPTCP_Field_link_color extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -33,11 +33,11 @@ if ( ! class_exists( 'KPF_Field_link_color' ) ) {
       );
 
       $color_props = array(
-        'color'    => esc_html__( 'Normal', 'kpf' ),
-        'hover'    => esc_html__( 'Hover', 'kpf' ),
-        'active'   => esc_html__( 'Active', 'kpf' ),
-        'visited'  => esc_html__( 'Visited', 'kpf' ),
-        'focus'    => esc_html__( 'Focus', 'kpf' )
+        'color'    => esc_html__( 'Normal', 'kptcp' ),
+        'hover'    => esc_html__( 'Hover', 'kptcp' ),
+        'active'   => esc_html__( 'Active', 'kptcp' ),
+        'visited'  => esc_html__( 'Visited', 'kptcp' ),
+        'focus'    => esc_html__( 'Focus', 'kptcp' )
       );
 
       $value = wp_parse_args( $this->value, $default_values );
@@ -50,9 +50,9 @@ if ( ! class_exists( 'KPF_Field_link_color' ) ) {
 
           $default_attr = ( ! empty( $this->field['default'][$color_prop_key] ) ) ? ' data-default-color="'. esc_attr( $this->field['default'][$color_prop_key] ) .'"' : '';
 
-          echo '<div class="kpf--left kpf-field-color">';
-          echo '<div class="kpf--title">'. esc_attr( $color_prop_value ) .'</div>';
-          echo '<input type="text" name="'. esc_attr( $this->field_name( '['. $color_prop_key .']' ) ) .'" value="'. esc_attr( $value[$color_prop_key] ) .'" class="kpf-color"'. $default_attr . $this->field_attributes() .'/>';
+          echo '<div class="kptcp--left kptcp-field-color">';
+          echo '<div class="kptcp--title">'. esc_attr( $color_prop_value ) .'</div>';
+          echo '<input type="text" name="'. esc_attr( $this->field_name( '['. $color_prop_key .']' ) ) .'" value="'. esc_attr( $value[$color_prop_key] ) .'" class="kptcp-color"'. $default_attr . $this->field_attributes() .'/>';
           echo '</div>';
 
         }

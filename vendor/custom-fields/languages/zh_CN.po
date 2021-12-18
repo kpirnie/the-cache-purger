@@ -1,5 +1,5 @@
-# Copyright (C) 2021 Kpf
-# This file is distributed under the same license as the Kpf Framework package.
+# Copyright (C) 2021 Kptcp
+# This file is distributed under the same license as the Kptcp Framework package.
 msgid ""
 msgstr ""
 "POT-Creation-Date: 2021-06-25 12:32:35+00:00\n"
@@ -652,21 +652,21 @@ msgid "Please enter a valid URL."
 msgstr "请输入有效网址"
 
 #. Plugin Name of the plugin/theme
-msgid "Kpf Framework"
-msgstr "Kpf Framework"
+msgid "Kptcp Framework"
+msgstr "Kptcp Framework"
 
 #. Plugin URI of the plugin/theme
-msgid "http://kpfframework.com/"
-msgstr "http://kpfframework.com/"
+msgid "http://kptcpframework.com/"
+msgstr "http://kptcpframework.com/"
 
 #. Description of the plugin/theme
 msgid "A Simple and Lightweight WordPress Option Framework for Themes and Plugins"
 msgstr "一个简单且轻量的 WordPress 主题和插件选项框架"
 
 #. Author of the plugin/theme
-msgid "Kpf"
-msgstr "Kpf"
+msgid "Kptcp"
+msgstr "Kptcp"
 
 #. Author URI of the plugin/theme
-msgid "http://kpfthemes.com/"
-msgstr "http://kpfthemes.com/"
+msgid "http://kptcpthemes.com/"
+msgstr "http://kptcpthemes.com/"

@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_media' ) ) {
-  class KPF_Field_media extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_media' ) ) {
+  class KPTCP_Field_media extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -22,8 +22,8 @@ if ( ! class_exists( 'KPF_Field_media' ) ) {
         'preview_width'  => '',
         'preview_height' => '',
         'library'        => array(),
-        'button_title'   => esc_html__( 'Upload', 'kpf' ),
-        'remove_title'   => esc_html__( 'Remove', 'kpf' ),
+        'button_title'   => esc_html__( 'Upload', 'kptcp' ),
+        'remove_title'   => esc_html__( 'Remove', 'kptcp' ),
         'preview_size'   => 'thumbnail',
       ) );
 
@@ -56,7 +56,7 @@ if ( ! class_exists( 'KPF_Field_media' ) ) {
       $preview_src = ( $args['preview_size'] !== 'thumbnail' ) ? $this->value['url'] : $this->value['thumbnail'];
       $hidden_url  = ( empty( $args['url'] ) ) ? ' hidden' : '';
       $hidden_auto = ( empty( $this->value['url'] ) ) ? ' hidden' : '';
-      $placeholder = ( empty( $this->field['placeholder'] ) ) ? ' placeholder="'.  esc_html__( 'Not selected', 'kpf' ) .'"' : '';
+      $placeholder = ( empty( $this->field['placeholder'] ) ) ? ' placeholder="'.  esc_html__( 'Not selected', 'kptcp' ) .'"' : '';
 
       echo $this->field_before();
 
@@ -66,27 +66,27 @@ if ( ! class_exists( 'KPF_Field_media' ) ) {
         $preview_height = ( ! empty( $args['preview_height'] ) ) ? 'max-height:'. esc_attr( $args['preview_height'] ) .'px;' : '';
         $preview_style  = ( ! empty( $preview_width ) || ! empty( $preview_height ) ) ? ' style="'. esc_attr( $preview_width . $preview_height ) .'"': '';
 
-        echo '<div class="kpf--preview'. esc_attr( $hidden_auto ) .'">';
-        echo '<div class="kpf-image-preview"'. $preview_style .'>';
-        echo '<i class="kpf--remove fas fa-times"></i><span><img src="'. esc_url( $preview_src ) .'" class="kpf--src" /></span>';
+        echo '<div class="kptcp--preview'. esc_attr( $hidden_auto ) .'">';
+        echo '<div class="kptcp-image-preview"'. $preview_style .'>';
+        echo '<i class="kptcp--remove fas fa-times"></i><span><img src="'. esc_url( $preview_src ) .'" class="kptcp--src" /></span>';
         echo '</div>';
         echo '</div>';
 
       }
 
-      echo '<div class="kpf--placeholder">';
-      echo '<input type="text" name="'. esc_attr( $this->field_name( '[url]' ) ) .'" value="'. esc_attr( $this->value['url'] ) .'" class="kpf--url'. esc_attr( $hidden_url ) .'" readonly="readonly"'. $this->field_attributes() . $placeholder .' />';
-      echo '<a href="#" class="button button-primary kpf--button" data-library="'. esc_attr( $library ) .'" data-preview-size="'. esc_attr( $args['preview_size'] ) .'">'. $args['button_title'] .'</a>';
-      echo ( empty( $args['preview'] ) ) ? '<a href="#" class="button button-secondary kpf-warning-primary kpf--remove'. esc_attr( $hidden_auto ) .'">'. $args['remove_title'] .'</a>' : '';
+      echo '<div class="kptcp--placeholder">';
+      echo '<input type="text" name="'. esc_attr( $this->field_name( '[url]' ) ) .'" value="'. esc_attr( $this->value['url'] ) .'" class="kptcp--url'. esc_attr( $hidden_url ) .'" readonly="readonly"'. $this->field_attributes() . $placeholder .' />';
+      echo '<a href="#" class="button button-primary kptcp--button" data-library="'. esc_attr( $library ) .'" data-preview-size="'. esc_attr( $args['preview_size'] ) .'">'. $args['button_title'] .'</a>';
+      echo ( empty( $args['preview'] ) ) ? '<a href="#" class="button button-secondary kptcp-warning-primary kptcp--remove'. esc_attr( $hidden_auto ) .'">'. $args['remove_title'] .'</a>' : '';
       echo '</div>';
 
-      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[id]' ) ) .'" value="'. esc_attr( $this->value['id'] ) .'" class="kpf--id"/>';
-      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[width]' ) ) .'" value="'. esc_attr( $this->value['width'] ) .'" class="kpf--width"/>';
-      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[height]' ) ) .'" value="'. esc_attr( $this->value['height'] ) .'" class="kpf--height"/>';
-      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[thumbnail]' ) ) .'" value="'. esc_attr( $this->value['thumbnail'] ) .'" class="kpf--thumbnail"/>';
-      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[alt]' ) ) .'" value="'. esc_attr( $this->value['alt'] ) .'" class="kpf--alt"/>';
-      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[title]' ) ) .'" value="'. esc_attr( $this->value['title'] ) .'" class="kpf--title"/>';
-      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[description]' ) ) .'" value="'. esc_attr( $this->value['description'] ) .'" class="kpf--description"/>';
+      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[id]' ) ) .'" value="'. esc_attr( $this->value['id'] ) .'" class="kptcp--id"/>';
+      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[width]' ) ) .'" value="'. esc_attr( $this->value['width'] ) .'" class="kptcp--width"/>';
+      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[height]' ) ) .'" value="'. esc_attr( $this->value['height'] ) .'" class="kptcp--height"/>';
+      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[thumbnail]' ) ) .'" value="'. esc_attr( $this->value['thumbnail'] ) .'" class="kptcp--thumbnail"/>';
+      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[alt]' ) ) .'" value="'. esc_attr( $this->value['alt'] ) .'" class="kptcp--alt"/>';
+      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[title]' ) ) .'" value="'. esc_attr( $this->value['title'] ) .'" class="kptcp--title"/>';
+      echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[description]' ) ) .'" value="'. esc_attr( $this->value['description'] ) .'" class="kptcp--description"/>';
 
       echo $this->field_after();
 

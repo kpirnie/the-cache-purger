@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_code_editor' ) ) {
-  class KPF_Field_code_editor extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_code_editor' ) ) {
+  class KPTCP_Field_code_editor extends KPTCP_Fields {
 
     public $version = '5.64.0';
     public $cdn_url = 'https://cdn.jsdelivr.net/npm/codemirror@';
@@ -43,13 +43,13 @@ if ( ! class_exists( 'KPF_Field_code_editor' ) ) {
       // Do not loads CodeMirror in revslider page.
       if ( in_array( $page, array( 'revslider' ) ) ) { return; }
 
-      if ( ! wp_script_is( 'kpf-codemirror' ) ) {
-        wp_enqueue_script( 'kpf-codemirror', esc_url( $this->cdn_url . $this->version .'/lib/codemirror.min.js' ), array( 'kpf' ), $this->version, true );
-        wp_enqueue_script( 'kpf-codemirror-loadmode', esc_url( $this->cdn_url . $this->version .'/addon/mode/loadmode.min.js' ), array( 'kpf-codemirror' ), $this->version, true );
+      if ( ! wp_script_is( 'kptcp-codemirror' ) ) {
+        wp_enqueue_script( 'kptcp-codemirror', esc_url( $this->cdn_url . $this->version .'/lib/codemirror.min.js' ), array( 'kptcp' ), $this->version, true );
+        wp_enqueue_script( 'kptcp-codemirror-loadmode', esc_url( $this->cdn_url . $this->version .'/addon/mode/loadmode.min.js' ), array( 'kptcp-codemirror' ), $this->version, true );
       }
 
-      if ( ! wp_style_is( 'kpf-codemirror' ) ) {
-        wp_enqueue_style( 'kpf-codemirror', esc_url( $this->cdn_url . $this->version .'/lib/codemirror.min.css' ), array(), $this->version );
+      if ( ! wp_style_is( 'kptcp-codemirror' ) ) {
+        wp_enqueue_style( 'kptcp-codemirror', esc_url( $this->cdn_url . $this->version .'/lib/codemirror.min.css' ), array(), $this->version );
       }
 
     }

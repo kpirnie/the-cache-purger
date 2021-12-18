@@ -1,7 +1,7 @@
 <?php if ( ! defined( 'ABSPATH' ) ) { die; } // Cannot access directly.
 
-if ( ! function_exists( 'kpf_get_google_fonts' ) ) {
-  function kpf_get_google_fonts() {
+if ( ! function_exists( 'kptcp_get_google_fonts' ) ) {
+  function kptcp_get_google_fonts() {
     return [
       'ABeeZee'=>[['normal','italic'],['latin']],
       'Abel'=>[['normal'],['latin']],

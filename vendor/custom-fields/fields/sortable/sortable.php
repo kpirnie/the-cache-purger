@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_sortable' ) ) {
-  class KPF_Field_sortable extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_sortable' ) ) {
+  class KPTCP_Field_sortable extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -18,7 +18,7 @@ if ( ! class_exists( 'KPF_Field_sortable' ) ) {
 
       echo $this->field_before();
 
-      echo '<div class="kpf-sortable" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
+      echo '<div class="kptcp-sortable" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
 
       $pre_sortby = array();
       $pre_fields = array();
@@ -51,19 +51,19 @@ if ( ! class_exists( 'KPF_Field_sortable' ) ) {
 
       foreach ( $pre_sortby as $key => $field ) {
 
-        echo '<div class="kpf-sortable-item">';
+        echo '<div class="kptcp-sortable-item">';
 
-          echo '<div class="kpf-sortable-content">';
+          echo '<div class="kptcp-sortable-content">';
 
           $field_default = ( isset( $this->field['default'][$key] ) ) ? $this->field['default'][$key] : '';
           $field_value   = ( isset( $this->value[$key] ) ) ? $this->value[$key] : $field_default;
           $unique_id     = ( ! empty( $this->unique ) ) ? $this->unique .'['. $this->field['id'] .']' : $this->field['id'];
 
-          KPF::field( $field, $field_value, $unique_id, 'field/sortable' );
+          KPTCP::field( $field, $field_value, $unique_id, 'field/sortable' );
 
           echo '</div>';
 
-          echo '<div class="kpf-sortable-helper"><i class="fas fa-arrows-alt"></i></div>';
+          echo '<div class="kptcp-sortable-helper"><i class="fas fa-arrows-alt"></i></div>';
 
         echo '</div>';
 

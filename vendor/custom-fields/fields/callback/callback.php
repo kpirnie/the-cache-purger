@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_callback' ) ) {
-  class KPF_Field_callback extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_callback' ) ) {
+  class KPTCP_Field_callback extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );

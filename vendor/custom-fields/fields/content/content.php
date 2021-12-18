@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_content' ) ) {
-  class KPF_Field_content extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_content' ) ) {
+  class KPTCP_Field_content extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );

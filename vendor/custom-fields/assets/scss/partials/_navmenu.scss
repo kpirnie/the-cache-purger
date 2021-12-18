@@ -1,44 +1,44 @@
 /**
  * 08. Nav Menu
  */
-.kpf-nav-menu-options{
+.kptcp-nav-menu-options{
   clear: both;
   float: left;
   width: 100%;
 
-  > .kpf-fields{
+  > .kptcp-fields{
     margin-left: -10px;
     margin-top: 10px;
     margin-bottom: 10px;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
 
-    > .kpf-field{
+    > .kptcp-field{
       padding: 12px 14px 12px 12px;
 
-      .kpf-title{
+      .kptcp-title{
         float: none;
         width: 100%;
         margin-bottom: 5px;
       }
 
-      .kpf-fieldset{
+      .kptcp-fieldset{
         float: none;
         width: 100%;
       }
     }
   }
 
-  .kpf-field-text input{
+  .kptcp-field-text input{
     width: 100%;
   }
 
-  .kpf-field-notice .kpf-notice{
+  .kptcp-field-notice .kptcp-notice{
     padding: 15px;
   }
 }
 
-.kpf-nav-menu-title{
+.kptcp-nav-menu-title{
   padding: 12px 14px 12px 12px;
   background-color: #f5f5f5;
   border-top: 1px solid #eee;
@@ -55,6 +55,6 @@
   }
 }
 
-.kpf-nav-menu-icon{
+.kptcp-nav-menu-icon{
   margin-right: 5px;
 }

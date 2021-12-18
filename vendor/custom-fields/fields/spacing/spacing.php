@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_spacing' ) ) {
-  class KPF_Field_spacing extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_spacing' ) ) {
+  class KPTCP_Field_spacing extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -22,11 +22,11 @@ if ( ! class_exists( 'KPF_Field_spacing' ) ) {
         'bottom_icon'        => '<i class="fas fa-long-arrow-alt-down"></i>',
         'left_icon'          => '<i class="fas fa-long-arrow-alt-left"></i>',
         'all_icon'           => '<i class="fas fa-arrows-alt"></i>',
-        'top_placeholder'    => esc_html__( 'top', 'kpf' ),
-        'right_placeholder'  => esc_html__( 'right', 'kpf' ),
-        'bottom_placeholder' => esc_html__( 'bottom', 'kpf' ),
-        'left_placeholder'   => esc_html__( 'left', 'kpf' ),
-        'all_placeholder'    => esc_html__( 'all', 'kpf' ),
+        'top_placeholder'    => esc_html__( 'top', 'kptcp' ),
+        'right_placeholder'  => esc_html__( 'right', 'kptcp' ),
+        'bottom_placeholder' => esc_html__( 'bottom', 'kptcp' ),
+        'left_placeholder'   => esc_html__( 'left', 'kptcp' ),
+        'all_placeholder'    => esc_html__( 'all', 'kptcp' ),
         'top'                => true,
         'left'               => true,
         'bottom'             => true,
@@ -48,20 +48,20 @@ if ( ! class_exists( 'KPF_Field_spacing' ) ) {
 
       $value   = wp_parse_args( $this->value, $default_values );
       $unit    = ( count( $args['units'] ) === 1 && ! empty( $args['unit'] ) ) ? $args['units'][0] : '';
-      $is_unit = ( ! empty( $unit ) ) ? ' kpf--is-unit' : '';
+      $is_unit = ( ! empty( $unit ) ) ? ' kptcp--is-unit' : '';
 
       echo $this->field_before();
 
-      echo '<div class="kpf--inputs" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
+      echo '<div class="kptcp--inputs" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
 
       if ( ! empty( $args['all'] ) ) {
 
         $placeholder = ( ! empty( $args['all_placeholder'] ) ) ? ' placeholder="'. esc_attr( $args['all_placeholder'] ) .'"' : '';
 
-        echo '<div class="kpf--input">';
-        echo ( ! empty( $args['all_icon'] ) ) ? '<span class="kpf--label kpf--icon">'. $args['all_icon'] .'</span>' : '';
-        echo '<input type="number" name="'. esc_attr( $this->field_name( '[all]' ) ) .'" value="'. esc_attr( $value['all'] ) .'"'. $placeholder .' class="kpf-input-number'. esc_attr( $is_unit ) .'" step="any" />';
-        echo ( $unit ) ? '<span class="kpf--label kpf--unit">'. esc_attr( $args['units'][0] ) .'</span>' : '';
+        echo '<div class="kptcp--input">';
+        echo ( ! empty( $args['all_icon'] ) ) ? '<span class="kptcp--label kptcp--icon">'. $args['all_icon'] .'</span>' : '';
+        echo '<input type="number" name="'. esc_attr( $this->field_name( '[all]' ) ) .'" value="'. esc_attr( $value['all'] ) .'"'. $placeholder .' class="kptcp-input-number'. esc_attr( $is_unit ) .'" step="any" />';
+        echo ( $unit ) ? '<span class="kptcp--label kptcp--unit">'. esc_attr( $args['units'][0] ) .'</span>' : '';
         echo '</div>';
 
       } else {
@@ -80,10 +80,10 @@ if ( ! class_exists( 'KPF_Field_spacing' ) ) {
 
           $placeholder = ( ! empty( $args[$property.'_placeholder'] ) ) ? ' placeholder="'. esc_attr( $args[$property.'_placeholder'] ) .'"' : '';
 
-          echo '<div class="kpf--input">';
-          echo ( ! empty( $args[$property.'_icon'] ) ) ? '<span class="kpf--label kpf--icon">'. $args[$property.'_icon'] .'</span>' : '';
-          echo '<input type="number" name="'. esc_attr( $this->field_name( '['. $property .']' ) ) .'" value="'. esc_attr( $value[$property] ) .'"'. $placeholder .' class="kpf-input-number'. esc_attr( $is_unit ) .'" step="any" />';
-          echo ( $unit ) ? '<span class="kpf--label kpf--unit">'. esc_attr( $args['units'][0] ) .'</span>' : '';
+          echo '<div class="kptcp--input">';
+          echo ( ! empty( $args[$property.'_icon'] ) ) ? '<span class="kptcp--label kptcp--icon">'. $args[$property.'_icon'] .'</span>' : '';
+          echo '<input type="number" name="'. esc_attr( $this->field_name( '['. $property .']' ) ) .'" value="'. esc_attr( $value[$property] ) .'"'. $placeholder .' class="kptcp-input-number'. esc_attr( $is_unit ) .'" step="any" />';
+          echo ( $unit ) ? '<span class="kptcp--label kptcp--unit">'. esc_attr( $args['units'][0] ) .'</span>' : '';
           echo '</div>';
 
         }
@@ -91,7 +91,7 @@ if ( ! class_exists( 'KPF_Field_spacing' ) ) {
       }
 
       if ( ! empty( $args['unit'] ) && ! empty( $args['show_units'] ) && count( $args['units'] ) > 1 ) {
-        echo '<div class="kpf--input">';
+        echo '<div class="kptcp--input">';
         echo '<select name="'. esc_attr( $this->field_name( '[unit]' ) ) .'">';
         foreach ( $args['units'] as $unit ) {
           $selected = ( $value['unit'] === $unit ) ? ' selected' : '';

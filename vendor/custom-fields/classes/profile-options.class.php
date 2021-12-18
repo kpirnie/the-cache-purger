@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Profile_Options' ) ) {
-  class KPF_Profile_Options extends KPF_Abstract{
+if ( ! class_exists( 'KPTCP_Profile_Options' ) ) {
+  class KPTCP_Profile_Options extends KPTCP_Abstract{
 
     // constans
     public $unique   = '';
@@ -24,8 +24,8 @@ if ( ! class_exists( 'KPF_Profile_Options' ) ) {
     public function __construct( $key, $params ) {
 
       $this->unique   = $key;
-      $this->args     = apply_filters( "kpf_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
-      $this->sections = apply_filters( "kpf_{$this->unique}_sections", $params['sections'], $this );
+      $this->args     = apply_filters( "kptcp_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
+      $this->sections = apply_filters( "kptcp_{$this->unique}_sections", $params['sections'], $this );
 
       add_action( 'admin_init', array( $this, 'add_profile_options' ) );
 
@@ -86,25 +86,25 @@ if ( ! class_exists( 'KPF_Profile_Options' ) ) {
 
       $is_profile = ( is_object( $profileuser ) && isset( $profileuser->ID ) ) ? true : false;
       $profile_id = ( $is_profile ) ? $profileuser->ID : 0;
-      $errors     = ( ! empty( $profile_id ) ) ? get_user_meta( $profile_id, '_kpf_errors_'. $this->unique, true ) : array();
+      $errors     = ( ! empty( $profile_id ) ) ? get_user_meta( $profile_id, '_kptcp_errors_'. $this->unique, true ) : array();
       $errors     = ( ! empty( $errors ) ) ? $errors : array();
       $class      = ( $this->args['class'] ) ? ''. $this->args['class'] : '';
 
       if ( ! empty( $errors ) ) {
-        delete_user_meta( $profile_id, '_kpf_errors_'. $this->unique );
+        delete_user_meta( $profile_id, '_kptcp_errors_'. $this->unique );
       }
 
-      echo '<div class="kpf kpf-profile-options kpf-onload'. esc_attr( $class ) .'">';
+      echo '<div class="kptcp kptcp-profile-options kptcp-onload'. esc_attr( $class ) .'">';
 
-      wp_nonce_field( 'kpf_profile_nonce', 'kpf_profile_nonce'. $this->unique );
+      wp_nonce_field( 'kptcp_profile_nonce', 'kptcp_profile_nonce'. $this->unique );
 
       foreach ( $this->sections as $section ) {
 
-        $section_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="kpf-section-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
+        $section_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="kptcp-section-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
         $section_title = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
 
         echo ( $section_title || $section_icon ) ? '<h2>'. $section_icon . $section_title .'</h2>' : '';
-        echo ( ! empty( $section['description'] ) ) ? '<div class="kpf-field kpf-section-description">'. $section['description'] .'</div>' : '';
+        echo ( ! empty( $section['description'] ) ) ? '<div class="kptcp-field kptcp-section-description">'. $section['description'] .'</div>' : '';
 
         if ( ! empty( $section['fields'] ) ) {
 
@@ -118,7 +118,7 @@ if ( ! class_exists( 'KPF_Profile_Options' ) ) {
               $field['default'] = $this->get_default( $field );
             }
 
-            KPF::field( $field, $this->get_meta_value( $profile_id, $field ), $this->unique, 'profile' );
+            KPTCP::field( $field, $this->get_meta_value( $profile_id, $field ), $this->unique, 'profile' );
 
           }
 
@@ -136,10 +136,10 @@ if ( ! class_exists( 'KPF_Profile_Options' ) ) {
       $count    = 1;
       $data     = array();
       $errors   = array();
-      $noncekey = 'kpf_profile_nonce'. $this->unique;
+      $noncekey = 'kptcp_profile_nonce'. $this->unique;
       $nonce    = ( ! empty( $_POST[ $noncekey ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $noncekey ] ) ) : '';
 
-      if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, 'kpf_profile_nonce' ) ) {
+      if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, 'kptcp_profile_nonce' ) ) {
         return $user_id;
       }
 
@@ -206,9 +206,9 @@ if ( ! class_exists( 'KPF_Profile_Options' ) ) {
 
       }
 
-      $data = apply_filters( "kpf_{$this->unique}_save", $data, $user_id, $this );
+      $data = apply_filters( "kptcp_{$this->unique}_save", $data, $user_id, $this );
 
-      do_action( "kpf_{$this->unique}_save_before", $data, $user_id, $this );
+      do_action( "kptcp_{$this->unique}_save_before", $data, $user_id, $this );
 
       if ( empty( $data ) ) {
 
@@ -231,14 +231,14 @@ if ( ! class_exists( 'KPF_Profile_Options' ) ) {
         }
 
         if ( ! empty( $errors ) ) {
-          update_user_meta( $user_id, '_kpf_errors_'. $this->unique, $errors );
+          update_user_meta( $user_id, '_kptcp_errors_'. $this->unique, $errors );
         }
 
       }
 
-      do_action( "kpf_{$this->unique}_saved", $data, $user_id, $this );
+      do_action( "kptcp_{$this->unique}_saved", $data, $user_id, $this );
 
-      do_action( "kpf_{$this->unique}_save_after", $data, $user_id, $this );
+      do_action( "kptcp_{$this->unique}_save_after", $data, $user_id, $this );
 
     }
   }

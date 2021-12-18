@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_notice' ) ) {
-  class KPF_Field_notice extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_notice' ) ) {
+  class KPTCP_Field_notice extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -18,7 +18,7 @@ if ( ! class_exists( 'KPF_Field_notice' ) ) {
 
       $style = ( ! empty( $this->field['style'] ) ) ? $this->field['style'] : 'normal';
 
-      echo ( ! empty( $this->field['content'] ) ) ? '<div class="kpf-notice kpf-notice-'. esc_attr( $style ) .'">'. $this->field['content'] .'</div>' : '';
+      echo ( ! empty( $this->field['content'] ) ) ? '<div class="kptcp-notice kptcp-notice-'. esc_attr( $style ) .'">'. $this->field['content'] .'</div>' : '';
 
     }
 

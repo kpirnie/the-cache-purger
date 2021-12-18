@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_typography' ) ) {
-  class KPF_Field_typography extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_typography' ) ) {
+  class KPTCP_Field_typography extends KPTCP_Fields {
 
     public $chosen = false;
 
@@ -82,28 +82,28 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
       $default_value    = ( ! empty( $this->field['default'] ) ) ? wp_parse_args( $this->field['default'], $default_value ) : $default_value;
       $this->value      = wp_parse_args( $this->value, $default_value );
       $this->chosen     = $args['chosen'];
-      $chosen_class     = ( $this->chosen ) ? ' kpf--chosen' : '';
+      $chosen_class     = ( $this->chosen ) ? ' kptcp--chosen' : '';
       $line_height_unit = ( ! empty( $args['line_height_unit'] ) ) ? $args['line_height_unit'] : $args['unit'];
 
-      echo '<div class="kpf--typography'. esc_attr( $chosen_class ) .'" data-depend-id="'. esc_attr( $this->field['id'] ) .'" data-unit="'. esc_attr( $args['unit'] ) .'" data-line-height-unit="'. esc_attr( $line_height_unit ) .'" data-exclude="'. esc_attr( $args['exclude'] ) .'">';
+      echo '<div class="kptcp--typography'. esc_attr( $chosen_class ) .'" data-depend-id="'. esc_attr( $this->field['id'] ) .'" data-unit="'. esc_attr( $args['unit'] ) .'" data-line-height-unit="'. esc_attr( $line_height_unit ) .'" data-exclude="'. esc_attr( $args['exclude'] ) .'">';
 
-        echo '<div class="kpf--blocks kpf--blocks-selects">';
+        echo '<div class="kptcp--blocks kptcp--blocks-selects">';
 
           //
           // Font Family
           if ( ! empty( $args['font_family'] ) ) {
-            echo '<div class="kpf--block">';
-            echo '<div class="kpf--title">'. esc_html__( 'Font Family', 'kpf' ) .'</div>';
-            echo $this->create_select( array( $this->value['font-family'] => $this->value['font-family'] ), 'font-family', esc_html__( 'Select a font', 'kpf' ) );
+            echo '<div class="kptcp--block">';
+            echo '<div class="kptcp--title">'. esc_html__( 'Font Family', 'kptcp' ) .'</div>';
+            echo $this->create_select( array( $this->value['font-family'] => $this->value['font-family'] ), 'font-family', esc_html__( 'Select a font', 'kptcp' ) );
             echo '</div>';
           }
 
           //
           // Backup Font Family
           if ( ! empty( $args['backup_font_family'] ) ) {
-            echo '<div class="kpf--block kpf--block-backup-font-family hidden">';
-            echo '<div class="kpf--title">'. esc_html__( 'Backup Font Family', 'kpf' ) .'</div>';
-            echo $this->create_select( apply_filters( 'kpf_field_typography_backup_font_family', array(
+            echo '<div class="kptcp--block kptcp--block-backup-font-family hidden">';
+            echo '<div class="kptcp--title">'. esc_html__( 'Backup Font Family', 'kptcp' ) .'</div>';
+            echo $this->create_select( apply_filters( 'kptcp_field_typography_backup_font_family', array(
               'Arial, Helvetica, sans-serif',
               "'Arial Black', Gadget, sans-serif",
               "'Comic Sans MS', cursive, sans-serif",
@@ -116,7 +116,7 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
               "'Lucida Console', Monaco, monospace",
               'Georgia, serif',
               'Palatino Linotype'
-            ) ), 'backup-font-family', esc_html__( 'Default', 'kpf' ) );
+            ) ), 'backup-font-family', esc_html__( 'Default', 'kptcp' ) );
             echo '</div>';
           }
 
@@ -126,23 +126,23 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
 
             //
             // Font Style Select
-            echo '<div class="kpf--block kpf--block-font-style hidden">';
-            echo '<div class="kpf--title">'. esc_html__( 'Font Style', 'kpf') .'</div>';
-            echo '<select class="kpf--font-style-select" data-placeholder="Default">';
-            echo '<option value="">'. ( ! $this->chosen ? esc_html__( 'Default', 'kpf' ) : '' ) .'</option>';
+            echo '<div class="kptcp--block kptcp--block-font-style hidden">';
+            echo '<div class="kptcp--title">'. esc_html__( 'Font Style', 'kptcp') .'</div>';
+            echo '<select class="kptcp--font-style-select" data-placeholder="Default">';
+            echo '<option value="">'. ( ! $this->chosen ? esc_html__( 'Default', 'kptcp' ) : '' ) .'</option>';
             if ( ! empty( $this->value['font-weight'] ) || ! empty( $this->value['font-style'] ) ) {
               echo '<option value="'. esc_attr( strtolower( $this->value['font-weight'] . $this->value['font-style'] ) ) .'" selected></option>';
             }
             echo '</select>';
-            echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[font-weight]' ) ) .'" class="kpf--font-weight" value="'. esc_attr( $this->value['font-weight'] ) .'" />';
-            echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[font-style]' ) ) .'" class="kpf--font-style" value="'. esc_attr( $this->value['font-style'] ) .'" />';
+            echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[font-weight]' ) ) .'" class="kptcp--font-weight" value="'. esc_attr( $this->value['font-weight'] ) .'" />';
+            echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[font-style]' ) ) .'" class="kptcp--font-style" value="'. esc_attr( $this->value['font-style'] ) .'" />';
 
             //
             // Extra Font Style Select
             if ( ! empty( $args['extra_styles'] ) ) {
-              echo '<div class="kpf--block-extra-styles hidden">';
-              echo ( ! $this->chosen ) ? '<div class="kpf--title">'. esc_html__( 'Load Extra Styles', 'kpf' ) .'</div>' : '';
-              $placeholder = ( $this->chosen ) ? esc_html__( 'Load Extra Styles', 'kpf' ) : esc_html__( 'Default', 'kpf' );
+              echo '<div class="kptcp--block-extra-styles hidden">';
+              echo ( ! $this->chosen ) ? '<div class="kptcp--title">'. esc_html__( 'Load Extra Styles', 'kptcp' ) .'</div>' : '';
+              $placeholder = ( $this->chosen ) ? esc_html__( 'Load Extra Styles', 'kptcp' ) : esc_html__( 'Default', 'kptcp' );
               echo $this->create_select( $this->value['extra-styles'], 'extra-styles', $placeholder, true );
               echo '</div>';
             }
@@ -154,86 +154,86 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
           //
           // Subset
           if ( ! empty( $args['subset'] ) ) {
-            echo '<div class="kpf--block kpf--block-subset hidden">';
-            echo '<div class="kpf--title">'. esc_html__( 'Subset', 'kpf' ) .'</div>';
+            echo '<div class="kptcp--block kptcp--block-subset hidden">';
+            echo '<div class="kptcp--title">'. esc_html__( 'Subset', 'kptcp' ) .'</div>';
             $subset = ( is_array( $this->value['subset'] ) ) ? $this->value['subset'] : array_filter( (array) $this->value['subset'] );
-            echo $this->create_select( $subset, 'subset', esc_html__( 'Default', 'kpf' ), $args['multi_subset'] );
+            echo $this->create_select( $subset, 'subset', esc_html__( 'Default', 'kptcp' ), $args['multi_subset'] );
             echo '</div>';
           }
 
           //
           // Text Align
           if ( ! empty( $args['text_align'] ) ) {
-            echo '<div class="kpf--block">';
-            echo '<div class="kpf--title">'. esc_html__( 'Text Align', 'kpf' ) .'</div>';
+            echo '<div class="kptcp--block">';
+            echo '<div class="kptcp--title">'. esc_html__( 'Text Align', 'kptcp' ) .'</div>';
             echo $this->create_select( array(
-              'inherit' => esc_html__( 'Inherit', 'kpf' ),
-              'left'    => esc_html__( 'Left', 'kpf' ),
-              'center'  => esc_html__( 'Center', 'kpf' ),
-              'right'   => esc_html__( 'Right', 'kpf' ),
-              'justify' => esc_html__( 'Justify', 'kpf' ),
-              'initial' => esc_html__( 'Initial', 'kpf' )
-            ), 'text-align', esc_html__( 'Default', 'kpf' ) );
+              'inherit' => esc_html__( 'Inherit', 'kptcp' ),
+              'left'    => esc_html__( 'Left', 'kptcp' ),
+              'center'  => esc_html__( 'Center', 'kptcp' ),
+              'right'   => esc_html__( 'Right', 'kptcp' ),
+              'justify' => esc_html__( 'Justify', 'kptcp' ),
+              'initial' => esc_html__( 'Initial', 'kptcp' )
+            ), 'text-align', esc_html__( 'Default', 'kptcp' ) );
             echo '</div>';
           }
 
           //
           // Font Variant
           if ( ! empty( $args['font_variant'] ) ) {
-            echo '<div class="kpf--block">';
-            echo '<div class="kpf--title">'. esc_html__( 'Font Variant', 'kpf' ) .'</div>';
+            echo '<div class="kptcp--block">';
+            echo '<div class="kptcp--title">'. esc_html__( 'Font Variant', 'kptcp' ) .'</div>';
             echo $this->create_select( array(
-              'normal'         => esc_html__( 'Normal', 'kpf' ),
-              'small-caps'     => esc_html__( 'Small Caps', 'kpf' ),
-              'all-small-caps' => esc_html__( 'All Small Caps', 'kpf' )
-            ), 'font-variant', esc_html__( 'Default', 'kpf' ) );
+              'normal'         => esc_html__( 'Normal', 'kptcp' ),
+              'small-caps'     => esc_html__( 'Small Caps', 'kptcp' ),
+              'all-small-caps' => esc_html__( 'All Small Caps', 'kptcp' )
+            ), 'font-variant', esc_html__( 'Default', 'kptcp' ) );
             echo '</div>';
           }
 
           //
           // Text Transform
           if ( ! empty( $args['text_transform'] ) ) {
-            echo '<div class="kpf--block">';
-            echo '<div class="kpf--title">'. esc_html__( 'Text Transform', 'kpf' ) .'</div>';
+            echo '<div class="kptcp--block">';
+            echo '<div class="kptcp--title">'. esc_html__( 'Text Transform', 'kptcp' ) .'</div>';
             echo $this->create_select( array(
-              'none'       => esc_html__( 'None', 'kpf' ),
-              'capitalize' => esc_html__( 'Capitalize', 'kpf' ),
-              'uppercase'  => esc_html__( 'Uppercase', 'kpf' ),
-              'lowercase'  => esc_html__( 'Lowercase', 'kpf' )
-            ), 'text-transform', esc_html__( 'Default', 'kpf' ) );
+              'none'       => esc_html__( 'None', 'kptcp' ),
+              'capitalize' => esc_html__( 'Capitalize', 'kptcp' ),
+              'uppercase'  => esc_html__( 'Uppercase', 'kptcp' ),
+              'lowercase'  => esc_html__( 'Lowercase', 'kptcp' )
+            ), 'text-transform', esc_html__( 'Default', 'kptcp' ) );
             echo '</div>';
           }
 
           //
           // Text Decoration
           if ( ! empty( $args['text_decoration'] ) ) {
-            echo '<div class="kpf--block">';
-            echo '<div class="kpf--title">'. esc_html__( 'Text Decoration', 'kpf' ) .'</div>';
+            echo '<div class="kptcp--block">';
+            echo '<div class="kptcp--title">'. esc_html__( 'Text Decoration', 'kptcp' ) .'</div>';
             echo $this->create_select( array(
-              'none'               => esc_html__( 'None', 'kpf' ),
-              'underline'          => esc_html__( 'Solid', 'kpf' ),
-              'underline double'   => esc_html__( 'Double', 'kpf' ),
-              'underline dotted'   => esc_html__( 'Dotted', 'kpf' ),
-              'underline dashed'   => esc_html__( 'Dashed', 'kpf' ),
-              'underline wavy'     => esc_html__( 'Wavy', 'kpf' ),
-              'underline overline' => esc_html__( 'Overline', 'kpf' ),
-              'line-through'       => esc_html__( 'Line-through', 'kpf' )
-            ), 'text-decoration', esc_html__( 'Default', 'kpf' ) );
+              'none'               => esc_html__( 'None', 'kptcp' ),
+              'underline'          => esc_html__( 'Solid', 'kptcp' ),
+              'underline double'   => esc_html__( 'Double', 'kptcp' ),
+              'underline dotted'   => esc_html__( 'Dotted', 'kptcp' ),
+              'underline dashed'   => esc_html__( 'Dashed', 'kptcp' ),
+              'underline wavy'     => esc_html__( 'Wavy', 'kptcp' ),
+              'underline overline' => esc_html__( 'Overline', 'kptcp' ),
+              'line-through'       => esc_html__( 'Line-through', 'kptcp' )
+            ), 'text-decoration', esc_html__( 'Default', 'kptcp' ) );
             echo '</div>';
           }
 
         echo '</div>';
 
-        echo '<div class="kpf--blocks kpf--blocks-inputs">';
+        echo '<div class="kptcp--blocks kptcp--blocks-inputs">';
 
           //
           // Font Size
           if ( ! empty( $args['font_size'] ) ) {
-            echo '<div class="kpf--block">';
-            echo '<div class="kpf--title">'. esc_html__( 'Font Size', 'kpf' ) .'</div>';
-            echo '<div class="kpf--input-wrap">';
-            echo '<input type="number" name="'. esc_attr( $this->field_name( '[font-size]' ) ) .'" class="kpf--font-size kpf--input kpf-input-number" value="'. esc_attr( $this->value['font-size'] ) .'" step="any" />';
-            echo '<span class="kpf--unit">'. esc_attr( $args['unit'] ) .'</span>';
+            echo '<div class="kptcp--block">';
+            echo '<div class="kptcp--title">'. esc_html__( 'Font Size', 'kptcp' ) .'</div>';
+            echo '<div class="kptcp--input-wrap">';
+            echo '<input type="number" name="'. esc_attr( $this->field_name( '[font-size]' ) ) .'" class="kptcp--font-size kptcp--input kptcp-input-number" value="'. esc_attr( $this->value['font-size'] ) .'" step="any" />';
+            echo '<span class="kptcp--unit">'. esc_attr( $args['unit'] ) .'</span>';
             echo '</div>';
             echo '</div>';
           }
@@ -241,11 +241,11 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
           //
           // Line Height
           if ( ! empty( $args['line_height'] ) ) {
-            echo '<div class="kpf--block">';
-            echo '<div class="kpf--title">'. esc_html__( 'Line Height', 'kpf' ) .'</div>';
-            echo '<div class="kpf--input-wrap">';
-            echo '<input type="number" name="'. esc_attr( $this->field_name( '[line-height]' ) ) .'" class="kpf--line-height kpf--input kpf-input-number" value="'. esc_attr( $this->value['line-height'] ) .'" step="any" />';
-            echo '<span class="kpf--unit">'. esc_attr( $line_height_unit ) .'</span>';
+            echo '<div class="kptcp--block">';
+            echo '<div class="kptcp--title">'. esc_html__( 'Line Height', 'kptcp' ) .'</div>';
+            echo '<div class="kptcp--input-wrap">';
+            echo '<input type="number" name="'. esc_attr( $this->field_name( '[line-height]' ) ) .'" class="kptcp--line-height kptcp--input kptcp-input-number" value="'. esc_attr( $this->value['line-height'] ) .'" step="any" />';
+            echo '<span class="kptcp--unit">'. esc_attr( $line_height_unit ) .'</span>';
             echo '</div>';
             echo '</div>';
           }
@@ -253,11 +253,11 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
           //
           // Letter Spacing
           if ( ! empty( $args['letter_spacing'] ) ) {
-            echo '<div class="kpf--block">';
-            echo '<div class="kpf--title">'. esc_html__( 'Letter Spacing', 'kpf' ) .'</div>';
-            echo '<div class="kpf--input-wrap">';
-            echo '<input type="number" name="'. esc_attr( $this->field_name( '[letter-spacing]' ) ) .'" class="kpf--letter-spacing kpf--input kpf-input-number" value="'. esc_attr( $this->value['letter-spacing'] ) .'" step="any" />';
-            echo '<span class="kpf--unit">'. esc_attr( $args['unit'] ) .'</span>';
+            echo '<div class="kptcp--block">';
+            echo '<div class="kptcp--title">'. esc_html__( 'Letter Spacing', 'kptcp' ) .'</div>';
+            echo '<div class="kptcp--input-wrap">';
+            echo '<input type="number" name="'. esc_attr( $this->field_name( '[letter-spacing]' ) ) .'" class="kptcp--letter-spacing kptcp--input kptcp-input-number" value="'. esc_attr( $this->value['letter-spacing'] ) .'" step="any" />';
+            echo '<span class="kptcp--unit">'. esc_attr( $args['unit'] ) .'</span>';
             echo '</div>';
             echo '</div>';
           }
@@ -265,11 +265,11 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
           //
           // Word Spacing
           if ( ! empty( $args['word_spacing'] ) ) {
-            echo '<div class="kpf--block">';
-            echo '<div class="kpf--title">'. esc_html__( 'Word Spacing', 'kpf' ) .'</div>';
-            echo '<div class="kpf--input-wrap">';
-            echo '<input type="number" name="'. esc_attr( $this->field_name( '[word-spacing]' ) ) .'" class="kpf--word-spacing kpf--input kpf-input-number" value="'. esc_attr( $this->value['word-spacing'] ) .'" step="any" />';
-            echo '<span class="kpf--unit">'. esc_attr( $args['unit'] ) .'</span>';
+            echo '<div class="kptcp--block">';
+            echo '<div class="kptcp--title">'. esc_html__( 'Word Spacing', 'kptcp' ) .'</div>';
+            echo '<div class="kptcp--input-wrap">';
+            echo '<input type="number" name="'. esc_attr( $this->field_name( '[word-spacing]' ) ) .'" class="kptcp--word-spacing kptcp--input kptcp-input-number" value="'. esc_attr( $this->value['word-spacing'] ) .'" step="any" />';
+            echo '<span class="kptcp--unit">'. esc_attr( $args['unit'] ) .'</span>';
             echo '</div>';
             echo '</div>';
           }
@@ -280,10 +280,10 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
         // Font Color
         if ( ! empty( $args['color'] ) ) {
           $default_color_attr = ( ! empty( $default_value['color'] ) ) ? ' data-default-color="'. esc_attr( $default_value['color'] ) .'"' : '';
-          echo '<div class="kpf--block kpf--block-font-color">';
-          echo '<div class="kpf--title">'. esc_html__( 'Font Color', 'kpf' ) .'</div>';
-          echo '<div class="kpf-field-color">';
-          echo '<input type="text" name="'. esc_attr( $this->field_name( '[color]' ) ) .'" class="kpf-color kpf--color" value="'. esc_attr( $this->value['color'] ) .'"'. $default_color_attr .' />';
+          echo '<div class="kptcp--block kptcp--block-font-color">';
+          echo '<div class="kptcp--title">'. esc_html__( 'Font Color', 'kptcp' ) .'</div>';
+          echo '<div class="kptcp-field-color">';
+          echo '<input type="text" name="'. esc_attr( $this->field_name( '[color]' ) ) .'" class="kptcp-color kptcp--color" value="'. esc_attr( $this->value['color'] ) .'"'. $default_color_attr .' />';
           echo '</div>';
           echo '</div>';
         }
@@ -291,9 +291,9 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
         //
         // Custom style
         if ( ! empty( $args['custom_style'] ) ) {
-          echo '<div class="kpf--block kpf--block-custom-style">';
-          echo '<div class="kpf--title">'. esc_html__( 'Custom Style', 'kpf' ) .'</div>';
-          echo '<textarea name="'. esc_attr( $this->field_name( '[custom-style]' ) ) .'" class="kpf--custom-style">'. esc_attr( $this->value['custom-style'] ) .'</textarea>';
+          echo '<div class="kptcp--block kptcp--block-custom-style">';
+          echo '<div class="kptcp--title">'. esc_html__( 'Custom Style', 'kptcp' ) .'</div>';
+          echo '<textarea name="'. esc_attr( $this->field_name( '[custom-style]' ) ) .'" class="kptcp--custom-style">'. esc_attr( $this->value['custom-style'] ) .'</textarea>';
           echo '</div>';
         }
 
@@ -302,14 +302,14 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
         $always_preview = ( $args['preview'] !== 'always' ) ? ' hidden' : '';
 
         if ( ! empty( $args['preview'] ) ) {
-          echo '<div class="kpf--block kpf--block-preview'. esc_attr( $always_preview ) .'">';
-          echo '<div class="kpf--toggle fas fa-toggle-off"></div>';
-          echo '<div class="kpf--preview">'. esc_attr( $args['preview_text'] ) .'</div>';
+          echo '<div class="kptcp--block kptcp--block-preview'. esc_attr( $always_preview ) .'">';
+          echo '<div class="kptcp--toggle fas fa-toggle-off"></div>';
+          echo '<div class="kptcp--preview">'. esc_attr( $args['preview_text'] ) .'</div>';
           echo '</div>';
         }
 
-        echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[type]' ) ) .'" class="kpf--type" value="'. esc_attr( $this->value['type'] ) .'" />';
-        echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[unit]' ) ) .'" class="kpf--unit-save" value="'. esc_attr( $args['unit'] ) .'" />';
+        echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[type]' ) ) .'" class="kptcp--type" value="'. esc_attr( $this->value['type'] ) .'" />';
+        echo '<input type="hidden" name="'. esc_attr( $this->field_name( '[unit]' ) ) .'" class="kptcp--unit-save" value="'. esc_attr( $args['unit'] ) .'" />';
 
       echo '</div>';
 
@@ -323,7 +323,7 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
       $multiple_attr = ( $is_multiple ) ? ' multiple data-multiple="true"' : '';
       $chosen_rtl    = ( $this->chosen && is_rtl() ) ? ' chosen-rtl' : '';
 
-      $output  = '<select name="'. esc_attr( $this->field_name( '['. $name .']'. $multiple_name ) ) .'" class="kpf--'. esc_attr( $name ) . esc_attr( $chosen_rtl ) .'" data-placeholder="'. esc_attr( $placeholder ) .'"'. $multiple_attr .'>';
+      $output  = '<select name="'. esc_attr( $this->field_name( '['. $name .']'. $multiple_name ) ) .'" class="kptcp--'. esc_attr( $name ) . esc_attr( $chosen_rtl ) .'" data-placeholder="'. esc_attr( $placeholder ) .'"'. $multiple_attr .'>';
       $output .= ( ! empty( $placeholder ) ) ? '<option value="">'. esc_attr( ( ! $this->chosen ) ? $placeholder : '' ) .'</option>' : '';
 
       if ( ! empty( $options ) ) {
@@ -347,26 +347,26 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
 
     public function enqueue() {
 
-      if ( ! wp_script_is( 'kpf-webfontloader' ) ) {
+      if ( ! wp_script_is( 'kptcp-webfontloader' ) ) {
 
-        KPF::include_plugin_file( 'fields/typography/google-fonts.php' );
+        KPTCP::include_plugin_file( 'fields/typography/google-fonts.php' );
 
-        wp_enqueue_script( 'kpf-webfontloader', 'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js', array( 'kpf' ), '1.6.28', true );
+        wp_enqueue_script( 'kptcp-webfontloader', 'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js', array( 'kptcp' ), '1.6.28', true );
 
         $webfonts = array();
 
-        $customwebfonts = apply_filters( 'kpf_field_typography_customwebfonts', array() );
+        $customwebfonts = apply_filters( 'kptcp_field_typography_customwebfonts', array() );
 
         if ( ! empty( $customwebfonts ) ) {
           $webfonts['custom'] = array(
-            'label' => esc_html__( 'Custom Web Fonts', 'kpf' ),
+            'label' => esc_html__( 'Custom Web Fonts', 'kptcp' ),
             'fonts' => $customwebfonts
           );
         }
 
         $webfonts['safe'] = array(
-          'label' => esc_html__( 'Safe Web Fonts', 'kpf' ),
-          'fonts' => apply_filters( 'kpf_field_typography_safewebfonts', array(
+          'label' => esc_html__( 'Safe Web Fonts', 'kptcp' ),
+          'fonts' => apply_filters( 'kptcp_field_typography_safewebfonts', array(
             'Arial',
             'Arial Black',
             'Helvetica',
@@ -385,13 +385,13 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
         ) );
 
         $webfonts['google'] = array(
-          'label' => esc_html__( 'Google Web Fonts', 'kpf' ),
-          'fonts' => apply_filters( 'kpf_field_typography_googlewebfonts', kpf_get_google_fonts()
+          'label' => esc_html__( 'Google Web Fonts', 'kptcp' ),
+          'fonts' => apply_filters( 'kptcp_field_typography_googlewebfonts', kptcp_get_google_fonts()
         ) );
 
-        $defaultstyles = apply_filters( 'kpf_field_typography_defaultstyles', array( 'normal', 'italic', '700', '700italic' ) );
+        $defaultstyles = apply_filters( 'kptcp_field_typography_defaultstyles', array( 'normal', 'italic', '700', '700italic' ) );
 
-        $googlestyles = apply_filters( 'kpf_field_typography_googlestyles', array(
+        $googlestyles = apply_filters( 'kptcp_field_typography_googlestyles', array(
           '100'       => 'Thin 100',
           '100italic' => 'Thin 100 Italic',
           '200'       => 'Extra-Light 200',
@@ -412,9 +412,9 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
           '900italic' => 'Black 900 Italic'
         ) );
 
-        $webfonts = apply_filters( 'kpf_field_typography_webfonts', $webfonts );
+        $webfonts = apply_filters( 'kptcp_field_typography_webfonts', $webfonts );
 
-        wp_localize_script( 'kpf', 'kpf_typography_json', array(
+        wp_localize_script( 'kptcp', 'kptcp_typography_json', array(
           'webfonts'      => $webfonts,
           'defaultstyles' => $defaultstyles,
           'googlestyles'  => $googlestyles
@@ -431,8 +431,8 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
       if ( ! empty( $this->value['type'] ) ) {
         $is_google = ( $this->value['type'] === 'google' ) ? true : false;
       } else {
-        KPF::include_plugin_file( 'fields/typography/google-fonts.php' );
-        $is_google = ( array_key_exists( $this->value['font-family'], kpf_get_google_fonts() ) ) ? true : false;
+        KPTCP::include_plugin_file( 'fields/typography/google-fonts.php' );
+        $is_google = ( array_key_exists( $this->value['font-family'], kptcp_get_google_fonts() ) ) ? true : false;
       }
 
       if ( $is_google ) {
@@ -446,10 +446,10 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
           $style = $font_weight . $font_style;
           if ( ! empty( $style ) ) {
             $style = ( $style === 'normal' ) ? '400' : $style;
-            KPF::$webfonts[$method][$font_family][$style] = $style;
+            KPTCP::$webfonts[$method][$font_family][$style] = $style;
           }
         } else {
-          KPF::$webfonts[$method][$font_family] = array();
+          KPTCP::$webfonts[$method][$font_family] = array();
         }
 
         // set extra styles
@@ -457,7 +457,7 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
           foreach ( $this->value['extra-styles'] as $extra_style ) {
             if ( ! empty( $extra_style ) ) {
               $extra_style = ( $extra_style === 'normal' ) ? '400' : $extra_style;
-              KPF::$webfonts[$method][$font_family][$extra_style] = $extra_style;
+              KPTCP::$webfonts[$method][$font_family][$extra_style] = $extra_style;
             }
           }
         }
@@ -467,7 +467,7 @@ if ( ! class_exists( 'KPF_Field_typography' ) ) {
           $this->value['subset'] = ( is_array( $this->value['subset'] ) ) ? $this->value['subset'] : array_filter( (array) $this->value['subset'] );
           foreach ( $this->value['subset'] as $subset ) {
             if( ! empty( $subset ) ) {
-              KPF::$subsets[$subset] = $subset;
+              KPTCP::$subsets[$subset] = $subset;
             }
           }
         }

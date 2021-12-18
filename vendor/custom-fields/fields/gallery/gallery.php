@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_gallery' ) ) {
-  class KPF_Field_gallery extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_gallery' ) ) {
+  class KPTCP_Field_gallery extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -17,9 +17,9 @@ if ( ! class_exists( 'KPF_Field_gallery' ) ) {
     public function render() {
 
       $args = wp_parse_args( $this->field, array(
-        'add_title'   => esc_html__( 'Add Gallery', 'kpf' ),
-        'edit_title'  => esc_html__( 'Edit Gallery', 'kpf' ),
-        'clear_title' => esc_html__( 'Clear', 'kpf' ),
+        'add_title'   => esc_html__( 'Add Gallery', 'kptcp' ),
+        'edit_title'  => esc_html__( 'Edit Gallery', 'kptcp' ),
+        'clear_title' => esc_html__( 'Clear', 'kptcp' ),
       ) );
 
       $hidden = ( empty( $this->value ) ) ? ' hidden' : '';
@@ -39,9 +39,9 @@ if ( ! class_exists( 'KPF_Field_gallery' ) ) {
       }
       echo '</ul>';
 
-      echo '<a href="#" class="button button-primary kpf-button">'. $args['add_title'] .'</a>';
-      echo '<a href="#" class="button kpf-edit-gallery'. esc_attr( $hidden ) .'">'. $args['edit_title'] .'</a>';
-      echo '<a href="#" class="button kpf-warning-primary kpf-clear-gallery'. esc_attr( $hidden ) .'">'. $args['clear_title'] .'</a>';
+      echo '<a href="#" class="button button-primary kptcp-button">'. $args['add_title'] .'</a>';
+      echo '<a href="#" class="button kptcp-edit-gallery'. esc_attr( $hidden ) .'">'. $args['edit_title'] .'</a>';
+      echo '<a href="#" class="button kptcp-warning-primary kptcp-clear-gallery'. esc_attr( $hidden ) .'">'. $args['clear_title'] .'</a>';
       echo '<input type="hidden" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'"'. $this->field_attributes() .'/>';
 
       echo $this->field_after();

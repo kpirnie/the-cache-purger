@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_tabbed' ) ) {
-  class KPF_Field_tabbed extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_tabbed' ) ) {
+  class KPTCP_Field_tabbed extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -20,23 +20,23 @@ if ( ! class_exists( 'KPF_Field_tabbed' ) ) {
 
       echo $this->field_before();
 
-      echo '<div class="kpf-tabbed-nav" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
+      echo '<div class="kptcp-tabbed-nav" data-depend-id="'. esc_attr( $this->field['id'] ) .'">';
       foreach ( $this->field['tabs'] as $key => $tab ) {
 
-        $tabbed_icon   = ( ! empty( $tab['icon'] ) ) ? '<i class="kpf--icon '. esc_attr( $tab['icon'] ) .'"></i>' : '';
-        $tabbed_active = ( empty( $key ) ) ? 'kpf-tabbed-active' : '';
+        $tabbed_icon   = ( ! empty( $tab['icon'] ) ) ? '<i class="kptcp--icon '. esc_attr( $tab['icon'] ) .'"></i>' : '';
+        $tabbed_active = ( empty( $key ) ) ? 'kptcp-tabbed-active' : '';
 
         echo '<a href="#" class="'. esc_attr( $tabbed_active ) .'"">'. $tabbed_icon . esc_attr( $tab['title'] ) .'</a>';
 
       }
       echo '</div>';
 
-      echo '<div class="kpf-tabbed-contents">';
+      echo '<div class="kptcp-tabbed-contents">';
       foreach ( $this->field['tabs'] as $key => $tab ) {
 
         $tabbed_hidden = ( ! empty( $key ) ) ? ' hidden' : '';
 
-        echo '<div class="kpf-tabbed-content'. esc_attr( $tabbed_hidden ) .'">';
+        echo '<div class="kptcp-tabbed-content'. esc_attr( $tabbed_hidden ) .'">';
 
         foreach ( $tab['fields'] as $field ) {
 
@@ -47,7 +47,7 @@ if ( ! class_exists( 'KPF_Field_tabbed' ) ) {
           $field_value   = ( isset( $this->value[$field_id] ) ) ? $this->value[$field_id] : $field_default;
           $unique_id     = ( ! empty( $this->unique ) ) ? $this->unique .'['. $this->field['id'] .']' : $this->field['id'];
 
-          KPF::field( $field, $field_value, $unique_id, 'field/tabbed' );
+          KPTCP::field( $field, $field_value, $unique_id, 'field/tabbed' );
 
         }
 

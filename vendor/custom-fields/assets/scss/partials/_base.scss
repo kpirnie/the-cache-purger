@@ -1,7 +1,7 @@
 /**
  * 01. Base
  */
-.kpf{
+.kptcp{
   position: relative;
 
   label{
@@ -11,15 +11,15 @@
   }
 }
 
-.kpf-ab-icon{
+.kptcp-ab-icon{
   top: 2px;
 }
 
-#screen-meta-links + .kpf-options{
+#screen-meta-links + .kptcp-options{
   margin-top: 40px;
 }
 
-.kpf-options{
+.kptcp-options{
   margin-top: 20px;
   margin-right: 20px;
 }
@@ -27,11 +27,11 @@
 /**
  * 01. 01. Header
  */
-.kpf-header{
+.kptcp-header{
   position: relative;
 }
 
-.kpf-header-inner{
+.kptcp-header-inner{
   padding: 25px;
   transition: box-shadow .3s ease;
 
@@ -52,9 +52,9 @@
 /**
  * 01. 02. Sticky
  */
-.kpf-sticky{
+.kptcp-sticky{
 
-  .kpf-header-inner{
+  .kptcp-header-inner{
     position: fixed;
     z-index: 99;
     top: 32px;
@@ -65,7 +65,7 @@
 /**
  * 01. 03. Header Buttons
  */
-.kpf-buttons{
+.kptcp-buttons{
   float: right;
 
   .button{
@@ -78,23 +78,23 @@
     }
   }
 
-  .kpf-save{
+  .kptcp-save{
     min-width: 72px;
   }
 }
 
-.kpf-header-left{
+.kptcp-header-left{
   float: left;
 }
 
-.kpf-header-right{
+.kptcp-header-right{
   float: right;
 }
 
 /**
  * 01. 04. Navigation
  */
-.kpf-nav{
+.kptcp-nav{
   display: block;
   position: relative;
   z-index: 10;
@@ -124,7 +124,7 @@
         }
       }
 
-      .kpf-arrow:after{
+      .kptcp-arrow:after{
         content: "\f054";
         display: inline-block;
         font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
@@ -137,9 +137,9 @@
         margin-top: -4px;
       }
 
-      &.kpf-tab-expanded{
+      &.kptcp-tab-expanded{
 
-        .kpf-arrow:after{
+        .kptcp-arrow:after{
           transform: rotate(90deg);
         }
 
@@ -163,28 +163,28 @@
     }
   }
 
-  .kpf-tab-icon{
+  .kptcp-tab-icon{
     width: 20px;
     margin-right: 5px;
     font-size: 13px;
     text-align: center;
   }
 
-  .kpf-label-error{
+  .kptcp-label-error{
     margin-left: 4px;
     vertical-align: top;
   }
 }
 
-.kpf-nav-normal{
+.kptcp-nav-normal{
   width: 225px;
 
-  + .kpf-content{
+  + .kptcp-content{
     margin-left: 225px;
   }
 }
 
-.kpf-nav-inline{
+.kptcp-nav-inline{
   width: 100%;
 
   ul{
@@ -196,7 +196,7 @@
   }
 }
 
-.kpf-nav-background{
+.kptcp-nav-background{
   position: absolute;
   top: 0;
   left: 0;
@@ -208,14 +208,14 @@
 /**
  * 01. 05. Wrapper
  */
-.kpf-wrapper{
+.kptcp-wrapper{
   position: relative;
 }
 
 /**
  * 01. 06. Content
  */
-.kpf-content{
+.kptcp-content{
   position: relative;
   background-color: #fff;
 }
@@ -223,12 +223,12 @@
 /**
  * 01. 07. Section
  */
-.kpf-sections{
+.kptcp-sections{
   float: left;
   width: 100%;
 }
 
-.kpf-section-title{
+.kptcp-section-title{
   display: none;
   padding: 20px 30px;
   background-color: #f5f5f5;
@@ -243,7 +243,7 @@
     text-transform: uppercase;
   }
 
-  .kpf-section-icon{
+  .kptcp-section-icon{
     margin-right: 5px;
   }
 }
@@ -251,7 +251,7 @@
 /**
  * 01. 08. Footer
  */
-.kpf-footer{
+.kptcp-footer{
   padding: 20px;
   font-size: 11px;
 }
@@ -259,7 +259,7 @@
 /**
  * 01. 09. Copyright
  */
-.kpf-copyright{
+.kptcp-copyright{
   float: left;
   margin-top: 5px;
 }
@@ -267,25 +267,25 @@
 /**
  * 01. 10. Show All Settings
  */
-.kpf-search-all,
-.kpf-show-all{
-  .kpf-nav-background,
-  .kpf-nav{
+.kptcp-search-all,
+.kptcp-show-all{
+  .kptcp-nav-background,
+  .kptcp-nav{
     display: none;
   }
 
-  .kpf-content{
+  .kptcp-content{
     margin-left: 0;
   }
 
-  .kpf-section-title,
-  .kpf-section{
+  .kptcp-section-title,
+  .kptcp-section{
     display: block !important;
   }
 }
 
-.kpf-search-all{
-  .kpf-section-title{
+.kptcp-search-all{
+  .kptcp-section-title{
     display: none !important;
   }
 }
@@ -293,7 +293,7 @@
 //
 // Expand
 //
-.kpf-expand-all{
+.kptcp-expand-all{
   float: left;
   padding: 0 8px;
   margin-right: 4px;
@@ -314,7 +314,7 @@
 /**
  * 01. 11. Search Input
  */
-.kpf-search{
+.kptcp-search{
   float: left;
 
   input{
@@ -334,10 +334,10 @@
   }
 }
 
-.kpf-saving{
+.kptcp-saving{
 
-  .kpf-buttons,
-  .kpf-content{
+  .kptcp-buttons,
+  .kptcp-content{
     cursor: default;
     pointer-events: none;
     opacity: 0.5;
@@ -347,40 +347,40 @@
 /**
  * 01. 12. Metabox
  */
-.kpf-metabox{
+.kptcp-metabox{
   margin: -6px -12px -12px -12px;
 
-  .kpf-field{
+  .kptcp-field{
     padding: 20px;
   }
 
-  .kpf-section-title{
+  .kptcp-section-title{
     padding: 20px;
   }
 }
 
 .block-editor-page{
 
-  .kpf-metabox{
+  .kptcp-metabox{
     margin: -6px -14px -14px -14px;
   }
 }
 
 .block-editor-editor-skeleton__content{
 
-  .kpf-metabox{
+  .kptcp-metabox{
     border-left: 1px solid #e2e4e7;
     border-right: 1px solid #e2e4e7;
   }
 }
 
-.kpf-sections-reset{
+.kptcp-sections-reset{
   float: left;
   width: 100%;
   text-align: right;
   border-top: 1px solid #eee;
 
-  .kpf-button-cancel,
+  .kptcp-button-cancel,
   input{
     display: none;
   }
@@ -395,11 +395,11 @@
   }
 
 
-  input:checked ~ .kpf-button-reset{
+  input:checked ~ .kptcp-button-reset{
     display: none;
   }
 
-  input:checked ~ .kpf-button-cancel{
+  input:checked ~ .kptcp-button-cancel{
     display: inline-block;
   }
 
@@ -407,30 +407,30 @@
 
 #side-sortables{
 
-  .kpf-section-title{
+  .kptcp-section-title{
     padding: 12px;
   }
 
-  .kpf-field{
+  .kptcp-field{
     padding: 10px 15px;
 
-    .kpf-title{
+    .kptcp-title{
       float: none;
       width: 100%;
       margin-bottom: 6px;
     }
 
-    .kpf-fieldset{
+    .kptcp-fieldset{
       float: none;
       width: 100%;
     }
   }
 
-  .kpf-field-text input{
+  .kptcp-field-text input{
     width: 100%;
   }
 
-  .kpf-notice{
+  .kptcp-notice{
     padding: 10px 15px;
   }
 }
@@ -438,14 +438,14 @@
 /**
  * 01. 13. Comment Metabox
  */
-.kpf-comment-metabox{
+.kptcp-comment-metabox{
   margin: -6px -12px -12px -12px;
 
-  .kpf-field{
+  .kptcp-field{
     padding: 20px;
   }
 
-  .kpf-section-title{
+  .kptcp-section-title{
     padding: 20px;
   }
 }
@@ -454,7 +454,7 @@
 /**
  * 01. 14. Help Tooltip
  */
-.kpf-tooltip{
+.kptcp-tooltip{
   position: absolute;
   z-index: 5000001;
   font-size: 12px;

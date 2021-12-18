@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_background' ) ) {
-  class KPF_Field_background extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_background' ) ) {
+  class KPTCP_Field_background extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -33,7 +33,7 @@ if ( ! class_exists( 'KPF_Field_background' ) ) {
         'background_auto_attributes'    => false,
         'compact'                       => false,
         'background_image_library'      => 'image',
-        'background_image_placeholder'  => esc_html__( 'Not selected', 'kpf' ),
+        'background_image_placeholder'  => esc_html__( 'Not selected', 'kptcp' ),
       ) );
 
       if ( $args['compact'] ) {
@@ -61,17 +61,17 @@ if ( ! class_exists( 'KPF_Field_background' ) ) {
 
       echo $this->field_before();
 
-      echo '<div class="kpf--background-colors">';
+      echo '<div class="kptcp--background-colors">';
 
       //
       // Background Color
       if ( ! empty( $args['background_color'] ) ) {
 
-        echo '<div class="kpf--color">';
+        echo '<div class="kptcp--color">';
 
-        echo ( ! empty( $args['background_gradient'] ) ) ? '<div class="kpf--title">'. esc_html__( 'From', 'kpf' ) .'</div>' : '';
+        echo ( ! empty( $args['background_gradient'] ) ) ? '<div class="kptcp--title">'. esc_html__( 'From', 'kptcp' ) .'</div>' : '';
 
-        KPF::field( array(
+        KPTCP::field( array(
           'id'      => 'background-color',
           'type'    => 'color',
           'default' => $default_value['background-color'],
@@ -85,11 +85,11 @@ if ( ! class_exists( 'KPF_Field_background' ) ) {
       // Background Gradient Color
       if ( ! empty( $args['background_gradient_color'] ) && ! empty( $args['background_gradient'] ) ) {
 
-        echo '<div class="kpf--color">';
+        echo '<div class="kptcp--color">';
 
-        echo ( ! empty( $args['background_gradient'] ) ) ? '<div class="kpf--title">'. esc_html__( 'To', 'kpf' ) .'</div>' : '';
+        echo ( ! empty( $args['background_gradient'] ) ) ? '<div class="kptcp--title">'. esc_html__( 'To', 'kptcp' ) .'</div>' : '';
 
-        KPF::field( array(
+        KPTCP::field( array(
           'id'      => 'background-gradient-color',
           'type'    => 'color',
           'default' => $default_value['background-gradient-color'],
@@ -103,19 +103,19 @@ if ( ! class_exists( 'KPF_Field_background' ) ) {
       // Background Gradient Direction
       if ( ! empty( $args['background_gradient_direction'] ) && ! empty( $args['background_gradient'] ) ) {
 
-        echo '<div class="kpf--color">';
+        echo '<div class="kptcp--color">';
 
-        echo ( ! empty( $args['background_gradient'] ) ) ? '<div class="kpf---title">'. esc_html__( 'Direction', 'kpf' ) .'</div>' : '';
+        echo ( ! empty( $args['background_gradient'] ) ) ? '<div class="kptcp---title">'. esc_html__( 'Direction', 'kptcp' ) .'</div>' : '';
 
-        KPF::field( array(
+        KPTCP::field( array(
           'id'          => 'background-gradient-direction',
           'type'        => 'select',
           'options'     => array(
-            ''          => esc_html__( 'Gradient Direction', 'kpf' ),
-            'to bottom' => esc_html__( '&#8659; top to bottom', 'kpf' ),
-            'to right'  => esc_html__( '&#8658; left to right', 'kpf' ),
-            '135deg'    => esc_html__( '&#8664; corner top to right', 'kpf' ),
-            '-135deg'   => esc_html__( '&#8665; corner top to left', 'kpf' ),
+            ''          => esc_html__( 'Gradient Direction', 'kptcp' ),
+            'to bottom' => esc_html__( '&#8659; top to bottom', 'kptcp' ),
+            'to right'  => esc_html__( '&#8658; left to right', 'kptcp' ),
+            '135deg'    => esc_html__( '&#8664; corner top to right', 'kptcp' ),
+            '-135deg'   => esc_html__( '&#8665; corner top to left', 'kptcp' ),
           ),
         ), $this->value['background-gradient-direction'], $this->field_name(), 'field/background' );
 
@@ -129,12 +129,12 @@ if ( ! class_exists( 'KPF_Field_background' ) ) {
       // Background Image
       if ( ! empty( $args['background_image'] ) ) {
 
-        echo '<div class="kpf--background-image">';
+        echo '<div class="kptcp--background-image">';
 
-        KPF::field( array(
+        KPTCP::field( array(
           'id'          => 'background-image',
           'type'        => 'media',
-          'class'       => 'kpf-assign-field-background',
+          'class'       => 'kptcp-assign-field-background',
           'library'     => $args['background_image_library'],
           'preview'     => $args['background_image_preview'],
           'placeholder' => $args['background_image_placeholder'],
@@ -145,29 +145,29 @@ if ( ! class_exists( 'KPF_Field_background' ) ) {
 
       }
 
-      $auto_class   = ( ! empty( $args['background_auto_attributes'] ) ) ? ' kpf--auto-attributes' : '';
-      $hidden_class = ( ! empty( $args['background_auto_attributes'] ) && empty( $this->value['background-image']['url'] ) ) ? ' kpf--attributes-hidden' : '';
+      $auto_class   = ( ! empty( $args['background_auto_attributes'] ) ) ? ' kptcp--auto-attributes' : '';
+      $hidden_class = ( ! empty( $args['background_auto_attributes'] ) && empty( $this->value['background-image']['url'] ) ) ? ' kptcp--attributes-hidden' : '';
 
-      echo '<div class="kpf--background-attributes'. esc_attr( $auto_class . $hidden_class ) .'">';
+      echo '<div class="kptcp--background-attributes'. esc_attr( $auto_class . $hidden_class ) .'">';
 
       //
       // Background Position
       if ( ! empty( $args['background_position'] ) ) {
 
-        KPF::field( array(
+        KPTCP::field( array(
           'id'              => 'background-position',
           'type'            => 'select',
           'options'         => array(
-            ''              => esc_html__( 'Background Position', 'kpf' ),
-            'left top'      => esc_html__( 'Left Top', 'kpf' ),
-            'left center'   => esc_html__( 'Left Center', 'kpf' ),
-            'left bottom'   => esc_html__( 'Left Bottom', 'kpf' ),
-            'center top'    => esc_html__( 'Center Top', 'kpf' ),
-            'center center' => esc_html__( 'Center Center', 'kpf' ),
-            'center bottom' => esc_html__( 'Center Bottom', 'kpf' ),
-            'right top'     => esc_html__( 'Right Top', 'kpf' ),
-            'right center'  => esc_html__( 'Right Center', 'kpf' ),
-            'right bottom'  => esc_html__( 'Right Bottom', 'kpf' ),
+            ''              => esc_html__( 'Background Position', 'kptcp' ),
+            'left top'      => esc_html__( 'Left Top', 'kptcp' ),
+            'left center'   => esc_html__( 'Left Center', 'kptcp' ),
+            'left bottom'   => esc_html__( 'Left Bottom', 'kptcp' ),
+            'center top'    => esc_html__( 'Center Top', 'kptcp' ),
+            'center center' => esc_html__( 'Center Center', 'kptcp' ),
+            'center bottom' => esc_html__( 'Center Bottom', 'kptcp' ),
+            'right top'     => esc_html__( 'Right Top', 'kptcp' ),
+            'right center'  => esc_html__( 'Right Center', 'kptcp' ),
+            'right bottom'  => esc_html__( 'Right Bottom', 'kptcp' ),
           ),
         ), $this->value['background-position'], $this->field_name(), 'field/background' );
 
@@ -177,15 +177,15 @@ if ( ! class_exists( 'KPF_Field_background' ) ) {
       // Background Repeat
       if ( ! empty( $args['background_repeat'] ) ) {
 
-        KPF::field( array(
+        KPTCP::field( array(
           'id'          => 'background-repeat',
           'type'        => 'select',
           'options'     => array(
-            ''          => esc_html__( 'Background Repeat', 'kpf' ),
-            'repeat'    => esc_html__( 'Repeat', 'kpf' ),
-            'no-repeat' => esc_html__( 'No Repeat', 'kpf' ),
-            'repeat-x'  => esc_html__( 'Repeat Horizontally', 'kpf' ),
-            'repeat-y'  => esc_html__( 'Repeat Vertically', 'kpf' ),
+            ''          => esc_html__( 'Background Repeat', 'kptcp' ),
+            'repeat'    => esc_html__( 'Repeat', 'kptcp' ),
+            'no-repeat' => esc_html__( 'No Repeat', 'kptcp' ),
+            'repeat-x'  => esc_html__( 'Repeat Horizontally', 'kptcp' ),
+            'repeat-y'  => esc_html__( 'Repeat Vertically', 'kptcp' ),
           ),
         ), $this->value['background-repeat'], $this->field_name(), 'field/background' );
 
@@ -195,13 +195,13 @@ if ( ! class_exists( 'KPF_Field_background' ) ) {
       // Background Attachment
       if ( ! empty( $args['background_attachment'] ) ) {
 
-        KPF::field( array(
+        KPTCP::field( array(
           'id'       => 'background-attachment',
           'type'     => 'select',
           'options'  => array(
-            ''       => esc_html__( 'Background Attachment', 'kpf' ),
-            'scroll' => esc_html__( 'Scroll', 'kpf' ),
-            'fixed'  => esc_html__( 'Fixed', 'kpf' ),
+            ''       => esc_html__( 'Background Attachment', 'kptcp' ),
+            'scroll' => esc_html__( 'Scroll', 'kptcp' ),
+            'fixed'  => esc_html__( 'Fixed', 'kptcp' ),
           ),
         ), $this->value['background-attachment'], $this->field_name(), 'field/background' );
 
@@ -211,14 +211,14 @@ if ( ! class_exists( 'KPF_Field_background' ) ) {
       // Background Size
       if ( ! empty( $args['background_size'] ) ) {
 
-        KPF::field( array(
+        KPTCP::field( array(
           'id'        => 'background-size',
           'type'      => 'select',
           'options'   => array(
-            ''        => esc_html__( 'Background Size', 'kpf' ),
-            'cover'   => esc_html__( 'Cover', 'kpf' ),
-            'contain' => esc_html__( 'Contain', 'kpf' ),
-            'auto'    => esc_html__( 'Auto', 'kpf' ),
+            ''        => esc_html__( 'Background Size', 'kptcp' ),
+            'cover'   => esc_html__( 'Cover', 'kptcp' ),
+            'contain' => esc_html__( 'Contain', 'kptcp' ),
+            'auto'    => esc_html__( 'Auto', 'kptcp' ),
           ),
         ), $this->value['background-size'], $this->field_name(), 'field/background' );
 
@@ -228,14 +228,14 @@ if ( ! class_exists( 'KPF_Field_background' ) ) {
       // Background Origin
       if ( ! empty( $args['background_origin'] ) ) {
 
-        KPF::field( array(
+        KPTCP::field( array(
           'id'            => 'background-origin',
           'type'          => 'select',
           'options'       => array(
-            ''            => esc_html__( 'Background Origin', 'kpf' ),
-            'padding-box' => esc_html__( 'Padding Box', 'kpf' ),
-            'border-box'  => esc_html__( 'Border Box', 'kpf' ),
-            'content-box' => esc_html__( 'Content Box', 'kpf' ),
+            ''            => esc_html__( 'Background Origin', 'kptcp' ),
+            'padding-box' => esc_html__( 'Padding Box', 'kptcp' ),
+            'border-box'  => esc_html__( 'Border Box', 'kptcp' ),
+            'content-box' => esc_html__( 'Content Box', 'kptcp' ),
           ),
         ), $this->value['background-origin'], $this->field_name(), 'field/background' );
 
@@ -245,14 +245,14 @@ if ( ! class_exists( 'KPF_Field_background' ) ) {
       // Background Clip
       if ( ! empty( $args['background_clip'] ) ) {
 
-        KPF::field( array(
+        KPTCP::field( array(
           'id'            => 'background-clip',
           'type'          => 'select',
           'options'       => array(
-            ''            => esc_html__( 'Background Clip', 'kpf' ),
-            'border-box'  => esc_html__( 'Border Box', 'kpf' ),
-            'padding-box' => esc_html__( 'Padding Box', 'kpf' ),
-            'content-box' => esc_html__( 'Content Box', 'kpf' ),
+            ''            => esc_html__( 'Background Clip', 'kptcp' ),
+            'border-box'  => esc_html__( 'Border Box', 'kptcp' ),
+            'padding-box' => esc_html__( 'Padding Box', 'kptcp' ),
+            'content-box' => esc_html__( 'Content Box', 'kptcp' ),
           ),
         ), $this->value['background-clip'], $this->field_name(), 'field/background' );
 
@@ -262,21 +262,21 @@ if ( ! class_exists( 'KPF_Field_background' ) ) {
       // Background Blend Mode
       if ( ! empty( $args['background_blend_mode'] ) ) {
 
-        KPF::field( array(
+        KPTCP::field( array(
           'id'            => 'background-blend-mode',
           'type'          => 'select',
           'options'       => array(
-            ''            => esc_html__( 'Background Blend Mode', 'kpf' ),
-            'normal'      => esc_html__( 'Normal', 'kpf' ),
-            'multiply'    => esc_html__( 'Multiply', 'kpf' ),
-            'screen'      => esc_html__( 'Screen', 'kpf' ),
-            'overlay'     => esc_html__( 'Overlay', 'kpf' ),
-            'darken'      => esc_html__( 'Darken', 'kpf' ),
-            'lighten'     => esc_html__( 'Lighten', 'kpf' ),
-            'color-dodge' => esc_html__( 'Color Dodge', 'kpf' ),
-            'saturation'  => esc_html__( 'Saturation', 'kpf' ),
-            'color'       => esc_html__( 'Color', 'kpf' ),
-            'luminosity'  => esc_html__( 'Luminosity', 'kpf' ),
+            ''            => esc_html__( 'Background Blend Mode', 'kptcp' ),
+            'normal'      => esc_html__( 'Normal', 'kptcp' ),
+            'multiply'    => esc_html__( 'Multiply', 'kptcp' ),
+            'screen'      => esc_html__( 'Screen', 'kptcp' ),
+            'overlay'     => esc_html__( 'Overlay', 'kptcp' ),
+            'darken'      => esc_html__( 'Darken', 'kptcp' ),
+            'lighten'     => esc_html__( 'Lighten', 'kptcp' ),
+            'color-dodge' => esc_html__( 'Color Dodge', 'kptcp' ),
+            'saturation'  => esc_html__( 'Saturation', 'kptcp' ),
+            'color'       => esc_html__( 'Color', 'kptcp' ),
+            'luminosity'  => esc_html__( 'Luminosity', 'kptcp' ),
           ),
         ), $this->value['background-blend-mode'], $this->field_name(), 'field/background' );
 

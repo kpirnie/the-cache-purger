@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_textarea' ) ) {
-  class KPF_Field_textarea extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_textarea' ) ) {
+  class KPTCP_Field_textarea extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -31,11 +31,11 @@ if ( ! class_exists( 'KPF_Field_textarea' ) ) {
 
         foreach ( $instances as $instance_key ) {
 
-          if ( isset( KPF::$shortcode_instances[$instance_key] ) ) {
+          if ( isset( KPTCP::$shortcode_instances[$instance_key] ) ) {
 
-            $button_title = KPF::$shortcode_instances[$instance_key]['button_title'];
+            $button_title = KPTCP::$shortcode_instances[$instance_key]['button_title'];
 
-            echo '<a href="#" class="button button-primary kpf-shortcode-button" data-modal-id="'. esc_attr( $instance_key ) .'">'. $button_title .'</a>';
+            echo '<a href="#" class="button button-primary kptcp-shortcode-button" data-modal-id="'. esc_attr( $instance_key ) .'">'. $button_title .'</a>';
 
           }
 

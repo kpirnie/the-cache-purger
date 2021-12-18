@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_submessage' ) ) {
-  class KPF_Field_submessage extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_submessage' ) ) {
+  class KPTCP_Field_submessage extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -18,7 +18,7 @@ if ( ! class_exists( 'KPF_Field_submessage' ) ) {
 
       $style = ( ! empty( $this->field['style'] ) ) ? $this->field['style'] : 'normal';
 
-      echo '<div class="kpf-submessage kpf-submessage-'. esc_attr( $style ) .'">'. $this->field['content'] .'</div>';
+      echo '<div class="kptcp-submessage kptcp-submessage-'. esc_attr( $style ) .'">'. $this->field['content'] .'</div>';
 
     }
 

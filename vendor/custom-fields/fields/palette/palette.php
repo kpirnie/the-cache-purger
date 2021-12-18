@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_palette' ) ) {
-  class KPF_Field_palette extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_palette' ) ) {
+  class KPTCP_Field_palette extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -22,14 +22,14 @@ if ( ! class_exists( 'KPF_Field_palette' ) ) {
 
       if ( ! empty( $palette ) ) {
 
-        echo '<div class="kpf-siblings kpf--palettes">';
+        echo '<div class="kptcp-siblings kptcp--palettes">';
 
         foreach ( $palette as $key => $colors ) {
 
-          $active  = ( $key === $this->value ) ? ' kpf--active' : '';
+          $active  = ( $key === $this->value ) ? ' kptcp--active' : '';
           $checked = ( $key === $this->value ) ? ' checked' : '';
 
-          echo '<div class="kpf--sibling kpf--palette'. esc_attr( $active ) .'">';
+          echo '<div class="kptcp--sibling kptcp--palette'. esc_attr( $active ) .'">';
 
           if ( ! empty( $colors ) ) {
 

@@ -1,7 +1,7 @@
 /**
  * 09. Modal
  */
-.kpf-modal{
+.kptcp-modal{
   position: fixed;
   z-index: 100101;
   top: 0;
@@ -14,23 +14,23 @@
   }
 }
 
-.kpf-modal-icon{
+.kptcp-modal-icon{
   z-index: 100102;
 }
 
-.kpf-modal-table{
+.kptcp-modal-table{
   display: table;
   width: 100%;
   height: 100%;
 }
 
-.kpf-modal-table-cell{
+.kptcp-modal-table-cell{
   display: table-cell;
   vertical-align: middle;
   margin: 100px 0;
 }
 
-.kpf-modal-inner{
+.kptcp-modal-inner{
   position: relative;
   z-index: 10;
   width: 760px;
@@ -39,17 +39,17 @@
   background-color: #fff;
 }
 
-.kpf-modal-content{
+.kptcp-modal-content{
   position: relative;
   overflow: hidden;
   overflow-y: auto;
   height: 595px;
 
-  .kpf-shortcode-button{
+  .kptcp-shortcode-button{
     display: none;
   }
 
-  .kpf-field{
+  .kptcp-field{
     padding: 15px 30px 15px 15px;
   }
 
@@ -72,7 +72,7 @@
   }
 }
 
-.kpf-modal-title{
+.kptcp-modal-title{
   position: relative;
   background-color: #fcfcfc;
   border-bottom: 1px solid #ddd;
@@ -84,7 +84,7 @@
   padding: 0 36px 0 16px;
 }
 
-.kpf-modal-header{
+.kptcp-modal-header{
   width: 100%;
   padding: 14px 0;
   background-color: #f5f5f5;
@@ -102,7 +102,7 @@
   }
 }
 
-.kpf-modal-close{
+.kptcp-modal-close{
   color: #666;
   padding: 0;
   position: absolute;
@@ -128,7 +128,7 @@
   }
 }
 
-.kpf-modal-insert-wrapper{
+.kptcp-modal-insert-wrapper{
   text-align: center;
   width: 100%;
   padding: 15px 0;
@@ -136,7 +136,7 @@
   border-top: 1px solid #ddd;
 }
 
-.kpf-modal-overlay{
+.kptcp-modal-overlay{
   position: absolute;
   top: 0;
   left: 0;
@@ -149,28 +149,28 @@
 /**
  * 09. 01. Shortcode Modal
  */
-.kpf--repeatable{
+.kptcp--repeatable{
   padding: 15px 15px 0 15px;
 }
 
-.kpf--repeat-button-block{
+.kptcp--repeat-button-block{
   text-align: center;
   padding-bottom: 15px;
 }
 
-.kpf--repeat-shortcode{
+.kptcp--repeat-shortcode{
   position: relative;
   margin-bottom: 15px;
   border: 1px dashed #ddd;
 
   &:first-child{
 
-    .kpf-repeat-remove{
+    .kptcp-repeat-remove{
       display: none;
     }
   }
 
-  .kpf-repeat-remove{
+  .kptcp-repeat-remove{
     position: absolute;
     right: 10px;
     top: 10px;
@@ -193,24 +193,24 @@
   }
 }
 
-.kpf-shortcode-single{
+.kptcp-shortcode-single{
 
-  .kpf-modal-inner{
+  .kptcp-modal-inner{
     height: 750px;
   }
 
-  .kpf-modal-content{
+  .kptcp-modal-content{
     height: 652px;
   }
 }
 
 .elementor-editor-active{
 
-  .kpf-shortcode-button{
+  .kptcp-shortcode-button{
     margin-left: 5px;
   }
 
-  .kpf-modal .hidden{
+  .kptcp-modal .hidden{
     display: none !important;
   }
 }
@@ -218,7 +218,7 @@
 /**
  * 09. 02. Gutenberg Modal
  */
-.kpf-shortcode-block{
+.kptcp-shortcode-block{
   text-align: center;
   padding: 14px;
   font-size: 13px;
@@ -226,16 +226,16 @@
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
 }
 
-.kpf-shortcode-block .components-button{
+.kptcp-shortcode-block .components-button{
   margin-bottom: 10px;
 }
 
 /**
  * 09. 03. Icon Modal
  */
-.kpf-modal-icon{
+.kptcp-modal-icon{
 
-  .kpf-icon-title{
+  .kptcp-icon-title{
     padding: 15px 0;
     margin: 4px;
     font-size: 14px;
@@ -245,11 +245,11 @@
     background-color: #f7f7f7;
   }
 
-  .kpf-modal-header{
+  .kptcp-modal-header{
     text-align: center;
   }
 
-  .kpf-icon-search{
+  .kptcp-icon-search{
     width: 50%;
     height: 40px;
     line-height: 40px;
@@ -277,24 +277,24 @@
     }
   }
 
-  .kpf-modal-content{
+  .kptcp-modal-content{
     padding: 10px;
     height: 618px;
   }
 
-  .kpf-error-text{
+  .kptcp-error-text{
     padding: 10px;
   }
 }
 
-.kpf-modal-loading{
+.kptcp-modal-loading{
   display: none;
   position: absolute;
   left: 15px;
   top: 15px;
 }
 
-.kpf-loading{
+.kptcp-loading{
   position: relative;
   width: 20px;
   height: 20px;
@@ -315,12 +315,12 @@
     animation-duration: 0.5s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
-    animation-name: kpfLoader;
+    animation-name: kptcpLoader;
     border-radius: 4px;
   }
 }
 
-@keyframes kpfLoader {
+@keyframes kptcpLoader {
   0% {
     transform: rotate(0deg) translateX(-6px) rotate(0deg);
   }

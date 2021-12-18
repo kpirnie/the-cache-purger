@@ -5,7 +5,7 @@ Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.0
 Tested up to: 5.9
 Requires PHP: 7.3
-Stable tag: 0.6.02
+Stable tag: 0.7.16
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -50,7 +50,7 @@ Purges are configurable in the settings, and include the following saves/updates
 
 Do you need to manually clear your server-side caches everytime you modify your site?  If yes, then this is for you.  It automates this process for you.
 
-Even if you don't, there are still some server based caches that need to be purged that this plugin takes care of.
+Even if you don't, there are still some server based caches that need to be purged that this plugin attempts to take care of.
 
 == Screenshots ==
 
@@ -61,6 +61,18 @@ Even if you don't, there are still some server based caches that need to be purg
 5. Logged Purged Object
 
 == Changelog ==
+
+= 0.7.16 =
+* Update: settings rewrite
+  * Was conflicting with another plugin
+* UI Fix: convert selectables to "chosen"
+* Feature: Add API/Server settings
+  * Implement: Remote Redis Clearing
+  * Implement: Remote Memcached Clearing
+  * Implement: Direct Cloudflare Clearing
+  * Implement: Direct Sucuri Clearing
+  * Implement: Direct RunCloud Hub Clearing
+
 = 0.6.02 =
 * Fixed: Admin bar menu show in for non-admin capabilities.
 * Improved: Usage anywhere framework fields.

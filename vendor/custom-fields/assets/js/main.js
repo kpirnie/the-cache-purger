@@ -2,7 +2,7 @@
  *
  * -----------------------------------------------------------
  *
- * Kpf Framework
+ * Kptcp Framework
  * A Simple and Lightweight WordPress Option Framework
  *
  * -----------------------------------------------------------
@@ -14,11 +14,11 @@
   //
   // Constants
   //
-  var KPF   = KPF || {};
+  var KPTCP   = KPTCP || {};
 
-  KPF.funcs = {};
+  KPTCP.funcs = {};
 
-  KPF.vars  = {
+  KPTCP.vars  = {
     onloaded: false,
     $body: $('body'),
     $window: $(window),
@@ -33,7 +33,7 @@
   //
   // Helper Functions
   //
-  KPF.helper = {
+  KPTCP.helper = {
 
     //
     // Generate UID
@@ -54,7 +54,7 @@
     name_nested_replace: function( $selector, field_id ) {
 
       var checks = [];
-      var regex  = new RegExp(KPF.helper.preg_quote(field_id +'[\\d+]'), 'g');
+      var regex  = new RegExp(KPTCP.helper.preg_quote(field_id +'[\\d+]'), 'g');
 
       $selector.find(':radio').each(function() {
         if ( this.checked || this.orginal_checked ) {
@@ -100,7 +100,7 @@
   //
   // Custom clone for textarea and select clone() bug
   //
-  $.fn.kpf_clone = function() {
+  $.fn.kptcp_clone = function() {
 
     var base   = $.fn.clone.apply(this, arguments),
         clone  = this.find('select').add(this.filter('select')),
@@ -127,13 +127,13 @@
   //
   // Expand All Options
   //
-  $.fn.kpf_expand_all = function() {
+  $.fn.kptcp_expand_all = function() {
     return this.each( function() {
       $(this).on('click', function( e ) {
 
         e.preventDefault();
-        $('.kpf-wrapper').toggleClass('kpf-show-all');
-        $('.kpf-section').kpf_reload_script();
+        $('.kptcp-wrapper').toggleClass('kptcp-show-all');
+        $('.kptcp-section').kptcp_reload_script();
         $(this).find('.fa').toggleClass('fa-indent').toggleClass('fa-outdent');
 
       });
@@ -143,7 +143,7 @@
   //
   // Options Navigation
   //
-  $.fn.kpf_nav_options = function() {
+  $.fn.kptcp_nav_options = function() {
     return this.each( function() {
 
       var $nav    = $(this),
@@ -152,7 +152,7 @@
           $links  = $nav.find('a'),
           $last;
 
-      $window.on('hashchange kpf.hashchange', function() {
+      $window.on('hashchange kptcp.hashchange', function() {
 
         var hash  = window.location.hash.replace('#tab=', '');
         var slug  = hash ? hash : $links.first().attr('href').replace('#tab=', '');
@@ -160,7 +160,7 @@
 
         if ( $link.length ) {
 
-          $link.closest('.kpf-tab-item').addClass('kpf-tab-expanded').siblings().removeClass('kpf-tab-expanded');
+          $link.closest('.kptcp-tab-item').addClass('kptcp-tab-expanded').siblings().removeClass('kptcp-tab-expanded');
 
           if( $link.next().is('ul') ) {
 
@@ -169,8 +169,8 @@
 
           }
 
-          $links.removeClass('kpf-active');
-          $link.addClass('kpf-active');
+          $links.removeClass('kptcp-active');
+          $link.addClass('kptcp-active');
 
           if ( $last ) {
             $last.addClass('hidden');
@@ -179,9 +179,9 @@
           var $section = $('[data-section-id="'+slug+'"]');
 
           $section.removeClass('hidden');
-          $section.kpf_reload_script();
+          $section.kptcp_reload_script();
 
-          $('.kpf-section-id').val( $section.index()+1 );
+          $('.kptcp-section-id').val( $section.index()+1 );
 
           $last = $section;
 
@@ -192,7 +192,7 @@
 
         }
 
-      }).trigger('kpf.hashchange');
+      }).trigger('kptcp.hashchange');
 
     });
   };
@@ -200,12 +200,12 @@
   //
   // Metabox Tabs
   //
-  $.fn.kpf_nav_metabox = function() {
+  $.fn.kptcp_nav_metabox = function() {
     return this.each( function() {
 
       var $nav      = $(this),
           $links    = $nav.find('a'),
-          $sections = $nav.parent().find('.kpf-section'),
+          $sections = $nav.parent().find('.kptcp-section'),
           $last;
 
       $links.each( function( index ) {
@@ -216,8 +216,8 @@
 
           var $link = $(this);
 
-          $links.removeClass('kpf-active');
-          $link.addClass('kpf-active');
+          $links.removeClass('kptcp-active');
+          $link.addClass('kptcp-active');
 
           if ( $last !== undefined ) {
             $last.addClass('hidden');
@@ -226,7 +226,7 @@
           var $section = $sections.eq(index);
 
           $section.removeClass('hidden');
-          $section.kpf_reload_script();
+          $section.kptcp_reload_script();
 
           $last = $section;
 
@@ -242,15 +242,15 @@
   //
   // Metabox Page Templates Listener
   //
-  $.fn.kpf_page_templates = function() {
+  $.fn.kptcp_page_templates = function() {
     if ( this.length ) {
 
       $(document).on('change', '.editor-page-attributes__template select, #page_template', function() {
 
         var maybe_value = $(this).val() || 'default';
 
-        $('.kpf-page-templates').removeClass('kpf-metabox-show').addClass('kpf-metabox-hide');
-        $('.kpf-page-'+maybe_value.toLowerCase().replace(/[^a-zA-Z0-9]+/g,'-')).removeClass('kpf-metabox-hide').addClass('kpf-metabox-show');
+        $('.kptcp-page-templates').removeClass('kptcp-metabox-show').addClass('kptcp-metabox-hide');
+        $('.kptcp-page-'+maybe_value.toLowerCase().replace(/[^a-zA-Z0-9]+/g,'-')).removeClass('kptcp-metabox-hide').addClass('kptcp-metabox-show');
 
       });
 
@@ -260,7 +260,7 @@
   //
   // Metabox Post Formats Listener
   //
-  $.fn.kpf_post_formats = function() {
+  $.fn.kptcp_post_formats = function() {
     if ( this.length ) {
 
       $(document).on('change', '.editor-post-format select, #formatdiv input[name="post_format"]', function() {
@@ -270,8 +270,8 @@
         // Fallback for classic editor version
         maybe_value = ( maybe_value === '0' ) ? 'default' : maybe_value;
 
-        $('.kpf-post-formats').removeClass('kpf-metabox-show').addClass('kpf-metabox-hide');
-        $('.kpf-post-format-'+maybe_value).removeClass('kpf-metabox-hide').addClass('kpf-metabox-show');
+        $('.kptcp-post-formats').removeClass('kptcp-metabox-show').addClass('kptcp-metabox-hide');
+        $('.kptcp-post-format-'+maybe_value).removeClass('kptcp-metabox-hide').addClass('kptcp-metabox-show');
 
       });
 
@@ -281,7 +281,7 @@
   //
   // Search
   //
-  $.fn.kpf_search = function() {
+  $.fn.kptcp_search = function() {
     return this.each( function() {
 
       var $this  = $(this),
@@ -290,15 +290,15 @@
       $input.on('change keyup', function() {
 
         var value    = $(this).val(),
-            $wrapper = $('.kpf-wrapper'),
-            $section = $wrapper.find('.kpf-section'),
-            $fields  = $section.find('> .kpf-field:not(.kpf-depend-on)'),
-            $titles  = $fields.find('> .kpf-title, .kpf-search-tags');
+            $wrapper = $('.kptcp-wrapper'),
+            $section = $wrapper.find('.kptcp-section'),
+            $fields  = $section.find('> .kptcp-field:not(.kptcp-depend-on)'),
+            $titles  = $fields.find('> .kptcp-title, .kptcp-search-tags');
 
         if ( value.length > 3 ) {
 
-          $fields.addClass('kpf-metabox-hide');
-          $wrapper.addClass('kpf-search-all');
+          $fields.addClass('kptcp-metabox-hide');
+          $wrapper.addClass('kptcp-search-all');
 
           $titles.each( function() {
 
@@ -306,10 +306,10 @@
 
             if ( $title.text().match( new RegExp('.*?' + value + '.*?', 'i') ) ) {
 
-              var $field = $title.closest('.kpf-field');
+              var $field = $title.closest('.kptcp-field');
 
-              $field.removeClass('kpf-metabox-hide');
-              $field.parent().kpf_reload_script();
+              $field.removeClass('kptcp-metabox-hide');
+              $field.parent().kptcp_reload_script();
 
             }
 
@@ -317,8 +317,8 @@
 
         } else {
 
-          $fields.removeClass('kpf-metabox-hide');
-          $wrapper.removeClass('kpf-search-all');
+          $fields.removeClass('kptcp-metabox-hide');
+          $wrapper.removeClass('kptcp-search-all');
 
         }
 
@@ -330,12 +330,12 @@
   //
   // Sticky Header
   //
-  $.fn.kpf_sticky = function() {
+  $.fn.kptcp_sticky = function() {
     return this.each( function() {
 
       var $this     = $(this),
           $window   = $(window),
-          $inner    = $this.find('.kpf-header-inner'),
+          $inner    = $this.find('.kptcp-header-inner'),
           padding   = parseInt( $inner.css('padding-left') ) + parseInt( $inner.css('padding-right') ),
           offset    = 32,
           scrollTop = 0,
@@ -349,10 +349,10 @@
 
             if ( stickyTop <= offset && winWidth > 782 ) {
               $inner.css({width: $this.outerWidth()-padding});
-              $this.css({height: $this.outerHeight()}).addClass( 'kpf-sticky' );
+              $this.css({height: $this.outerHeight()}).addClass( 'kptcp-sticky' );
             } else {
               $inner.removeAttr('style');
-              $this.removeAttr('style').removeClass( 'kpf-sticky' );
+              $this.removeAttr('style').removeClass( 'kptcp-sticky' );
             }
 
           },
@@ -385,7 +385,7 @@
   //
   // Dependency System
   //
-  $.fn.kpf_dependency = function() {
+  $.fn.kptcp_dependency = function() {
     return this.each( function() {
 
       var $this   = $(this),
@@ -393,8 +393,8 @@
 
       if( $fields.length ) {
 
-        var normal_ruleset = $.kpf_deps.createRuleset(),
-            global_ruleset = $.kpf_deps.createRuleset(),
+        var normal_ruleset = $.kptcp_deps.createRuleset(),
+            global_ruleset = $.kptcp_deps.createRuleset(),
             normal_depends = [],
             global_depends = [];
 
@@ -427,11 +427,11 @@
         });
 
         if ( normal_depends.length ) {
-          $.kpf_deps.enable($this, normal_ruleset, normal_depends);
+          $.kptcp_deps.enable($this, normal_ruleset, normal_depends);
         }
 
         if ( global_depends.length ) {
-          $.kpf_deps.enable(KPF.vars.$body, global_ruleset, global_depends);
+          $.kptcp_deps.enable(KPTCP.vars.$body, global_ruleset, global_depends);
         }
 
       }
@@ -442,15 +442,15 @@
   //
   // Field: accordion
   //
-  $.fn.kpf_field_accordion = function() {
+  $.fn.kptcp_field_accordion = function() {
     return this.each( function() {
 
-      var $titles = $(this).find('.kpf-accordion-title');
+      var $titles = $(this).find('.kptcp-accordion-title');
 
       $titles.on('click', function() {
 
         var $title   = $(this),
-            $icon    = $title.find('.kpf-accordion-icon'),
+            $icon    = $title.find('.kptcp-accordion-icon'),
             $content = $title.next();
 
         if ( $icon.hasClass('fa-angle-right') ) {
@@ -461,12 +461,12 @@
 
         if ( !$content.data( 'opened' ) ) {
 
-          $content.kpf_reload_script();
+          $content.kptcp_reload_script();
           $content.data( 'opened', true );
 
         }
 
-        $content.toggleClass('kpf-accordion-open');
+        $content.toggleClass('kptcp-accordion-open');
 
       });
 
@@ -476,7 +476,7 @@
   //
   // Field: backup
   //
-  $.fn.kpf_field_backup = function() {
+  $.fn.kptcp_field_backup = function() {
     return this.each( function() {
 
       if ( window.wp.customize === undefined ) { return; }
@@ -484,8 +484,8 @@
       var base    = this,
           $this   = $(this),
           $body   = $('body'),
-          $import = $this.find('.kpf-import'),
-          $reset  = $this.find('.kpf-reset');
+          $import = $this.find('.kptcp-import'),
+          $reset  = $this.find('.kptcp-reset');
 
       base.notificationOverlay = function() {
 
@@ -499,7 +499,7 @@
           }
 
           // then show a notification overlay
-          wp.customize.notifications.add( new wp.customize.OverlayNotification('kpf_field_backup_notification', {
+          wp.customize.notifications.add( new wp.customize.OverlayNotification('kptcp_field_backup_notification', {
             type: 'default',
             message: '&nbsp;',
             loading: true
@@ -513,11 +513,11 @@
 
         e.preventDefault();
 
-        if ( KPF.vars.is_confirm ) {
+        if ( KPTCP.vars.is_confirm ) {
 
           base.notificationOverlay();
 
-          window.wp.ajax.post('kpf-reset', {
+          window.wp.ajax.post('kptcp-reset', {
             unique: $reset.data('unique'),
             nonce: $reset.data('nonce')
           })
@@ -526,7 +526,7 @@
           })
           .fail( function( response ) {
             alert( response.error );
-            wp.customize.notifications.remove('kpf_field_backup_notification');
+            wp.customize.notifications.remove('kptcp_field_backup_notification');
           });
 
         }
@@ -537,19 +537,19 @@
 
         e.preventDefault();
 
-        if ( KPF.vars.is_confirm ) {
+        if ( KPTCP.vars.is_confirm ) {
 
           base.notificationOverlay();
 
-          window.wp.ajax.post( 'kpf-import', {
+          window.wp.ajax.post( 'kptcp-import', {
             unique: $import.data('unique'),
             nonce: $import.data('nonce'),
-            data: $this.find('.kpf-import-data').val()
+            data: $this.find('.kptcp-import-data').val()
           }).done( function( response ) {
             window.location.reload(true);
           }).fail( function( response ) {
             alert( response.error );
-            wp.customize.notifications.remove('kpf_field_backup_notification');
+            wp.customize.notifications.remove('kptcp_field_backup_notification');
           });
 
         }
@@ -562,16 +562,16 @@
   //
   // Field: background
   //
-  $.fn.kpf_field_background = function() {
+  $.fn.kptcp_field_background = function() {
     return this.each( function() {
-      $(this).find('.kpf--background-image').kpf_reload_script();
+      $(this).find('.kptcp--background-image').kptcp_reload_script();
     });
   };
 
   //
   // Field: code_editor
   //
-  $.fn.kpf_field_code_editor = function() {
+  $.fn.kptcp_field_code_editor = function() {
     return this.each( function() {
 
       if ( typeof CodeMirror !== 'function' ) { return; }
@@ -591,21 +591,21 @@
           var code_editor = CodeMirror.fromTextArea( $textarea[0], data_editor );
 
           // load code-mirror theme css.
-          if ( data_editor.theme !== 'default' && KPF.vars.code_themes.indexOf(data_editor.theme) === -1 ) {
+          if ( data_editor.theme !== 'default' && KPTCP.vars.code_themes.indexOf(data_editor.theme) === -1 ) {
 
             var $cssLink = $('<link>');
 
-            $('#kpf-codemirror-css').after( $cssLink );
+            $('#kptcp-codemirror-css').after( $cssLink );
 
             $cssLink.attr({
               rel: 'stylesheet',
-              id: 'kpf-codemirror-'+ data_editor.theme +'-css',
+              id: 'kptcp-codemirror-'+ data_editor.theme +'-css',
               href: data_editor.cdnURL +'/theme/'+ data_editor.theme +'.min.css',
               type: 'text/css',
               media: 'all'
             });
 
-            KPF.vars.code_themes.push(data_editor.theme);
+            KPTCP.vars.code_themes.push(data_editor.theme);
 
           }
 
@@ -627,22 +627,22 @@
   //
   // Field: date
   //
-  $.fn.kpf_field_date = function() {
+  $.fn.kptcp_field_date = function() {
     return this.each( function() {
 
       var $this    = $(this),
           $inputs  = $this.find('input'),
-          settings = $this.find('.kpf-date-settings').data('settings'),
-          wrapper  = '<div class="kpf-datepicker-wrapper"></div>',
+          settings = $this.find('.kptcp-date-settings').data('settings'),
+          wrapper  = '<div class="kptcp-datepicker-wrapper"></div>',
           $datepicker;
 
       var defaults = {
         showAnim: '',
         beforeShow: function(input, inst) {
-          $(inst.dpDiv).addClass('kpf-datepicker-wrapper');
+          $(inst.dpDiv).addClass('kptcp-datepicker-wrapper');
         },
         onClose: function( input, inst ) {
-          $(inst.dpDiv).removeClass('kpf-datepicker-wrapper');
+          $(inst.dpDiv).removeClass('kptcp-datepicker-wrapper');
         },
       };
 
@@ -683,31 +683,31 @@
   //
   // Field: fieldset
   //
-  $.fn.kpf_field_fieldset = function() {
+  $.fn.kptcp_field_fieldset = function() {
     return this.each( function() {
-      $(this).find('.kpf-fieldset-content').kpf_reload_script();
+      $(this).find('.kptcp-fieldset-content').kptcp_reload_script();
     });
   };
 
   //
   // Field: gallery
   //
-  $.fn.kpf_field_gallery = function() {
+  $.fn.kptcp_field_gallery = function() {
     return this.each( function() {
 
       var $this  = $(this),
-          $edit  = $this.find('.kpf-edit-gallery'),
-          $clear = $this.find('.kpf-clear-gallery'),
+          $edit  = $this.find('.kptcp-edit-gallery'),
+          $clear = $this.find('.kptcp-clear-gallery'),
           $list  = $this.find('ul'),
           $input = $this.find('input'),
           $img   = $this.find('img'),
           wp_media_frame;
 
-      $this.on('click', '.kpf-button, .kpf-edit-gallery', function( e ) {
+      $this.on('click', '.kptcp-button, .kptcp-edit-gallery', function( e ) {
 
         var $el   = $(this),
             ids   = $input.val(),
-            what  = ( $el.hasClass('kpf-edit-gallery') ) ? 'edit' : 'add',
+            what  = ( $el.hasClass('kptcp-edit-gallery') ) ? 'edit' : 'add',
             state = ( what === 'add' && !ids.length ) ? 'gallery' : 'gallery-edit';
 
         e.preventDefault();
@@ -777,16 +777,16 @@
   //
   // Field: group
   //
-  $.fn.kpf_field_group = function() {
+  $.fn.kptcp_field_group = function() {
     return this.each( function() {
 
       var $this     = $(this),
-          $fieldset = $this.children('.kpf-fieldset'),
+          $fieldset = $this.children('.kptcp-fieldset'),
           $group    = $fieldset.length ? $fieldset : $this,
-          $wrapper  = $group.children('.kpf-cloneable-wrapper'),
-          $hidden   = $group.children('.kpf-cloneable-hidden'),
-          $max      = $group.children('.kpf-cloneable-max'),
-          $min      = $group.children('.kpf-cloneable-min'),
+          $wrapper  = $group.children('.kptcp-cloneable-wrapper'),
+          $hidden   = $group.children('.kptcp-cloneable-hidden'),
+          $max      = $group.children('.kptcp-cloneable-max'),
+          $min      = $group.children('.kptcp-cloneable-min'),
           field_id  = $wrapper.data('field-id'),
           is_number = Boolean( Number( $wrapper.data('title-number') ) ),
           max       = parseInt( $wrapper.data('max') ),
@@ -798,20 +798,20 @@
       }
 
       var update_title_numbers = function( $selector ) {
-        $selector.find('.kpf-cloneable-title-number').each( function( index ) {
-          $(this).html( ( $(this).closest('.kpf-cloneable-item').index()+1 ) + '.' );
+        $selector.find('.kptcp-cloneable-title-number').each( function( index ) {
+          $(this).html( ( $(this).closest('.kptcp-cloneable-item').index()+1 ) + '.' );
         });
       };
 
       $wrapper.accordion({
-        header: '> .kpf-cloneable-item > .kpf-cloneable-title',
+        header: '> .kptcp-cloneable-item > .kptcp-cloneable-title',
         collapsible : true,
         active: false,
         animate: false,
         heightStyle: 'content',
         icons: {
-          'header': 'kpf-cloneable-header-icon fas fa-angle-right',
-          'activeHeader': 'kpf-cloneable-header-icon fas fa-angle-down'
+          'header': 'kptcp-cloneable-header-icon fas fa-angle-right',
+          'activeHeader': 'kptcp-cloneable-header-icon fas fa-angle-down'
         },
         activate: function( event, ui ) {
 
@@ -822,19 +822,19 @@
 
             var $fields = $panel.children();
             var $first  = $fields.first().find(':input').first();
-            var $title  = $header.find('.kpf-cloneable-value');
+            var $title  = $header.find('.kptcp-cloneable-value');
 
             $first.on('change keyup', function( event ) {
               $title.text($first.val());
             });
 
-            $panel.kpf_reload_script();
+            $panel.kptcp_reload_script();
             $panel.data( 'opened', true );
             $panel.data( 'retry', false );
 
           } else if ( $panel.data( 'retry' ) ) {
 
-            $panel.kpf_reload_script_retry();
+            $panel.kptcp_reload_script_retry();
             $panel.data( 'retry', false );
 
           }
@@ -844,7 +844,7 @@
 
       $wrapper.sortable({
         axis: 'y',
-        handle: '.kpf-cloneable-title,.kpf-cloneable-sort',
+        handle: '.kptcp-cloneable-title,.kptcp-cloneable-sort',
         helper: 'original',
         cursor: 'move',
         placeholder: 'widget-placeholder',
@@ -852,13 +852,13 @@
 
           $wrapper.accordion({ active:false });
           $wrapper.sortable('refreshPositions');
-          ui.item.children('.kpf-cloneable-content').data('retry', true);
+          ui.item.children('.kptcp-cloneable-content').data('retry', true);
 
         },
         update: function( event, ui ) {
 
-          KPF.helper.name_nested_replace( $wrapper.children('.kpf-cloneable-item'), field_id );
-          $wrapper.kpf_customizer_refresh();
+          KPTCP.helper.name_nested_replace( $wrapper.children('.kptcp-cloneable-item'), field_id );
+          $wrapper.kptcp_customizer_refresh();
 
           if ( is_number ) {
             update_title_numbers($wrapper);
@@ -867,11 +867,11 @@
         },
       });
 
-      $group.children('.kpf-cloneable-add').on('click', function( e ) {
+      $group.children('.kptcp-cloneable-add').on('click', function( e ) {
 
         e.preventDefault();
 
-        var count = $wrapper.children('.kpf-cloneable-item').length;
+        var count = $wrapper.children('.kptcp-cloneable-item').length;
 
         $min.hide();
 
@@ -880,9 +880,9 @@
           return;
         }
 
-        var $cloned_item = $hidden.kpf_clone(true);
+        var $cloned_item = $hidden.kptcp_clone(true);
 
-        $cloned_item.removeClass('kpf-cloneable-hidden');
+        $cloned_item.removeClass('kptcp-cloneable-hidden');
 
         $cloned_item.find(':input[name!="_pseudo"]').each( function() {
           this.name = this.name.replace( '___', '' ).replace( field_id +'[0]', field_id +'['+ count +']' );
@@ -891,8 +891,8 @@
         $wrapper.append($cloned_item);
         $wrapper.accordion('refresh');
         $wrapper.accordion({active: count});
-        $wrapper.kpf_customizer_refresh();
-        $wrapper.kpf_customizer_listen({closest: true});
+        $wrapper.kptcp_customizer_refresh();
+        $wrapper.kptcp_customizer_listen({closest: true});
 
         if ( is_number ) {
           update_title_numbers($wrapper);
@@ -904,7 +904,7 @@
 
         e.preventDefault();
 
-        var count = $wrapper.children('.kpf-cloneable-item').length;
+        var count = $wrapper.children('.kptcp-cloneable-item').length;
 
         $min.hide();
 
@@ -915,10 +915,10 @@
 
         var $this           = $(this),
             $parent         = $this.parent().parent(),
-            $cloned_helper  = $parent.children('.kpf-cloneable-helper').kpf_clone(true),
-            $cloned_title   = $parent.children('.kpf-cloneable-title').kpf_clone(),
-            $cloned_content = $parent.children('.kpf-cloneable-content').kpf_clone(),
-            $cloned_item    = $('<div class="kpf-cloneable-item" />');
+            $cloned_helper  = $parent.children('.kptcp-cloneable-helper').kptcp_clone(true),
+            $cloned_title   = $parent.children('.kptcp-cloneable-title').kptcp_clone(),
+            $cloned_content = $parent.children('.kptcp-cloneable-content').kptcp_clone(),
+            $cloned_item    = $('<div class="kptcp-cloneable-item" />');
 
         $cloned_item.append($cloned_helper);
         $cloned_item.append($cloned_title);
@@ -926,11 +926,11 @@
 
         $wrapper.children().eq($parent.index()).after($cloned_item);
 
-        KPF.helper.name_nested_replace( $wrapper.children('.kpf-cloneable-item'), field_id );
+        KPTCP.helper.name_nested_replace( $wrapper.children('.kptcp-cloneable-item'), field_id );
 
         $wrapper.accordion('refresh');
-        $wrapper.kpf_customizer_refresh();
-        $wrapper.kpf_customizer_listen({closest: true});
+        $wrapper.kptcp_customizer_refresh();
+        $wrapper.kptcp_customizer_listen({closest: true});
 
         if ( is_number ) {
           update_title_numbers($wrapper);
@@ -938,14 +938,14 @@
 
       };
 
-      $wrapper.children('.kpf-cloneable-item').children('.kpf-cloneable-helper').on('click', '.kpf-cloneable-clone', event_clone);
-      $group.children('.kpf-cloneable-hidden').children('.kpf-cloneable-helper').on('click', '.kpf-cloneable-clone', event_clone);
+      $wrapper.children('.kptcp-cloneable-item').children('.kptcp-cloneable-helper').on('click', '.kptcp-cloneable-clone', event_clone);
+      $group.children('.kptcp-cloneable-hidden').children('.kptcp-cloneable-helper').on('click', '.kptcp-cloneable-clone', event_clone);
 
       var event_remove = function( e ) {
 
         e.preventDefault();
 
-        var count = $wrapper.children('.kpf-cloneable-item').length;
+        var count = $wrapper.children('.kptcp-cloneable-item').length;
 
         $max.hide();
         $min.hide();
@@ -955,11 +955,11 @@
           return;
         }
 
-        $(this).closest('.kpf-cloneable-item').remove();
+        $(this).closest('.kptcp-cloneable-item').remove();
 
-        KPF.helper.name_nested_replace( $wrapper.children('.kpf-cloneable-item'), field_id );
+        KPTCP.helper.name_nested_replace( $wrapper.children('.kptcp-cloneable-item'), field_id );
 
-        $wrapper.kpf_customizer_refresh();
+        $wrapper.kptcp_customizer_refresh();
 
         if ( is_number ) {
           update_title_numbers($wrapper);
@@ -967,8 +967,8 @@
 
       };
 
-      $wrapper.children('.kpf-cloneable-item').children('.kpf-cloneable-helper').on('click', '.kpf-cloneable-remove', event_remove);
-      $group.children('.kpf-cloneable-hidden').children('.kpf-cloneable-helper').on('click', '.kpf-cloneable-remove', event_remove);
+      $wrapper.children('.kptcp-cloneable-item').children('.kptcp-cloneable-helper').on('click', '.kptcp-cloneable-remove', event_remove);
+      $group.children('.kptcp-cloneable-hidden').children('.kptcp-cloneable-helper').on('click', '.kptcp-cloneable-remove', event_remove);
 
     });
   };
@@ -976,35 +976,35 @@
   //
   // Field: icon
   //
-  $.fn.kpf_field_icon = function() {
+  $.fn.kptcp_field_icon = function() {
     return this.each( function() {
 
       var $this = $(this);
 
-      $this.on('click', '.kpf-icon-add', function( e ) {
+      $this.on('click', '.kptcp-icon-add', function( e ) {
 
         e.preventDefault();
 
         var $button = $(this);
-        var $modal  = $('#kpf-modal-icon');
+        var $modal  = $('#kptcp-modal-icon');
 
         $modal.removeClass('hidden');
 
-        KPF.vars.$icon_target = $this;
+        KPTCP.vars.$icon_target = $this;
 
-        if ( !KPF.vars.icon_modal_loaded ) {
+        if ( !KPTCP.vars.icon_modal_loaded ) {
 
-          $modal.find('.kpf-modal-loading').show();
+          $modal.find('.kptcp-modal-loading').show();
 
-          window.wp.ajax.post( 'kpf-get-icons', {
+          window.wp.ajax.post( 'kptcp-get-icons', {
             nonce: $button.data('nonce')
           }).done( function( response ) {
 
-            $modal.find('.kpf-modal-loading').hide();
+            $modal.find('.kptcp-modal-loading').hide();
 
-            KPF.vars.icon_modal_loaded = true;
+            KPTCP.vars.icon_modal_loaded = true;
 
-            var $load = $modal.find('.kpf-modal-load').html( response.content );
+            var $load = $modal.find('.kptcp-modal-load').html( response.content );
 
             $load.on('click', 'i', function( e ) {
 
@@ -1012,16 +1012,16 @@
 
               var icon = $(this).attr('title');
 
-              KPF.vars.$icon_target.find('.kpf-icon-preview i').removeAttr('class').addClass(icon);
-              KPF.vars.$icon_target.find('.kpf-icon-preview').removeClass('hidden');
-              KPF.vars.$icon_target.find('.kpf-icon-remove').removeClass('hidden');
-              KPF.vars.$icon_target.find('input').val(icon).trigger('change');
+              KPTCP.vars.$icon_target.find('.kptcp-icon-preview i').removeAttr('class').addClass(icon);
+              KPTCP.vars.$icon_target.find('.kptcp-icon-preview').removeClass('hidden');
+              KPTCP.vars.$icon_target.find('.kptcp-icon-remove').removeClass('hidden');
+              KPTCP.vars.$icon_target.find('input').val(icon).trigger('change');
 
               $modal.addClass('hidden');
 
             });
 
-            $modal.on('change keyup', '.kpf-icon-search', function() {
+            $modal.on('change keyup', '.kptcp-icon-search', function() {
 
               var value  = $(this).val(),
                   $icons = $load.find('i');
@@ -1040,13 +1040,13 @@
 
             });
 
-            $modal.on('click', '.kpf-modal-close, .kpf-modal-overlay', function() {
+            $modal.on('click', '.kptcp-modal-close, .kptcp-modal-overlay', function() {
               $modal.addClass('hidden');
             });
 
           }).fail( function( response ) {
-            $modal.find('.kpf-modal-loading').hide();
-            $modal.find('.kpf-modal-load').html( response.error );
+            $modal.find('.kptcp-modal-loading').hide();
+            $modal.find('.kptcp-modal-load').html( response.error );
             $modal.on('click', function() {
               $modal.addClass('hidden');
             });
@@ -1055,9 +1055,9 @@
 
       });
 
-      $this.on('click', '.kpf-icon-remove', function( e ) {
+      $this.on('click', '.kptcp-icon-remove', function( e ) {
         e.preventDefault();
-        $this.find('.kpf-icon-preview').addClass('hidden');
+        $this.find('.kptcp-icon-preview').addClass('hidden');
         $this.find('input').val('').trigger('change');
         $(this).addClass('hidden');
       });
@@ -1068,17 +1068,17 @@
   //
   // Field: map
   //
-  $.fn.kpf_field_map = function() {
+  $.fn.kptcp_field_map = function() {
     return this.each( function() {
 
       if ( typeof L === 'undefined' ) { return; }
 
       var $this         = $(this),
-          $map          = $this.find('.kpf--map-osm'),
-          $search_input = $this.find('.kpf--map-search input'),
-          $latitude     = $this.find('.kpf--latitude'),
-          $longitude    = $this.find('.kpf--longitude'),
-          $zoom         = $this.find('.kpf--zoom'),
+          $map          = $this.find('.kptcp--map-osm'),
+          $search_input = $this.find('.kptcp--map-search input'),
+          $latitude     = $this.find('.kptcp--latitude'),
+          $longitude    = $this.find('.kptcp--longitude'),
+          $zoom         = $this.find('.kptcp--zoom'),
           map_data      = $map.data( 'map' );
 
       var mapInit = L.map( $map.get(0), map_data);
@@ -1109,7 +1109,7 @@
       });
 
       if ( ! $search_input.length ) {
-        $search_input = $( '[data-depend-id="'+ $this.find('.kpf--address-field').data( 'address-field' ) +'"]' );
+        $search_input = $( '[data-depend-id="'+ $this.find('.kptcp--address-field').data( 'address-field' ) +'"]' );
       }
 
       var cache = {};
@@ -1165,7 +1165,7 @@
 
         },
         create: function (event, ui) {
-          $(this).autocomplete('widget').addClass('kpf-map-ui-autocomplate');
+          $(this).autocomplete('widget').addClass('kptcp-map-ui-autocomplate');
         }
       });
 
@@ -1187,16 +1187,16 @@
   //
   // Field: link
   //
-  $.fn.kpf_field_link = function() {
+  $.fn.kptcp_field_link = function() {
     return this.each( function() {
 
       var $this   = $(this),
-          $link   = $this.find('.kpf--link'),
-          $add    = $this.find('.kpf--add'),
-          $edit   = $this.find('.kpf--edit'),
-          $remove = $this.find('.kpf--remove'),
-          $result = $this.find('.kpf--result'),
-          uniqid  = KPF.helper.uid('kpf-wplink-textarea-');
+          $link   = $this.find('.kptcp--link'),
+          $add    = $this.find('.kptcp--add'),
+          $edit   = $this.find('.kptcp--edit'),
+          $remove = $this.find('.kptcp--remove'),
+          $result = $this.find('.kptcp--result'),
+          uniqid  = KPTCP.helper.uid('kptcp-wplink-textarea-');
 
       $add.on('click', function( e ) {
 
@@ -1212,9 +1212,9 @@
 
         $add.trigger('click');
 
-        $('#wp-link-url').val($this.find('.kpf--url').val());
-        $('#wp-link-text').val($this.find('.kpf--text').val());
-        $('#wp-link-target').prop('checked', ($this.find('.kpf--target').val() === '_blank'));
+        $('#wp-link-url').val($this.find('.kptcp--url').val());
+        $('#wp-link-text').val($this.find('.kptcp--text').val());
+        $('#wp-link-target').prop('checked', ($this.find('.kptcp--target').val() === '_blank'));
 
       });
 
@@ -1222,9 +1222,9 @@
 
         e.preventDefault();
 
-        $this.find('.kpf--url').val('').trigger('change');
-        $this.find('.kpf--text').val('');
-        $this.find('.kpf--target').val('');
+        $this.find('.kptcp--url').val('').trigger('change');
+        $this.find('.kptcp--text').val('');
+        $this.find('.kptcp--target').val('');
 
         $add.removeClass('hidden');
         $edit.addClass('hidden');
@@ -1240,9 +1240,9 @@
             text   = $('#wp-link-text').val(),
             target = ( atts.target ) ? atts.target : '';
 
-        $this.find('.kpf--url').val(href).trigger('change');
-        $this.find('.kpf--text').val(text);
-        $this.find('.kpf--target').val(target);
+        $this.find('.kptcp--url').val(href).trigger('change');
+        $this.find('.kptcp--text').val(text);
+        $this.find('.kptcp--target').val(target);
 
         $result.html('{url:"'+href+'", text:"'+text+'", target:"'+target+'"}');
 
@@ -1260,14 +1260,14 @@
   //
   // Field: media
   //
-  $.fn.kpf_field_media = function() {
+  $.fn.kptcp_field_media = function() {
     return this.each( function() {
 
       var $this            = $(this),
-          $upload_button   = $this.find('.kpf--button'),
-          $remove_button   = $this.find('.kpf--remove'),
+          $upload_button   = $this.find('.kptcp--button'),
+          $remove_button   = $this.find('.kptcp--remove'),
           $library         = $upload_button.data('library') && $upload_button.data('library').split(',') || '',
-          $auto_attributes = ( $this.hasClass('kpf-assign-field-background') ) ? $this.closest('.kpf-field-background').find('.kpf--auto-attributes') : false,
+          $auto_attributes = ( $this.hasClass('kptcp-assign-field-background') ) ? $this.closest('.kptcp-field-background').find('.kptcp--auto-attributes') : false,
           wp_media_frame;
 
       $upload_button.on('click', function( e ) {
@@ -1299,12 +1299,12 @@
             return;
           }
 
-          $this.find('.kpf--id').val( attributes.id );
-          $this.find('.kpf--width').val( attributes.width );
-          $this.find('.kpf--height').val( attributes.height );
-          $this.find('.kpf--alt').val( attributes.alt );
-          $this.find('.kpf--title').val( attributes.title );
-          $this.find('.kpf--description').val( attributes.description );
+          $this.find('.kptcp--id').val( attributes.id );
+          $this.find('.kptcp--width').val( attributes.width );
+          $this.find('.kptcp--height').val( attributes.height );
+          $this.find('.kptcp--alt').val( attributes.alt );
+          $this.find('.kptcp--title').val( attributes.title );
+          $this.find('.kptcp--description').val( attributes.description );
 
           if ( typeof attributes.sizes !== 'undefined' && typeof attributes.sizes.thumbnail !== 'undefined' && preview_size === 'thumbnail' ) {
             thumbnail = attributes.sizes.thumbnail.url;
@@ -1319,15 +1319,15 @@
           console.log(attributes);
 
           if ( $auto_attributes ) {
-            $auto_attributes.removeClass('kpf--attributes-hidden');
+            $auto_attributes.removeClass('kptcp--attributes-hidden');
           }
 
           $remove_button.removeClass('hidden');
 
-          $this.find('.kpf--preview').removeClass('hidden');
-          $this.find('.kpf--src').attr('src', thumbnail);
-          $this.find('.kpf--thumbnail').val( thumbnail );
-          $this.find('.kpf--url').val( attributes.url ).trigger('change');
+          $this.find('.kptcp--preview').removeClass('hidden');
+          $this.find('.kptcp--src').attr('src', thumbnail);
+          $this.find('.kptcp--thumbnail').val( thumbnail );
+          $this.find('.kptcp--url').val( attributes.url ).trigger('change');
 
         });
 
@@ -1340,13 +1340,13 @@
         e.preventDefault();
 
         if ( $auto_attributes ) {
-          $auto_attributes.addClass('kpf--attributes-hidden');
+          $auto_attributes.addClass('kptcp--attributes-hidden');
         }
 
         $remove_button.addClass('hidden');
         $this.find('input').val('');
-        $this.find('.kpf--preview').addClass('hidden');
-        $this.find('.kpf--url').trigger('change');
+        $this.find('.kptcp--preview').addClass('hidden');
+        $this.find('.kptcp--url').trigger('change');
 
       });
 
@@ -1357,42 +1357,42 @@
   //
   // Field: repeater
   //
-  $.fn.kpf_field_repeater = function() {
+  $.fn.kptcp_field_repeater = function() {
     return this.each( function() {
 
       var $this     = $(this),
-          $fieldset = $this.children('.kpf-fieldset'),
+          $fieldset = $this.children('.kptcp-fieldset'),
           $repeater = $fieldset.length ? $fieldset : $this,
-          $wrapper  = $repeater.children('.kpf-repeater-wrapper'),
-          $hidden   = $repeater.children('.kpf-repeater-hidden'),
-          $max      = $repeater.children('.kpf-repeater-max'),
-          $min      = $repeater.children('.kpf-repeater-min'),
+          $wrapper  = $repeater.children('.kptcp-repeater-wrapper'),
+          $hidden   = $repeater.children('.kptcp-repeater-hidden'),
+          $max      = $repeater.children('.kptcp-repeater-max'),
+          $min      = $repeater.children('.kptcp-repeater-min'),
           field_id  = $wrapper.data('field-id'),
           max       = parseInt( $wrapper.data('max') ),
           min       = parseInt( $wrapper.data('min') );
 
-      $wrapper.children('.kpf-repeater-item').children('.kpf-repeater-content').kpf_reload_script();
+      $wrapper.children('.kptcp-repeater-item').children('.kptcp-repeater-content').kptcp_reload_script();
 
       $wrapper.sortable({
         axis: 'y',
-        handle: '.kpf-repeater-sort',
+        handle: '.kptcp-repeater-sort',
         helper: 'original',
         cursor: 'move',
         placeholder: 'widget-placeholder',
         update: function( event, ui ) {
 
-          KPF.helper.name_nested_replace( $wrapper.children('.kpf-repeater-item'), field_id );
-          $wrapper.kpf_customizer_refresh();
-          ui.item.kpf_reload_script_retry();
+          KPTCP.helper.name_nested_replace( $wrapper.children('.kptcp-repeater-item'), field_id );
+          $wrapper.kptcp_customizer_refresh();
+          ui.item.kptcp_reload_script_retry();
 
         }
       });
 
-      $repeater.children('.kpf-repeater-add').on('click', function( e ) {
+      $repeater.children('.kptcp-repeater-add').on('click', function( e ) {
 
         e.preventDefault();
 
-        var count = $wrapper.children('.kpf-repeater-item').length;
+        var count = $wrapper.children('.kptcp-repeater-item').length;
 
         $min.hide();
 
@@ -1401,18 +1401,18 @@
           return;
         }
 
-        var $cloned_item = $hidden.kpf_clone(true);
+        var $cloned_item = $hidden.kptcp_clone(true);
 
-        $cloned_item.removeClass('kpf-repeater-hidden');
+        $cloned_item.removeClass('kptcp-repeater-hidden');
 
         $cloned_item.find(':input[name!="_pseudo"]').each( function() {
           this.name = this.name.replace( '___', '' ).replace( field_id +'[0]', field_id +'['+ count +']' );
         });
 
         $wrapper.append($cloned_item);
-        $cloned_item.children('.kpf-repeater-content').kpf_reload_script();
-        $wrapper.kpf_customizer_refresh();
-        $wrapper.kpf_customizer_listen({closest: true});
+        $cloned_item.children('.kptcp-repeater-content').kptcp_reload_script();
+        $wrapper.kptcp_customizer_refresh();
+        $wrapper.kptcp_customizer_listen({closest: true});
 
       });
 
@@ -1420,7 +1420,7 @@
 
         e.preventDefault();
 
-        var count = $wrapper.children('.kpf-repeater-item').length;
+        var count = $wrapper.children('.kptcp-repeater-item').length;
 
         $min.hide();
 
@@ -1431,32 +1431,32 @@
 
         var $this           = $(this),
             $parent         = $this.parent().parent().parent(),
-            $cloned_content = $parent.children('.kpf-repeater-content').kpf_clone(),
-            $cloned_helper  = $parent.children('.kpf-repeater-helper').kpf_clone(true),
-            $cloned_item    = $('<div class="kpf-repeater-item" />');
+            $cloned_content = $parent.children('.kptcp-repeater-content').kptcp_clone(),
+            $cloned_helper  = $parent.children('.kptcp-repeater-helper').kptcp_clone(true),
+            $cloned_item    = $('<div class="kptcp-repeater-item" />');
 
         $cloned_item.append($cloned_content);
         $cloned_item.append($cloned_helper);
 
         $wrapper.children().eq($parent.index()).after($cloned_item);
 
-        $cloned_item.children('.kpf-repeater-content').kpf_reload_script();
+        $cloned_item.children('.kptcp-repeater-content').kptcp_reload_script();
 
-        KPF.helper.name_nested_replace( $wrapper.children('.kpf-repeater-item'), field_id );
+        KPTCP.helper.name_nested_replace( $wrapper.children('.kptcp-repeater-item'), field_id );
 
-        $wrapper.kpf_customizer_refresh();
-        $wrapper.kpf_customizer_listen({closest: true});
+        $wrapper.kptcp_customizer_refresh();
+        $wrapper.kptcp_customizer_listen({closest: true});
 
       };
 
-      $wrapper.children('.kpf-repeater-item').children('.kpf-repeater-helper').on('click', '.kpf-repeater-clone', event_clone);
-      $repeater.children('.kpf-repeater-hidden').children('.kpf-repeater-helper').on('click', '.kpf-repeater-clone', event_clone);
+      $wrapper.children('.kptcp-repeater-item').children('.kptcp-repeater-helper').on('click', '.kptcp-repeater-clone', event_clone);
+      $repeater.children('.kptcp-repeater-hidden').children('.kptcp-repeater-helper').on('click', '.kptcp-repeater-clone', event_clone);
 
       var event_remove = function( e ) {
 
         e.preventDefault();
 
-        var count = $wrapper.children('.kpf-repeater-item').length;
+        var count = $wrapper.children('.kptcp-repeater-item').length;
 
         $max.hide();
         $min.hide();
@@ -1466,16 +1466,16 @@
           return;
         }
 
-        $(this).closest('.kpf-repeater-item').remove();
+        $(this).closest('.kptcp-repeater-item').remove();
 
-        KPF.helper.name_nested_replace( $wrapper.children('.kpf-repeater-item'), field_id );
+        KPTCP.helper.name_nested_replace( $wrapper.children('.kptcp-repeater-item'), field_id );
 
-        $wrapper.kpf_customizer_refresh();
+        $wrapper.kptcp_customizer_refresh();
 
       };
 
-      $wrapper.children('.kpf-repeater-item').children('.kpf-repeater-helper').on('click', '.kpf-repeater-remove', event_remove);
-      $repeater.children('.kpf-repeater-hidden').children('.kpf-repeater-helper').on('click', '.kpf-repeater-remove', event_remove);
+      $wrapper.children('.kptcp-repeater-item').children('.kptcp-repeater-helper').on('click', '.kptcp-repeater-remove', event_remove);
+      $repeater.children('.kptcp-repeater-hidden').children('.kptcp-repeater-helper').on('click', '.kptcp-repeater-remove', event_remove);
 
     });
   };
@@ -1483,12 +1483,12 @@
   //
   // Field: slider
   //
-  $.fn.kpf_field_slider = function() {
+  $.fn.kptcp_field_slider = function() {
     return this.each( function() {
 
       var $this   = $(this),
           $input  = $this.find('input'),
-          $slider = $this.find('.kpf-slider-ui'),
+          $slider = $this.find('.kptcp-slider-ui'),
           data    = $input.data(),
           value   = $input.val() || 0;
 
@@ -1517,10 +1517,10 @@
   //
   // Field: sortable
   //
-  $.fn.kpf_field_sortable = function() {
+  $.fn.kptcp_field_sortable = function() {
     return this.each( function() {
 
-      var $sortable = $(this).find('.kpf-sortable');
+      var $sortable = $(this).find('.kptcp-sortable');
 
       $sortable.sortable({
         axis: 'y',
@@ -1528,11 +1528,11 @@
         cursor: 'move',
         placeholder: 'widget-placeholder',
         update: function( event, ui ) {
-          $sortable.kpf_customizer_refresh();
+          $sortable.kptcp_customizer_refresh();
         }
       });
 
-      $sortable.find('.kpf-sortable-content').kpf_reload_script();
+      $sortable.find('.kptcp-sortable-content').kptcp_reload_script();
 
     });
   };
@@ -1540,12 +1540,12 @@
   //
   // Field: sorter
   //
-  $.fn.kpf_field_sorter = function() {
+  $.fn.kptcp_field_sorter = function() {
     return this.each( function() {
 
       var $this         = $(this),
-          $enabled      = $this.find('.kpf-enabled'),
-          $has_disabled = $this.find('.kpf-disabled'),
+          $enabled      = $this.find('.kptcp-enabled'),
+          $has_disabled = $this.find('.kptcp-disabled'),
           $disabled     = ( $has_disabled.length ) ? $has_disabled : false;
 
       $enabled.sortable({
@@ -1555,13 +1555,13 @@
 
           var $el = ui.item.find('input');
 
-          if ( ui.item.parent().hasClass('kpf-enabled') ) {
+          if ( ui.item.parent().hasClass('kptcp-enabled') ) {
             $el.attr('name', $el.attr('name').replace('disabled', 'enabled'));
           } else {
             $el.attr('name', $el.attr('name').replace('enabled', 'disabled'));
           }
 
-          $this.kpf_customizer_refresh();
+          $this.kptcp_customizer_refresh();
 
         }
       });
@@ -1572,7 +1572,7 @@
           connectWith: $enabled,
           placeholder: 'ui-sortable-placeholder',
           update: function( event, ui ) {
-            $this.kpf_customizer_refresh();
+            $this.kptcp_customizer_refresh();
           }
         });
 
@@ -1584,7 +1584,7 @@
   //
   // Field: spinner
   //
-  $.fn.kpf_field_spinner = function() {
+  $.fn.kptcp_field_spinner = function() {
     return this.each( function() {
 
       var $this   = $(this),
@@ -1602,7 +1602,7 @@
         step: data.step || 1,
         create: function( event, ui ) {
           if ( data.unit ) {
-            $input.after('<span class="ui-button kpf--unit">'+ data.unit +'</span>');
+            $input.after('<span class="ui-button kptcp--unit">'+ data.unit +'</span>');
           }
         },
         spin: function (event, ui ) {
@@ -1616,21 +1616,21 @@
   //
   // Field: switcher
   //
-  $.fn.kpf_field_switcher = function() {
+  $.fn.kptcp_field_switcher = function() {
     return this.each( function() {
 
-      var $switcher = $(this).find('.kpf--switcher');
+      var $switcher = $(this).find('.kptcp--switcher');
 
       $switcher.on('click', function() {
 
         var value  = 0;
         var $input = $switcher.find('input');
 
-        if ( $switcher.hasClass('kpf--active') ) {
-          $switcher.removeClass('kpf--active');
+        if ( $switcher.hasClass('kptcp--active') ) {
+          $switcher.removeClass('kptcp--active');
         } else {
           value = 1;
-          $switcher.addClass('kpf--active');
+          $switcher.addClass('kptcp--active');
         }
 
         $input.val(value).trigger('change');
@@ -1643,14 +1643,14 @@
   //
   // Field: tabbed
   //
-  $.fn.kpf_field_tabbed = function() {
+  $.fn.kptcp_field_tabbed = function() {
     return this.each( function() {
 
       var $this     = $(this),
-          $links    = $this.find('.kpf-tabbed-nav a'),
-          $contents = $this.find('.kpf-tabbed-content');
+          $links    = $this.find('.kptcp-tabbed-nav a'),
+          $contents = $this.find('.kptcp-tabbed-content');
 
-      $contents.eq(0).kpf_reload_script();
+      $contents.eq(0).kptcp_reload_script();
 
       $links.on( 'click', function( e ) {
 
@@ -1660,8 +1660,8 @@
             index    = $link.index(),
             $content = $contents.eq(index);
 
-        $link.addClass('kpf-tabbed-active').siblings().removeClass('kpf-tabbed-active');
-        $content.kpf_reload_script();
+        $link.addClass('kptcp-tabbed-active').siblings().removeClass('kptcp-tabbed-active');
+        $content.kptcp_reload_script();
         $content.removeClass('hidden').siblings().addClass('hidden');
 
       });
@@ -1672,15 +1672,15 @@
   //
   // Field: typography
   //
-  $.fn.kpf_field_typography = function() {
+  $.fn.kptcp_field_typography = function() {
     return this.each(function () {
 
       var base          = this;
       var $this         = $(this);
       var loaded_fonts  = [];
-      var webfonts      = kpf_typography_json.webfonts;
-      var googlestyles  = kpf_typography_json.googlestyles;
-      var defaultstyles = kpf_typography_json.defaultstyles;
+      var webfonts      = kptcp_typography_json.webfonts;
+      var googlestyles  = kptcp_typography_json.googlestyles;
+      var defaultstyles = kptcp_typography_json.defaultstyles;
 
       //
       //
@@ -1753,7 +1753,7 @@
 
         });
 
-        $select.append(opts).trigger('kpf.change').trigger('chosen:updated');
+        $select.append(opts).trigger('kptcp.change').trigger('chosen:updated');
 
       };
 
@@ -1763,9 +1763,9 @@
         //
         // Constants
         var selected_styles  = [];
-        var $typography      = $this.find('.kpf--typography');
-        var $type            = $this.find('.kpf--type');
-        var $styles          = $this.find('.kpf--block-font-style');
+        var $typography      = $this.find('.kptcp--typography');
+        var $type            = $this.find('.kptcp--type');
+        var $styles          = $this.find('.kptcp--block-font-style');
         var unit             = $typography.data('unit');
         var line_height_unit = $typography.data('line-height-unit');
         var exclude_fonts    = $typography.data('exclude') ? $typography.data('exclude').split(',') : [];
@@ -1773,7 +1773,7 @@
         //
         //
         // Chosen init
-        if ( $this.find('.kpf--chosen').length ) {
+        if ( $this.find('.kptcp--chosen').length ) {
 
           var $chosen_selects = $this.find('select');
 
@@ -1799,7 +1799,7 @@
         //
         //
         // Font family select
-        var $font_family_select = $this.find('.kpf--font-family');
+        var $font_family_select = $this.find('.kptcp--font-family');
         var first_font_family   = $font_family_select.val();
 
         // Clear default font family select options
@@ -1833,16 +1833,16 @@
         //
         //
         // Font style select
-        var $font_style_block = $this.find('.kpf--block-font-style');
+        var $font_style_block = $this.find('.kptcp--block-font-style');
 
         if ( $font_style_block.length ) {
 
-          var $font_style_select = $this.find('.kpf--font-style-select');
+          var $font_style_select = $this.find('.kptcp--font-style-select');
           var first_style_value  = $font_style_select.val() ? $font_style_select.val().replace(/normal/g, '' ) : '';
 
           //
           // Font Style on on change listener
-          $font_style_select.on('change kpf.change', function( event ) {
+          $font_style_select.on('change kptcp.change', function( event ) {
 
             var style_value = $font_style_select.val();
 
@@ -1856,18 +1856,18 @@
             var font_weight = ( style_value && style_value !== 'italic' && style_value !== 'normal' ) ? style_value.replace('italic', '') : font_normal;
             var font_style  = ( style_value && style_value.substr(-6) === 'italic' ) ? 'italic' : '';
 
-            $this.find('.kpf--font-weight').val( font_weight );
-            $this.find('.kpf--font-style').val( font_style );
+            $this.find('.kptcp--font-weight').val( font_weight );
+            $this.find('.kptcp--font-style').val( font_style );
 
           });
 
           //
           //
           // Extra font style select
-          var $extra_font_style_block = $this.find('.kpf--block-extra-styles');
+          var $extra_font_style_block = $this.find('.kptcp--block-extra-styles');
 
           if ( $extra_font_style_block.length ) {
-            var $extra_font_style_select = $this.find('.kpf--extra-styles');
+            var $extra_font_style_select = $this.find('.kptcp--extra-styles');
             var first_extra_style_value  = $extra_font_style_select.val();
           }
 
@@ -1876,9 +1876,9 @@
         //
         //
         // Subsets select
-        var $subset_block = $this.find('.kpf--block-subset');
+        var $subset_block = $this.find('.kptcp--block-subset');
         if ( $subset_block.length ) {
-          var $subset_select = $this.find('.kpf--subset');
+          var $subset_select = $this.find('.kptcp--subset');
           var first_subset_select_value = $subset_select.val();
           var subset_multi_select = $subset_select.data('multiple') || false;
         }
@@ -1886,12 +1886,12 @@
         //
         //
         // Backup font family
-        var $backup_font_family_block = $this.find('.kpf--block-backup-font-family');
+        var $backup_font_family_block = $this.find('.kptcp--block-backup-font-family');
 
         //
         //
         // Font Family on Change Listener
-        $font_family_select.on('change kpf.change', function( event ) {
+        $font_family_select.on('change kptcp.change', function( event ) {
 
           // Hide subsets on change
           if ( $subset_block.length ) {
@@ -2003,36 +2003,36 @@
           // Update font type input value
           $type.val(type);
 
-        }).trigger('kpf.change');
+        }).trigger('kptcp.change');
 
         //
         //
         // Preview
-        var $preview_block = $this.find('.kpf--block-preview');
+        var $preview_block = $this.find('.kptcp--block-preview');
 
         if ( $preview_block.length ) {
 
-          var $preview = $this.find('.kpf--preview');
+          var $preview = $this.find('.kptcp--preview');
 
           // Set preview styles on change
-          $this.on('change', KPF.helper.debounce( function( event ) {
+          $this.on('change', KPTCP.helper.debounce( function( event ) {
 
             $preview_block.removeClass('hidden');
 
             var font_family       = $font_family_select.val(),
-                font_weight       = $this.find('.kpf--font-weight').val(),
-                font_style        = $this.find('.kpf--font-style').val(),
-                font_size         = $this.find('.kpf--font-size').val(),
-                font_variant      = $this.find('.kpf--font-variant').val(),
-                line_height       = $this.find('.kpf--line-height').val(),
-                text_align        = $this.find('.kpf--text-align').val(),
-                text_transform    = $this.find('.kpf--text-transform').val(),
-                text_decoration   = $this.find('.kpf--text-decoration').val(),
-                text_color        = $this.find('.kpf--color').val(),
-                word_spacing      = $this.find('.kpf--word-spacing').val(),
-                letter_spacing    = $this.find('.kpf--letter-spacing').val(),
-                custom_style      = $this.find('.kpf--custom-style').val(),
-                type              = $this.find('.kpf--type').val();
+                font_weight       = $this.find('.kptcp--font-weight').val(),
+                font_style        = $this.find('.kptcp--font-style').val(),
+                font_size         = $this.find('.kptcp--font-size').val(),
+                font_variant      = $this.find('.kptcp--font-variant').val(),
+                line_height       = $this.find('.kptcp--line-height').val(),
+                text_align        = $this.find('.kptcp--text-align').val(),
+                text_transform    = $this.find('.kptcp--text-transform').val(),
+                text_decoration   = $this.find('.kptcp--text-decoration').val(),
+                text_color        = $this.find('.kptcp--color').val(),
+                word_spacing      = $this.find('.kptcp--word-spacing').val(),
+                letter_spacing    = $this.find('.kptcp--letter-spacing').val(),
+                custom_style      = $this.find('.kptcp--custom-style').val(),
+                type              = $this.find('.kptcp--type').val();
 
             if ( type === 'google' ) {
               base.load_google_font(font_family, font_weight, font_style);
@@ -2065,9 +2065,9 @@
           // Preview black and white backgrounds trigger
           $preview_block.on('click', function() {
 
-            $preview.toggleClass('kpf--black-background');
+            $preview.toggleClass('kptcp--black-background');
 
-            var $toggle = $preview_block.find('.kpf--toggle');
+            var $toggle = $preview_block.find('.kptcp--toggle');
 
             if ( $toggle.hasClass('fa-toggle-off') ) {
               $toggle.removeClass('fa-toggle-off').addClass('fa-toggle-on');
@@ -2093,15 +2093,15 @@
   //
   // Field: upload
   //
-  $.fn.kpf_field_upload = function() {
+  $.fn.kptcp_field_upload = function() {
     return this.each( function() {
 
       var $this          = $(this),
           $input         = $this.find('input'),
-          $upload_button = $this.find('.kpf--button'),
-          $remove_button = $this.find('.kpf--remove'),
-          $preview_wrap  = $this.find('.kpf--preview'),
-          $preview_src   = $this.find('.kpf--src'),
+          $upload_button = $this.find('.kptcp--button'),
+          $remove_button = $this.find('.kptcp--remove'),
+          $preview_wrap  = $this.find('.kptcp--preview'),
+          $preview_src   = $this.find('.kptcp--src'),
           $library       = $upload_button.data('library') && $upload_button.data('library').split(',') || '',
           wp_media_frame;
 
@@ -2176,15 +2176,15 @@
   //
   // Field: wp_editor
   //
-  $.fn.kpf_field_wp_editor = function() {
+  $.fn.kptcp_field_wp_editor = function() {
     return this.each( function() {
 
-      if ( typeof window.wp.editor === 'undefined' || typeof window.tinyMCEPreInit === 'undefined' || typeof window.tinyMCEPreInit.mceInit.kpf_wp_editor === 'undefined' ) {
+      if ( typeof window.wp.editor === 'undefined' || typeof window.tinyMCEPreInit === 'undefined' || typeof window.tinyMCEPreInit.mceInit.kptcp_wp_editor === 'undefined' ) {
         return;
       }
 
       var $this     = $(this),
-          $editor   = $this.find('.kpf-wp-editor'),
+          $editor   = $this.find('.kptcp-wp-editor'),
           $textarea = $this.find('textarea');
 
       // If there is wp-editor remove it for avoid dupliated wp-editor conflicts.
@@ -2197,14 +2197,14 @@
       }
 
       // Generate a unique id
-      var uid = KPF.helper.uid('kpf-editor-');
+      var uid = KPTCP.helper.uid('kptcp-editor-');
 
       $textarea.attr('id', uid);
 
       // Get default editor settings
       var default_editor_settings = {
-        tinymce: window.tinyMCEPreInit.mceInit.kpf_wp_editor,
-        quicktags: window.tinyMCEPreInit.qtInit.kpf_wp_editor
+        tinymce: window.tinyMCEPreInit.mceInit.kptcp_wp_editor,
+        quicktags: window.tinyMCEPreInit.qtInit.kptcp_wp_editor
       };
 
       // Get default editor settings
@@ -2233,13 +2233,13 @@
       // Override editor tinymce settings
       if ( field_editor_settings.tinymce === false ) {
         default_editor_settings.tinymce = false;
-        $editor.addClass('kpf-no-tinymce');
+        $editor.addClass('kptcp-no-tinymce');
       }
 
       // Override editor quicktags settings
       if ( field_editor_settings.quicktags === false ) {
         default_editor_settings.quicktags = false;
-        $editor.addClass('kpf-no-quicktags');
+        $editor.addClass('kptcp-no-quicktags');
       }
 
       // Wait until :visible
@@ -2251,19 +2251,19 @@
       });
 
       // Add Media buttons
-      if ( field_editor_settings.media_buttons && window.kpf_media_buttons ) {
+      if ( field_editor_settings.media_buttons && window.kptcp_media_buttons ) {
 
         var $editor_buttons = $editor.find('.wp-media-buttons');
 
         if ( $editor_buttons.length ) {
 
-          $editor_buttons.find('.kpf-shortcode-button').data('editor-id', uid);
+          $editor_buttons.find('.kptcp-shortcode-button').data('editor-id', uid);
 
         } else {
 
-          var $media_buttons = $(window.kpf_media_buttons);
+          var $media_buttons = $(window.kptcp_media_buttons);
 
-          $media_buttons.find('.kpf-shortcode-button').data('editor-id', uid);
+          $media_buttons.find('.kptcp-shortcode-button').data('editor-id', uid);
 
           $editor.prepend( $media_buttons );
 
@@ -2278,16 +2278,16 @@
   //
   // Confirm
   //
-  $.fn.kpf_confirm = function() {
+  $.fn.kptcp_confirm = function() {
     return this.each( function() {
       $(this).on('click', function( e ) {
 
-        var confirm_text   = $(this).data('confirm') || window.kpf_vars.i18n.confirm;
+        var confirm_text   = $(this).data('confirm') || window.kptcp_vars.i18n.confirm;
         var confirm_answer = confirm( confirm_text );
 
         if ( confirm_answer ) {
-          KPF.vars.is_confirm = true;
-          KPF.vars.form_modified = false;
+          KPTCP.vars.is_confirm = true;
+          KPTCP.vars.form_modified = false;
         } else {
           e.preventDefault();
           return false;
@@ -2317,12 +2317,12 @@
   //
   // Options Save
   //
-  $.fn.kpf_save = function() {
+  $.fn.kptcp_save = function() {
     return this.each( function() {
 
       var $this    = $(this),
-          $buttons = $('.kpf-save'),
-          $panel   = $('.kpf-options'),
+          $buttons = $('.kptcp-save'),
+          $panel   = $('.kptcp-options'),
           flooding = false,
           timeout;
 
@@ -2335,55 +2335,55 @@
 
           $buttons.attr('value', $text);
 
-          if ( $this.hasClass('kpf-save-ajax') ) {
+          if ( $this.hasClass('kptcp-save-ajax') ) {
 
             e.preventDefault();
 
-            $panel.addClass('kpf-saving');
+            $panel.addClass('kptcp-saving');
             $buttons.prop('disabled', true);
 
-            window.wp.ajax.post( 'kpf_'+ $panel.data('unique') +'_ajax_save', {
-              data: $('#kpf-form').serializeJSONKPF()
+            window.wp.ajax.post( 'kptcp_'+ $panel.data('unique') +'_ajax_save', {
+              data: $('#kptcp-form').serializeJSONKPTCP()
             })
             .done( function( response ) {
 
               // clear errors
-              $('.kpf-error').remove();
+              $('.kptcp-error').remove();
 
               if ( Object.keys( response.errors ).length ) {
 
-                var error_icon = '<i class="kpf-label-error kpf-error">!</i>';
+                var error_icon = '<i class="kptcp-label-error kptcp-error">!</i>';
 
                 $.each(response.errors, function( key, error_message ) {
 
                   var $field = $('[data-depend-id="'+ key +'"]'),
-                      $link  = $('a[href="#tab='+ $field.closest('.kpf-section').data('section-id') +'"]' ),
-                      $tab   = $link.closest('.kpf-tab-item');
+                      $link  = $('a[href="#tab='+ $field.closest('.kptcp-section').data('section-id') +'"]' ),
+                      $tab   = $link.closest('.kptcp-tab-item');
 
-                  $field.closest('.kpf-fieldset').append( '<p class="kpf-error kpf-error-text">'+ error_message +'</p>' );
+                  $field.closest('.kptcp-fieldset').append( '<p class="kptcp-error kptcp-error-text">'+ error_message +'</p>' );
 
-                  if ( !$link.find('.kpf-error').length ) {
+                  if ( !$link.find('.kptcp-error').length ) {
                     $link.append( error_icon );
                   }
 
-                  if ( !$tab.find('.kpf-arrow .kpf-error').length ) {
-                    $tab.find('.kpf-arrow').append( error_icon );
+                  if ( !$tab.find('.kptcp-arrow .kptcp-error').length ) {
+                    $tab.find('.kptcp-arrow').append( error_icon );
                   }
 
                 });
 
               }
 
-              $panel.removeClass('kpf-saving');
+              $panel.removeClass('kptcp-saving');
               $buttons.prop('disabled', false).attr('value', $value);
               flooding = false;
 
-              KPF.vars.form_modified = false;
-              KPF.vars.$form_warning.hide();
+              KPTCP.vars.form_modified = false;
+              KPTCP.vars.$form_warning.hide();
 
               clearTimeout(timeout);
 
-              var $result_success = $('.kpf-form-success');
+              var $result_success = $('.kptcp-form-success');
               $result_success.empty().append(response.notice).fadeIn('fast', function() {
                 timeout = setTimeout( function() {
                   $result_success.fadeOut('fast');
@@ -2397,7 +2397,7 @@
 
           } else {
 
-            KPF.vars.form_modified = false;
+            KPTCP.vars.form_modified = false;
 
           }
 
@@ -2413,35 +2413,35 @@
   //
   // Option Framework
   //
-  $.fn.kpf_options = function() {
+  $.fn.kptcp_options = function() {
     return this.each( function() {
 
       var $this         = $(this),
-          $content      = $this.find('.kpf-content'),
-          $form_success = $this.find('.kpf-form-success'),
-          $form_warning = $this.find('.kpf-form-warning'),
-          $save_button  = $this.find('.kpf-header .kpf-save');
+          $content      = $this.find('.kptcp-content'),
+          $form_success = $this.find('.kptcp-form-success'),
+          $form_warning = $this.find('.kptcp-form-warning'),
+          $save_button  = $this.find('.kptcp-header .kptcp-save');
 
-      KPF.vars.$form_warning = $form_warning;
+      KPTCP.vars.$form_warning = $form_warning;
 
       // Shows a message white leaving theme options without saving
       if ( $form_warning.length ) {
 
         window.onbeforeunload = function() {
-          return ( KPF.vars.form_modified ) ? true : undefined;
+          return ( KPTCP.vars.form_modified ) ? true : undefined;
         };
 
         $content.on('change keypress', ':input', function() {
-          if ( !KPF.vars.form_modified ) {
+          if ( !KPTCP.vars.form_modified ) {
             $form_success.hide();
             $form_warning.fadeIn('fast');
-            KPF.vars.form_modified = true;
+            KPTCP.vars.form_modified = true;
           }
         });
 
       }
 
-      if ( $form_success.hasClass('kpf-form-show') ) {
+      if ( $form_success.hasClass('kptcp-form-show') ) {
         setTimeout( function() {
           $form_success.fadeOut('fast');
         }, 1000);
@@ -2461,7 +2461,7 @@
   //
   // Taxonomy Framework
   //
-  $.fn.kpf_taxonomy = function() {
+  $.fn.kptcp_taxonomy = function() {
     return this.each( function() {
 
       var $this = $(this),
@@ -2470,7 +2470,7 @@
       if ( $form.attr('id') === 'addtag' ) {
 
         var $submit = $form.find('#submit'),
-            $cloned = $this.find('.kpf-field').kpf_clone();
+            $cloned = $this.find('.kptcp-field').kptcp_clone();
 
         $submit.on( 'click', function() {
 
@@ -2482,9 +2482,9 @@
 
             $this.html( $cloned );
 
-            $cloned = $cloned.kpf_clone();
+            $cloned = $cloned.kptcp_clone();
 
-            $this.kpf_reload_script();
+            $this.kptcp_reload_script();
 
           }
 
@@ -2498,7 +2498,7 @@
   //
   // Shortcode Framework
   //
-  $.fn.kpf_shortcode = function() {
+  $.fn.kptcp_shortcode = function() {
 
     var base = this;
 
@@ -2607,10 +2607,10 @@
     return this.each( function() {
 
       var $modal   = $(this),
-          $load    = $modal.find('.kpf-modal-load'),
-          $content = $modal.find('.kpf-modal-content'),
-          $insert  = $modal.find('.kpf-modal-insert'),
-          $loading = $modal.find('.kpf-modal-loading'),
+          $load    = $modal.find('.kptcp-modal-load'),
+          $content = $modal.find('.kptcp-modal-content'),
+          $insert  = $modal.find('.kptcp-modal-insert'),
+          $loading = $modal.find('.kptcp-modal-loading'),
           $select  = $modal.find('select'),
           modal_id = $modal.data('modal-id'),
           nonce    = $modal.data('nonce'),
@@ -2624,7 +2624,7 @@
           $cloned,
           $button;
 
-      $(document).on('click', '.kpf-shortcode-button[data-modal-id="'+ modal_id +'"]', function( e ) {
+      $(document).on('click', '.kptcp-shortcode-button[data-modal-id="'+ modal_id +'"]', function( e ) {
 
         e.preventDefault();
 
@@ -2636,7 +2636,7 @@
         $modal.removeClass('hidden');
 
         // single usage trigger first shortcode
-        if ( $modal.hasClass('kpf-shortcode-single') && sc_name === undefined ) {
+        if ( $modal.hasClass('kptcp-shortcode-single') && sc_name === undefined ) {
           $select.trigger('change');
         }
 
@@ -2658,7 +2658,7 @@
 
           $loading.show();
 
-          window.wp.ajax.post( 'kpf-get-shortcode-'+ modal_id, {
+          window.wp.ajax.post( 'kptcp-get-shortcode-'+ modal_id, {
             shortcode_key: sc_key,
             nonce: nonce
           })
@@ -2670,10 +2670,10 @@
 
             $insert.parent().removeClass('hidden');
 
-            $cloned = $appended.find('.kpf--repeat-shortcode').kpf_clone();
+            $cloned = $appended.find('.kptcp--repeat-shortcode').kptcp_clone();
 
-            $appended.kpf_reload_script();
-            $appended.find('.kpf-fields').kpf_reload_script();
+            $appended.kptcp_reload_script();
+            $appended.find('.kptcp-fields').kptcp_reload_script();
 
           });
 
@@ -2692,7 +2692,7 @@
         if ( $insert.prop('disabled') || $insert.attr('disabled') ) { return; }
 
         var shortcode = '';
-        var serialize = $modal.find('.kpf-field:not(.kpf-depend-on)').find(':input:not(.ignore)').serializeObjectKPF();
+        var serialize = $modal.find('.kptcp-field:not(.kptcp-depend-on)').find(':input:not(.ignore)').serializeObjectKPTCP();
 
         switch ( sc_view ) {
 
@@ -2730,8 +2730,8 @@
 
         if ( gutenberg_id ) {
 
-          var content = window.kpf_gutenberg_props.attributes.hasOwnProperty('shortcode') ? window.kpf_gutenberg_props.attributes.shortcode : '';
-          window.kpf_gutenberg_props.setAttributes({shortcode: content + shortcode});
+          var content = window.kptcp_gutenberg_props.attributes.hasOwnProperty('shortcode') ? window.kptcp_gutenberg_props.attributes.shortcode : '';
+          window.kptcp_gutenberg_props.setAttributes({shortcode: content + shortcode});
 
         } else if ( editor_id ) {
 
@@ -2748,31 +2748,31 @@
 
       });
 
-      $modal.on('click', '.kpf--repeat-button', function( e ) {
+      $modal.on('click', '.kptcp--repeat-button', function( e ) {
 
         e.preventDefault();
 
-        var $repeatable = $modal.find('.kpf--repeatable');
-        var $new_clone  = $cloned.kpf_clone();
-        var $remove_btn = $new_clone.find('.kpf-repeat-remove');
+        var $repeatable = $modal.find('.kptcp--repeatable');
+        var $new_clone  = $cloned.kptcp_clone();
+        var $remove_btn = $new_clone.find('.kptcp-repeat-remove');
 
         var $appended = $new_clone.appendTo( $repeatable );
 
-        $new_clone.find('.kpf-fields').kpf_reload_script();
+        $new_clone.find('.kptcp-fields').kptcp_reload_script();
 
-        KPF.helper.name_nested_replace( $modal.find('.kpf--repeat-shortcode'), sc_group );
+        KPTCP.helper.name_nested_replace( $modal.find('.kptcp--repeat-shortcode'), sc_group );
 
         $remove_btn.on('click', function() {
 
           $new_clone.remove();
 
-          KPF.helper.name_nested_replace( $modal.find('.kpf--repeat-shortcode'), sc_group );
+          KPTCP.helper.name_nested_replace( $modal.find('.kptcp--repeat-shortcode'), sc_group );
 
         });
 
       });
 
-      $modal.on('click', '.kpf-modal-close, .kpf-modal-overlay', function() {
+      $modal.on('click', '.kptcp-modal-close, .kptcp-modal-overlay', function() {
         $modal.addClass('hidden');
       });
 
@@ -2806,7 +2806,7 @@
 
   }
 
-  KPF.funcs.parse_color = function( color ) {
+  KPTCP.funcs.parse_color = function( color ) {
 
     var value = color.replace(/\s+/g, ''),
         trans = ( value.indexOf('rgba') !== -1 ) ? parseFloat( value.replace(/^.*,(.+)\)/, '$1') * 100 ) : 100,
@@ -2816,12 +2816,12 @@
 
   };
 
-  $.fn.kpf_color = function() {
+  $.fn.kptcp_color = function() {
     return this.each( function() {
 
       var $input        = $(this),
-          picker_color  = KPF.funcs.parse_color( $input.val() ),
-          palette_color = window.kpf_vars.color_palette.length ? window.kpf_vars.color_palette : true,
+          picker_color  = KPTCP.funcs.parse_color( $input.val() ),
+          palette_color = window.kptcp_vars.color_palette.length ? window.kptcp_vars.color_palette : true,
           $container;
 
       // Destroy and Reinit
@@ -2835,8 +2835,8 @@
 
           var ui_color_value = ui.color.toString();
 
-          $container.removeClass('kpf--transparent-active');
-          $container.find('.kpf--transparent-offset').css('background-color', ui_color_value);
+          $container.removeClass('kptcp--transparent-active');
+          $container.find('.kptcp--transparent-offset').css('background-color', ui_color_value);
           $input.val(ui_color_value).trigger('change');
 
         },
@@ -2845,28 +2845,28 @@
           $container = $input.closest('.wp-picker-container');
 
           var a8cIris = $input.data('a8cIris'),
-              $transparent_wrap = $('<div class="kpf--transparent-wrap">' +
-                                '<div class="kpf--transparent-slider"></div>' +
-                                '<div class="kpf--transparent-offset"></div>' +
-                                '<div class="kpf--transparent-text"></div>' +
-                                '<div class="kpf--transparent-button">transparent <i class="fas fa-toggle-off"></i></div>' +
+              $transparent_wrap = $('<div class="kptcp--transparent-wrap">' +
+                                '<div class="kptcp--transparent-slider"></div>' +
+                                '<div class="kptcp--transparent-offset"></div>' +
+                                '<div class="kptcp--transparent-text"></div>' +
+                                '<div class="kptcp--transparent-button">transparent <i class="fas fa-toggle-off"></i></div>' +
                                 '</div>').appendTo( $container.find('.wp-picker-holder') ),
-              $transparent_slider = $transparent_wrap.find('.kpf--transparent-slider'),
-              $transparent_text   = $transparent_wrap.find('.kpf--transparent-text'),
-              $transparent_offset = $transparent_wrap.find('.kpf--transparent-offset'),
-              $transparent_button = $transparent_wrap.find('.kpf--transparent-button');
+              $transparent_slider = $transparent_wrap.find('.kptcp--transparent-slider'),
+              $transparent_text   = $transparent_wrap.find('.kptcp--transparent-text'),
+              $transparent_offset = $transparent_wrap.find('.kptcp--transparent-offset'),
+              $transparent_button = $transparent_wrap.find('.kptcp--transparent-button');
 
           if ( $input.val() === 'transparent' ) {
-            $container.addClass('kpf--transparent-active');
+            $container.addClass('kptcp--transparent-active');
           }
 
           $transparent_button.on('click', function() {
             if ( $input.val() !== 'transparent' ) {
               $input.val('transparent').trigger('change').removeClass('iris-error');
-              $container.addClass('kpf--transparent-active');
+              $container.addClass('kptcp--transparent-active');
             } else {
               $input.val( a8cIris._color.toString() ).trigger('change');
-              $container.removeClass('kpf--transparent-active');
+              $container.removeClass('kptcp--transparent-active');
             }
           });
 
@@ -2896,14 +2896,14 @@
                 a8cIris._color._alpha = 1;
                 $transparent_text.text('');
                 $transparent_slider.slider('option', 'value', 100);
-                $container.removeClass('kpf--transparent-active');
+                $container.removeClass('kptcp--transparent-active');
                 $input.trigger('change');
 
               });
 
               $container.on('click', '.wp-picker-default', function() {
 
-                var default_color = KPF.funcs.parse_color( $input.data('default-color') ),
+                var default_color = KPTCP.funcs.parse_color( $input.data('default-color') ),
                     default_value = parseFloat( default_color.transparent / 100 ),
                     default_text  = default_value < 1 ? default_value : '';
 
@@ -2913,7 +2913,7 @@
 
                 if ( default_color.value === 'transparent' ) {
                   $input.removeClass('iris-error');
-                  $container.addClass('kpf--transparent-active');
+                  $container.addClass('kptcp--transparent-active');
                 }
 
               });
@@ -2929,20 +2929,20 @@
   //
   // ChosenJS
   //
-  $.fn.kpf_chosen = function() {
+  $.fn.kptcp_chosen = function() {
     return this.each( function() {
 
       var $this       = $(this),
           $inited     = $this.parent().find('.chosen-container'),
-          is_sortable = $this.hasClass('kpf-chosen-sortable') || false,
-          is_ajax     = $this.hasClass('kpf-chosen-ajax') || false,
+          is_sortable = $this.hasClass('kptcp-chosen-sortable') || false,
+          is_ajax     = $this.hasClass('kptcp-chosen-ajax') || false,
           is_multiple = $this.attr('multiple') || false,
           set_width   = is_multiple ? '100%' : 'auto',
           set_options = $.extend({
             allow_single_deselect: true,
             disable_search_threshold: 10,
             width: set_width,
-            no_results_text: window.kpf_vars.i18n.no_results_text,
+            no_results_text: window.kptcp_vars.i18n.no_results_text,
           }, $this.data('chosen-settings'));
 
       if ( $inited.length ) {
@@ -2962,12 +2962,12 @@
           width: '100%',
           min_length: 3,
           type_delay: 500,
-          typing_text: window.kpf_vars.i18n.typing_text,
-          searching_text: window.kpf_vars.i18n.searching_text,
-          no_results_text: window.kpf_vars.i18n.no_results_text,
+          typing_text: window.kptcp_vars.i18n.typing_text,
+          searching_text: window.kptcp_vars.i18n.searching_text,
+          no_results_text: window.kptcp_vars.i18n.no_results_text,
         }, $this.data('chosen-settings'));
 
-        $this.KPFAjaxChosen(set_ajax_options);
+        $this.KPTCPAjaxChosen(set_ajax_options);
 
       } else {
 
@@ -2978,7 +2978,7 @@
       // Chosen keep options order
       if ( is_multiple ) {
 
-        var $hidden_select = $this.parent().find('.kpf-hide-select');
+        var $hidden_select = $this.parent().find('.kptcp-hide-select');
         var $hidden_value  = $hidden_select.val() || [];
 
         $this.on('change', function(obj, result) {
@@ -2999,7 +2999,7 @@
         });
 
         // Chosen order abstract
-        $this.KPFChosenOrder($hidden_value, true);
+        $this.KPTCPChosenOrder($hidden_value, true);
 
       }
 
@@ -3028,7 +3028,7 @@
 
             var select_options = '';
             var chosen_object  = $this.data('chosen');
-            var $prev_select   = $this.parent().find('.kpf-hide-select');
+            var $prev_select   = $this.parent().find('.kptcp-hide-select');
 
             $chosen_choices.find('.search-choice-close').each( function() {
               var option_array_index = $(this).data('option-array-index');
@@ -3054,12 +3054,12 @@
   //
   // Helper Checkbox Checker
   //
-  $.fn.kpf_checkbox = function() {
+  $.fn.kptcp_checkbox = function() {
     return this.each( function() {
 
       var $this     = $(this),
-          $input    = $this.find('.kpf--input'),
-          $checkbox = $this.find('.kpf--checkbox');
+          $input    = $this.find('.kptcp--input'),
+          $checkbox = $this.find('.kptcp--checkbox');
 
       $checkbox.on('click', function() {
         $input.val( Number( $checkbox.prop('checked') ) ).trigger('change');
@@ -3071,11 +3071,11 @@
   //
   // Siblings
   //
-  $.fn.kpf_siblings = function() {
+  $.fn.kptcp_siblings = function() {
     return this.each( function() {
 
       var $this     = $(this),
-          $siblings = $this.find('.kpf--sibling'),
+          $siblings = $this.find('.kptcp--sibling'),
           multiple  = $this.data('multiple') || false;
 
       $siblings.on('click', function() {
@@ -3084,11 +3084,11 @@
 
         if ( multiple ) {
 
-          if ( $sibling.hasClass('kpf--active') ) {
-            $sibling.removeClass('kpf--active');
+          if ( $sibling.hasClass('kptcp--active') ) {
+            $sibling.removeClass('kptcp--active');
             $sibling.find('input').prop('checked', false).trigger('change');
           } else {
-            $sibling.addClass('kpf--active');
+            $sibling.addClass('kptcp--active');
             $sibling.find('input').prop('checked', true).trigger('change');
           }
 
@@ -3096,7 +3096,7 @@
 
           $this.find('input').prop('checked', false);
           $sibling.find('input').prop('checked', true).trigger('change');
-          $sibling.addClass('kpf--active').siblings().removeClass('kpf--active');
+          $sibling.addClass('kptcp--active').siblings().removeClass('kptcp--active');
 
         }
 
@@ -3108,7 +3108,7 @@
   //
   // Help Tooltip
   //
-  $.fn.kpf_help = function() {
+  $.fn.kptcp_help = function() {
     return this.each( function() {
 
       var $this = $(this),
@@ -3118,8 +3118,8 @@
       $this.on({
         mouseenter: function() {
 
-          $tooltip = $( '<div class="kpf-tooltip"></div>' ).html( $this.find('.kpf-help-text').html() ).appendTo('body');
-          offset_left = ( KPF.vars.is_rtl ) ? ( $this.offset().left + 24 ) : ( $this.offset().left - $tooltip.outerWidth() );
+          $tooltip = $( '<div class="kptcp-tooltip"></div>' ).html( $this.find('.kptcp-help-text').html() ).appendTo('body');
+          offset_left = ( KPTCP.vars.is_rtl ) ? ( $this.offset().left + 24 ) : ( $this.offset().left - $tooltip.outerWidth() );
 
           $tooltip.css({
             top: $this.offset().top - ( ( $tooltip.outerHeight() / 2 ) - 14 ),
@@ -3143,11 +3143,11 @@
   //
   // Customize Refresh
   //
-  $.fn.kpf_customizer_refresh = function() {
+  $.fn.kptcp_customizer_refresh = function() {
     return this.each( function() {
 
       var $this    = $(this),
-          $complex = $this.closest('.kpf-customize-complex');
+          $complex = $this.closest('.kptcp-customize-complex');
 
       if ( $complex.length ) {
 
@@ -3159,7 +3159,7 @@
 
         var $input    = $complex.find(':input'),
             option_id = $complex.data('option-id'),
-            obj       = $input.serializeObjectKPF(),
+            obj       = $input.serializeObjectKPTCP(),
             data      = ( ! $.isEmptyObject(obj) && obj[unique_id] && obj[unique_id][option_id] ) ? obj[unique_id][option_id] : '',
             control   = window.wp.customize.control(unique_id +'['+ option_id +']');
 
@@ -3174,7 +3174,7 @@
 
       }
 
-      $(document).trigger('kpf-customizer-refresh', $this);
+      $(document).trigger('kptcp-customizer-refresh', $this);
 
     });
   };
@@ -3182,7 +3182,7 @@
   //
   // Customize Listen Form Elements
   //
-  $.fn.kpf_customizer_listen = function( options ) {
+  $.fn.kptcp_customizer_listen = function( options ) {
 
     var settings = $.extend({
       closest: false,
@@ -3192,7 +3192,7 @@
 
       if ( window.wp.customize === undefined ) { return; }
 
-      var $this     = ( settings.closest ) ? $(this).closest('.kpf-customize-complex') : $(this),
+      var $this     = ( settings.closest ) ? $(this).closest('.kptcp-customize-complex') : $(this),
           $input    = $this.find(':input'),
           unique_id = $this.data('unique-id'),
           option_id = $this.data('option-id');
@@ -3203,7 +3203,7 @@
 
       $input.on('change keyup', function() {
 
-        var obj = $this.find(':input').serializeObjectKPF();
+        var obj = $this.find(':input').serializeObjectKPTCP();
         var val = ( !$.isEmptyObject(obj) && obj[unique_id] && obj[unique_id][option_id] ) ? obj[unique_id][option_id] : '';
 
         window.wp.customize.control( unique_id +'['+ option_id +']' ).setting.set( val );
@@ -3222,13 +3222,13 @@
 
     if ( $this.hasClass('open') && !$this.data('inited') ) {
 
-      var $fields  = $this.find('.kpf-customize-field');
-      var $complex = $this.find('.kpf-customize-complex');
+      var $fields  = $this.find('.kptcp-customize-field');
+      var $complex = $this.find('.kptcp-customize-complex');
 
       if ( $fields.length ) {
-        $this.kpf_dependency();
-        $fields.kpf_reload_script({dependency: false});
-        $complex.kpf_customizer_listen();
+        $this.kptcp_dependency();
+        $fields.kptcp_reload_script({dependency: false});
+        $complex.kptcp_customizer_listen();
       }
 
       $this.data('inited', true);
@@ -3240,45 +3240,45 @@
   //
   // Window on resize
   //
-  KPF.vars.$window.on('resize kpf.resize', KPF.helper.debounce( function( event ) {
+  KPTCP.vars.$window.on('resize kptcp.resize', KPTCP.helper.debounce( function( event ) {
 
-    var window_width = navigator.userAgent.indexOf('AppleWebKit/') > -1 ? KPF.vars.$window.width() : window.innerWidth;
+    var window_width = navigator.userAgent.indexOf('AppleWebKit/') > -1 ? KPTCP.vars.$window.width() : window.innerWidth;
 
-    if ( window_width <= 782 && !KPF.vars.onloaded ) {
-      $('.kpf-section').kpf_reload_script();
-      KPF.vars.onloaded  = true;
+    if ( window_width <= 782 && !KPTCP.vars.onloaded ) {
+      $('.kptcp-section').kptcp_reload_script();
+      KPTCP.vars.onloaded  = true;
     }
 
-  }, 200)).trigger('kpf.resize');
+  }, 200)).trigger('kptcp.resize');
 
   //
   // Widgets Framework
   //
-  $.fn.kpf_widgets = function() {
+  $.fn.kptcp_widgets = function() {
     return this.each( function() {
 
       $(document).on('widget-added widget-updated', function( event, $widget ) {
 
-        var $fields = $widget.find('.kpf-fields');
+        var $fields = $widget.find('.kptcp-fields');
 
         if ( $fields.length ) {
-          $fields.kpf_reload_script();
+          $fields.kptcp_reload_script();
         }
 
       });
 
       $(document).on('click', '.widget-top', function( event ) {
 
-        var $fields = $(this).parent().find('.kpf-fields');
+        var $fields = $(this).parent().find('.kptcp-fields');
 
         if ( $fields.length ) {
-          $fields.kpf_reload_script();
+          $fields.kptcp_reload_script();
         }
 
       });
 
       $('.widgets-sortables, .control-section-sidebar').on('sortstop', function( event, ui ) {
-        ui.item.find('.kpf-fields').kpf_reload_script_retry();
+        ui.item.find('.kptcp-fields').kptcp_reload_script_retry();
       });
 
     });
@@ -3287,17 +3287,17 @@
   //
   // Nav Menu Options Framework
   //
-  $.fn.kpf_nav_menu = function() {
+  $.fn.kptcp_nav_menu = function() {
     return this.each( function() {
 
       var $navmenu = $(this);
 
       $navmenu.on('click', 'a.item-edit', function() {
-        $(this).closest('li.menu-item').find('.kpf-fields').kpf_reload_script();
+        $(this).closest('li.menu-item').find('.kptcp-fields').kptcp_reload_script();
       });
 
       $navmenu.on('sortstop', function( event, ui ) {
-        ui.item.find('.kpf-fields').kpf_reload_script_retry();
+        ui.item.find('.kptcp-fields').kptcp_reload_script_retry();
       });
 
     });
@@ -3306,13 +3306,13 @@
   //
   // Retry Plugins
   //
-  $.fn.kpf_reload_script_retry = function() {
+  $.fn.kptcp_reload_script_retry = function() {
     return this.each( function() {
 
       var $this = $(this);
 
       if ( $this.data('inited') ) {
-        $this.children('.kpf-field-wp_editor').kpf_field_wp_editor();
+        $this.children('.kptcp-field-wp_editor').kptcp_field_wp_editor();
       }
 
     });
@@ -3321,7 +3321,7 @@
   //
   // Reload Plugins
   //
-  $.fn.kpf_reload_script = function( options ) {
+  $.fn.kptcp_reload_script = function( options ) {
 
     var settings = $.extend({
       dependency: true,
@@ -3335,58 +3335,58 @@
       if ( !$this.data('inited') ) {
 
         // Field plugins
-        $this.children('.kpf-field-accordion').kpf_field_accordion();
-        $this.children('.kpf-field-backup').kpf_field_backup();
-        $this.children('.kpf-field-background').kpf_field_background();
-        $this.children('.kpf-field-code_editor').kpf_field_code_editor();
-        $this.children('.kpf-field-date').kpf_field_date();
-        $this.children('.kpf-field-fieldset').kpf_field_fieldset();
-        $this.children('.kpf-field-gallery').kpf_field_gallery();
-        $this.children('.kpf-field-group').kpf_field_group();
-        $this.children('.kpf-field-icon').kpf_field_icon();
-        $this.children('.kpf-field-link').kpf_field_link();
-        $this.children('.kpf-field-media').kpf_field_media();
-        $this.children('.kpf-field-map').kpf_field_map();
-        $this.children('.kpf-field-repeater').kpf_field_repeater();
-        $this.children('.kpf-field-slider').kpf_field_slider();
-        $this.children('.kpf-field-sortable').kpf_field_sortable();
-        $this.children('.kpf-field-sorter').kpf_field_sorter();
-        $this.children('.kpf-field-spinner').kpf_field_spinner();
-        $this.children('.kpf-field-switcher').kpf_field_switcher();
-        $this.children('.kpf-field-tabbed').kpf_field_tabbed();
-        $this.children('.kpf-field-typography').kpf_field_typography();
-        $this.children('.kpf-field-upload').kpf_field_upload();
-        $this.children('.kpf-field-wp_editor').kpf_field_wp_editor();
+        $this.children('.kptcp-field-accordion').kptcp_field_accordion();
+        $this.children('.kptcp-field-backup').kptcp_field_backup();
+        $this.children('.kptcp-field-background').kptcp_field_background();
+        $this.children('.kptcp-field-code_editor').kptcp_field_code_editor();
+        $this.children('.kptcp-field-date').kptcp_field_date();
+        $this.children('.kptcp-field-fieldset').kptcp_field_fieldset();
+        $this.children('.kptcp-field-gallery').kptcp_field_gallery();
+        $this.children('.kptcp-field-group').kptcp_field_group();
+        $this.children('.kptcp-field-icon').kptcp_field_icon();
+        $this.children('.kptcp-field-link').kptcp_field_link();
+        $this.children('.kptcp-field-media').kptcp_field_media();
+        $this.children('.kptcp-field-map').kptcp_field_map();
+        $this.children('.kptcp-field-repeater').kptcp_field_repeater();
+        $this.children('.kptcp-field-slider').kptcp_field_slider();
+        $this.children('.kptcp-field-sortable').kptcp_field_sortable();
+        $this.children('.kptcp-field-sorter').kptcp_field_sorter();
+        $this.children('.kptcp-field-spinner').kptcp_field_spinner();
+        $this.children('.kptcp-field-switcher').kptcp_field_switcher();
+        $this.children('.kptcp-field-tabbed').kptcp_field_tabbed();
+        $this.children('.kptcp-field-typography').kptcp_field_typography();
+        $this.children('.kptcp-field-upload').kptcp_field_upload();
+        $this.children('.kptcp-field-wp_editor').kptcp_field_wp_editor();
 
         // Field colors
-        $this.children('.kpf-field-border').find('.kpf-color').kpf_color();
-        $this.children('.kpf-field-background').find('.kpf-color').kpf_color();
-        $this.children('.kpf-field-color').find('.kpf-color').kpf_color();
-        $this.children('.kpf-field-color_group').find('.kpf-color').kpf_color();
-        $this.children('.kpf-field-link_color').find('.kpf-color').kpf_color();
-        $this.children('.kpf-field-typography').find('.kpf-color').kpf_color();
+        $this.children('.kptcp-field-border').find('.kptcp-color').kptcp_color();
+        $this.children('.kptcp-field-background').find('.kptcp-color').kptcp_color();
+        $this.children('.kptcp-field-color').find('.kptcp-color').kptcp_color();
+        $this.children('.kptcp-field-color_group').find('.kptcp-color').kptcp_color();
+        $this.children('.kptcp-field-link_color').find('.kptcp-color').kptcp_color();
+        $this.children('.kptcp-field-typography').find('.kptcp-color').kptcp_color();
 
         // Field chosenjs
-        $this.children('.kpf-field-select').find('.kpf-chosen').kpf_chosen();
+        $this.children('.kptcp-field-select').find('.kptcp-chosen').kptcp_chosen();
 
         // Field Checkbox
-        $this.children('.kpf-field-checkbox').find('.kpf-checkbox').kpf_checkbox();
+        $this.children('.kptcp-field-checkbox').find('.kptcp-checkbox').kptcp_checkbox();
 
         // Field Siblings
-        $this.children('.kpf-field-button_set').find('.kpf-siblings').kpf_siblings();
-        $this.children('.kpf-field-image_select').find('.kpf-siblings').kpf_siblings();
-        $this.children('.kpf-field-palette').find('.kpf-siblings').kpf_siblings();
+        $this.children('.kptcp-field-button_set').find('.kptcp-siblings').kptcp_siblings();
+        $this.children('.kptcp-field-image_select').find('.kptcp-siblings').kptcp_siblings();
+        $this.children('.kptcp-field-palette').find('.kptcp-siblings').kptcp_siblings();
 
         // Help Tooptip
-        $this.children('.kpf-field').find('.kpf-help').kpf_help();
+        $this.children('.kptcp-field').find('.kptcp-help').kptcp_help();
 
         if ( settings.dependency ) {
-          $this.kpf_dependency();
+          $this.kptcp_dependency();
         }
 
         $this.data('inited', true);
 
-        $(document).trigger('kpf-reload-script', $this);
+        $(document).trigger('kptcp-reload-script', $this);
 
       }
 
@@ -3398,22 +3398,22 @@
   //
   $(document).ready( function() {
 
-    $('.kpf-save').kpf_save();
-    $('.kpf-options').kpf_options();
-    $('.kpf-sticky-header').kpf_sticky();
-    $('.kpf-nav-options').kpf_nav_options();
-    $('.kpf-nav-metabox').kpf_nav_metabox();
-    $('.kpf-taxonomy').kpf_taxonomy();
-    $('.kpf-page-templates').kpf_page_templates();
-    $('.kpf-post-formats').kpf_post_formats();
-    $('.kpf-shortcode').kpf_shortcode();
-    $('.kpf-search').kpf_search();
-    $('.kpf-confirm').kpf_confirm();
-    $('.kpf-expand-all').kpf_expand_all();
-    $('.kpf-onload').kpf_reload_script();
-    $('#widgets-editor').kpf_widgets();
-    $('#widgets-right').kpf_widgets();
-    $('#menu-to-edit').kpf_nav_menu();
+    $('.kptcp-save').kptcp_save();
+    $('.kptcp-options').kptcp_options();
+    $('.kptcp-sticky-header').kptcp_sticky();
+    $('.kptcp-nav-options').kptcp_nav_options();
+    $('.kptcp-nav-metabox').kptcp_nav_metabox();
+    $('.kptcp-taxonomy').kptcp_taxonomy();
+    $('.kptcp-page-templates').kptcp_page_templates();
+    $('.kptcp-post-formats').kptcp_post_formats();
+    $('.kptcp-shortcode').kptcp_shortcode();
+    $('.kptcp-search').kptcp_search();
+    $('.kptcp-confirm').kptcp_confirm();
+    $('.kptcp-expand-all').kptcp_expand_all();
+    $('.kptcp-onload').kptcp_reload_script();
+    $('#widgets-editor').kptcp_widgets();
+    $('#widgets-right').kptcp_widgets();
+    $('#menu-to-edit').kptcp_nav_menu();
 
   });
 

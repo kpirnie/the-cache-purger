@@ -53,7 +53,7 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
         $_path = TCP_PATH . '/work/inc/' . $_class . '.php';
 
         // check if it's our field framework
-        if( $_cls === 'KPF' ) {
+        if( $_cls === 'KPTCP' ) {
 
             // setup the proper path
             $_path = TCP_PATH . '/vendor/custom-fields/classes/setup.class.php';
@@ -76,12 +76,12 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
     add_action( 'plugins_loaded', function( ) : void {
 
         // initialize the field framework
-        KPF::init( );
+        KPTCP::init( );
 
     }, PHP_INT_MAX );
     
     // hook into the custom fields loaded
-    add_action( 'kpf_loaded', function( ) : void {
+    add_action( 'kptcp_loaded', function( ) : void {
 
         // fire up the admin class
         $_cp_admin = new KP_Cache_Purge_Admin( );

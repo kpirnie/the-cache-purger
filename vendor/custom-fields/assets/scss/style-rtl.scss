@@ -1,7 +1,7 @@
 /**
  *
  * ---------------------------------------------------------
- * KPF FRAMEWORK RTL CSS MAP
+ * KPTCP FRAMEWORK RTL CSS MAP
  * ---------------------------------------------------------
  *
  * 01. Base
@@ -56,7 +56,7 @@
 /**
  * 01. Base
  */
-.kpf-options{
+.kptcp-options{
   margin-left: 20px;
   margin-right: 0;
 }
@@ -64,7 +64,7 @@
 /**
  * 01. 01. Header
  */
-.kpf-header{
+.kptcp-header{
   h1{
     float: right;
   }
@@ -77,43 +77,43 @@
 /**
  * 01. 02. Header Buttons
  */
-.kpf-buttons{
+.kptcp-buttons{
   float: left;
   direction: ltr;
 }
 
-.kpf-header-left{
+.kptcp-header-left{
   float: right;
 }
 
-.kpf-header-right{
+.kptcp-header-right{
   float: left;
 }
 
 /**
  * 01. 03. Navigation
  */
-.kpf-nav{
+.kptcp-nav{
   float: right;
 
   ul{
     clear: right;
 
     li{
-      .kpf-active:after{
+      .kptcp-active:after{
         right: auto;
         left: 0;
         border-left-color: #fff;
         border-right-color: transparent;
       }
 
-      .kpf-arrow:after{
+      .kptcp-arrow:after{
         content: "\f053";
         right: auto;
         left: 10px;
       }
 
-      &.kpf-tab-expanded .kpf-arrow:after{
+      &.kptcp-tab-expanded .kptcp-arrow:after{
         transform: rotate(-90deg);
       }
     }
@@ -133,13 +133,13 @@
     }
   }
 
-  .kpf-tab-icon{
+  .kptcp-tab-icon{
     margin-left: 5px;
     margin-right: 0;
   }
 }
 
-.kpf-nav-background{
+.kptcp-nav-background{
   left: auto;
   right: 0;
 }
@@ -147,7 +147,7 @@
 /**
  * 01. 04. Content
  */
-.kpf-content{
+.kptcp-content{
   margin-left: 0;
   margin-right: 225px;
 }
@@ -155,19 +155,19 @@
 /**
  * 01. 05. Section
  */
-.kpf-sections{
+.kptcp-sections{
   float: right;
 }
 
 /**
  * 01. 06. Show all options
  */
-.kpf-show-all .kpf-content{
+.kptcp-show-all .kptcp-content{
   margin-right: 0;
   overflow: hidden;
 }
 
-.kpf-expand-all{
+.kptcp-expand-all{
   float: right;
   right: auto;
   left: 40px;
@@ -178,7 +178,7 @@
 /**
  * 01. 07. Search Input
  */
-.kpf-search{
+.kptcp-search{
   float: right;
 
   input{
@@ -189,24 +189,24 @@
 /**
  * 01. 08. Copyright
  */
-.kpf-copyright{
+.kptcp-copyright{
   float: right;
 }
 
 /**
  * 01. 09. Metabox
  */
-.kpf-metabox{
+.kptcp-metabox{
   margin: -6px -12px -12px -12px;
 
-  .kpf-section-title{
+  .kptcp-section-title{
     padding: 20px;
   }
 }
 
-.kpf-section-title{
+.kptcp-section-title{
 
-  .kpf-section-icon{
+  .kptcp-section-icon{
     margin-left: 5px;
     margin-right: 0;
   }
@@ -215,38 +215,38 @@
 /**
  * 02. Fields
  */
-.kpf-field{
+.kptcp-field{
 
-  .kpf-title{
+  .kptcp-title{
     float: right;
   }
 
-  .kpf-fieldset{
+  .kptcp-fieldset{
     float: left;
   }
 }
 
-.kpf-pseudo-field{
+.kptcp-pseudo-field{
   padding: 0 0 0 5px !important;
 }
 
 /**
  * 02. 01. Field: typography
  */
-.kpf-field-typography{
+.kptcp-field-typography{
 
   select{
     margin: 0;
     width: 100%;
   }
 
-  .kpf--blocks-inputs{
-    .kpf--blocks{
+  .kptcp--blocks-inputs{
+    .kptcp--blocks{
       flex-direction: row-reverse;
     }
   }
 
-  .kpf--unit{
+  .kptcp--unit{
     left: 4px;
     right: auto;
   }
@@ -255,8 +255,8 @@
 /**
  * 02. 02. Field: checkbox, radio
  */
-.kpf-field-checkbox,
-.kpf-field-radio{
+.kptcp-field-checkbox,
+.kptcp-field-radio{
 
   ul ul li{
     margin-left: 0;
@@ -267,12 +267,12 @@
     }
   }
 
-  .kpf--inline-list li{
+  .kptcp--inline-list li{
     margin-right: 0;
     margin-left: 15px;
   }
 
-  .kpf--text{
+  .kptcp--text{
     margin-left: 0;
     margin-right: 5px;
   }
@@ -281,13 +281,13 @@
 /**
  * 02. 03. Field: switcher
  */
-.kpf-field-switcher{
+.kptcp-field-switcher{
 
-  .kpf--switcher{
+  .kptcp--switcher{
     float: right;
   }
 
-  .kpf--label{
+  .kptcp--label{
     float: right;
     margin-left: 0;
     margin-right: 5px;
@@ -297,10 +297,10 @@
 /**
  * 02. 04. Field: upload
  */
-.kpf-field-upload{
+.kptcp-field-upload{
 
-  .kpf--remove,
-  .kpf--button{
+  .kptcp--remove,
+  .kptcp--button{
     margin-left: 0;
     margin-right: 5px;
   }
@@ -309,13 +309,13 @@
 /**
  * 02. 05. Field: group
  */
-.kpf-field-group{
+.kptcp-field-group{
 
-  .kpf-cloneable-title{
+  .kptcp-cloneable-title{
     padding: 15px 10px 15px 65px;
   }
 
-  .kpf-cloneable-helper{
+  .kptcp-cloneable-helper{
     right: auto;
     left: 10px;
   }
@@ -324,9 +324,9 @@
 /**
  * 02. 06. Field: repeater
  */
-.kpf-field-repeater{
+.kptcp-field-repeater{
 
-  .kpf-repeater-helper{
+  .kptcp-repeater-helper{
     border-left: 0;
     border-right: 1px solid #eee;
   }
@@ -335,7 +335,7 @@
 /**
  * 02. 07. Field: help
  */
-.kpf-help{
+.kptcp-help{
   right: auto;
   left: 5px;
 }
@@ -343,14 +343,14 @@
 /**
  * 02. 08. Field: icon
  */
-.kpf-field-icon{
+.kptcp-field-icon{
 
   .button{
     margin-right: 0;
     margin-left: 5px;
   }
 
-  .kpf-icon-preview i{
+  .kptcp-icon-preview i{
     margin-right: 0;
     margin-left: 5px;
   }
@@ -359,7 +359,7 @@
 /**
  * 02. 09. Field: gallery
  */
-.kpf-field-gallery{
+.kptcp-field-gallery{
 
   ul li{
     margin-right: 0;
@@ -375,11 +375,11 @@
 /**
  * 02. 11. Field: tabbed
  */
-.kpf-field-tabbed{
+.kptcp-field-tabbed{
 
-  .kpf-tabbed-nav{
+  .kptcp-tabbed-nav{
 
-    .kpf--icon{
+    .kptcp--icon{
       padding-right: 0;
       padding-left: 5px;
     }
@@ -394,7 +394,7 @@
 /**
  * 02. 12. Field: media
  */
-.kpf-field-media{
+.kptcp-field-media{
 
   .button{
     margin-left: 0;
@@ -409,7 +409,7 @@
 /**
  * 02. 13. Field: notice
  */
-.kpf-notice{
+.kptcp-notice{
   border-left: none;
   border-right-style: solid;
   border-right-width: 4px;
@@ -418,21 +418,21 @@
 /**
  * 02. 14. Field: border, spacing, dimensions
  */
-.kpf-field-dimensions,
-.kpf-field-spacing,
-.kpf-field-border{
+.kptcp-field-dimensions,
+.kptcp-field-spacing,
+.kptcp-field-border{
 
-  .kpf--input,
-  .kpf-fieldset{
+  .kptcp--input,
+  .kptcp-fieldset{
     direction: ltr;
   }
 
-  .kpf--inputs,
-  .kpf--color{
+  .kptcp--inputs,
+  .kptcp--color{
     float: right;
   }
 
-  .kpf--color{
+  .kptcp--color{
     margin-right: 4px;
     direction: rtl;
   }
@@ -441,18 +441,18 @@
 /**
  * 02. 15. Field: background
  */
-.kpf-field-background{
+.kptcp-field-background{
 
-  .kpf--block{
+  .kptcp--block{
     float: right;
   }
 
-  .kpf--select,
-  .kpf--media{
+  .kptcp--select,
+  .kptcp--media{
     padding-right: 0;
   }
 
-  .kpf--title{
+  .kptcp--title{
     margin-right: 0;
     margin-left: 5px;
   }
@@ -461,9 +461,9 @@
 /**
  * 02. 16. Field: spinner
  */
-.kpf-field-spinner{
+.kptcp-field-spinner{
 
-  .kpf--spin{
+  .kptcp--spin{
     float: right;
     direction: ltr;
   }
@@ -472,15 +472,15 @@
 /**
  * 02. 17. Field: slider
  */
-.kpf-field-slider{
+.kptcp-field-slider{
 
-  .kpf-slider-ui{
+  .kptcp-slider-ui{
     direction: ltr;
     margin-right: 0;
     margin-left: 15px;
   }
 
-  .kpf--input{
+  .kptcp--input{
     direction: ltr;
   }
 }
@@ -488,9 +488,9 @@
 /**
  * 02. 18. Field: button_set
  */
-.kpf-field-button_set{
+.kptcp-field-button_set{
 
-  .kpf--button-group{
+  .kptcp--button-group{
     float: right;
   }
 }
@@ -498,9 +498,9 @@
 /**
  * 02. 19. Field: link_color
  */
-.kpf-field-link_color{
+.kptcp-field-link_color{
 
-  .kpf--left{
+  .kptcp--left{
     float: right;
     margin-right: 0;
     margin-left: 10px;
@@ -510,9 +510,9 @@
 /**
  * 02. 20. Field: color_group
  */
-.kpf-field-color_group{
+.kptcp-field-color_group{
 
-  .kpf--left{
+  .kptcp--left{
     float: right;
     margin-right: 0;
     margin-left: 10px;
@@ -522,9 +522,9 @@
 /**
  * 02. 21. Field: palette
  */
-.kpf-field-palette{
+.kptcp-field-palette{
 
-  .kpf--palette{
+  .kptcp--palette{
     margin-right: 0;
     margin-left: 10px;
   }
@@ -533,9 +533,9 @@
 /**
  * 02. 22. Field: accordion
  */
-.kpf-field-accordion{
+.kptcp-field-accordion{
 
-  .kpf--icon{
+  .kptcp--icon{
     margin-right: 0;
     margin-left: 2px;
   }
@@ -544,9 +544,9 @@
 /**
  * 02. 23. Field: date
  */
-.kpf-field-date{
+.kptcp-field-date{
 
-  .kpf--to {
+  .kptcp--to {
     margin-left: 0;
     margin-right: 7px;
   }
@@ -555,9 +555,9 @@
 /**
  * 02. 24. Field: map
  */
-.kpf-field-map{
+.kptcp-field-map{
 
-  .kpf--map-input:last-child {
+  .kptcp--map-input:last-child {
     padding-left: 0;
     padding-right: 10px;
   }
@@ -566,9 +566,9 @@
 /**
  * 02. 25. Field: sortable
  */
-.kpf-field-sortable{
+.kptcp-field-sortable{
 
-  .kpf-sortable-helper{
+  .kptcp-sortable-helper{
     border-left: none;
     border-right: 1px solid #eee;
   }
@@ -577,13 +577,13 @@
 /**
  * 02. 26. Field: number
  */
-.kpf-field-number{
+.kptcp-field-number{
 
-  .kpf--wrap{
+  .kptcp--wrap{
     float: right;
   }
 
-  .kpf--unit{
+  .kptcp--unit{
     left: 4px;
     right: auto;
   }
@@ -592,21 +592,21 @@
 /**
  * 03. Taxonomy
  */
-.kpf-taxonomy-add-fields{
+.kptcp-taxonomy-add-fields{
   margin-right: 0;
   margin-left: 30px;
 
-  .kpf-field > .kpf-fieldset > .kpf-help{
+  .kptcp-field > .kptcp-fieldset > .kptcp-help{
     left: -5px;
     right: auto;
   }
 }
 
-.kpf-taxonomy-edit-fields{
+.kptcp-taxonomy-edit-fields{
   margin-right: 0;
   margin-left: 35px;
 
-  .kpf-field > .kpf-fieldset > .kpf-help{
+  .kptcp-field > .kptcp-fieldset > .kptcp-help{
     right: auto;
     left: -5px;
   }
@@ -615,18 +615,18 @@
 /**
  * 04. Profile
  */
-.kpf-profile-options{
+.kptcp-profile-options{
 
   > h2 > .fa{
     padding-right: 0;
     padding-left: 7px;
   }
 
-  > .kpf-field{
+  > .kptcp-field{
 
-    > .kpf-fieldset{
+    > .kptcp-fieldset{
 
-      > .kpf-help{
+      > .kptcp-help{
         left: -5px;
         right: auto;
       }
@@ -637,20 +637,20 @@
 /**
  * 05. Nav Menu
  */
-.kpf-nav-menu-options{
+.kptcp-nav-menu-options{
 
-  > .kpf-fields{
+  > .kptcp-fields{
     margin-left: 0;
     margin-right: -10px;
   }
 }
 
-.kpf-nav-menu-title {
+.kptcp-nav-menu-title {
   padding-left: 14px;
   padding-right: 12px;
 }
 
-.kpf-nav-menu-icon{
+.kptcp-nav-menu-icon{
   margin-right: 0;
   margin-left: 5px;
 }
@@ -658,18 +658,18 @@
 /**
  * 06. Modal
  */
-.kpf-modal-content{
+.kptcp-modal-content{
 
-  .kpf-field{
+  .kptcp-field{
     padding: 15px 15px 15px 30px;
   }
 }
 
-.kpf-modal-title{
+.kptcp-modal-title{
   padding: 0 16px 0 36px;
 }
 
-.kpf-modal-close{
+.kptcp-modal-close{
   right: auto;
   left: 0;
 }
@@ -679,9 +679,9 @@
  */
 .control-section{
 
-  .kpf-field{
+  .kptcp-field{
 
-    .kpf-fieldset{
+    .kptcp-fieldset{
       margin-right: 0;
     }
   }
@@ -691,14 +691,14 @@
  * 08. Responsive
  */
 @media only screen and (max-width:1200px){
-  .kpf-metabox .kpf-field .kpf-fieldset{
+  .kptcp-metabox .kptcp-field .kptcp-fieldset{
     margin-left: 0;
   }
 }
 
 @media only screen and (max-width:782px){
-  .kpf .kpf-fieldset,
-  .kpf .kpf-content{
+  .kptcp .kptcp-fieldset,
+  .kptcp .kptcp-content{
     margin-right: 0;
   }
 }
@@ -706,9 +706,9 @@
 /**
  * 09. Others
  */
-.kpf-field{
+.kptcp-field{
 
-  .kpf--transparent-slider{
+  .kptcp--transparent-slider{
     margin-left: 0;
     margin-right: 2px;
 
@@ -717,11 +717,11 @@
     }
   }
 
-  .kpf--transparent-offset{
+  .kptcp--transparent-offset{
     background-position: center right;
   }
 
-  .kpf--transparent-text{
+  .kptcp--transparent-text{
     right: auto;
     left: 10px;
   }

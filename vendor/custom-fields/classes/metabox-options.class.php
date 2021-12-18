@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Metabox' ) ) {
-  class KPF_Metabox extends KPF_Abstract{
+if ( ! class_exists( 'KPTCP_Metabox' ) ) {
+  class KPTCP_Metabox extends KPTCP_Abstract{
 
     // constans
     public $unique         = '';
@@ -40,8 +40,8 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
     public function __construct( $key, $params = array() ) {
 
       $this->unique         = $key;
-      $this->args           = apply_filters( "kpf_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
-      $this->sections       = apply_filters( "kpf_{$this->unique}_sections", $params['sections'], $this );
+      $this->args           = apply_filters( "kptcp_{$this->unique}_args", wp_parse_args( $params['args'], $this->args ), $this );
+      $this->sections       = apply_filters( "kptcp_{$this->unique}_sections", $params['sections'], $this );
       $this->post_type      = ( is_array( $this->args['post_type'] ) ) ? $this->args['post_type'] : array_filter( (array) $this->args['post_type'] );
       $this->post_formats   = ( is_array( $this->args['post_formats'] ) ) ? $this->args['post_formats'] : array_filter( (array) $this->args['post_formats'] );
       $this->page_templates = ( is_array( $this->args['page_templates'] ) ) ? $this->args['page_templates'] : array_filter( (array) $this->args['page_templates'] );
@@ -92,7 +92,7 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
         $saved_post_format = ( is_object( $post ) ) ? get_post_format( $post ) : false;
         $saved_post_format = ( ! empty( $saved_post_format ) ) ? $saved_post_format : 'default';
 
-        $classes[] = 'kpf-post-formats';
+        $classes[] = 'kptcp-post-formats';
 
         // Sanitize post format for standard to default
         if ( ( $key = array_search( 'standard', $this->post_formats ) ) !== false ) {
@@ -100,13 +100,13 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
         }
 
         foreach ( $this->post_formats as $format ) {
-          $classes[] = 'kpf-post-format-'. $format;
+          $classes[] = 'kptcp-post-format-'. $format;
         }
 
         if ( ! in_array( $saved_post_format, $this->post_formats ) ) {
-          $classes[] = 'kpf-metabox-hide';
+          $classes[] = 'kptcp-metabox-hide';
         } else {
-          $classes[] = 'kpf-metabox-show';
+          $classes[] = 'kptcp-metabox-show';
         }
 
       }
@@ -115,16 +115,16 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
 
         $saved_template = ( is_object( $post ) && ! empty( $post->page_template ) ) ? $post->page_template : 'default';
 
-        $classes[] = 'kpf-page-templates';
+        $classes[] = 'kptcp-page-templates';
 
         foreach ( $this->page_templates as $template ) {
-          $classes[] = 'kpf-page-'. preg_replace( '/[^a-zA-Z0-9]+/', '-', strtolower( $template ) );
+          $classes[] = 'kptcp-page-'. preg_replace( '/[^a-zA-Z0-9]+/', '-', strtolower( $template ) );
         }
 
         if ( ! in_array( $saved_template, $this->page_templates ) ) {
-          $classes[] = 'kpf-metabox-hide';
+          $classes[] = 'kptcp-metabox-hide';
         } else {
-          $classes[] = 'kpf-metabox-show';
+          $classes[] = 'kptcp-metabox-show';
         }
 
       }
@@ -188,26 +188,26 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
       global $post;
 
       $has_nav   = ( count( $this->sections ) > 1 && $this->args['context'] !== 'side' ) ? true : false;
-      $show_all  = ( ! $has_nav ) ? ' kpf-show-all' : '';
+      $show_all  = ( ! $has_nav ) ? ' kptcp-show-all' : '';
       $post_type = ( is_object ( $post ) ) ? $post->post_type : '';
-      $errors    = ( is_object ( $post ) ) ? get_post_meta( $post->ID, '_kpf_errors_'. $this->unique, true ) : array();
+      $errors    = ( is_object ( $post ) ) ? get_post_meta( $post->ID, '_kptcp_errors_'. $this->unique, true ) : array();
       $errors    = ( ! empty( $errors ) ) ? $errors : array();
-      $theme     = ( $this->args['theme'] ) ? ' kpf-theme-'. $this->args['theme'] : '';
+      $theme     = ( $this->args['theme'] ) ? ' kptcp-theme-'. $this->args['theme'] : '';
       $nav_type  = ( $this->args['nav'] === 'inline' ) ? 'inline' : 'normal';
 
       if ( is_object ( $post ) && ! empty( $errors ) ) {
-        delete_post_meta( $post->ID, '_kpf_errors_'. $this->unique );
+        delete_post_meta( $post->ID, '_kptcp_errors_'. $this->unique );
       }
 
-      wp_nonce_field( 'kpf_metabox_nonce', 'kpf_metabox_nonce'. $this->unique );
+      wp_nonce_field( 'kptcp_metabox_nonce', 'kptcp_metabox_nonce'. $this->unique );
 
-      echo '<div class="kpf kpf-metabox'. esc_attr( $theme ) .'">';
+      echo '<div class="kptcp kptcp-metabox'. esc_attr( $theme ) .'">';
 
-        echo '<div class="kpf-wrapper'. esc_attr( $show_all ) .'">';
+        echo '<div class="kptcp-wrapper'. esc_attr( $show_all ) .'">';
 
           if ( $has_nav ) {
 
-            echo '<div class="kpf-nav kpf-nav-'. esc_attr( $nav_type ) .' kpf-nav-metabox">';
+            echo '<div class="kptcp-nav kptcp-nav-'. esc_attr( $nav_type ) .' kptcp-nav-metabox">';
 
               echo '<ul>';
 
@@ -219,8 +219,8 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
                   continue;
                 }
 
-                $tab_error = ( ! empty( $errors['sections'][$tab_key] ) ) ? '<i class="kpf-label-error kpf-error">!</i>' : '';
-                $tab_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="kpf-tab-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
+                $tab_error = ( ! empty( $errors['sections'][$tab_key] ) ) ? '<i class="kptcp-label-error kptcp-error">!</i>' : '';
+                $tab_icon  = ( ! empty( $section['icon'] ) ) ? '<i class="kptcp-tab-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
 
                 echo '<li><a href="#">'. $tab_icon . $section['title'] . $tab_error .'</a></li>';
 
@@ -234,9 +234,9 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
 
           }
 
-          echo '<div class="kpf-content">';
+          echo '<div class="kptcp-content">';
 
-            echo '<div class="kpf-sections">';
+            echo '<div class="kptcp-sections">';
 
             $section_key = 0;
 
@@ -246,15 +246,15 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
                 continue;
               }
 
-              $section_onload = ( ! $has_nav ) ? ' kpf-onload' : '';
+              $section_onload = ( ! $has_nav ) ? ' kptcp-onload' : '';
               $section_class  = ( ! empty( $section['class'] ) ) ? ' '. $section['class'] : '';
               $section_title  = ( ! empty( $section['title'] ) ) ? $section['title'] : '';
-              $section_icon   = ( ! empty( $section['icon'] ) ) ? '<i class="kpf-section-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
+              $section_icon   = ( ! empty( $section['icon'] ) ) ? '<i class="kptcp-section-icon '. esc_attr( $section['icon'] ) .'"></i>' : '';
 
-              echo '<div class="kpf-section hidden'. esc_attr( $section_onload . $section_class ) .'">';
+              echo '<div class="kptcp-section hidden'. esc_attr( $section_onload . $section_class ) .'">';
 
-              echo ( $section_title || $section_icon ) ? '<div class="kpf-section-title"><h3>'. $section_icon . $section_title .'</h3></div>' : '';
-              echo ( ! empty( $section['description'] ) ) ? '<div class="kpf-field kpf-section-description">'. $section['description'] .'</div>' : '';
+              echo ( $section_title || $section_icon ) ? '<div class="kptcp-section-title"><h3>'. $section_icon . $section_title .'</h3></div>' : '';
+              echo ( ! empty( $section['description'] ) ) ? '<div class="kptcp-field kptcp-section-description">'. $section['description'] .'</div>' : '';
 
               if ( ! empty( $section['fields'] ) ) {
 
@@ -268,13 +268,13 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
                     $field['default'] = $this->get_default( $field );
                   }
 
-                  KPF::field( $field, $this->get_meta_value( $field ), $this->unique, 'metabox' );
+                  KPTCP::field( $field, $this->get_meta_value( $field ), $this->unique, 'metabox' );
 
                 }
 
               } else {
 
-                echo '<div class="kpf-no-option">'. esc_html__( 'No data available.', 'kpf' ) .'</div>';
+                echo '<div class="kptcp-no-option">'. esc_html__( 'No data available.', 'kptcp' ) .'</div>';
 
               }
 
@@ -288,11 +288,11 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
 
             if ( ! empty( $this->args['show_restore'] ) || ! empty( $this->args['show_reset'] ) ) {
 
-              echo '<div class="kpf-sections-reset">';
+              echo '<div class="kptcp-sections-reset">';
               echo '<label>';
               echo '<input type="checkbox" name="'. esc_attr( $this->unique ) .'[_reset]" />';
-              echo '<span class="button kpf-button-reset">'. esc_html__( 'Reset', 'kpf' ) .'</span>';
-              echo '<span class="button kpf-button-cancel">'. sprintf( '<small>( %s )</small> %s', esc_html__( 'update post', 'kpf' ), esc_html__( 'Cancel', 'kpf' ) ) .'</span>';
+              echo '<span class="button kptcp-button-reset">'. esc_html__( 'Reset', 'kptcp' ) .'</span>';
+              echo '<span class="button kptcp-button-cancel">'. sprintf( '<small>( %s )</small> %s', esc_html__( 'update post', 'kptcp' ), esc_html__( 'Cancel', 'kptcp' ) ) .'</span>';
               echo '</label>';
               echo '</div>';
 
@@ -300,7 +300,7 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
 
           echo '</div>';
 
-          echo ( $has_nav && $nav_type === 'normal' ) ? '<div class="kpf-nav-background"></div>' : '';
+          echo ( $has_nav && $nav_type === 'normal' ) ? '<div class="kptcp-nav-background"></div>' : '';
 
           echo '<div class="clear"></div>';
 
@@ -316,10 +316,10 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
       $count    = 1;
       $data     = array();
       $errors   = array();
-      $noncekey = 'kpf_metabox_nonce'. $this->unique;
+      $noncekey = 'kptcp_metabox_nonce'. $this->unique;
       $nonce    = ( ! empty( $_POST[ $noncekey ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $noncekey ] ) ) : '';
 
-      if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, 'kpf_metabox_nonce' ) ) {
+      if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! wp_verify_nonce( $nonce, 'kptcp_metabox_nonce' ) ) {
         return $post_id;
       }
 
@@ -386,9 +386,9 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
 
       }
 
-      $data = apply_filters( "kpf_{$this->unique}_save", $data, $post_id, $this );
+      $data = apply_filters( "kptcp_{$this->unique}_save", $data, $post_id, $this );
 
-      do_action( "kpf_{$this->unique}_save_before", $data, $post_id, $this );
+      do_action( "kptcp_{$this->unique}_save_before", $data, $post_id, $this );
 
       if ( empty( $data ) || ! empty( $request['_reset'] ) ) {
 
@@ -411,14 +411,14 @@ if ( ! class_exists( 'KPF_Metabox' ) ) {
         }
 
         if ( ! empty( $errors ) ) {
-          update_post_meta( $post_id, '_kpf_errors_'. $this->unique, $errors );
+          update_post_meta( $post_id, '_kptcp_errors_'. $this->unique, $errors );
         }
 
       }
 
-      do_action( "kpf_{$this->unique}_saved", $data, $post_id, $this );
+      do_action( "kptcp_{$this->unique}_saved", $data, $post_id, $this );
 
-      do_action( "kpf_{$this->unique}_save_after", $data, $post_id, $this );
+      do_action( "kptcp_{$this->unique}_save_after", $data, $post_id, $this );
 
     }
   }

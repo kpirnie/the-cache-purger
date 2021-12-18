@@ -7,8 +7,8 @@
  * @version 1.0.0
  *
  */
-if ( ! class_exists( 'KPF_Field_number' ) ) {
-  class KPF_Field_number extends KPF_Fields {
+if ( ! class_exists( 'KPTCP_Field_number' ) ) {
+  class KPTCP_Field_number extends KPTCP_Fields {
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {
       parent::__construct( $field, $value, $unique, $where, $parent );
@@ -21,9 +21,9 @@ if ( ! class_exists( 'KPF_Field_number' ) ) {
       ) );
 
       echo $this->field_before();
-      echo '<div class="kpf--wrap">';
-      echo '<input type="number" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'"'. $this->field_attributes( array( 'class' => 'kpf-input-number' ) ) .' step="any" />';
-      echo ( ! empty( $args['unit'] ) ) ? '<span class="kpf--unit">'. esc_attr( $args['unit'] ) .'</span>' : '';
+      echo '<div class="kptcp--wrap">';
+      echo '<input type="number" name="'. esc_attr( $this->field_name() ) .'" value="'. esc_attr( $this->value ) .'"'. $this->field_attributes( array( 'class' => 'kptcp-input-number' ) ) .' step="any" />';
+      echo ( ! empty( $args['unit'] ) ) ? '<span class="kptcp--unit">'. esc_attr( $args['unit'] ) .'</span>' : '';
       echo '</div>';
       echo $this->field_after();
 
