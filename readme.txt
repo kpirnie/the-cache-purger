@@ -68,10 +68,10 @@ Even if you don't, there are still some server based caches that need to be purg
 * UI Fix: convert selectables to "chosen"
 * Feature: Add API/Server settings
   * Implement: Remote Redis Clearing
+  * Implement: Remote Memcache Clearing
   * Implement: Remote Memcached Clearing
   * Implement: Direct Cloudflare Clearing
   * Implement: Direct Sucuri Clearing
-  * Implement: Direct RunCloud Hub Clearing
 
 = 0.6.02 =
 * Fixed: Admin bar menu show in for non-admin capabilities.

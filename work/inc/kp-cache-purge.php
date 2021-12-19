@@ -111,6 +111,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             // log the purge
             KPCPC::write_log( "\tAPI/SERVER PURGE" );
+            // let's attempt to purge the api and server based caches
             $this -> purge_remote_apiserver_caches( );
 
         }
@@ -148,9 +149,6 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             // sucuri
             $this -> purge_sucuri( $_opt );
-
-            // runcloud hub
-
 
         }
 
