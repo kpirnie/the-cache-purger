@@ -19,7 +19,7 @@
 .kptcp-theme-dark .kptcp-search input, .kptcp-theme-dark .kptcp-search input::placeholder {
     color:#fff !important;
 }
-.kptcp-doc-content ul {
+.kptcp-doc-content main ul {
     margin:10px 25px;
 }
 .kptcp-doc-content h2 {font-size:1.7em;}

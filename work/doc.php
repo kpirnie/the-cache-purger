@@ -15,18 +15,18 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
 
 ?>
 
-<article class="kpfw-doc-content" id="kpcp_top">
+<article class="kptcp-doc-content" id="kpcp_top">
     <header>
         <h1>The Cache Purger Documentation</h1>
     </header>
     <main>
         <h2 id="kpcp_desc">Description</h2>
-        <p class="kpcp_nav"><a href="#kpcp_top">TOP</a> | <a href="#kpcp_desc">DESCRIPTION</a> | <a href="#kpcp_features">FEATURES</a> | <a href="#kpcp_settings">SETTINGS</a> | <a href="#kpcp_in_the_works">IN THE WORKS</a></p>
+        <p class="kpcp_nav"><a href="#kpcp_top">TOP</a> | <a href="#kpcp_desc">DESCRIPTION</a> | <a href="#kpcp_features">FEATURES</a> | <a href="#kpcp_settings">SETTINGS</a> | <a href="#kpcp_api_settings">API/SERVER SETTINGS</a> | <a href="#kpcp_in_the_works">IN THE WORKS</a></p>
         <p>This plugin attempts to purge all server-side caching methods.</p>
         <p>This includes the most common caching plugins, some hosting based caches, most server based caches, built-in Wordpress object caches, and even simple file based caches</p>
         <p>Just configure what you want to purge on, and the plugin will take care of the rest.</p>
         <h2 id="kpcp_features">Features</h2>
-        <p class="kpcp_nav"><a href="#kpcp_top">TOP</a> | <a href="#kpcp_desc">DESCRIPTION</a> | <a href="#kpcp_features">FEATURES</a> | <a href="#kpcp_settings">SETTINGS</a> | <a href="#kpcp_in_the_works">IN THE WORKS</a></p>
+        <p class="kpcp_nav"><a href="#kpcp_top">TOP</a> | <a href="#kpcp_desc">DESCRIPTION</a> | <a href="#kpcp_features">FEATURES</a> | <a href="#kpcp_settings">SETTINGS</a> | <a href="#kpcp_api_settings">API/SERVER SETTINGS</a> | <a href="#kpcp_in_the_works">IN THE WORKS</a></p>
         <h3>Built in automatic cache purging for the following caches</h3>
         <ul>
             <li><strong>Plugins</strong>
@@ -67,6 +67,9 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
                     <li>APC and APCU</li>
                     <li>WinCache</li>
                     <li>Pagespeed Module</li>
+                    <li>Memcache</li>
+                    <li>Memcached</li>
+                    <li>Redis</li>
                     <li>nGinx</li>
                     <li>Static File Caches</li>
                 </ul>
@@ -91,7 +94,7 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
             <li>WooCommerce Settings (<em>if installed and activated</em>)</li>
         </ul>
         <h2 id="kpcp_settings">Settings</h2>
-        <p class="kpcp_nav"><a href="#kpcp_top">TOP</a> | <a href="#kpcp_desc">DESCRIPTION</a> | <a href="#kpcp_features">FEATURES</a> | <a href="#kpcp_settings">SETTINGS</a> | <a href="#kpcp_in_the_works">IN THE WORKS</a></p>
+        <p class="kpcp_nav"><a href="#kpcp_top">TOP</a> | <a href="#kpcp_desc">DESCRIPTION</a> | <a href="#kpcp_features">FEATURES</a> | <a href="#kpcp_settings">SETTINGS</a> | <a href="#kpcp_api_settings">API/SERVER SETTINGS</a> | <a href="#kpcp_in_the_works">IN THE WORKS</a></p>
         <ul>
             <li>
                 <strong>Log Purge Actions?</strong>
@@ -210,8 +213,109 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
                 </ul>
             </li>
         </ul>
+        <h2 id="kpcp_api_settings">API/SERVER Settings</h2>
+        <p class="kpcp_nav"><a href="#kpcp_top">TOP</a> | <a href="#kpcp_desc">DESCRIPTION</a> | <a href="#kpcp_features">FEATURES</a> | <a href="#kpcp_settings">SETTINGS</a> | <a href="#kpcp_api_settings">API/SERVER SETTINGS</a> | <a href="#kpcp_in_the_works">IN THE WORKS</a></p>
+        <ul>
+            <li>
+                <strong>Remote Redis Server</strong>
+                <ul>
+                    <li>Option(s) Name: <code>remote_redis</code></li>
+                    <li>Do you want to configure Redis servers to be purged?</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Redis Servers - Server</strong>
+                <ul>
+                    <li>Option(s) Name: <code>remote_redis_servers['remote_redis_server']</code></li>
+                    <li>Insert the servers IP address.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Redis Servers - Port</strong>
+                <ul>
+                    <li>Option(s) Name: <code>remote_redis_servers['remote_redis_port']</code></li>
+                    <li>Insert the servers port.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Remote Memcache Server</strong>
+                <ul>
+                    <li>Option(s) Name: <code>remote_memcache</code></li>
+                    <li>Do you want to configure Memcache servers to be purged?</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Memcache Servers - Server</strong>
+                <ul>
+                    <li>Option(s) Name: <code>remote_memcache_servers['remote_memcache_server']</code></li>
+                    <li>Insert the servers IP address.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Memcache Servers - Port</strong>
+                <ul>
+                    <li>Option(s) Name: <code>remote_memcache_servers['remote_memcache_port']</code></li>
+                    <li>Insert the servers port.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Remote Memcached Server</strong>
+                <ul>
+                    <li>Option(s) Name: <code>remote_memcached</code></li>
+                    <li>Do you want to configure Memcached servers to be purged?</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Memcached Servers - Server</strong>
+                <ul>
+                    <li>Option(s) Name: <code>remote_memcached_servers['remote_memcached_server']</code></li>
+                    <li>Insert the servers IP address.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Memcached Servers - Port</strong>
+                <ul>
+                    <li>Option(s) Name: <code>remote_memcached_servers['remote_memcached_port']</code></li>
+                    <li>Insert the servers port.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Service API Keys</strong>
+                <ul>
+                    <li>
+                        <strong>Cloudflare Token</strong>
+                        <ul>
+                            <li>Option(s) Name: <code>service_api_keys['cloudflare_token']</code></li>
+                            <li>Enter your Cloudflare API Token. If you do not have one, you can create one here: <a href="https://dash.cloudflare.com/profile/api-tokens" target="_blank">https://dash.cloudflare.com/profile/api-tokens</a><br /><strong>NOTE: </strong>This is stored in plain-text.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Cloudflare Zone</strong>
+                        <ul>
+                            <li>Option(s) Name: <code>service_api_keys['cloudflare_zone']</code></li>
+                            <li>Enter your Cloudflare Zone ID. You can find this by clicking into your websites overview in your account: <a href="https://dash.cloudflare.com/" target="_blank">https://dash.cloudflare.com/</a><br /><strong>NOTE: </strong>This is stored in plain-text.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Sucuri Key</strong>
+                        <ul>
+                            <li>Option(s) Name: <code>service_api_keys['sucuri_key']</code></li>
+                            <li>Enter your Sucuri API Key. If you do not have one, you can find it in your site\'s Firewall here: <a href="https://waf.sucuri.net/" target="_blank">https://waf.sucuri.net/</a>. Click into your site, then Settings, then API.<br /><strong>NOTE: </strong>This is stored in plain-text.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Sucuri Secret</strong>
+                        <ul>
+                            <li>Option(s) Name: <code>service_api_keys['sucuri_secret']</code></li>
+                            <li>Enter your Sucuri API Secret. If you do not have one, you can find it in your site\'s Firewall here: <a href="https://waf.sucuri.net/" target="_blank">https://waf.sucuri.net/</a>. Click into your site, then Settings, then API.<br /><strong>NOTE: </strong>This is stored in plain-text.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
         <h2 id="kpcp_in_the_works">In The Works</h2>
-        <p class="kpcp_nav"><a href="#kpcp_top">TOP</a> | <a href="#kpcp_desc">DESCRIPTION</a> | <a href="#kpcp_features">FEATURES</a> | <a href="#kpcp_settings">SETTINGS</a> | <a href="#kpcp_in_the_works">IN THE WORKS</a></p>
+        <p class="kpcp_nav"><a href="#kpcp_top">TOP</a> | <a href="#kpcp_desc">DESCRIPTION</a> | <a href="#kpcp_features">FEATURES</a> | <a href="#kpcp_settings">SETTINGS</a> | <a href="#kpcp_api_settings">API/SERVER SETTINGS</a> | <a href="#kpcp_in_the_works">IN THE WORKS</a></p>
         <ul>
             <li>WooCommerce Product Updates (<em>and exclusions</em>)</li>
             <li>WooCommerce Order Updates</li>
