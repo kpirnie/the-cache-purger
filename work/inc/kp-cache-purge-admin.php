@@ -206,6 +206,46 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     ),
                 ),
 
+                // remote memcache
+                array(
+                    'id' => 'remote_memcache',
+                    'type' => 'switcher',
+                    'title' => __( 'Remote Memcache server?' ),
+                    'desc' => __( 'Please only switch this on if you utilize a remote Memcache Server.' ),
+                    'default' => false,
+                ),
+                
+                // remote memcached servers
+                array(
+                    'id' => 'remote_memcache_servers',
+                    'type' => 'repeater',
+                    'title' => __( 'Memcache Servers' ),
+                    'max' => 10,
+                    'class' => 'inlinable-container',
+                    'button_title' => __( 'Add New Server' ),
+                    'dependency' => array( 'remote_memcache', '==', true ),
+                    'fields' => array(
+
+                        // memcache server
+                        array(
+                            'id' => 'remote_memcache_server',
+                            'title' => __( 'Server' ),
+                            'type' => 'text',
+                            'class' => 'kptcp-half-field',
+                            'desc' => __( 'Enter the IP address of the server.' ),
+                        ),
+
+                        // memcache port
+                        array(
+                            'id' => 'remote_memcache_port',
+                            'title' => __( 'Port' ),
+                            'type' => 'text',
+                            'class' => 'kptcp-half-field',
+                            'desc' => __( 'Enter the Port number of the server.' ),
+                        ),
+                    ),
+                ),
+
                 // remote memcached
                 array(
                     'id' => 'remote_memcached',
@@ -226,7 +266,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'dependency' => array( 'remote_memcached', '==', true ),
                     'fields' => array(
 
-                        // redis server
+                        // memcached server
                         array(
                             'id' => 'remote_memcached_server',
                             'title' => __( 'Server' ),
@@ -235,7 +275,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                             'desc' => __( 'Enter the IP address of the server.' ),
                         ),
 
-                        // redis port
+                        // memcached port
                         array(
                             'id' => 'remote_memcached_port',
                             'title' => __( 'Port' ),
@@ -254,13 +294,24 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'subtitle' => __( 'These are all optional, and only necessary if you do not have the service\'s plugin installed on your site, but their caches are still used.<br /><br />Please consult with your hosting provider or IT Team if you do not know if they are in use.' ),
                     'fields' => array(
                         
-                        // cloudflare
+                        // cloudflare Token
                         array(
                             'id' => 'cloudflare_token',
                             'type' => 'text',
                             'title' => __( 'Cloudflare Token' ),
                             'desc' => __( 'Enter your Cloudflare API Token. If you do not have one, you can create one here: <a href="https://dash.cloudflare.com/profile/api-tokens" target="_blank">https://dash.cloudflare.com/profile/api-tokens</a><br /><strong>NOTE: </strong>This is stored in plain-text.' ),
                             'attributes'  => array( 'type' => 'password', ),
+                            'class' => 'kptcp-half-field',
+                        ),
+
+                        // cloudflare Zone
+                        array(
+                            'id' => 'cloudflare_zone',
+                            'type' => 'text',
+                            'title' => __( 'Cloudflare Zone' ),
+                            'desc' => __( 'Enter your Cloudflare Zone ID. You can find this by clicking into your websites overview in your account: <a href="https://dash.cloudflare.com/" target="_blank">https://dash.cloudflare.com/</a><br /><strong>NOTE: </strong>This is stored in plain-text.' ),
+                            'attributes'  => array( 'type' => 'password', ),
+                            'class' => 'kptcp-half-field',
                         ),
 
                         // Sucuri Key

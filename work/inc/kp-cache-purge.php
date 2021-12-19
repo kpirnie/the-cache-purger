@@ -45,8 +45,6 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             KPCPC::write_log( "STARTING THE PURGE" );
             KPCPC::write_log( "------------------------------------" );
 
-            $this -> purge_remote_apiserver_caches( );
-
         }
 
         // clean us up --- probably not necessary, but whatever...
@@ -111,6 +109,10 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // let's attempt to clear out file based caches
             $this -> purge_file_caches( );
 
+            // log the purge
+            KPCPC::write_log( "\tAPI/SERVER PURGE" );
+            $this -> purge_remote_apiserver_caches( );
+
         }
 
         /** 
@@ -132,15 +134,277 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // get our options 
             $_opt = KPCPC::get_options( );
 
+            // purge redis
+            $this -> purge_redis( $_opt );
+
+            // purge memcached
+            $this -> purge_memcached( $_opt );
+            
+            // purge memcache
+            $this -> purge_memcache( $_opt );
+
+            // cloudflare
+            $this -> purge_cloudflare( $_opt );
+
+            // sucuri
+            $this -> purge_sucuri( $_opt );
+
+            // runcloud hub
+
+
+        }
+
+        /** 
+         * purge_sucuri
+         * 
+         * This method attempts to purge the sucuri cache configured
+         * 
+         * @since 7.3
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @param object $_opt The options object
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        private function purge_sucuri( object $_opt ) : void {
+
+            // get the key
+            $_key = ( $_opt -> service_api_keys['sucuri_key'] ) ?? null;
+            
+            // get the secret
+            $_secret = ( $_opt -> service_api_keys['sucuri_secret'] ) ?? null;
+
+            // make sure they both exist
+            if( $_key && $_secret ) {
+
+                // create the request URL
+                $_url = sprintf(
+                    'https://waf.sucuri.net/api?k=%s&s=%s&a=clearcache',
+                    sanitize_text_field( $_key ),
+                    sanitize_text_field( $_secret )
+                );
+
+
+
+            }
+
+        }
+
+        /** 
+         * purge_cloudflare
+         * 
+         * This method attempts to purge the cloudflare cache configured
+         * 
+         * @since 7.3
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @param object $_opt The options object
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        private function purge_cloudflare( object $_opt ) : void {
+            
+            // get the cloudflare token
+            $_token = ( $_opt -> service_api_keys['cloudflare_token'] ) ?? null;
+            
+            // get the cloudflare zone
+            $_zone = ( $_opt -> service_api_keys['cloudflare_zone'] ) ?? null;
+
+            // make sure we have all required fields
+            if( $_token && $_zone ) {
+
+                // setup our arguments
+                $_args = array(
+                    'headers' => array(
+                        'timeout' => 30,
+                        'Authorization' => "Bearer " . sanitize_text_field( $_token ),
+                        'Content-Type' => 'application/json',
+                    ),
+                    'body' => json_encode( array( 'purge_everything' => true ) ),
+                );
+
+                // setup the URL
+                $_url = sprintf(
+                    'https://api.cloudflare.com/client/v4/zones/%s/purge_cache',
+                    sanitize_text_field( $_zone )
+                );
+
+                // utilize wordpress's built-in remote post
+                $_req = wp_safe_remote_post( $_url, $_args );
+
+                // get the responses body
+                $_resp = wp_remote_retrieve_body( $_req );
+
+                // if there is a response
+                if( ! empty( $_resp ) ) {
+
+                    // decode the json
+                    $_json = json_decode( $_resp, true );
+
+                    // if it was not successful
+                    if( ! $_json['success'] ) {
+
+                        // log it
+                        KPCPC::write_log( "\t\tCLOUDFLARE PURGE - " . $_json['errors'][0]['message'] );
+
+                    } else {
+
+                        // log it
+                        KPCPC::write_log( "\t\tCLOUDFLARE PURGE - SUCCESS");
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        /** 
+         * purge_redis
+         * 
+         * This method attempts to purge the redis servers configured
+         * 
+         * @since 7.3
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @param object $_opt The options object
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        private function purge_redis( object $_opt ) : void {
+
             // redis
             $_allow_redis = filter_var( ( $_opt -> remote_redis ) ?? false, FILTER_VALIDATE_BOOLEAN );
 
             // if we are doing the remote redis
             if( $_allow_redis ) {
 
-                
+                if( class_exists( 'Redis' ) ) {
+
+                    // fire up the redis class
+                    $_redis = new Redis( );
+
+                    // get the configured servers
+                    $_servers = ( $_opt -> remote_redis_servers ) ?? array( );
+
+                    // make sure we have some
+                    if( ! empty( $_servers ) ) {
+
+                        // loop them
+                        foreach( $_servers as $_server ) {
+
+                            // try to trap an exception
+                            try {
+
+                                // connect
+                                $_redis -> connect( $_server['remote_redis_server'], $_server['remote_redis_port'] );
+
+                                // now flush
+                                $_redis -> flushAll( );
+
+                                // now close the connection
+                                $_redis -> close( );
+
+                            } catch ( Exception $e ) {
+                                // do nothing... php will ignore and continue 
+                            }
+
+                        }
+
+                    }
+
+                    // clean it up
+                    unset( $_redis );
+
+                }
 
             }
+
+        }
+
+        /** 
+         * purge_memcache
+         * 
+         * This method attempts to purge the memcache servers configured
+         * 
+         * @since 7.3
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @param object $_opt The options object
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        private function purge_memcache( object $_opt ) : void {
+
+            // memcached
+            $_allow_memcache = filter_var( ( $_opt -> remote_memcache ) ?? false, FILTER_VALIDATE_BOOLEAN );
+            
+            // if we are doing the remote memcached
+            if( $_allow_memcache ) {
+
+                // make sure the Memcached module is installed for PHP
+                if( class_exists( 'Memcache' ) ) {
+
+                    // get the configured memcache servers
+                    $_servers = ( $_opt -> remote_memcache_servers ) ?? array( );
+
+                    // make sure this exists
+                    if( ! empty( $_servers ) ) {
+
+                        // fire it up
+                        $_mc = new Memcache( );
+
+                        // loop them
+                        foreach( $_servers as $_server ) {
+
+                            // add the server
+                            $_mc -> addServer( $_server['remote_memcache_server'], $_server['remote_memcache_port'] );
+
+                            // now flush it
+                            $_mc -> flush( );
+
+                        }
+
+                        // clean it up 
+                        unset( $_mc );
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        /** 
+         * purge_memcached
+         * 
+         * This method attempts to purge the memcached servers configured
+         * 
+         * @since 7.3
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @param object $_opt The options object
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        private function purge_memcached( object $_opt ) : void {
 
             // memcached
             $_allow_memcached = filter_var( ( $_opt -> remote_memcached ) ?? false, FILTER_VALIDATE_BOOLEAN );
@@ -164,7 +428,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                         foreach( $_servers as $_server ) {
 
                             // add the server
-                            $_mc -> addServer( 'localhost', 11211 );
+                            $_mc -> addServer( $_server['remote_memcached_server'], $_server['remote_memcached_port'] );
 
                             // now flush it
                             $_mc -> flush( );
@@ -179,15 +443,6 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 }
 
             }
-
-            // cloudflare
-
-
-            // sucuri
-
-
-            // runcloud hub
-
 
         }
 
