@@ -187,7 +187,15 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                     sanitize_text_field( $_secret )
                 );
 
+                // all we need to do is perform the request
+                wp_safe_remote_get( $_url, array(
+                    'headers' => array(
+                        'timeout' => 30,
+                    ),
+                ) );
 
+                // log it
+                KPCPC::write_log( "\t\tSUCURI PURGE - SUCCESS");
 
             }
 

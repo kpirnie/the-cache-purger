@@ -334,25 +334,6 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                             'class' => 'kptcp-half-field',
                         ),
 
-                        // RunCloud Key
-                        array(
-                            'id' => 'runcloud_key',
-                            'type' => 'text',
-                            'title' => __( 'RunCloud Key' ),
-                            'desc' => __( 'Enter your RunCloud API Key. If you do not have one, you can find it here: <a href="https://manage.runcloud.io/settings/apikey" target="_blank">https://manage.runcloud.io/settings/apikey</a>.<br /><strong>NOTE: </strong>This is stored in plain-text.' ),
-                            'attributes'  => array( 'type' => 'password', ),
-                            'class' => 'kptcp-half-field',
-                        ),
-
-                        // RunCloud Secret
-                        array(
-                            'id' => 'runcloud_secret',
-                            'type' => 'text',
-                            'title' => __( 'RunCloud Secret' ),
-                            'desc' => __( 'Enter your RunCloud API Key. If you do not have one, you can find it here: <a href="https://manage.runcloud.io/settings/apikey" target="_blank">https://manage.runcloud.io/settings/apikey</a>.<br /><strong>NOTE: </strong>This is stored in plain-text.' ),
-                            'attributes'  => array( 'type' => 'password', ),
-                            'class' => 'kptcp-half-field',
-                        ),
 
                     ),
                 ),
