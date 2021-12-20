@@ -406,7 +406,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'placeholder' => __( 'Please select the exclusions...' ),
                     'desc' => __( 'Posts to exclude from the purger.' ),
                     'options' => KPCPC::get_posts_for_select( 'posts' ),
-                    'default' => 0,
+                    'default' => array( 0 ),
                     'dependency' => array( 'on_post', '==', true ),
                 ),
 
@@ -429,7 +429,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'placeholder' => __( 'Please select the exclusions...' ),
                     'desc' => __( 'Pages to exclude from the purger.' ),
                     'options' => KPCPC::get_posts_for_select( 'pages' ),
-                    'default' => 0,
+                    'default' => array( 0 ),
                     'dependency' => array( 'on_page', '==', true ),
                 ),
 
@@ -452,7 +452,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'placeholder' => __( 'Please select the exclusions...' ),
                     'desc' => __( 'CPTs to exclude from the purger.' ),
                     'options' => KPCPC::get_post_types_for_select( ),
-                    'default' => 0,
+                    'default' => array( 0 ),
                     'dependency' => array( 'on_cpt', '==', true ),
                 ),
 
@@ -516,7 +516,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'placeholder' => __( 'Please select the exclusions...' ),
                     'desc' => __( 'Forms to exclude from the purger.' ),
                     'options' => $this -> get_our_forms( ),
-                    'default' => 0,
+                    'default' => array( 0 ),
                     'dependency' => array( 'on_form', '==', true ),
                 );
 
@@ -544,7 +544,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'placeholder' => __( 'Please select the exclusions...' ),
                     'desc' => __( 'Field Groups to exclude from the purger.' ),
                     'options' => $this -> get_our_field_groups( ),
-                    'default' => 0,
+                    'default' => array( 0 ),
                     'dependency' => array( 'on_acf', '==', true ),
                 );
 

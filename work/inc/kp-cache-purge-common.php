@@ -385,6 +385,27 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
             
         }
 
+        /** 
+         * arr_or_empty
+         * 
+         * Public method to return either an array or an empty array
+         * 
+         * @since 7.3
+         * @access public
+         * @static
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return array Returns either the array or an empty one
+         * 
+        */
+        public static function arr_or_empty( mixed $_val ) : array {
+
+            // return either the array or an empty array
+            return ( is_array( $_val ) && ! empty( $_val ) ) ? $_val : array( );
+
+        }
+
     }
 
 }

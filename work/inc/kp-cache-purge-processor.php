@@ -88,19 +88,19 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
                 $_on_post = filter_var( ( $this -> options -> on_post ) ?? false, FILTER_VALIDATE_BOOLEAN );
 
                 // on post exclude
-                $_on_post_exclude = ( $this -> options -> on_post_exclude ) ?? array( );
+                $_on_post_exclude = KPCPC::arr_or_empty( ( $this -> options -> on_post_exclude ) ?? null );
 
                 // on page
                 $_on_page = filter_var( ( $this -> options -> on_page ) ?? false, FILTER_VALIDATE_BOOLEAN );
 
                 // on page exclude
-                $_on_page_exclude = ( $this -> options -> on_page_exclude ) ?? array( );
+                $_on_page_exclude = KPCPC::arr_or_empty( ( $this -> options -> on_page_exclude ) ?? null  );
 
                 // on cpt
                 $_on_cpt = filter_var( ( $this -> options -> on_cpt ) ?? false, FILTER_VALIDATE_BOOLEAN );
 
                 // on cpt exclude
-                $_on_cpt_exclude = ( $this -> options -> on_cpt_exclude ) ?? array( );
+                $_on_cpt_exclude = KPCPC::arr_or_empty( ( $this -> options -> on_cpt_exclude ) ?? null  );
 
                 // on taxonomy
                 $_on_taxonomy = filter_var( ( $this -> options -> on_taxonomy ) ?? false, FILTER_VALIDATE_BOOLEAN );
@@ -121,13 +121,13 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
                 $_on_form = filter_var( ( $this -> options -> on_form ) ?? false, FILTER_VALIDATE_BOOLEAN );
 
                 // on form exclude
-                $_on_form_exclude = ( $this -> options -> on_form_exclude ) ?? array( );
+                $_on_form_exclude = KPCPC::arr_or_empty( ( $this -> options -> on_form_exclude ) ?? null );
 
                 // on acf
                 $_on_acf = filter_var( ( $this -> options -> on_acf ) ?? false, FILTER_VALIDATE_BOOLEAN );
 
                 // on acf exclude
-                $_on_acf_exclude = ( $this -> options -> on_acf_exclude ) ?? array( );
+                $_on_acf_exclude = KPCPC::arr_or_empty( ( $this -> options -> on_acf_exclude ) ?? null );
 
                 // loop over the actions objects
                 foreach( $this -> actions as $_cat => $_actions ) {

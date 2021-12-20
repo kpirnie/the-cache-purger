@@ -5,7 +5,7 @@ Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.0
 Tested up to: 5.9
 Requires PHP: 7.3
-Stable tag: 0.7.16
+Stable tag: 0.7.21
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,7 +29,7 @@ Built in automatic cache purging for the following caches:
     * WPEngine, Kinsta, GoDaddy Managed Wordpress, Pantheon, CloudFlare, Sucuri, RunCloud
         * Some of these are dependant on separate plugins.  Please see your provider if it is necessary, or already included
 * Server Based
-    * PHP FPM, Zend Opcache, APC and APCU, WinCache, Pagespeed Module, nGinx, Static File Caches
+    * PHP FPM, Zend Opcache, APC and APCU, WinCache, Pagespeed Module, nGinx, Static File Caches, Redis, Memcache, Memcached
 * Wordpress Built-In object caching, and persistent object caching
 
 Purges are configurable in the settings, and include the following saves/updates/trashes:
@@ -61,6 +61,9 @@ Even if you don't, there are still some server based caches that need to be purg
 5. Logged Purged Object
 
 == Changelog ==
+
+= 0.7.21 =
+* Fix: Issue on first config if no exceptions are selected
 
 = 0.7.16 =
 * Update: settings rewrite
