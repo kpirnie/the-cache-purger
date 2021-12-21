@@ -396,10 +396,12 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
          * 
+         * @param var $_val The value to check
+         * 
          * @return array Returns either the array or an empty one
          * 
         */
-        public static function arr_or_empty( mixed $_val ) : array {
+        public static function arr_or_empty( $_val ) : array {
 
             // return either the array or an empty array
             return ( is_array( $_val ) && ! empty( $_val ) ) ? $_val : array( );
