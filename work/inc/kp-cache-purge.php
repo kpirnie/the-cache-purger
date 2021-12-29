@@ -489,6 +489,11 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                     WpeCommon::purge_varnish_cache( );
                 }
 
+                // clear object cache
+                if ( is_callable( 'WpeCommon::instance' ) && $_inst = WpeCommon::instance( ) ) {
+                    method_exists( $_inst, 'purge_object_cache' ) ? $_inst -> purge_object_cache( ) : '';
+                }
+
                 // log the purge
                 KPCPC::write_log( "\t\tWPEngine Cache" );
 
@@ -499,7 +504,12 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                 // $kinsta_cache object already created by Kinsta cache.php file.
                 global $kinsta_cache;
-                $kinsta_cache->kinsta_cache_purge -> purge_complete_full_page_cache( );
+
+                // try to purge the full page caches
+                $kinsta_cache -> kinsta_cache_purge -> purge_complete_full_page_cache( );
+
+                // try to purg the rest
+                $kinsta_cache -> kinsta_cache_purge -> purge_complete_caches( );
 
                 // log the purge
                 KPCPC::write_log( "\t\tKinsta Cache" );
@@ -518,8 +528,29 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             }
 
-            // Media Temple
+            // Bluehost
+            if ( class_exists( 'Endurance_Page_Cache' ) ) {
+                
+                // try it
+                do_action( 'epc_purge' );
 
+                // log the purge
+                KPCPC::write_log( "\t\tBlueHost Cache" );
+                
+            }
+
+            // Cloudways
+            if ( class_exists( 'Breeze_Admin' ) ) {
+
+                // fire up the class
+                $_ba = new Breeze_Admin( );
+
+                // try to clear it
+                $_ba -> breeze_clear_all_cache( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tCloudways Cache" );
+            }
 
             // Pantheon
             if( function_exists( 'pantheon_clear_edge_all' ) ) {
@@ -530,6 +561,32 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 // log the purge
                 KPCPC::write_log( "\t\tPantheon Cache" );
 
+            }
+
+            // Siteground
+            if ( isset( $GLOBALS['sg_cachepress_supercacher'] ) ) {
+
+                // grab it's globa;
+                global $sg_cachepress_supercacher;
+    
+                // make sure it exists
+                if ( is_object( $sg_cachepress_supercacher ) && method_exists( $sg_cachepress_supercacher, 'purge_cache' ) ) {
+                    
+                    // purge
+                    $sg_cachepress_supercacher->purge_cache( true );
+                }
+
+                // log the purge
+                KPCPC::write_log( "\t\tSiteground Cache" );
+    
+            // otherwise
+            } else if ( function_exists( 'sg_cachepress_purge_cache' ) ) {
+                
+                // purge
+                sg_cachepress_purge_cache( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tSiteground Cache" );
             }
 
             // Cloudflare - even though it's not a host
@@ -636,6 +693,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 // litespeed
                 LiteSpeed_Cache_Purge::all( );
 
+                // just in case
+                do_action( 'litespeed_purge_all' );
+
                 // log the purge
                 KPCPC::write_log( "\t\tLiteSpeed Cache" );
             }
@@ -655,6 +715,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                 // autoptimize
                 autoptimizeCache::clearall_actionless( );
+
+                // try this too
+                autoptimizeCache::clearall( );
 
                 // log the purge
                 KPCPC::write_log( "\t\tAutoptimize Cache" );
@@ -704,6 +767,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 // I would use Hummingbird\WP_Hummingbird::flush_cache( true, false ) instead, but it's disabling the page cache option in Hummingbird settings.
                 Hummingbird\Core\Filesystem::instance( ) -> clean_up( );
 
+                // just in case
+                do_action( 'wphb_clear_page_cache' );
+
                 // log the purge
                 KPCPC::write_log( "\t\tHummingbird Cache" );
             }
@@ -727,10 +793,15 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             // WP Super Cache
             if( function_exists( 'wp_cache_clear_cache' ) ) {
+
+                // check if we're multisite
                 if( is_multisite( ) ) {
+
+                    // we are so utilize the cache clearing for it
                     wp_cache_clear_cache( $_site_id );
                 } else {
                     
+                    // we're not
                     wp_cache_clear_cache( );
                 }
 
@@ -740,7 +811,12 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             // W3 Total Cache
             if( function_exists( 'w3tc_flush_all' ) ) {
+
+                // flush
                 w3tc_flush_all( );
+
+                // just in case
+                do_action( 'w3tc_flush_posts' );
 
                 // log the purge
                 KPCPC::write_log( "\t\tW3 Total Cache" );
@@ -761,6 +837,18 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                 // log the purge
                 KPCPC::write_log( "\t\tWP Optimize Cache" );
+            }
+
+            // WP-Optimize
+            if ( class_exists( 'WP_Optimize' ) && defined( 'WPO_PLUGIN_MAIN_PATH' ) ) {
+                if( is_callable( array( 'WP_Optimize', 'get_page_cache' ) ) && is_callable( array( WP_Optimize( ) -> get_page_cache( ), 'purge' ) ) ) {
+                    
+                    // purge
+                    WP_Optimize( ) -> get_page_cache( ) -> purge( );
+                }
+
+                // log the purge
+                KPCPC::write_log( "\t\tWP Optimize (try 2) Cache" );
             }
 
             // WP-Optimize 2
@@ -787,8 +875,85 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             if( class_exists( 'Cache_Enabler' ) ) {
                 Cache_Enabler::clear_total_cache( );
 
+                // just in case
+                do_action( 'ce_clear_cache' );
+
                 // log the purge
                 KPCPC::write_log( "\t\tCache Enabler Cache" );
+            }
+
+            // Elementor
+            if( did_action( 'elementor/loaded' ) ) {
+
+                // Automatically purge and regenerate the Elementor CSS cache
+                \Elementor\Plugin::instance( ) -> files_manager -> clear_cache( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tElementor Cache" );
+
+            }
+
+            // Divi
+            if( defined( 'ET_CORE_CACHE_DIR' ) ) {
+
+                // clear the Divi caches
+                ET_Core_PageResource::remove_static_resources( 'all', 'all', true );
+
+                // clear the ET cache folder as well
+                $_et_cache = ET_CORE_CACHE_DIR;
+
+                // let's utilize wordpress's filesystem global
+                global $wp_filesystem;
+
+                // if we do not have the global yet
+                if( empty( $wp_filesystem ) ) {
+
+                    // require the file
+                    require_once ABSPATH . '/wp-admin/includes/file.php';
+
+                    // initialize the wordpress filesystem
+                    WP_Filesystem( );
+
+                }
+
+                // clear the files from the cache path.  This should take care of the rest
+                if( @is_readable ( $_et_cache ) ) {
+
+                    // get a list of the files/folders in the cache path
+                    $_files = glob( $_et_cache . '*' );
+
+                    // loop over them
+                    foreach( $_files as $_file ) {
+
+                        // if the location is readable
+                        if( @is_readable( $_file ) ) {
+
+                            // if it's a directory
+                            if( $wp_filesystem -> is_dir( $_file ) ) {
+
+                                // try to delete it recursively
+                                $wp_filesystem -> delete( $_file, true, 'd' );
+
+                                // for my own OCDness, let's then recreate the path
+                                $wp_filesystem -> mkdir( $_file );
+
+                            // otherwise it's a file
+                            } else {
+
+                                // try to delete it
+                                $wp_filesystem -> delete( $_file, false, 'f' );
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                // log the purge
+                KPCPC::write_log( "\t\tDivi Cache & Divi File Cache" );
+
             }
 
             // throw a hook here

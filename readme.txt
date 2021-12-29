@@ -5,7 +5,7 @@ Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.0
 Tested up to: 5.9
 Requires PHP: 7.3
-Stable tag: 0.7.22
+Stable tag: 0.8.09
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -61,6 +61,21 @@ Even if you don't, there are still some server based caches that need to be purg
 5. Logged Purged Object
 
 == Changelog ==
+
+= 0.8.09 =
+* Add: Elementor CSS Auto-Regenerate
+* Add: Divi Cache Purge
+* Update: W3 Total Cache Clearing
+* Update: WP Super Cache Clearing
+* Update: Hummingbird Cache Clearing
+* Update: Cache Enabler Clearing
+* Update: Lightspeed Cache Clearing
+* Update: Kinsta Cache Clearing
+* Update: Autoptimize Cache Clearing
+* Add: Siteground Hosting Cache Purge
+* Add: Bluehost Hosting Cache Purge
+* Add: Breezeway Hosting Cache Purge
+* Update: WP Optimize Cache Clearing
 
 = 0.7.22 =
 * Fix: Strict typing for non-nullable object
