@@ -25,11 +25,14 @@ Built in automatic cache purging for the following caches:
 * Plugins
     * SiteGround Optimizer, Nginx Helper, LiteSpeed Cache, Cachify, Autoptimize, Fast Velocity Minify, WP Rocket, Swift Performance,
       Comet Cache, Hummingbird, WP Fastest Cache, WP Super Cache, W3 Total Cache, Hyper Cache, WP Optimize, Cache Enabler
+    * Check the changelog below for new additions...
 * Hosting / CDN
     * WPEngine, Kinsta, GoDaddy Managed Wordpress, Pantheon, CloudFlare, Sucuri, RunCloud
         * Some of these are dependant on separate plugins.  Please see your provider if it is necessary, or already included
+        * Check the changelog below for new additions...
 * Server Based
     * PHP FPM, Zend Opcache, APC and APCU, WinCache, Pagespeed Module, nGinx, Static File Caches, Redis, Memcache, Memcached
+    * Check the changelog below for new additions...
 * Wordpress Built-In object caching, and persistent object caching
 
 Purges are configurable in the settings, and include the following saves/updates/trashes:
