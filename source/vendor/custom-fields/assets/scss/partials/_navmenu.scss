@@ -1,0 +1,60 @@
+/**
+ * 08. Nav Menu
+ */
+.kptcp-nav-menu-options{
+  clear: both;
+  float: left;
+  width: 100%;
+
+  > .kptcp-fields{
+    margin-left: -10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+
+    > .kptcp-field{
+      padding: 12px 14px 12px 12px;
+
+      .kptcp-title{
+        float: none;
+        width: 100%;
+        margin-bottom: 5px;
+      }
+
+      .kptcp-fieldset{
+        float: none;
+        width: 100%;
+      }
+    }
+  }
+
+  .kptcp-field-text input{
+    width: 100%;
+  }
+
+  .kptcp-field-notice .kptcp-notice{
+    padding: 15px;
+  }
+}
+
+.kptcp-nav-menu-title{
+  padding: 12px 14px 12px 12px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+
+  &:first-child{
+    border-top: 0;
+  }
+
+  h4{
+    margin: 0;
+    padding: 0;
+    color: #23282d;
+  }
+}
+
+.kptcp-nav-menu-icon{
+  margin-right: 5px;
+}

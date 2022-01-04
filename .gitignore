@@ -1,0 +1,5 @@
+# Global
+node_modules
+.sass-cache/
+.DS_Store
+package-lock.json

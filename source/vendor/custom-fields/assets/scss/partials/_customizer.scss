@@ -1,0 +1,179 @@
+/**
+ * 05. Widget
+ */
+.control-section{
+
+  .kptcp-field{
+    padding: 0;
+
+    .kptcp-title{
+      float: none;
+      width: 100%;
+      margin-bottom: 6px;
+
+      h4{
+        display: block;
+        font-size: 13px;
+        line-height: 1;
+        font-weight: 600;
+        color: inherit;
+      }
+    }
+
+    .kptcp-fieldset{
+      float: none;
+      width: 100%;
+    }
+  }
+
+  .kptcp-help{
+    top: -5px;
+    right: -5px;
+  }
+
+  .kptcp-field-select select{
+    width: 100%;
+  }
+
+  .kptcp-field-heading{
+    color: inherit;
+    font-size: 14px;
+    line-height: 1em;
+    margin-right: -15px;
+    margin-left: -15px;
+    padding: 15px;
+  }
+
+  .kptcp-field-subheading{
+    color: inherit;
+    font-size: 11px;
+    margin-right: -15px;
+    margin-left: -15px;
+    padding: 10px 15px;
+  }
+
+  .kptcp-subtitle-text{
+    margin-top: 4px;
+    font-size: 12px;
+  }
+
+  .kptcp-field-submessage .kptcp-submessage{
+    margin-right: -15px;
+    margin-left: -15px;
+    padding: 15px;
+  }
+
+  .kptcp-fieldset{
+
+    .kptcp-field-submessage .kptcp-submessage,
+    .kptcp-field-heading,
+    .kptcp-field-subheading{
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .kptcp-field-date{
+
+    .kptcp--to{
+      margin-left: 0;
+    }
+  }
+
+  .kptcp-field-sorter{
+
+    ul li{
+      padding: 5px;
+    }
+
+    .kptcp-modules{
+      float: none;
+      width: 100%;
+    }
+
+    .kptcp-modules:first-child{
+      padding-right: 0;
+      padding-bottom: 15px;
+    }
+  }
+
+  .kptcp-field-background{
+
+    .kptcp--background-attributes{
+      flex-direction: column;
+    }
+  }
+
+  .kptcp-field-spacing{
+    input{
+      width: 90px;
+    }
+  }
+
+  .kptcp-field-border{
+
+    .kptcp--input{
+      flex: 1 50%;
+    }
+
+    input,
+    select{
+      width: 100%;
+    }
+  }
+
+  .kptcp-field-spinner{
+    input{
+      width: 50px;
+    }
+  }
+
+  .kptcp-field-number{
+
+    .kptcp--wrap{
+      width: 100%;
+    }
+  }
+
+  .kptcp-field-backup{
+
+    .kptcp-export-data{
+      display: none;
+    }
+  }
+
+  .kptcp-field-fieldset{
+
+    .kptcp-fieldset-content{
+      border-color: #e5e5e5;
+    }
+  }
+
+  .kptcp-tabbed-content,
+  .kptcp-sortable-content,
+  .kptcp-repeater-content,
+  .kptcp-fieldset-content,
+  .kptcp-cloneable-content,
+  .kptcp-accordion-content{
+
+    > .kptcp-field{
+      padding: 10px;
+
+      .kptcp-title{
+        margin-bottom: 5px;
+      }
+
+      h4{
+        font-size: 12px;
+      }
+    }
+  }
+
+  .kptcp-depend-hidden.kptcp-depend-on{
+    display: none !important;
+  }
+
+  .kptcp-depend-visible.kptcp-depend-on{
+    border-top: 0 !important;
+  }
+}

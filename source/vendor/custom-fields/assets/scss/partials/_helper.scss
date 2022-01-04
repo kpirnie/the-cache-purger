@@ -1,0 +1,152 @@
+/**
+ * 10. Helper
+ */
+.kptcp-subtitle-text{
+  margin-top: 6px;
+  font-weight: 400;
+  color: #999;
+}
+
+.kptcp-desc-text{
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 6px;
+  font-weight: 400;
+  color: #999;
+}
+
+.kptcp-error-text{
+  margin-top: 6px;
+  color: #d02c21;
+}
+
+.kptcp-before-text{
+  margin-bottom: 6px;
+}
+
+.kptcp-after-text{
+  margin-top: 6px;
+}
+
+.kptcp-metabox-hide{
+  display: none !important;
+}
+
+.kptcp-metabox-show{
+  display: block !important;
+}
+
+.kptcp-depend-hidden.kptcp-depend-on{
+  display: none;
+}
+
+.kptcp-depend-visible.kptcp-depend-on{
+  display: block;
+  opacity: 0.75;
+  filter: grayscale(1);
+  user-select: none;
+  border-top: 1px solid #eee;
+
+  .clear:before{
+    content: "";
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    background-color: #eee;
+    opacity: 0.25;
+    z-index: 10;
+  }
+}
+
+.kptcp-warning-primary{
+  color: #fff !important;
+  border-color: #dc3545 !important;
+  background: #dc3545 !important;
+
+  &:hover,
+  &:focus{
+    border-color: #bd2130 !important;
+    background: #bd2130 !important;
+  }
+
+  &:focus{
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px #bd2130 !important;
+  }
+
+  &:active{
+    border-color: #bd2130 !important;
+    background: #bd2130 !important;
+  }
+}
+
+.kptcp-form-result{
+  display: none;
+  float: left;
+  padding: 0 8px;
+  margin-right: 4px;
+  font-size: 11px;
+  line-height: 30px;
+  user-select: none;
+  border-radius: 2px;
+}
+
+.kptcp-form-show{
+  display: block;
+}
+
+.kptcp-form-success{
+  color: #fff;
+  background-color: #46b450;
+}
+
+.kptcp-form-warning{
+  color: #8a6d3b;
+  background-color: #faebcc;
+}
+
+.kptcp-label-error{
+  position: relative;
+  top: -2px;
+  display: inline-block;
+  font-size: 10px;
+  line-height: 10px;
+  height: 10px;
+  width: 10px;
+  padding: 1px;
+  font-style: normal;
+  text-align: center;
+  color: #fff;
+  vertical-align: middle;
+  background-color: #e10000;
+  border-radius: 2px;
+}
+
+.kptcp-no-option{
+  padding: 30px;
+}
+
+.kptcp-input-number{
+  -moz-appearance:textfield;
+}
+
+.kptcp-input-number::-webkit-inner-spin-button,
+.kptcp-input-number::-webkit-outer-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.kptcp-fa5-shims{
+
+  .kptcp{
+
+    .fas,
+    .far,
+    .fab{
+      font-family: "FontAwesome";
+      font-style: normal;
+    }
+  }
+}

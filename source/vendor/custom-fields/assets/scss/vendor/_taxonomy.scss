@@ -1,0 +1,114 @@
+/**
+ * 06. Taxonomy
+ */
+.kpf-taxonomy{
+  max-width: 95%;
+
+  > .kpf-field{
+    border-top: none !important;
+  }
+
+  > .kpf-field-heading{
+    font-size: 1.1em;
+    padding: 20px !important;
+    border: 1px solid #ddd;
+  }
+
+  > .kpf-field-subheading{
+    font-size: 12px;
+    padding: 15px !important;
+    border: 1px solid #ddd;
+  }
+
+  > .kpf-field-submessage{
+
+    .kpf-submessage{
+      padding: 15px;
+      border-left-width: 1px;
+      border-left-style: solid;
+      border-right-width: 1px;
+      border-right-style: solid;
+    }
+  }
+
+  > .kpf-field-notice{
+    background-color: transparent;
+  }
+
+  .kpf-section-title{
+    display: block;
+    padding: 15px ;
+    background-color: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+  }
+}
+
+.kpf-taxonomy-add-fields{
+
+  > .kpf-field{
+    padding: 8px 0;
+
+    > .kpf-title{
+      float: none;
+      width: 100%;
+      padding: 2px 2px 4px 0;
+
+      h4{
+        font-size: 12px;
+        font-weight: normal;
+      }
+    }
+
+    > .kpf-fieldset{
+      float: none;
+      width: 100%;
+
+      > .kpf-help{
+        right: -5px;
+      }
+    }
+  }
+
+  + p.submit{
+    margin-top: 0;
+  }
+}
+
+.kpf-taxonomy-edit-fields{
+
+  > .kpf-field{
+    padding: 20px 0;
+
+    > .kpf-title{
+      width: 200px;
+
+      h4{
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.3;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    > .kpf-fieldset{
+      width: calc(100% - 220px);
+
+      > .kpf-help{
+        top: -5px;
+        right: -5px;
+      }
+    }
+  }
+
+  > .kpf-field-submessage{
+    margin: 20px 0;
+  }
+
+  > .kpf-field-subheading,
+  > .kpf-field-heading{
+    margin: 20px 0;
+    border: 1px solid #ddd;
+  }
+}

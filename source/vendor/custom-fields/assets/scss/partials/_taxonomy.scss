@@ -1,0 +1,114 @@
+/**
+ * 06. Taxonomy
+ */
+.kptcp-taxonomy{
+  max-width: 95%;
+
+  > .kptcp-field{
+    border-top: none !important;
+  }
+
+  > .kptcp-field-heading{
+    font-size: 1.1em;
+    padding: 20px !important;
+    border: 1px solid #ddd;
+  }
+
+  > .kptcp-field-subheading{
+    font-size: 12px;
+    padding: 15px !important;
+    border: 1px solid #ddd;
+  }
+
+  > .kptcp-field-submessage{
+
+    .kptcp-submessage{
+      padding: 15px;
+      border-left-width: 1px;
+      border-left-style: solid;
+      border-right-width: 1px;
+      border-right-style: solid;
+    }
+  }
+
+  > .kptcp-field-notice{
+    background-color: transparent;
+  }
+
+  .kptcp-section-title{
+    display: block;
+    padding: 15px ;
+    background-color: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+  }
+}
+
+.kptcp-taxonomy-add-fields{
+
+  > .kptcp-field{
+    padding: 8px 0;
+
+    > .kptcp-title{
+      float: none;
+      width: 100%;
+      padding: 2px 2px 4px 0;
+
+      h4{
+        font-size: 12px;
+        font-weight: normal;
+      }
+    }
+
+    > .kptcp-fieldset{
+      float: none;
+      width: 100%;
+
+      > .kptcp-help{
+        right: -5px;
+      }
+    }
+  }
+
+  + p.submit{
+    margin-top: 0;
+  }
+}
+
+.kptcp-taxonomy-edit-fields{
+
+  > .kptcp-field{
+    padding: 20px 0;
+
+    > .kptcp-title{
+      width: 200px;
+
+      h4{
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.3;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    > .kptcp-fieldset{
+      width: calc(100% - 220px);
+
+      > .kptcp-help{
+        top: -5px;
+        right: -5px;
+      }
+    }
+  }
+
+  > .kptcp-field-submessage{
+    margin: 20px 0;
+  }
+
+  > .kptcp-field-subheading,
+  > .kptcp-field-heading{
+    margin: 20px 0;
+    border: 1px solid #ddd;
+  }
+}

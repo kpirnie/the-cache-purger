@@ -1,0 +1,157 @@
+/**
+ * 12. Responsive
+ */
+@media only screen and (max-width:1200px){
+
+  .kptcp-metabox{
+
+    .kptcp-field{
+
+      .kptcp-title{
+        float: none;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .kptcp-fieldset{
+        float: none;
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width:782px){
+
+  .kptcp-header-inner{
+    text-align: center;
+
+    h1{
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+
+  .kptcp-form-result{
+    float: none;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .kptcp-search,
+  .kptcp-header-right,
+  .kptcp-header-left{
+    width: 100%;
+  }
+
+  .kptcp-search{
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .kptcp-footer{
+    text-align: center;
+  }
+
+  .kptcp-buttons{
+    float: none;
+  }
+
+  .kptcp-copyright{
+    float: none;
+    margin-top: 10px;
+  }
+
+  .kptcp-nav,
+  .kptcp-expand-all,
+  .kptcp-reset-section,
+  .kptcp-nav-background{
+    display: none !important;
+  }
+
+  .kptcp-nav-normal + .kptcp-content{
+    margin-left: 0;
+  }
+
+  .kptcp-section-title,
+  .kptcp-section{
+    display: block !important;
+  }
+
+  .kptcp-field{
+
+    .kptcp-title{
+      float: none;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .kptcp-fieldset{
+      float: none;
+      width: 100%;
+    }
+  }
+
+  .kptcp-field-color{
+
+    .button.wp-picker-clear{
+      padding: 0 8px;
+      line-height: 2.14285714;
+      min-height: 32px;
+    }
+  }
+
+  .kptcp-profile-options,
+  .kptcp-taxonomy-edit-fields{
+
+    > .kptcp-field{
+
+      > .kptcp-title{
+        float: none;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      > .kptcp-fieldset{
+        float: none;
+        width: 100%;
+      }
+    }
+  }
+
+  .kptcp-nav-menu-options{
+
+    > .kptcp-fields{
+      margin-left: -10px;
+      margin-right: -10px;
+
+      > .kptcp-field{
+        padding: 10px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 782px) {
+
+  .kptcp-modal{
+
+    .kptcp-modal-inner{
+      width: 90%;
+    }
+  }
+}
+
+@media only screen and (max-height: 750px) {
+
+  .kptcp-modal{
+
+    .kptcp-modal-inner{
+      height: auto;
+    }
+
+    .kptcp-modal-content{
+      height: calc(100vh - 200px);
+    }
+  }
+}
