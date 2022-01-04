@@ -7,7 +7,7 @@
   "source": "source",
   "distribution": "dist",
   "production" : {
-    "shouldcopy": true,
+    "shouldcopy": false,
     "path" : "/home/kpirnie/SVN/the-cache-purger/trunk/"
   },
   "license": "GPL-3.0",

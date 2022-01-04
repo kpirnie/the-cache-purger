@@ -231,11 +231,11 @@ gulp.task( 'production_copy', function( done ) {
 
     if( pkg.production.shouldcopy ) {
         console.log( '# Copying to Production' );
-        return gulp.src( `${dist.root}/**/*`, { allowEmpty: true }  )
+        return gulp.src( `${dist.root}/**/**/*`, { allowEmpty: true }  )
             .pipe( gulp.dest( `${pkg.production.path}/` ) );
     }
 
-    // default this to return false
+    // default ending
     done( );
 
 } );
@@ -249,5 +249,7 @@ gulp.task( 'default', gulp.series(
     'cleanupconcat',
     [ 'fonts', 'images', 'svgs', 'languages', 'templates', 'customs' ],
     //[ 'replace-env', 'replace-themename' ],
-    [ 'vendor', 'debug_assets', 'production_copy', ],
+    'vendor', 
+    'debug_assets',
+    'production_copy',
 ) );
