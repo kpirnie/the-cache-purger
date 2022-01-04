@@ -1,0 +1,25 @@
+.kptcp-half-field {
+    width:45% !important;
+    display:inline-block !important;
+} .kptcp-half-field input {width:100%;}
+.kptcp-half-field .kptcp-title{width:15%;}
+.kptcp-half-field .kptcp-fieldset{width:calc(85% - 20px);}
+.kptcp-nav-background, .kptcp-tab-item, .kptcp-theme-dark .kptcp-nav ul li a,
+.kptcp-theme-dark .kptcp-header-inner, .kptcp-theme-dark .kptcp-footer {
+    background: #01123c !important;
+}
+.kptcp-save, .kptcp-tab-expanded, .kptcp-nav ul li a.kptcp-active, .kptcp-theme-dark .kptcp-search input,
+.kptcp-theme-dark .kptcp-expand-all {
+    background: #2d7696 !important;
+}
+.kptcp-theme-dark .kptcp-header-inner h1 small {
+    color: #2d7696 !important;
+}
+.kptcp-theme-dark .kptcp-search input, .kptcp-theme-dark .kptcp-search input::placeholder {
+    color:#fff !important;
+}
+.kptcp-doc-content main ul {
+    margin:10px 25px;
+}
+.kptcp-doc-content h2 {font-size:1.7em;}
+.kptcp-doc-content h3 {font-size:1.25em;}

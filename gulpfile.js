@@ -31,7 +31,6 @@ import svgo from "gulp-svgo";
 
 // fs
 import fs from "fs";
-import { doesNotMatch } from "assert";
 
 // read in our package json file
 const pkg = JSON.parse( fs.readFileSync( './package.json' ) )
@@ -198,8 +197,17 @@ gulp.task( 'customs', function( ) {
 // our vendor folder
 gulp.task( 'vendor', function( ) {
     console.log( '# Working on Vendor' );
-    return gulp.src( `${src.vendor}`, { allowEmpty: true }  )
+    return gulp.src( `${src.vendor}`, { allowEmpty: true } )
         .pipe( gulp.dest( `${dist.vendor}` ) );
+} );
+
+// debug assets
+gulp.task( 'debug_assets', function( ) {
+    console.log( '# Copying in Debug Assets' );
+    return gulp.src( globs.src.css, { allowEmpty: true } )
+        .pipe( gulp.dest( `${dist.css}` ) ),
+        gulp.src( globs.src.js, { allowEmpty: true } )
+        .pipe( gulp.dest( `${dist.js}` ) );
 } );
 
 // replace environment set
@@ -241,6 +249,5 @@ gulp.task( 'default', gulp.series(
     'cleanupconcat',
     [ 'fonts', 'images', 'svgs', 'languages', 'templates', 'customs' ],
     //[ 'replace-env', 'replace-themename' ],
-    'vendor',
-    'production_copy',
+    [ 'vendor', 'debug_assets', 'production_copy', ],
 ) );
