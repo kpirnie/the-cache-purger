@@ -4,7 +4,7 @@
  * 
  * Process the uninstalling of this plugin
  * 
- * @since 7.3
+ * @since 7.4
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package Kevin's Framework
  * 

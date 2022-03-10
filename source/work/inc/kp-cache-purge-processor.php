@@ -4,7 +4,7 @@
  * 
  * This file does all the processing for the purges
  * 
- * @since 7.3
+ * @since 7.4
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
      * 
      * Class for processing the purges
      * 
-     * @since 7.3
+     * @since 7.4
      * @access public
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
@@ -33,10 +33,10 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
     class KP_Cache_Purge_Processor {
 
         // hold our internal options property
-        private object $options;
+        private $options;
 
         // hold our internal actions property
-        private array $actions;
+        private $actions;
 
         // fire us up
         public function __construct( ) {
@@ -68,7 +68,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
          * 
          * Public method attempting to process the purging
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -249,7 +249,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
          * Private method to purge on the action
          * and check for the exclusions
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -442,7 +442,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
          * 
          * Private method for processing the post
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @static
          * @author Kevin Pirnie <me@kpirnie.com>
@@ -586,7 +586,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
          * 
          * Private method for processing other cache flushing necessities
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @static
          * @author Kevin Pirnie <me@kpirnie.com>
@@ -626,7 +626,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
          * 
          * Private method for getting the current poost
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @static
          * @author Kevin Pirnie <me@kpirnie.com>

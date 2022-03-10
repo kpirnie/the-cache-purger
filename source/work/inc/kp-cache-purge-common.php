@@ -4,7 +4,7 @@
  * 
  * This file contains the plugins common functionality
  * 
- * @since 7.3
+ * @since 7.4
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
      * 
      * Class for building out the common functionality for the plugin
      * 
-     * @since 7.3
+     * @since 7.4
      * @access public
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
@@ -34,7 +34,7 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
          * 
          * Public method pull to the options
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @static
          * @author Kevin Pirnie <me@kpirnie.com>
@@ -60,7 +60,7 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
          * 
          * Public method pull to gather all public post types for a select box
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @static
          * @author Kevin Pirnie <me@kpirnie.com>
@@ -143,7 +143,7 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
          * 
          * Public method pull to gather all posts for a select box
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @static
          * @author Kevin Pirnie <me@kpirnie.com>
@@ -252,7 +252,7 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
          * 
          * Public method pull to gather all public URLs
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @static
          * @author Kevin Pirnie <me@kpirnie.com>
@@ -281,8 +281,19 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
                 // all we're interested in is publicly accessible posts/pages
                 $_post_types = get_post_types( array( 'public' => true, ), 'names' );
 
+                // setup some arguments
+                $_args = array( 
+                    'no_found_rows' => true, 
+                    'update_post_meta_cache' => false, 
+                    'update_post_term_cache' => false, 
+                    'fields' => 'ids',
+                    'post_type' => $_post_types, 
+                    'posts_per_page' => -1, 
+                    'post_status' => 'publish',
+                );
+
                 // our query for all public posts
-                $_qry = new WP_Query( array( 'post_type' => $_post_types, 'posts_per_page' => -1, 'post_status' => 'publish' ) );
+                $_qry = new WP_Query( $_args );
 
                 // fire up the recordset
                 $_rs = $_qry -> get_posts( );
@@ -291,10 +302,10 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
                 if( $_rs ) {
 
                     // loop and and populate the URL array with the posts permalinks
-                    foreach( $_rs as $_post ) {
+                    foreach( $_rs as $_id ) {
 
                         // add it to the return array
-                        $_ret[] = get_permalink( $_post -> ID );
+                        $_ret[] = get_permalink( $_id );
 
                     }
 
@@ -316,7 +327,7 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
          * Public method pull to gather all actions we need to hook into 
          * for each section the cache is configured to be purged for
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @static
          * @author Kevin Pirnie <me@kpirnie.com>
@@ -351,7 +362,7 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
          * 
          * Public method to write to a cache purge log
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @static
          * @author Kevin Pirnie <me@kpirnie.com>
@@ -386,11 +397,42 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
         }
 
         /** 
+         * write_error
+         * 
+         * Public method to write to a exception log
+         * 
+         * @since 7.4
+         * @access public
+         * @static
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        public static function write_error( string $_msg ) : void {
+
+            // set a path to hold the exception log
+            $_path = ABSPATH . 'wp-content/purge-exceptions.log';
+
+            // I want to append a timestamp to the message
+            $_message = '[' . current_time( 'mysql' ) . ']: ' . __( $_msg, 'the-cache-purger' ) . PHP_EOL;
+
+            // unfortunately we cannot use wp's builtin filesystem hanlders for this
+            // the put_contents method only writes/overwrites contents, and does not append
+            // we need this to append the content
+
+            // append the message to the purge log file
+            file_put_contents( $_path, $_message, FILE_APPEND | LOCK_EX );
+
+        }
+
+        /** 
          * arr_or_empty
          * 
          * Public method to return either an array or an empty array
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @static
          * @author Kevin Pirnie <me@kpirnie.com>

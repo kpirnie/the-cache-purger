@@ -4,7 +4,7 @@
  * 
  * This file contains cache purging methods
  * 
- * @since 7.3
+ * @since 7.4
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
      * 
      * Class for attempting to purge all caches
      * 
-     * @since 7.3
+     * @since 7.4
      * @access public
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
@@ -32,7 +32,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
     class KP_Cache_Purge {
 
         // internal class properties
-        private int $site_id;
+        private $site_id;
 
         /** We're going to use this to populate our class properties */
         public function __construct( ) {
@@ -64,7 +64,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
          * Public method attempting to purge the sites caches
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -122,7 +122,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * This method attempts to utilize the purge methods 
          * of the configured remote caches
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -157,7 +157,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
          * This method attempts to purge the sucuri cache configured
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -185,15 +185,24 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                     sanitize_text_field( $_secret )
                 );
 
-                // all we need to do is perform the request
-                wp_safe_remote_get( $_url, array(
-                    'headers' => array(
-                        'timeout' => 30,
-                    ),
-                ) );
+                // fire up the wordpress file system
+                $wp_filesystem = new WP_Filesystem_Direct( null );
 
-                // log it
-                KPCPC::write_log( "\t\tSUCURI PURGE - SUCCESS");
+                // get the contents of this request, since it's plain text
+                $_req = $wp_filesystem -> get_contents( $_url );
+
+                // check if the response contains an OK
+                if( strpos( $_req, 'OK' ) !== false ) {
+
+                    // log it
+                    KPCPC::write_log( "\t\tSUCURI PURGE - SUCCESS");
+
+                } else {
+
+                    // it actually failed, so log it
+                    KPCPC::write_log( "\t\tSUCURI PURGE - " . trim( preg_replace( '/\s+/', ' ', $_req ) ) );
+
+                }
 
             }
 
@@ -204,7 +213,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
          * This method attempts to purge the cloudflare cache configured
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -215,7 +224,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
         */
         private function purge_cloudflare( object $_opt ) : void {
-            
+
             // get the cloudflare token
             $_token = ( $_opt -> service_api_keys['cloudflare_token'] ) ?? null;
             
@@ -228,7 +237,8 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 // setup our arguments
                 $_args = array(
                     'headers' => array(
-                        'timeout' => 30,
+                        'timeout' => 5,
+                        'blocking' => false,
                         'Authorization' => "Bearer " . sanitize_text_field( $_token ),
                         'Content-Type' => 'application/json',
                     ),
@@ -266,6 +276,11 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                     }
 
+                } else {
+
+                    // log it
+                    KPCPC::write_log( "\t\tCLOUDFLARE PURGE - EMPTY RESPONSE, CHECK CF LOGS" );
+
                 }
 
             }
@@ -277,7 +292,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
          * This method attempts to purge the redis servers configured
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -343,7 +358,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
          * This method attempts to purge the memcache servers configured
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -400,7 +415,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
          * This method attempts to purge the memcached servers configured
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -458,7 +473,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * This method attempts to utilize the purge methods 
          * of the most common hosting environments
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -498,7 +513,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 KPCPC::write_log( "\t\tWPEngine Cache" );
 
             }
-
+        
             // Kinsta Cache.
             if( class_exists( 'Kinsta\Cache' ) ) {
 
@@ -586,39 +601,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 sg_cachepress_purge_cache( );
 
                 // log the purge
-                KPCPC::write_log( "\t\tSiteground Cache" );
-            }
-
-            // Cloudflare - even though it's not a host
-            if ( class_exists( '\CF\WordPress\Hooks' ) ) {
-
-                // Initiliaze Hooks class which contains WordPress hook functions from Cloudflare plugin.
-                $_cf_hooks = new \CF\WordPress\Hooks( );
-                
-                // If we have an instantiated class.
-                if ( $_cf_hooks ) {
-                
-                    // Purge all cache.
-                    $_cf_hooks -> purgeCacheEverything( );
-                
-                }
-
-                // log the purge
-                KPCPC::write_log( "\t\tCloudflare Cache" );
-            }
-
-            // Sucuri - even though it's not a host, we'll need to rely on the sucuri plugin being installed
-            if( class_exists( 'SucuriScanFirewall' ) ) {
-
-                // get the sucuri api key
-                $_key = SucuriScanFirewall::getKey( );
-
-                // fireoff the cache clearing ajax method
-                SucuriScanFirewall::clearCache( $_key );
-
-                // log the purge
-                KPCPC::write_log( "\t\tSucuri Cache" );
-
+                KPCPC::wite_log( "\t\tSiteground Cache" );
             }
 
             // RunCloud - this will only work if the RunCloud Hub is installed
@@ -653,7 +636,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * This method attempts to utilize the purge methods 
          * of the most common caching plugins
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -665,6 +648,38 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             // throw a hook here
             do_action( 'tcp_pre_plugin_purge' );
+
+            // Cloudflare - even though it's not a host
+            if ( class_exists( '\CF\WordPress\Hooks' ) ) {
+
+                // Initiliaze Hooks class which contains WordPress hook functions from Cloudflare plugin.
+                $_cf_hooks = new \CF\WordPress\Hooks( );
+                
+                // If we have an instantiated class.
+                if ( $_cf_hooks ) {
+                
+                    // Purge all cache.
+                    $_cf_hooks -> purgeCacheEverything( );
+                
+                }
+
+                // log the purge
+                KPCPC::write_log( "\t\tCloudflare Cache" );
+            }
+
+            // Sucuri - even though it's not a host, we'll need to rely on the sucuri plugin being installed
+            if( class_exists( 'SucuriScanFirewall' ) ) {
+
+                // get the sucuri api key
+                $_key = SucuriScanFirewall::getKey( );
+
+                // fireoff the cache clearing ajax method
+                SucuriScanFirewall::clearCache( $_key );
+
+                // log the purge
+                KPCPC::write_log( "\t\tSucuri Cache" );
+
+            }
 
             // SG Optimizer.
             if ( class_exists( 'SiteGround_Optimizer\Supercacher\Supercacher' ) ) {
@@ -751,8 +766,9 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                 // log the purge
                 KPCPC::write_log( "\t\tSwift Performance Cache" );
-            }
 
+            }
+    
             // Comet Cache.
             if ( class_exists( 'comet_cache' ) ) {
                 comet_cache::clear( );
@@ -782,7 +798,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 // log the purge
                 KPCPC::write_log( "\t\tWP Fastest Cache" );
             }
-        
+    
             // WP Fastest Cache 2
             if ( isset( $GLOBALS['wp_fastest_cache'] ) && method_exists( $GLOBALS['wp_fastest_cache'], 'deleteCache' ) ) {
                 $GLOBALS['wp_fastest_cache'] -> deleteCache( );
@@ -860,7 +876,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 // log the purge
                 KPCPC::write_log( "\t\tWP Optimize 2 Cache" );
             }
-            
+    
             // WP-Optimize minification files have a different cache.
             if ( class_exists( 'WP_Optimize_Minify_Cache_Functions' ) ) {
 
@@ -956,6 +972,31 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             }
 
+            // WP REST Cache
+            if( class_exists( 'WP_Rest_Cache_Plugin\\Includes\\Caching\\Caching' ) ) {
+
+                // fire up the database global
+                global $wpdb;
+
+                // get the table names
+                $_cache_tbl = ( defined( 'WP_Rest_Cache_Plugin\\Includes\\Caching\\Caching::TABLE_CACHES' ) ) ? WP_Rest_Cache_Plugin\Includes\Caching\Caching::TABLE_CACHES : 'wrc_caches';
+                $_cache_rel_tbl = ( defined( 'WP_Rest_Cache_Plugin\\Includes\\Caching\\Caching::TABLE_RELATIONS' ) ) ? WP_Rest_Cache_Plugin\Includes\Caching\Caching::TABLE_RELATIONS : 'wrc_relations';
+
+                // now append the table prefix
+                $_cache_tbl = sprintf( '%s%s', $wpdb -> prefix, $_cache_tbl );
+                $_cache_rel_tbl = sprintf( '%s%s', $wpdb -> prefix, $_cache_rel_tbl );
+
+                // truncate the relationship table
+                $wpdb->query( "TRUNCATE `{$_cache_rel_tbl}`;" );
+
+                // truncate the cache table
+                $wpdb->query( "TRUNCATE `{$_cache_tbl}`;" );
+
+                // log the purge
+                KPCPC::write_log( "\t\tWP REST Cache" );
+
+            }
+
             // throw a hook here
             do_action( 'tcp_post_plugin_purge' );
 
@@ -967,7 +1008,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * This method attempts to utilize the purge methods 
          * builtin to Wordpress
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -1012,7 +1053,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             }
 
             // delete the transients
-            $wpdb -> query( "DELETE FROM `$wpdb->options` WHERE `option_name` LIKE '_transient_files_%'" );
+            $wpdb -> query( "DELETE FROM `$wpdb->options` WHERE `option_name` LIKE '_transient_%'" );
 
             // log the purge
             KPCPC::write_log( "\t\tWP Transient Cache" );
@@ -1037,7 +1078,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * This method attempts to purge php based caches
          * if they exist; wincache, opcache, apc and apcu
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -1064,8 +1105,8 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // check if the Zend Opcache is available
             if( extension_loaded( 'Zend OPcache' ) ) {
 
-                // get the status
-                $_status = opcache_get_status( );
+                // get the status, silence the errors if any
+                $_status = @opcache_get_status( );
 
                 // make sure it's enabled
                 if( isset( $_status["opcache_enabled"] ) ) {
@@ -1115,7 +1156,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
          * This method attempts to purge the PageSpeed Mod caches
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -1131,8 +1172,8 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // hold possible pagespeed headers
             $_ps_headers = array( 'x-mod-pagespeed', 'x-page-speed' );
 
-            // make a remote request to the site
-		    $_res = wp_remote_request( site_url( ) );
+            // get the remote URL's headers only
+            $_res = wp_get_http_headers( site_url( ) );
 
             // check if there's an error
             if ( is_wp_error( $_res ) ) {
@@ -1141,15 +1182,12 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                 return;
             }
 
-            // we made it this far, check for the headers from the response
-            $_res_headers = wp_remote_retrieve_headers( $_res );
-
             // cast it as an array, and reset the index
             // NOTE: we have to do this, because the WP Dev page lies, this is not returned as an array, it's returned as a object(Requests_Utility_CaseInsensitiveDictionary)
-            $_headers = array_values( ( array ) $_res_headers );
+            $_headers = array_values( ( array ) $_res );
 
-            // check if our pagespeed headers are in the response headers
-            if( ! in_array( $_ps_headers, $_headers ) ) {
+            // check that our header return is actually an array & check if our pagespeed headers are in the response headers
+            if( is_array( $_headers[0] ) && ! in_array( $_ps_headers, $_headers[0] ) ) {
 
                 // the are not, this means the pagespeed module is not installed on the server, and we can dump out of this method
                 return;
@@ -1157,7 +1195,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             }
 
             // hold a "is cloudflare" flag
-            $_is_cf = ( isset( $_res_headers['server'] ) && ( strpos( $_res_headers['server'], 'cloudflare' ) !== false ) );
+            $_is_cf = ( isset( $_headers[0]['server'] ) && ( strpos( $_headers[0]['server'], 'cloudflare' ) !== false ) );
 
             // hold our default request arguments
             $_args = array(
@@ -1214,7 +1252,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * This method attempts to purge nginx based caches
          * if they exist
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -1249,13 +1287,13 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                 // set the cache path
                 $_cache_path = '/etc/nginx/cache/';
- 
+
             // check the /var/cache location
             } elseif( @is_readable( '/var/cache/nginx/') ) {
 
                 // set the cache path
                 $_cache_path = '/var/cache/nginx/';
- 
+
             // check the /var/cache location for runcloud
             } elseif( @is_readable( '/var/cache/nginx-rc/') ) {
 
@@ -1282,11 +1320,14 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // make sure we have pages
             if( $_pages ) {
 
-                // loop over the page array
-                foreach( $_pages as $_page ) {
+                // hold our index
+                $_idx = 0;
 
+                // loop
+                do {
+                    
                     // parse the URL
-                    $_url = parse_url( $_page );
+                    $_url = parse_url( $_pages[$_idx] );
 
                     // get the scheme
                     $_scheme = $_url['scheme'];
@@ -1309,9 +1350,6 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
                         // try to delete it recursively
                         $wp_filesystem -> delete( $_path, true, 'd' );
 
-                        // for my own OCDness, let's then recreate it
-                        $wp_filesystem -> mkdir( $_path );
-
                     // otherwise it's a file
                     } else {
 
@@ -1320,7 +1358,12 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
                     }
                     
-                }
+                    // increment the index
+                    ++$_idx;
+
+                    // keep running while the index is less than the number of pages
+                } while ( $_idx < count( $_pages ) );
+
 
                 // log the purge
                 KPCPC::write_log( "\t\tNginx Cache" );
@@ -1337,7 +1380,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
          * This method attempts to delete the file based caches
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger

@@ -4,7 +4,7 @@
  * 
  * This file contains cache purging settings and admin pages
  * 
- * @since 7.3
+ * @since 7.4
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
      * 
      * Class for building out our settings and admin pages
      * 
-     * @since 7.3
+     * @since 7.4
      * @access public
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
@@ -34,7 +34,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Public method pull together the settings and admin pages
          * 
-         * @since 7.3
+         * @since 7.4
          * @access public
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -85,6 +85,14 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     )
                 );
 
+                // WP Cron action settings
+                KPTCP::createSection( $_cp_settings_id, 
+                    array(
+                        'title'  => __( 'CRON Action Settings', 'the-cache-purger' ),
+                        'fields' => $this -> kpcp_cron_settings( ),
+                    )
+                );
+
                 // Documentation
                 KPTCP::createSection( $_cp_settings_id, 
                     array(
@@ -131,16 +139,21 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 // for this we'll hook directly into the admin menu bar
                 add_action( 'admin_bar_menu', function( $_admin_bar ) : void {
 
-                    // set the arguments for this admin bar menu item
-                    $_args = array (
-                        'id' => 'tcpmp',
-                        'title' => '<span class="ab-icon dashicons-layout"></span> ' . __( 'Master Cache Purge', 'the-cache-purger' ),
-                        'href' => admin_url( 'admin.php?page=kpcp_settings&the_purge=true' ),
-                        'meta' => array( 'title' => __( 'Click here to purge all of your caches.', 'the-cache-purger' ) ),
-                    );
-                
-                    // add the node with the arguments above
-                    $_admin_bar -> add_node( $_args );
+                    // only do this if we're NOT in a network admin
+                    if( ! is_network_admin( ) ) {
+
+                        // set the arguments for this admin bar menu item
+                        $_args = array (
+                            'id' => 'tcpmp',
+                            'title' => '<span class="ab-icon dashicons-layout"></span> ' . __( 'Master Cache Purge', 'the-cache-purger' ),
+                            'href' => admin_url( 'admin.php?page=kpcp_settings&the_purge=true' ),
+                            'meta' => array( 'title' => __( 'Click here to purge all of your caches.', 'the-cache-purger' ) ),
+                        );
+                    
+                        // add the node with the arguments above
+                        $_admin_bar -> add_node( $_args );
+
+                    }
 
                 }, PHP_INT_MAX );
 
@@ -149,11 +162,55 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
         }
 
         /** 
+         * kpcp_cron_settings
+         * 
+         * Private method pull together the cronex settings fields
+         * 
+         * @since 7.4
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return array Returns an array representing the settings fields
+         * 
+        */
+        private function kpcp_cron_settings( ) : array {
+
+            // hold the returnable array
+            $_ret = array(
+
+                // allowed?
+                array(
+                    'id' => 'cron_schedule_allowed',
+                    'type' => 'switcher',
+                    'title' => __( 'Allow Scheduled Purges?', 'the-cache-purger' ),
+                    'desc' => __( 'Do you want to allow scheduled cache purges?', 'the-cache-purger' ),
+                    'default' => false,
+                ),
+
+                // existing schedules
+                array(
+                    'id' => 'cron_schedule_builtin',
+                    'type' => 'select',
+                    'title' => __( 'Built-In Schedule', 'the-cache-purger' ),
+                    'desc' => __( 'Select a built-in schedule to use for the scheduled cache flushes.', 'the-cache-purger' ),
+                    'options' => $this -> get_current_schedules( ),
+                    'dependency' => array( 'cron_schedule_allowed', '==', 'true' ),
+                ),
+
+            );
+
+            // return it
+            return $_ret;
+
+        }
+
+        /** 
          * kpcp_apiserver_settings
          * 
          * Private method pull together the api/server settings fields
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -350,7 +407,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Private method pull together the settings fields
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -560,7 +617,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Private method pull together the documentation
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -604,7 +661,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Private method pull all forms
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -649,7 +706,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * 
          * Private method pull all ACF field groups
          * 
-         * @since 7.3
+         * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -686,6 +743,39 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
 
             // return
             return $_ret;
+
+        }
+
+        /** 
+         * get_current_schedules
+         * 
+         * The method pulls the current WP Cron schedules
+         * 
+         * @since 7.4
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package Kevin's Framework
+         * 
+         * @return array Returns an array of the existing WP cron schedules
+         * 
+        */
+        private function get_current_schedules( ) : array {
+
+            // get the schedules
+			$_sched = wp_get_schedules( );
+
+			// setup our returnable array
+			$_ret = array( );
+
+			// loop over the schedules
+			foreach( $_sched as $_k => $_v ) {
+
+				// populate the returnable array
+				$_ret[ $_k ] = __( $_v[ 'display' ], 'the-cache-purger' );
+			}
+
+			// return the array
+			return $_ret;
 
         }
 

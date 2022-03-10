@@ -2,10 +2,10 @@
 Contributors: kevp75
 Donate link: https://paypal.me/kevinpirnie
 Tags: remote cache, caching, purge cache, cache purging
-Requires at least: 5.0
-Tested up to: 5.9
-Requires PHP: 7.3
-Stable tag: 0.8.88
+Requires at least: 5.5
+Tested up to: 5.9.2
+Requires PHP: 7.4
+Stable tag: 1.0.27
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -64,6 +64,21 @@ Even if you don't, there are still some server based caches that need to be purg
 5. Logged Purged Object
 
 == Changelog ==
+
+= 1.0.27 =
+* Feature: WP Cron based cache purging
+  * including setting custom schedules
+* Feature: CLI based purging
+  * Command: `wp the_cache purge` 
+* Fix: Sucuri purge logging
+* Fix: Network activation check
+* Fix: Master Purge showing on network admin
+* Fix: Pagespeed purge performance issue
+* Fix: OOM issue on WooCommerce site with lots of products
+* Fix: Some hosting may require `opcache.restrict_api` to be configured. Disabled the warning on 
+  servers where it is not
+* Raise: PHP version requirement, WP tested up to, and minimum required WP version.
+* Add: WP REST Cache Purge
 
 = 0.8.88 =
 * Feature: Translation ready

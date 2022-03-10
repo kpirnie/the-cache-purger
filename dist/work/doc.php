@@ -4,7 +4,7 @@
  * 
  * The plugin documentation
  * 
- * @since 7.3
+ * @since 7.4
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package Kevin's Framework
  * 
@@ -21,12 +21,13 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
     </header>
     <main>
         <h2 id="kpcp_desc"><?php _e( 'Description', 'the-cache-purger' ); ?></h2>
-        <p class="kpcp_nav"><a href="#kpcp_top"><?php _e( 'TOP', 'the-cache-purger' ); ?></a> | <a href="#kpcp_desc"><?php _e( 'DESCRIPTION', 'the-cache-purger' ); ?></a> | <a href="#kpcp_features"><?php _e( 'FEATURES', 'the-cache-purger' ); ?></a> | <a href="#kpcp_settings"><?php _e( 'SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_api_settings"><?php _e( 'API/SERVER SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_in_the_works"><?php _e( 'IN THE WORKS', 'the-cache-purger' ); ?></a></p>
+        <p class="kpcp_nav"><a href="#kpcp_top"><?php _e( 'TOP', 'the-cache-purger' ); ?></a> | <a href="#kpcp_desc"><?php _e( 'DESCRIPTION', 'the-cache-purger' ); ?></a> | <a href="#kpcp_features"><?php _e( 'FEATURES', 'the-cache-purger' ); ?></a> | <a href="#kpcp_settings"><?php _e( 'SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_api_settings"><?php _e( 'API/SERVER SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_cron_settings"><?php _e( 'CRON Action SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_cron_settings"><?php _e( 'CRON Action SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_in_the_works"><?php _e( 'IN THE WORKS', 'the-cache-purger' ); ?></a></p>
         <p><?php _e( 'This plugin attempts to purge all server-side caching methods', 'the-cache-purger' ); ?>.</p>
         <p><?php _e( 'This includes the most common caching plugins, some hosting based caches, most server based caches, built-in Wordpress object caches, and even simple file based caches', 'the-cache-purger' ); ?></p>
         <p><?php _e( 'Just configure what you want to purge on, and the plugin will take care of the rest', 'the-cache-purger' ); ?>.</p>
+        <p><?php _e( 'We have also included a CLI cache purger.  Shell into your install and run the following command:', 'the-cache-purger' ); ?> <code>wp the_cache purge</code>. <?php _e( 'The normal CLI flags apply, and if you are in a multisite, you must include the --url flag.', 'the-cache-purger' ); ?></p>
         <h2 id="kpcp_features"><?php _e( 'Features', 'the-cache-purger' ); ?></h2>
-        <p class="kpcp_nav"><a href="#kpcp_top"><?php _e( 'TOP', 'the-cache-purger' ); ?></a> | <a href="#kpcp_desc"><?php _e( 'DESCRIPTION', 'the-cache-purger' ); ?></a> | <a href="#kpcp_features"><?php _e( 'FEATURES', 'the-cache-purger' ); ?></a> | <a href="#kpcp_settings"><?php _e( 'SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_api_settings"><?php _e( 'API/SERVER SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_in_the_works"><?php _e( 'IN THE WORKS', 'the-cache-purger' ); ?></a></p>
+        <p class="kpcp_nav"><a href="#kpcp_top"><?php _e( 'TOP', 'the-cache-purger' ); ?></a> | <a href="#kpcp_desc"><?php _e( 'DESCRIPTION', 'the-cache-purger' ); ?></a> | <a href="#kpcp_features"><?php _e( 'FEATURES', 'the-cache-purger' ); ?></a> | <a href="#kpcp_settings"><?php _e( 'SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_api_settings"><?php _e( 'API/SERVER SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_cron_settings"><?php _e( 'CRON Action SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_in_the_works"><?php _e( 'IN THE WORKS', 'the-cache-purger' ); ?></a></p>
         <h3><?php _e( 'Built in automatic cache purging for the following caches', 'the-cache-purger' ); ?></h3>
         <ul>
             <li><strong><?php _e( 'Plugins/Themes', 'the-cache-purger' ); ?></strong>
@@ -100,7 +101,7 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
             <li><?php _e( 'WooCommerce Settings', 'the-cache-purger' ); ?> (<em><?php _e( 'if installed and activated', 'the-cache-purger' ); ?></em>)</li>
         </ul>
         <h2 id="kpcp_settings"><?php _e( 'Settings', 'the-cache-purger' ); ?></h2>
-        <p class="kpcp_nav"><a href="#kpcp_top"><?php _e( 'TOP', 'the-cache-purger' ); ?></a> | <a href="#kpcp_desc"><?php _e( 'DESCRIPTION', 'the-cache-purger' ); ?></a> | <a href="#kpcp_features"><?php _e( 'FEATURES', 'the-cache-purger' ); ?></a> | <a href="#kpcp_settings"><?php _e( 'SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_api_settings"><?php _e( 'API/SERVER SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_in_the_works"><?php _e( 'IN THE WORKS', 'the-cache-purger' ); ?></a></p>
+        <p class="kpcp_nav"><a href="#kpcp_top"><?php _e( 'TOP', 'the-cache-purger' ); ?></a> | <a href="#kpcp_desc"><?php _e( 'DESCRIPTION', 'the-cache-purger' ); ?></a> | <a href="#kpcp_features"><?php _e( 'FEATURES', 'the-cache-purger' ); ?></a> | <a href="#kpcp_settings"><?php _e( 'SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_api_settings"><?php _e( 'API/SERVER SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_cron_settings"><?php _e( 'CRON Action SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_in_the_works"><?php _e( 'IN THE WORKS', 'the-cache-purger' ); ?></a></p>
         <ul>
             <li>
                 <strong><?php _e( 'Log Purge Actions?', 'the-cache-purger' ); ?></strong>
@@ -220,7 +221,7 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
             </li>
         </ul>
         <h2 id="kpcp_api_settings"><?php _e( 'API/SERVER Settings', 'the-cache-purger' ); ?></h2>
-        <p class="kpcp_nav"><a href="#kpcp_top"><?php _e( 'TOP', 'the-cache-purger' ); ?></a> | <a href="#kpcp_desc"><?php _e( 'DESCRIPTION', 'the-cache-purger' ); ?></a> | <a href="#kpcp_features"><?php _e( 'FEATURES', 'the-cache-purger' ); ?></a> | <a href="#kpcp_settings"><?php _e( 'SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_api_settings"><?php _e( 'API/SERVER SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_in_the_works"><?php _e( 'IN THE WORKS', 'the-cache-purger' ); ?></a></p>
+        <p class="kpcp_nav"><a href="#kpcp_top"><?php _e( 'TOP', 'the-cache-purger' ); ?></a> | <a href="#kpcp_desc"><?php _e( 'DESCRIPTION', 'the-cache-purger' ); ?></a> | <a href="#kpcp_features"><?php _e( 'FEATURES', 'the-cache-purger' ); ?></a> | <a href="#kpcp_settings"><?php _e( 'SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_api_settings"><?php _e( 'API/SERVER SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_cron_settings"><?php _e( 'CRON Action SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_in_the_works"><?php _e( 'IN THE WORKS', 'the-cache-purger' ); ?></a></p>
         <ul>
             <li>
                 <strong><?php _e( 'Remote Redis Server', 'the-cache-purger' ); ?></strong>
@@ -320,8 +321,26 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
             </li>
 
         </ul>
+        <h2 id="kpcp_cron_settings"><?php _e( 'CRON Action Settings', 'the-cache-purger' ); ?></h2>
+        <p class="kpcp_nav"><a href="#kpcp_top"><?php _e( 'TOP', 'the-cache-purger' ); ?></a> | <a href="#kpcp_desc"><?php _e( 'DESCRIPTION', 'the-cache-purger' ); ?></a> | <a href="#kpcp_features"><?php _e( 'FEATURES', 'the-cache-purger' ); ?></a> | <a href="#kpcp_settings"><?php _e( 'SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_api_settings"><?php _e( 'API/SERVER SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_cron_settings"><?php _e( 'CRON Action SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_in_the_works"><?php _e( 'IN THE WORKS', 'the-cache-purger' ); ?></a></p>
+        <ul>
+            <li>
+                <strong><?php _e( 'Allow Scheduled Purges?', 'the-cache-purger' ); ?></strong>
+                <ul>
+                    <li><?php _e( 'Option(s) Name:', 'the-cache-purger' ); ?> <code>cron_schedule_allowed</code></li>
+                    <li><?php _e( 'Should the cached be purged based on a Wordpress Cron schedule?', 'the-cache-purger' ); ?></li>
+                </ul>
+            </li>
+            <li>
+                <strong><?php _e( 'Built-In Schedule', 'the-cache-purger' ); ?></strong>
+                <ul>
+                    <li><?php _e( 'Option(s) Name:', 'the-cache-purger' ); ?> <code>cron_schedule_builtin</code></li>
+                    <li><?php _e( 'Select a built-in schedule to purge the caches on.', 'the-cache-purger' ); ?></li>
+                </ul>
+            </li>
+        </ul>
         <h2 id="kpcp_in_the_works"><?php _e( 'In The Works', 'the-cache-purger' ); ?></h2>
-        <p class="kpcp_nav"><a href="#kpcp_top"><?php _e( 'TOP', 'the-cache-purger' ); ?></a> | <a href="#kpcp_desc"><?php _e( 'DESCRIPTION', 'the-cache-purger' ); ?></a> | <a href="#kpcp_features"><?php _e( 'FEATURES', 'the-cache-purger' ); ?></a> | <a href="#kpcp_settings"><?php _e( 'SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_api_settings"><?php _e( 'API/SERVER SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_in_the_works"><?php _e( 'IN THE WORKS', 'the-cache-purger' ); ?></a></p>
+        <p class="kpcp_nav"><a href="#kpcp_top"><?php _e( 'TOP', 'the-cache-purger' ); ?></a> | <a href="#kpcp_desc"><?php _e( 'DESCRIPTION', 'the-cache-purger' ); ?></a> | <a href="#kpcp_features"><?php _e( 'FEATURES', 'the-cache-purger' ); ?></a> | <a href="#kpcp_settings"><?php _e( 'SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_api_settings"><?php _e( 'API/SERVER SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_cron_settings"><?php _e( 'CRON Action SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_in_the_works"><?php _e( 'IN THE WORKS', 'the-cache-purger' ); ?></a></p>
         <ul>
             <li><?php _e( 'WooCommerce Product Updates (<em>and exclusions</em>)', 'the-cache-purger' ); ?></li>
             <li><?php _e( 'WooCommerce Order Updates', 'the-cache-purger' ); ?></li>
