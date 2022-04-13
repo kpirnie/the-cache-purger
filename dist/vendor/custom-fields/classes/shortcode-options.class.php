@@ -50,7 +50,9 @@ if ( ! class_exists( 'KPTCP_Shortcoder' ) ) {
 
       if ( ! empty( $this->args['show_in_editor'] ) ) {
 
-        KPTCP::$shortcode_instances[$this->unique] = wp_parse_args( array( 'hash' => md5( $key ), 'modal_id' => $this->unique ), $this->args );
+        $name = str_replace( '_', '-', sanitize_title( $this->unique ) );
+
+        KPTCP::$shortcode_instances[] = wp_parse_args( array( 'name' => 'kptcp/'. $name, 'modal_id' => $this->unique ), $this->args );
 
         // elementor editor support
         if ( KPTCP::is_active_plugin( 'elementor/elementor.php' ) ) {
@@ -298,7 +300,7 @@ if ( ! class_exists( 'KPTCP_Shortcoder' ) ) {
     public static function once_editor_setup() {
 
       if ( function_exists( 'register_block_type' ) ) {
-        // add_action( 'enqueue_block_editor_assets', array( 'KPTCP_Shortcoder', 'add_guteberg_blocks' ) );
+        add_action( 'enqueue_block_editor_assets', array( 'KPTCP_Shortcoder', 'add_guteberg_blocks' ) );
       }
 
       if ( kptcp_wp_editor_api() ) {
@@ -322,9 +324,9 @@ if ( ! class_exists( 'KPTCP_Shortcoder' ) ) {
 
       wp_localize_script( 'kptcp-gutenberg-block', 'kptcp_gutenberg_blocks', KPTCP::$shortcode_instances );
 
-      foreach ( KPTCP::$shortcode_instances as $value ) {
+      foreach ( KPTCP::$shortcode_instances as $block ) {
 
-        register_block_type( 'kptcp-gutenberg-block/block-'. $value['hash'], array(
+        register_block_type( $block['name'], array(
           'editor_script' => 'kptcp-gutenberg-block',
         ) );
 

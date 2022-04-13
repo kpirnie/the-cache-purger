@@ -633,8 +633,7 @@
       var $this    = $(this),
           $inputs  = $this.find('input'),
           settings = $this.find('.kptcp-date-settings').data('settings'),
-          wrapper  = '<div class="kptcp-datepicker-wrapper"></div>',
-          $datepicker;
+          wrapper  = '<div class="kptcp-datepicker-wrapper"></div>';
 
       var defaults = {
         showAnim: '',
@@ -675,6 +674,41 @@
 
         $input.datepicker(settings);
 
+      });
+
+    });
+  };
+
+  //
+  // Field: datetime
+  //
+  $.fn.kptcp_field_datetime = function() {
+    return this.each( function() {
+
+      var $this    = $(this),
+          $inputs  = $this.find('input'),
+          settings = $this.find('.kptcp-datetime-settings').data('settings');
+
+      settings = $.extend({}, settings, {
+        onReady: function( selectedDates, dateStr, instance) {
+          $(instance.calendarContainer).addClass('kptcp-flatpickr');
+        },
+      });
+
+      if ( $inputs.length === 2 ) {
+        settings = $.extend({}, settings, {
+          onChange: function( selectedDates, dateStr, instance) {
+            if ( $(instance.element).data('type') === 'from' ) {
+              $inputs.last().get(0)._flatpickr.set( 'minDate', selectedDates[0] );
+            } else {
+              $inputs.first().get(0)._flatpickr.set( 'maxDate', selectedDates[0] );
+            }
+          },
+        });
+      }
+
+      $inputs.each( function() {
+        $(this).flatpickr(settings);
       });
 
     });
@@ -780,17 +814,19 @@
   $.fn.kptcp_field_group = function() {
     return this.each( function() {
 
-      var $this     = $(this),
-          $fieldset = $this.children('.kptcp-fieldset'),
-          $group    = $fieldset.length ? $fieldset : $this,
-          $wrapper  = $group.children('.kptcp-cloneable-wrapper'),
-          $hidden   = $group.children('.kptcp-cloneable-hidden'),
-          $max      = $group.children('.kptcp-cloneable-max'),
-          $min      = $group.children('.kptcp-cloneable-min'),
-          field_id  = $wrapper.data('field-id'),
-          is_number = Boolean( Number( $wrapper.data('title-number') ) ),
-          max       = parseInt( $wrapper.data('max') ),
-          min       = parseInt( $wrapper.data('min') );
+      var $this           = $(this),
+          $fieldset    = $this.children('.kptcp-fieldset'),
+          $group       = $fieldset.length ? $fieldset : $this,
+          $wrapper     = $group.children('.kptcp-cloneable-wrapper'),
+          $hidden      = $group.children('.kptcp-cloneable-hidden'),
+          $max         = $group.children('.kptcp-cloneable-max'),
+          $min         = $group.children('.kptcp-cloneable-min'),
+          title_by     = $wrapper.data('title-by'),
+          title_prefix = $wrapper.data('title-by-prefix'),
+          field_id     = $wrapper.data('field-id'),
+          is_number    = Boolean( Number( $wrapper.data('title-number') ) ),
+          max          = parseInt( $wrapper.data('max') ),
+          min          = parseInt( $wrapper.data('min') );
 
       // clear accordion arrows if multi-instance
       if ( $wrapper.hasClass('ui-accordion') ) {
@@ -820,12 +856,35 @@
 
           if ( $panel.length && !$panel.data( 'opened' ) ) {
 
-            var $fields = $panel.children();
-            var $first  = $fields.first().find(':input').first();
-            var $title  = $header.find('.kptcp-cloneable-value');
+            var $title = $header.find('.kptcp-cloneable-value');
+            var inputs = [];
 
-            $first.on('change keyup', function( event ) {
-              $title.text($first.val());
+            $.each(title_by, function( key, title_key ) {
+              inputs.push($panel.find( '[data-depend-id="'+ title_key +'"]' ));
+            });
+
+            $.each(inputs, function( key, $input ) {
+
+              $input.on('change keyup kptcp.keyup', function() {
+
+                var titles = [];
+
+                $.each(inputs, function( key, $input ) {
+
+                  var input_value = $input.val();
+
+                  if ( input_value ) {
+                    titles.push( input_value );
+                  }
+
+                });
+
+                if ( titles.length ) {
+                  $title.text( titles.join( title_prefix ) );
+                }
+
+              }).trigger('kptcp.keyup');
+
             });
 
             $panel.kptcp_reload_script();
@@ -1315,8 +1374,6 @@
           } else {
             thumbnail = attributes.icon;
           }
-
-          console.log(attributes);
 
           if ( $auto_attributes ) {
             $auto_attributes.removeClass('kptcp--attributes-hidden');
@@ -2556,14 +2613,14 @@
             }
 
             if ( sub_shortcode_value !== '' ) {
-              shortcode += ' ' + sub_shortcode_tag.replace('-', '_') + '="' + sub_shortcode_value.toString() + '"';
+              shortcode += ' ' + sub_shortcode_tag + '="' + sub_shortcode_value.toString() + '"';
             }
 
           });
 
         } else {
 
-          shortcode += ' ' + shortcode_tag.replace('-', '_') + '="' + shortcode_value.toString() + '"';
+          shortcode += ' ' + shortcode_tag + '="' + shortcode_value.toString() + '"';
 
         }
 
@@ -3201,7 +3258,7 @@
         return;
       }
 
-      $input.on('change keyup', function() {
+      $input.on('change keyup kptcp.change', function() {
 
         var obj = $this.find(':input').serializeObjectKPTCP();
         var val = ( !$.isEmptyObject(obj) && obj[unique_id] && obj[unique_id][option_id] ) ? obj[unique_id][option_id] : '';
@@ -3340,6 +3397,7 @@
         $this.children('.kptcp-field-background').kptcp_field_background();
         $this.children('.kptcp-field-code_editor').kptcp_field_code_editor();
         $this.children('.kptcp-field-date').kptcp_field_date();
+        $this.children('.kptcp-field-datetime').kptcp_field_datetime();
         $this.children('.kptcp-field-fieldset').kptcp_field_fieldset();
         $this.children('.kptcp-field-gallery').kptcp_field_gallery();
         $this.children('.kptcp-field-group').kptcp_field_group();

@@ -73,9 +73,15 @@
     }
   }
 
-  .kptcp-field-date{
+  .kptcp-field-date,
+  .kptcp-field-datetime{
+
+    label{
+      display: block;
+    }
 
     .kptcp--to{
+      margin-top: 4px;
       margin-left: 0;
     }
   }
