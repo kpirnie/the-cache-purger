@@ -5,7 +5,7 @@ Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.5
 Tested up to: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.01
+Stable tag: 1.2.66
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -65,6 +65,16 @@ Even if you don't, there are still some server based caches that need to be purg
 
 == Changelog ==
 
+= 1.2.66 =
+* Add: NitroPack Purge
+  * Gotcha: NitroPack has it's own methodology for clearing out and 
+    managing most server based caches.  As a result we cannot log items
+    that it removes, overwrites, manages, or flushes on it's purge processes.
+* Add: XCache Purge
+* Updated: Module structuring
+* Updated: Logging actions
+
+
 = 1.1.01 =
 * Test: Up to 6.0 compliant
 * Test: Up to PHP 8.1 Compliant
@@ -75,7 +85,6 @@ Even if you don't, there are still some server based caches that need to be purg
   * Updated: JS libraries (codemirror, leaflet, etc).
   * Improved: Group field “custom title and prefix” option (samples added).
   * Improved: Some JS and CSS coding.
-
 
 = 1.0.27 =
 * Feature: WP Cron based cache purging
