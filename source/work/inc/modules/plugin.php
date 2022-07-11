@@ -419,7 +419,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 nitropack_sdk_delete_backlog( );
 
                 // one more final try to purge nitro cache
-                nitropack_purge_cache( );
+                nitropack_sdk_purge( NULL, NULL, '' );
 
                 // log the purge
                 KPCPC::write_log( "\t\tNitroPack  Cache" );
