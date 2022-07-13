@@ -5,7 +5,7 @@ Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.5
 Tested up to: 6.0
 Requires PHP: 7.4
-Stable tag: 1.2.79
+Stable tag: 1.3.11
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -27,7 +27,7 @@ Built in automatic cache purging for the following caches:
       Comet Cache, Hummingbird, WP Fastest Cache, WP Super Cache, W3 Total Cache, Hyper Cache, WP Optimize, Cache Enabler
     * Check the changelog below for new additions...
 * Hosting / CDN
-    * WPEngine, Kinsta, GoDaddy Managed Wordpress, Pantheon, CloudFlare, Sucuri, RunCloud
+    * WPEngine, Kinsta, GoDaddy Managed Wordpress, Pantheon, Bluehost, Cloudways, Siteground, RunCloud
         * Some of these are dependant on separate plugins.  Please see your provider if it is necessary, or already included
         * Check the changelog below for new additions...
 * Server Based
@@ -65,8 +65,24 @@ Even if you don't, there are still some server based caches that need to be purg
 
 == Changelog ==
 
+= 1.3.11 =
+* Fix: WP Optimize issue in PHP 8+
+  * static call to non-static method
+* Organized: Module methods a bit better. 
+* Fix: nGinx Cache purging
+  * more path detections, better clearing, more efficient
+* Fix: File Cache purging
+  * better clearing, more efficient
+* Fix: Purge Performance
+  * By breaking them out into modules not only does it allow me to find and correct issues more efficiently
+    the purges themselves also seem to perform quicker (happy by-product)
+* Fix: Cloudflare and Sucuri purges
+  * only attempts to fire off if the api info exists (:facepalm:)
+* Fix: Master Purge link
+  * now stays put where you click it
+
 = 1.2.79 =
-Fix: NitroPack Purge ajaxian clear message exitting the page
+* Fix: NitroPack Purge ajaxian clear message exitting the page
 
 = 1.2.66 =
 * Add: NitroPack Purge

@@ -6,7 +6,7 @@
  * 
  * @since 7.4
  * @author Kevin Pirnie <me@kpirnie.com>
- * @package Kevin's Framework
+ * @package The Cache Purger
  * 
 */
 

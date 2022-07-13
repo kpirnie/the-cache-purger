@@ -76,45 +76,27 @@ if( ! trait_exists( 'FILE' ) ) {
                 $_cache_path = ABSPATH . 'wp-content/cache/';
 
             }
-            
-            // clear the files from the cache path.  This should take care of the rest
-            if( @is_readable ( $_cache_path ) ) {
 
-                // get a list of the files/folders in the cache path
-                $_files = glob( $_cache_path . '*' );
+            // log it
+            KPCPC::write_log( "\tFILE PURGE" );
 
-                // loop over them
-                foreach( $_files as $_file ) {
+            // if it exists
+            if( file_exists( $_cache_path ) ) {
+                    
+                // map the glob location of the cached files and delete them
+                array_map( 'unlink', glob( $_cache_path . "*/*/*" ) );
 
-                    // if the location is readable
-                    if( @is_readable( $_file ) ) {
+                // delete the parent
+                array_map( 'rmdir', glob( $_cache_path . "*/*" ) );
 
-                        // if it's a directory
-                        if( $wp_filesystem -> is_dir( $_file ) ) {
+                // delete the grandparent
+                array_map( 'rmdir', glob( $_cache_path . "*" ) );
 
-                            // try to delete it recursively
-                            $wp_filesystem -> delete( $_file, true, 'd' );
-
-                            // for my own OCDness, let's then recreate the path
-                            $wp_filesystem -> mkdir( $_file );
-
-                        // otherwise it's a file
-                        } else {
-
-                            // try to delete it
-                            $wp_filesystem -> delete( $_file, false, 'f' );
-
-                        }
-
-                    }
-
-                }
-
-                // log the purge
-                KPCPC::write_log( "\t\tFile Cache" );
+                // log the path cleared
+                KPCPC::write_log( "\t\t" . $_cache_path . " Purged" );
 
             }
-
+            
             // implement hook
             do_action( 'tcp_post_file_purge' );
 

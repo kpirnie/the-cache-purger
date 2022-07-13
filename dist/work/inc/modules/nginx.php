@@ -47,111 +47,44 @@ if( ! trait_exists( 'NGINX' ) ) {
             // implement hook
             do_shortcode( 'tcp_pre_nginx_purge' );
 
-            // let's utilize wordpress's filesystem global
-            global $wp_filesystem;
+            // hold the possible cache locations
+            $_cache_paths = array(
+                '/etc/nginx/cache/',
+                '/var/cache/nginx/',
+                '/var/cache/nginx-rc/',
+                '/var/cache/ea-nginx/proxy/',
+                '/var/nginx-cache/',
+                '/var/nginx/cache/',
+            );
 
-            // if we do not have the global yet
-            if( empty( $wp_filesystem ) ) {
+            // loop over these paths
+            foreach( $_cache_paths as $_path ) {
 
-                // require the file
-                require_once ABSPATH . '/wp-admin/includes/file.php';
+                // if it exists
+                if( file_exists( $_path ) ) {
 
-                // initialize the wordpress filesystem
-                WP_Filesystem( );
+                    // log it
+                    KPCPC::write_log( "\tNGINX PURGE" );
+                    
+                    // map the glob location of the cached files and delete them
+                    array_map( 'unlink', glob( $_path . "*/*/*" ) );
+
+                    // delete the parent
+                    array_map( 'rmdir', glob( $_path . "*/*" ) );
+
+                    // delete the grandparent
+                    array_map( 'rmdir', glob( $_path . "*" ) );
+
+                    // log the path cleared
+                    KPCPC::write_log( "\t\t" . $_path . " Purged" );
+
+                    // we found it, break the loop
+                    break;
+
+                }
 
             }
-
-            // hold the cache location, we'll need to try a few locations
-            $_cache_path = '';
-
-            // check the /etc/nginx location
-            if( @is_readable( '/etc/nginx/cache/' ) ) {
-
-                // set the cache path
-                $_cache_path = '/etc/nginx/cache/';
-
-            // check the /var/cache location
-            } elseif( @is_readable( '/var/cache/nginx/') ) {
-
-                // set the cache path
-                $_cache_path = '/var/cache/nginx/';
-
-            // check the /var/cache location for runcloud
-            } elseif( @is_readable( '/var/cache/nginx-rc/') ) {
-
-                // set the cache path
-                $_cache_path = '/var/cache/nginx-rc/';
-
-            // check the /var/cache location for cpanel
-            } elseif( @is_readable( '/var/cache/ea-nginx/proxy/') ) {
-
-                // set the cache path
-                $_cache_path = '/var/cache/ea-nginx/proxy/';
             
-            // check the /var/nginx-cache location inmotion
-            } elseif( @is_readable( '/var/nginx-cache/') ) {
-
-                // set the cache path
-                $_cache_path = '/var/nginx-cache/';
-
-            }
-
-            // get our URL list
-            $_pages = KPCPC::get_urls( );
-
-            // make sure we have pages
-            if( $_pages ) {
-
-                // hold our index
-                $_idx = 0;
-
-                // loop
-                do {
-                    
-                    // parse the URL
-                    $_url = parse_url( $_pages[$_idx] );
-
-                    // get the scheme
-                    $_scheme = $_url['scheme'];
-
-                    // get the host
-                    $_host = $_url['host'];
-
-                    // the uri
-                    $_requesturi = $_url['path'];
-
-                    // hash it
-                    $_hash = md5( $_scheme . 'GET' . $_host . $_requesturi );
-
-                    // now setup the full path
-                    $_path = $_cache_path . substr( $_hash, -1 ) . '/' . substr( $_hash, -3 ,2 ) . '/' . $_hash;
-
-                    // if it's a directory
-                    if( $wp_filesystem -> is_dir( $_path ) ) {
-
-                        // try to delete it recursively
-                        $wp_filesystem -> delete( $_path, true, 'd' );
-
-                    // otherwise it's a file
-                    } else {
-
-                        // try to delete it
-                        $wp_filesystem -> delete( $_path, false, 'f' );
-
-                    }
-                    
-                    // increment the index
-                    ++$_idx;
-
-                    // keep running while the index is less than the number of pages
-                } while ( $_idx < count( $_pages ) );
-
-
-                // log the purge
-                KPCPC::write_log( "\tNGINX PURGE" );
-
-            }
-
             // implement hook
             do_action( 'tcp_post_nginx_purge' );
 

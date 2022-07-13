@@ -28,6 +28,34 @@ if( ! trait_exists( 'PLUGIN' ) ) {
     */
     trait PLUGIN {
 
+        // hold the internal list of plugins we have methods for
+        protected $_plugin_caches = array(
+            'purge_plugin_cloudflare',
+            'purge_plugin_sucuri',
+            'purge_plugin_siteground',
+            'purge_plugin_nginxhelper',
+            'purge_plugin_lightspeed',
+            'purge_plugin_cachify',
+            'purge_plugin_autoptimize',
+            'purge_plugin_fastvelocity',
+            'purge_plugin_wprocket',
+            'purge_plugin_swift',
+            'purge_plugin_comet',
+            'purge_plugin_hummingbird',
+            'purge_plugin_wpfastest',
+            'purge_plugin_wpfastest2',
+            'purge_plugin_wpsupercache',
+            'purge_plugin_w3totalcache',
+            'purge_plugin_hypercache',
+            'purge_plugin_wpotimize',
+            'purge_plugin_wpoptimize2',
+            'purge_plugin_cacheenabler',
+            'purge_plugin_elementor',
+            'purge_plugin_divi',
+            'purge_plugin_wprestcache',
+            'purge_plugin_nitropack',
+        );
+
         /** 
          * purge_plugin_caches
          * 
@@ -50,6 +78,38 @@ if( ! trait_exists( 'PLUGIN' ) ) {
             // log it
             KPCPC::write_log( "\tPLUGIN PURGE" );
 
+            // loop over the slug array
+            foreach( $this -> _plugin_caches as $_plugin ) {
+
+                // fire up the method to do the purge
+                $this -> { $_plugin }( );
+
+            }
+            
+            // release the array
+            unset( $this -> _plugin_caches );
+
+            // throw a hook here
+            do_action( 'tcp_post_plugin_purge' );
+
+        }
+
+        /** 
+         * purge_plugin_cloudflare
+         * 
+         * This method attempts to utilize the purge methods
+         * of Cloudflare plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_cloudflare( ) : void {
+
             // Cloudflare - even though it's not a host
             if ( class_exists( '\CF\WordPress\Hooks' ) ) {
 
@@ -64,9 +124,30 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 
                 }
 
+                // clean up
+                unset( $_cf_hooks );
+
                 // log the purge
                 KPCPC::write_log( "\t\tCloudflare Cache" );
             }
+
+        }
+
+        /** 
+         * purge_plugin_sucuri
+         * 
+         * This method attempts to utilize the purge methods
+         * of Sucuri plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_sucuri( ) : void {
 
             // Sucuri - even though it's not a host, we'll need to rely on the sucuri plugin being installed
             if( class_exists( 'SucuriScanFirewall' ) ) {
@@ -82,6 +163,24 @@ if( ! trait_exists( 'PLUGIN' ) ) {
 
             }
 
+        }
+
+        /** 
+         * purge_plugin_siteground
+         * 
+         * This method attempts to utilize the purge methods
+         * of Siteground plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_siteground( ) : void {
+
             // SG Optimizer.
             if ( class_exists( 'SiteGround_Optimizer\Supercacher\Supercacher' ) ) {
 
@@ -93,6 +192,24 @@ if( ! trait_exists( 'PLUGIN' ) ) {
 
             }
 
+        }
+
+        /** 
+         * purge_plugin_nginxhelper
+         * 
+         * This method attempts to utilize the purge methods
+         * of nGinx Helper plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_nginxhelper( ) : void {
+
             // Nginx helper Plugin (Gridpane and others)
             if ( class_exists( 'Nginx_Helper' ) ) {
 
@@ -102,6 +219,24 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 // log the purge
                 KPCPC::write_log( "\t\tNginx Helper Cache" );
             }
+            
+        }
+
+        /** 
+         * purge_plugin_lightspeed
+         * 
+         * This method attempts to utilize the purge methods
+         * of Lightspeed plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_lightspeed( ) : void {
 
             // LiteSpeed Cache.
             if ( class_exists( 'LiteSpeed_Cache_Purge' ) ) {
@@ -116,6 +251,24 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 KPCPC::write_log( "\t\tLiteSpeed Cache" );
             }
 
+        }
+
+        /** 
+         * purge_plugin_cachify
+         * 
+         * This method attempts to utilize the purge methods
+         * of Cachify plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_cachify( ) : void {
+
             // Clear Cachify Cache
             if ( has_action('cachify_flush_cache') ) {
 
@@ -125,6 +278,24 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 // log the purge
                 KPCPC::write_log( "\t\tCachify Cache" );
             }
+
+        }
+
+        /** 
+         * purge_plugin_autoptimize
+         * 
+         * This method attempts to utilize the purge methods
+         * of Autoptimize plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_autoptimize( ) : void {
 
             // Autoptimize
             if( class_exists( 'autoptimizeCache' ) ) {
@@ -139,6 +310,24 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 KPCPC::write_log( "\t\tAutoptimize Cache" );
             }
 
+        }
+
+        /** 
+         * purge_plugin_fastvelocity
+         * 
+         * This method attempts to utilize the purge methods
+         * of Fast Velocity plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_fastvelocity( ) : void {
+
             // Fast Velocity Minify
             if( function_exists( 'fvm_purge_all' ) ) {
 
@@ -149,6 +338,24 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 KPCPC::write_log( "\t\tFast Velocity Minify Cache" );
             }
 
+        }
+
+        /** 
+         * purge_plugin_wprocket
+         * 
+         * This method attempts to utilize the purge methods
+         * of WP Rocket plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_wprocket( ) : void {
+
             // WPRocket
             if( function_exists( 'rocket_clean_domain' ) ) {
 
@@ -157,8 +364,27 @@ if( ! trait_exists( 'PLUGIN' ) ) {
 
                 // log the purge
                 KPCPC::write_log( "\t\tWPRocket Cache" );
+
             }
 
+        }
+
+        /** 
+         * purge_plugin_swift
+         * 
+         * This method attempts to utilize the purge methods
+         * of Swift plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_swift( ) : void {
+            
             // Swift Performance
             if( class_exists( 'Swift_Performance_Cache' ) ) {
 
@@ -169,14 +395,52 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 KPCPC::write_log( "\t\tSwift Performance Cache" );
 
             }
-    
+
+        }
+
+        /** 
+         * purge_plugin_comet
+         * 
+         * This method attempts to utilize the purge methods
+         * of Comet Cache plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_comet( ) : void {
+
             // Comet Cache.
             if ( class_exists( 'comet_cache' ) ) {
+
+                // clear it
                 comet_cache::clear( );
 
                 // log the purge
                 KPCPC::write_log( "\t\tComet Cache" );
-            }
+            }            
+
+        }
+
+        /** 
+         * purge_plugin_hummingbird
+         * 
+         * This method attempts to utilize the purge methods
+         * of Hummingbird Cache plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_hummingbird( ) : void {
 
             // Hummingbird.
             if ( class_exists( 'Hummingbird\Core\Filesystem' ) ) {
@@ -191,22 +455,83 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 KPCPC::write_log( "\t\tHummingbird Cache" );
             }
 
+        }
+
+        /** 
+         * purge_plugin_wpfastest
+         * 
+         * This method attempts to utilize the purge methods
+         * of WP Fastest Cache plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_wpfastest( ) : void {
+
             // WP Fastest Cache
             if( class_exists( 'WpFastestCache' ) ) {
+            
+                // fire up the class
                 $wpfc = new WpFastestCache( );
+                
+                // purge the cache
                 $wpfc -> deleteCache( );
 
                 // log the purge
                 KPCPC::write_log( "\t\tWP Fastest Cache" );
             }
-    
+
+        }
+
+        /** 
+         * purge_plugin_wpfastest2
+         * 
+         * This method attempts to utilize the purge methods
+         * of WP Fastest Cache (newer) plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_wpfastest2( ) : void {
+
             // WP Fastest Cache 2
             if ( isset( $GLOBALS['wp_fastest_cache'] ) && method_exists( $GLOBALS['wp_fastest_cache'], 'deleteCache' ) ) {
+            
+                // delete the caches    
                 $GLOBALS['wp_fastest_cache'] -> deleteCache( );
 
                 // log the purge
                 KPCPC::write_log( "\t\tWP Fastest 2 Cache" );
+            
             }
+
+        }
+
+        /** 
+         * purge_plugin_wpsupercache
+         * 
+         * This method attempts to utilize the purge methods
+         * of WP Super Cache plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_wpsupercache( ) : void {
 
             // WP Super Cache
             if( function_exists( 'wp_cache_clear_cache' ) ) {
@@ -215,16 +540,36 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 if( is_multisite( ) ) {
 
                     // we are so utilize the cache clearing for it
-                    wp_cache_clear_cache( $_site_id );
+                    wp_cache_clear_cache( $this -> site_id );
+                
                 } else {
                     
                     // we're not
                     wp_cache_clear_cache( );
+                
                 }
 
                 // log the purge
                 KPCPC::write_log( "\t\tWP Super Cache" );
             }
+
+        }
+
+        /** 
+         * purge_plugin_w3totalcache
+         * 
+         * This method attempts to utilize the purge methods
+         * of W3 Total Cache plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_w3totalcache( ) : void {
 
             // W3 Total Cache
             if( function_exists( 'w3tc_flush_all' ) ) {
@@ -239,25 +584,70 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 KPCPC::write_log( "\t\tW3 Total Cache" );
             }
 
+        }
+
+        /** 
+         * purge_plugin_hypercache
+         * 
+         * This method attempts to utilize the purge methods
+         * of Hyper Cache plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_hypercache( ) : void {
+
             // Hyper Cache
             if( class_exists( 'HyperCache' ) ) {
+            
+                // fire it up
                 $hypercache = new HyperCache( );
+                
+                // clean the cache
                 $hypercache -> clean( );
 
                 // log the purge
                 KPCPC::write_log( "\t\tHyper Cache" );
             }
 
+        }
+
+        /** 
+         * purge_plugin_wpoptimize
+         * 
+         * This method attempts to utilize the purge methods
+         * of WP Optimize plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_wpotimize( ) : void {
+
             // WP Optimize
             if( function_exists( 'wpo_cache_flush' ) ) {
+
+                // flush the cache
                 wpo_cache_flush( );
 
                 // log the purge
                 KPCPC::write_log( "\t\tWP Optimize Cache" );
+
             }
 
             // WP-Optimize
             if ( class_exists( 'WP_Optimize' ) && defined( 'WPO_PLUGIN_MAIN_PATH' ) ) {
+                
+                // check for the page cache
                 if( is_callable( array( 'WP_Optimize', 'get_page_cache' ) ) && is_callable( array( WP_Optimize( ) -> get_page_cache( ), 'purge' ) ) ) {
                     
                     // purge
@@ -266,30 +656,76 @@ if( ! trait_exists( 'PLUGIN' ) ) {
 
                 // log the purge
                 KPCPC::write_log( "\t\tWP Optimize (try 2) Cache" );
+
             }
+
+        }
+
+        /** 
+         * purge_plugin_wpoptimize2
+         * 
+         * This method attempts to utilize the purge methods
+         * of WP Optimize (newer version) plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_wpoptimize2( ) : void {
 
             // WP-Optimize 2
             if ( class_exists( 'WP_Optimize_Cache_Commands' ) ) {
 
-                // This function returns a response, so I'm assigning it to a variable to prevent unexpected output to the screen.
-                $response = WP_Optimize_Cache_Commands::purge_page_cache( );
+                // fir eup the class
+                $_wpo_cc = new WP_Optimize_Cache_Commands( );
+
+                // purge the caches
+                $_wpo_cc -> purge_page_cache( );
+
+                // clean up
+                unset( $_wpo_cc );
 
                 // log the purge
                 KPCPC::write_log( "\t\tWP Optimize 2 Cache" );
             }
-    
+
             // WP-Optimize minification files have a different cache.
             if ( class_exists( 'WP_Optimize_Minify_Cache_Functions' ) ) {
 
-                // This function returns a response, so I'm assigning it to a variable to prevent unexpected output to the screen.
-                $response = WP_Optimize_Minify_Cache_Functions::purge( );
+                // purge the caches
+                WP_Optimize_Minify_Cache_Functions::purge( );
 
                 // log the purge
                 KPCPC::write_log( "\t\tWP Optimize Minify Cache" );
+
             }
+
+        }
+
+        /** 
+         * purge_plugin_cacheenabler
+         * 
+         * This method attempts to utilize the purge methods
+         * of Cache Enabler plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_cacheenabler( ) {
 
             // Cache Enabler
             if( class_exists( 'Cache_Enabler' ) ) {
+                
+                // clear it all out
                 Cache_Enabler::clear_total_cache( );
 
                 // just in case
@@ -297,7 +733,26 @@ if( ! trait_exists( 'PLUGIN' ) ) {
 
                 // log the purge
                 KPCPC::write_log( "\t\tCache Enabler Cache" );
+
             }
+
+        }
+
+        /** 
+         * purge_plugin_elementor
+         * 
+         * This method attempts to utilize the purge methods
+         * of Elementor plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_elementor( ) : void {
 
             // Elementor
             if( did_action( 'elementor/loaded' ) ) {
@@ -309,6 +764,24 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 KPCPC::write_log( "\t\tElementor Cache" );
 
             }
+
+        }
+
+        /** 
+         * purge_plugin_divi
+         * 
+         * This method attempts to utilize the purge methods
+         * of Divi plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_divi( ) : void {
 
             // Divi
             if( defined( 'ET_CORE_CACHE_DIR' ) ) {
@@ -373,6 +846,24 @@ if( ! trait_exists( 'PLUGIN' ) ) {
 
             }
 
+        }
+
+        /** 
+         * purge_plugin_wprestcache
+         * 
+         * This method attempts to utilize the purge methods
+         * of WP Rest Cache plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_wprestcache( ) : void {
+
             // WP REST Cache
             if( class_exists( 'WP_Rest_Cache_Plugin\\Includes\\Caching\\Caching' ) ) {
 
@@ -397,6 +888,24 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 KPCPC::write_log( "\t\tWP REST Cache" );
 
             }
+
+        }
+
+        /** 
+         * purge_plugin_nitropack
+         * 
+         * This method attempts to utilize the purge methods
+         * of nitropack plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_nitropack( ) : void {
 
             // NitroPack Cache
             if( class_exists( 'NitroPack\\SDK\\NitroPack' ) ) {
@@ -425,9 +934,6 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 KPCPC::write_log( "\t\tNitroPack  Cache" );
 
             }
-
-            // throw a hook here
-            do_action( 'tcp_post_plugin_purge' );
 
         }
 

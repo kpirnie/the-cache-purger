@@ -47,16 +47,41 @@ if( ! trait_exists( 'API' ) ) {
             // get our options 
             $_opt = KPCPC::get_options( );
 
-            // cloudflare
-            $this -> purge_cloudflare( $_opt );
+            // get the cloudflare token
+            $_cf_token = ( $_opt -> service_api_keys['cloudflare_token'] ) ?? null;
 
-            // sucuri
-            $this -> purge_sucuri( $_opt );
+            // get the cloudflare zone
+            $_cf_zone = ( $_opt -> service_api_keys['cloudflare_zone'] ) ?? null;
+
+            // get the sucuri key
+            $_sucuri_key = ( $_opt -> service_api_keys['sucuri_key'] ) ?? null;
+            
+            // get the sucuri secret
+            $_sucuri_secret = ( $_opt -> service_api_keys['sucuri_secret'] ) ?? null;
+
+            // make sure we have keys for cloudflare
+            if( $_cf_token && $_cf_zone ) {
+
+                // cloudflare
+                $this -> purge_api_cloudflare( $_cf_token, $_cf_zone );
+
+            }
+
+            // make sure we have keys for sucuri
+            if( $_sucuri_key && $_cf_zone ) {
+
+                // sucuri
+                $this -> purge_api_sucuri( $_sucuri_key, $_sucuri_secret );
+
+            }
+
+            // we dont need the option anymore so dump it
+            unset( $_opt );
 
         }
 
         /** 
-         * purge_sucuri
+         * purge_api_sucuri
          * 
          * This method attempts to purge the sucuri cache configured
          * 
@@ -65,18 +90,13 @@ if( ! trait_exists( 'API' ) ) {
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
          * 
-         * @param object $_opt The options object
+         * @param string $_key The sucuri api key
+         * @param string $_secret The sucuri api secret
          * 
          * @return void This method does not return anything
          * 
         */
-        protected function purge_sucuri( object $_opt ) : void {
-
-            // get the key
-            $_key = ( $_opt -> service_api_keys['sucuri_key'] ) ?? null;
-            
-            // get the secret
-            $_secret = ( $_opt -> service_api_keys['sucuri_secret'] ) ?? null;
+        protected function purge_api_sucuri( string $_key = '', string $_secret ='' ) : void {
 
             // make sure they both exist
             if( $_key && $_secret ) {
@@ -124,18 +144,13 @@ if( ! trait_exists( 'API' ) ) {
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
          * 
-         * @param object $_opt The options object
+         * @param string $_token The Cloudflare token
+         * @param string $_zone The Cloudflare zone
          * 
          * @return void This method does not return anything
          * 
         */
-        protected function purge_cloudflare( object $_opt ) : void {
-
-            // get the cloudflare token
-            $_token = ( $_opt -> service_api_keys['cloudflare_token'] ) ?? null;
-            
-            // get the cloudflare zone
-            $_zone = ( $_opt -> service_api_keys['cloudflare_zone'] ) ?? null;
+        protected function purge_api_cloudflare( string $_token = '', string $_zone ='' ) : void {
 
             // make sure we have all required fields
             if( $_token && $_zone ) {

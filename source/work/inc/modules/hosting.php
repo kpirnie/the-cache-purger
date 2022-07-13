@@ -28,6 +28,17 @@ if( ! trait_exists( 'HOSTING' ) ) {
     */
     trait HOSTING {
 
+        protected $_hosting_caches = array(
+            'purge_hosting_wpengine',
+            'purge_hosting_kinsta',
+            'purge_hosting_godaddy',
+            'purge_hosting_bluehost',
+            'purge_hosting_cloudways',
+            'purge_hosting_pantheon',
+            'purge_hosting_siteground',
+            'purge_hosting_runcloud',
+        );
+
         /** 
          * purge_hosting_caches
          * 
@@ -49,6 +60,38 @@ if( ! trait_exists( 'HOSTING' ) ) {
 
             // log the purge
             KPCPC::write_log( "\tHOSTING PURGE" );
+
+            // loop over the slug array
+            foreach( $this -> _hosting_caches as $_host ) {
+
+                // fire up the method to do the purge
+                $this -> { $_host }( );
+
+            }
+
+            // clean em up
+            unset( $_hosting_caches );
+
+            // throw a hook here
+            do_action( 'tcp_post_hosting_purge' );
+
+        }
+
+        /** 
+         * purge_hosting_wpengine
+         * 
+         * This method attempts to utilize the purge the 
+         * wpengine caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_hosting_wpengine( ) : void {
 
             // WPEngine
             if( class_exists( 'WpeCommon' ) ) {
@@ -77,7 +120,25 @@ if( ! trait_exists( 'HOSTING' ) ) {
                 KPCPC::write_log( "\t\tWPEngine Cache" );
 
             }
-        
+
+        }
+
+        /** 
+         * purge_hosting_kinsta
+         * 
+         * This method attempts to utilize the purge the 
+         * kinsta caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_hosting_kinsta( ) : void {
+
             // Kinsta Cache.
             if( class_exists( 'Kinsta\Cache' ) ) {
 
@@ -95,6 +156,24 @@ if( ! trait_exists( 'HOSTING' ) ) {
 
             }
 
+        }
+
+        /** 
+         * purge_hosting_godaddy
+         * 
+         * This method attempts to utilize the purge the 
+         * godaddy caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_hosting_godaddy( ) : void {
+
             // GoDaddy
             if( class_exists( '\WPaaS\Cache' ) ) {
 
@@ -107,6 +186,24 @@ if( ! trait_exists( 'HOSTING' ) ) {
 
             }
 
+        }
+
+        /** 
+         * purge_hosting_bluehost
+         * 
+         * This method attempts to utilize the purge the 
+         * bluehost caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_hosting_bluehost( ) : void {
+
             // Bluehost
             if ( class_exists( 'Endurance_Page_Cache' ) ) {
                 
@@ -117,6 +214,24 @@ if( ! trait_exists( 'HOSTING' ) ) {
                 KPCPC::write_log( "\t\tBlueHost Cache" );
                 
             }
+
+        }
+
+        /** 
+         * purge_hosting_cloudways
+         * 
+         * This method attempts to utilize the purge the 
+         * cloudways caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_hosting_cloudways( ) : void {
 
             // Cloudways
             if ( class_exists( 'Breeze_Admin' ) ) {
@@ -131,6 +246,24 @@ if( ! trait_exists( 'HOSTING' ) ) {
                 KPCPC::write_log( "\t\tCloudways Cache" );
             }
 
+        }
+
+        /** 
+         * purge_hosting_pantheon
+         * 
+         * This method attempts to utilize the purge the 
+         * pantheon caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_hosting_pantheon( ) : void {
+
             // Pantheon
             if( function_exists( 'pantheon_clear_edge_all' ) ) {
 
@@ -141,6 +274,24 @@ if( ! trait_exists( 'HOSTING' ) ) {
                 KPCPC::write_log( "\t\tPantheon Cache" );
 
             }
+
+        }
+
+        /** 
+         * purge_hosting_siteground
+         * 
+         * This method attempts to utilize the purge the 
+         * siteground caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_hosting_siteground( ) : void {
 
             // Siteground
             if ( isset( $GLOBALS['sg_cachepress_supercacher'] ) ) {
@@ -168,6 +319,24 @@ if( ! trait_exists( 'HOSTING' ) ) {
                 KPCPC::wite_log( "\t\tSiteground Cache" );
             }
 
+        }
+
+        /** 
+         * purge_hosting_runcloud
+         * 
+         * This method attempts to utilize the purge the 
+         * runcloud caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_hosting_runcloud( ) : void {
+
             // RunCloud - this will only work if the RunCloud Hub is installed
             if( class_exists( 'RunCloud_Hub' ) ) {
 
@@ -188,9 +357,6 @@ if( ! trait_exists( 'HOSTING' ) ) {
                 KPCPC::write_log( "\t\tRunCloud Cache" );
 
             }
-
-            // throw a hook here
-            do_action( 'tcp_post_hosting_purge' );
 
         }
 

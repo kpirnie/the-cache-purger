@@ -142,11 +142,28 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     // only do this if we're NOT in a network admin
                     if( ! is_network_admin( ) ) {
 
+                        // get the current page we are on
+                        $_uri = sanitize_url( $_SERVER['REQUEST_URI'] );
+
+                        // see if the uri contains any ?
+                        if( strpos( $_uri, '?' ) !== false ) {
+
+                            // append
+                            $_uri .= '&the_purge=true';
+
+                        // it does not, so make sure we add it
+                        } else {
+
+                            // insert
+                            $_uri .= '?the_purge=true';
+
+                        }
+
                         // set the arguments for this admin bar menu item
                         $_args = array (
                             'id' => 'tcpmp',
                             'title' => '<span class="ab-icon dashicons-layout"></span> ' . __( 'Master Cache Purge', 'the-cache-purger' ),
-                            'href' => admin_url( 'admin.php?page=kpcp_settings&the_purge=true' ),
+                            'href' => $_uri,
                             'meta' => array( 'title' => __( 'Click here to purge all of your caches.', 'the-cache-purger' ) ),
                         );
                     
@@ -754,7 +771,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
          * @since 7.4
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
-         * @package Kevin's Framework
+         * @package The Cache Purger
          * 
          * @return array Returns an array of the existing WP cron schedules
          * 

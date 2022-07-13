@@ -28,6 +28,14 @@ if( ! trait_exists( 'PHP' ) ) {
     */
     trait PHP {
 
+        // hold our php cache slugs
+        protected $_php_caches = array(
+            'purge_php_wincache',
+            'purge_php_opcache',
+            'purge_php_apc',
+            'purge_php_xcache',
+        );
+
         /** 
          * purge_php_caches
          * 
@@ -50,6 +58,38 @@ if( ! trait_exists( 'PHP' ) ) {
             // log it
             KPCPC::write_log( "\tPHP PURGE" );
 
+            // loop over the slug array
+            foreach( $this -> _php_caches as $_php ) {
+
+                // fire up the method to do the purge
+                $this -> { $_php }( );
+
+            }
+
+            // release the array
+            unset( $this -> _php_caches );
+
+            // implement hook
+            do_action( 'tcp_post_php_purge' );
+
+        }
+
+        /** 
+         * purge_php_wincache
+         * 
+         * This method attempts to utilize the purge the 
+         * php wincaches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_php_wincache( ) : void {
+
             // if we're on a windows server
             if( function_exists( 'wincache_ucache_get' ) ) {
 
@@ -60,6 +100,24 @@ if( ! trait_exists( 'PHP' ) ) {
                 KPCPC::write_log( "\t\tPHP Win Cache" );
 
             }
+
+        }
+
+        /** 
+         * purge_php_opcache
+         * 
+         * This method attempts to utilize the purge the 
+         * php Zend opcaches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_php_opcache( ) : void {
 
             // check if the Zend Opcache is available
             if( extension_loaded( 'Zend OPcache' ) ) {
@@ -91,6 +149,24 @@ if( ! trait_exists( 'PHP' ) ) {
 
             }
 
+        }
+
+        /** 
+         * purge_php_apc
+         * 
+         * This method attempts to utilize the purge the 
+         * php apc caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_php_apc( ) : void {
+
             // check if the APC extension is enabled
             if( extension_loaded( 'apc' ) ) {
 
@@ -104,6 +180,24 @@ if( ! trait_exists( 'PHP' ) ) {
                 KPCPC::write_log( "\t\tPHP APC Cache" );
 
             }
+
+        }
+
+        /** 
+         * purge_php_xcache
+         * 
+         * This method attempts to utilize the purge the 
+         * php xcache
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_php_xcache( ) : void {
 
             // check if the xcache extension is enabled
             if( extension_loaded( 'xcache' ) ) {
@@ -120,9 +214,6 @@ if( ! trait_exists( 'PHP' ) ) {
                 }
 
             }
-
-            // implement hook
-            do_action( 'tcp_post_php_purge' );
 
         }
 
