@@ -45,7 +45,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
     */
     class KP_Cache_Purge {
         Use HOSTING, PLUGIN, WORDPRESS, PHP, PAGESPEED,
-        NGINX, FILE, MEMORY, API;
+        NGINX, FILE, MEMORY, VARNISH, API;
 
         // internal class properties
         private $site_id;
@@ -102,9 +102,6 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // now we'll try to purge php based caches
             $this -> purge_php_caches( );
 
-            // now we'll try to purge pagespeed mod caches
-            $this -> purge_pagespeed_caches( );
-
             // now we'll try to purge nginx caches
             $this -> purge_nginx_caches( );
 
@@ -113,6 +110,46 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             // let's attempt to clear out memory/ram based caches
             $this -> purge_memory_caches( );
+
+            // make sure we're only scheduling this once
+            if( ! wp_next_scheduled( 'kpcpc_long_purges' ) ) {
+
+                // create a hook the next purges
+                add_action( 'kpcpc_long_purges', function( ) : void {
+
+                    
+                }, PHP_INT_MAX );
+
+                // now schedule it to be run in 1 minute
+                wp_schedule_single_event( time( ) + MINUTE_IN_SECONDS, 'kpcpc_long_purges' );
+
+            }
+
+        }
+
+        /** 
+         * kp_do_long_purge
+         * 
+         * Public method attempting to run the long running purges
+         * 
+         * @since 7.4
+         * @access public
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        public function kp_do_long_purge( ) : void {
+
+            // log the purge
+            KPCPC::write_log( "\tLONG PURGES" );
+            
+            // now we'll try to purge pagespeed mod caches
+            $this -> purge_pagespeed_caches( );
+
+            // let's attempt to clear out varnish caches
+            $this -> purge_varnish_caches( );
 
             // let's attempt to purge the api and server based caches
             $this -> purge_remote_apiserver_caches( );

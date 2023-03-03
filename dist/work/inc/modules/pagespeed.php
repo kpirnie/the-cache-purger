@@ -114,7 +114,7 @@ if( ! trait_exists( 'PAGESPEED' ) ) {
                 }
 
                 // log the purge
-                KPCPC::write_log( "\tPAGESPEED PURGE" );
+                KPCPC::write_log( "\t\tPAGESPEED PURGE" );
 
             }
 

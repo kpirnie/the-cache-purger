@@ -125,12 +125,12 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
             if( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 
                 // we are, so queue up our unminified assets
-                wp_register_style( 'kpcp_css', plugins_url( '/assets/css/style.css', TCP_PATH . '/' . TCP_FILENAME ), null, null );
+                wp_register_style( 'kpcp_css', plugins_url( '/assets/css/style.css?_=' . time( ), TCP_PATH . '/' . TCP_FILENAME ), null, null );
 
             } else {
-
+                
                 // we're not, queue up the minified assets
-                wp_register_style( 'kpcp_css', plugins_url( '/assets/css/style.min.css', TCP_PATH . '/' . TCP_FILENAME ), null, null );
+                wp_register_style( 'kpcp_css', plugins_url( '/assets/css/style.min.css?_=' . time( ), TCP_PATH . '/' . TCP_FILENAME ), null, null );
 
             }
 
@@ -173,6 +173,20 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
 
             }
 
+            // get the querystring for purging the log
+            $_do_log_purge = filter_var( ( isset( $_GET['the_log_purge'] ) ) ? sanitize_text_field( $_GET['the_log_purge'] ) : false, FILTER_VALIDATE_BOOLEAN );
+
+            /// make sure we are actually purging the log
+            if( $_do_log_purge ) {
+
+                // get the logs path
+                $_l_path = ABSPATH . 'wp-content/purge.log';
+
+                // unfortunately we cannot utilize wordpress's built-in file methods, but let's clear the log
+                file_put_contents( $_l_path, '', LOCK_EX );
+
+            }
+
         }, PHP_INT_MAX );
 
         // hook into the wordpress initialization
@@ -183,6 +197,8 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
 
             // set if it's allowed 
             $_allowed = filter_var( $_opts -> cron_schedule_allowed, FILTER_VALIDATE_BOOLEAN );
+            $_l_allowed = filter_var( ( $_opts -> should_log ) ?? false, FILTER_VALIDATE_BOOLEAN );
+            $_lp_allowed = filter_var( ( $_opts -> cron_log_purge_allowed ) ?? false, FILTER_VALIDATE_BOOLEAN );
 
             // if it is
             if( $_allowed ) {
@@ -212,6 +228,33 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
 
                     // schedule the event
                     wp_schedule_event( time( ), $_bi_schedule, 'kpcpc_the_purge' );  
+                
+                }
+
+            }
+
+            // if the log is enabled and if the log purging is allowed, and allowed to be on a schedule
+            if( $_l_allowed && $_lp_allowed ) {
+
+                // setup the action to be performed
+                add_action( 'kpcpc_the_log_purge', function( ) : void {
+
+                    // get the logs path
+                    $_l_path = ABSPATH . 'wp-content/purge.log';
+
+                    // unfortunately we cannot utilize wordpress's built-in file methods, but let's clear the log
+                    file_put_contents( $_path, '', LOCK_EX );
+
+                } );
+
+                // make sure we're only scheduling this once
+                if( ! wp_next_scheduled( 'kpcpc_the_log_purge' ) ) {
+
+                    // get our schedule options
+                    $_bi_schedule = ( $_opts -> cron_log_purge_schedule ) ?? 'weekly';
+
+                    // schedule the event
+                    wp_schedule_event( time( ), $_bi_schedule, 'kpcpc_the_log_purge' );  
                 
                 }
 

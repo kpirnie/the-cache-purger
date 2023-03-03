@@ -10,7 +10,7 @@
 if ( ! class_exists( 'KPTCP_Field_map' ) ) {
   class KPTCP_Field_map extends KPTCP_Fields {
 
-    public $version = '1.7.1';
+    public $version = '1.9.2';
     public $cdn_url = 'https://cdn.jsdelivr.net/npm/leaflet@';
 
     public function __construct( $field, $value = '', $unique = '', $where = '', $parent = '' ) {

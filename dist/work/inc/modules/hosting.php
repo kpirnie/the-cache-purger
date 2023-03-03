@@ -177,12 +177,16 @@ if( ! trait_exists( 'HOSTING' ) ) {
             // GoDaddy
             if( class_exists( '\WPaaS\Cache' ) ) {
 
-                // purge and ban the GoDaddy Cache
-                remove_action( 'shutdown', [ '\WPaaS\Cache', 'purge' ], PHP_INT_MAX );
-                add_action( 'shutdown', [ '\WPaaS\Cache', 'ban' ], PHP_INT_MAX );
+                if ( ! \WPaaS\Cache::has_ban( ) ) {
 
-                // log the purge
-                KPCPC::write_log( "\t\tGoDaddy Cache" );
+                    // purge and ban the GoDaddy Cache
+                    remove_action( 'shutdown', [ '\WPaaS\Cache', 'purge' ], PHP_INT_MAX );
+                    add_action( 'shutdown', [ '\WPaaS\Cache', 'ban' ], PHP_INT_MAX );
+
+                    // log the purge
+                    KPCPC::write_log( "\t\tGoDaddy Cache" );
+
+                }
 
             }
 

@@ -3,9 +3,9 @@ Contributors: kevp75
 Donate link: https://paypal.me/kevinpirnie
 Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.5
-Tested up to: 6.0
+Tested up to: 6.1.2
 Requires PHP: 7.4
-Stable tag: 1.3.11
+Stable tag: 1.5.12
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -24,14 +24,14 @@ Built in automatic cache purging for the following caches:
 
 * Plugins
     * SiteGround Optimizer, Nginx Helper, LiteSpeed Cache, Cachify, Autoptimize, Fast Velocity Minify, WP Rocket, Swift Performance,
-      Comet Cache, Hummingbird, WP Fastest Cache, WP Super Cache, W3 Total Cache, Hyper Cache, WP Optimize, Cache Enabler
+      Comet Cache, Hummingbird, WP Fastest Cache, WP Super Cache, W3 Total Cache, Hyper Cache, WP Optimize, Cache Enabler, NitroPack
     * Check the changelog below for new additions...
 * Hosting / CDN
     * WPEngine, Kinsta, GoDaddy Managed Wordpress, Pantheon, Bluehost, Cloudways, Siteground, RunCloud
         * Some of these are dependant on separate plugins.  Please see your provider if it is necessary, or already included
         * Check the changelog below for new additions...
 * Server Based
-    * PHP FPM, Zend Opcache, APC and APCU, WinCache, Pagespeed Module, nGinx, Static File Caches, Redis, Memcache, Memcached
+    * PHP FPM, Zend Opcache, APC and APCU, WinCache, Pagespeed Module, nGinx, Static File Caches, Redis, Memcache, Memcached, Varnish
     * Check the changelog below for new additions...
 * Wordpress Built-In object caching, and persistent object caching
 
@@ -65,6 +65,29 @@ Even if you don't, there are still some server based caches that need to be purg
 
 == Changelog ==
 
+= 1.5.12 =
+* Add: option to clear caches on plugin settings save
+  * only works after hard refreshing after saving the settings
+* Add: log viewing tab, if setting is enabled.
+* Add: clear log
+  * Cron based, and manual
+  * manual only works after hard refreshing after saving the settings
+* Fix: `tcp_post_purge` hook
+* Add: Finally add in pure Varnish purging
+* Fix: Some typos with how I was labelling the remote servers
+* Update: Move Varnish and Pagespeed purging to admin ajax
+  * This should help wp-admin performance
+
+= 1.4.02 =
+* Verify: Core 6.1.2 Compatibility
+* Updated: Settings Field Framework
+  * Fixed: Added check/uncheck all option for checkbox field.
+  * Updated: Google Web Fonts array added new fonts.
+  * Updated: JS libraries (codemirror, leaflet, etc).
+  * Improved: Some JS and CSS coding.
+* Fix: Purging action ingnores
+* Update: Labelling for the ignores
+
 = 1.3.11 =
 * Fix: WP Optimize issue in PHP 8+
   * static call to non-static method
@@ -92,7 +115,6 @@ Even if you don't, there are still some server based caches that need to be purg
 * Add: XCache Purge
 * Updated: Module structuring
 * Updated: Logging actions
-
 
 = 1.1.01 =
 * Test: Up to 6.0 compliant

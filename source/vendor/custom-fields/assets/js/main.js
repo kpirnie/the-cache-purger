@@ -245,7 +245,7 @@
   $.fn.kptcp_page_templates = function() {
     if ( this.length ) {
 
-      $(document).on('change', '.editor-page-attributes__template select, #page_template', function() {
+      $(document).on('change', '.editor-page-attributes__template select, #page_template, .edit-post-post-status + div select', function() {
 
         var maybe_value = $(this).val() || 'default';
 
@@ -3126,6 +3126,40 @@
   };
 
   //
+  // Helper Check/Uncheck All
+  //
+  $.fn.kptcp_checkbox_all = function() {
+    return this.each( function() {
+
+      var $this = $(this);
+
+      $this.on('click', function() {
+
+        var $inputs = $this.closest('.kptcp-field-checkbox').find(':input'),
+            uncheck = false;
+
+        $inputs.each(function() {
+          if ( ! $(this).prop('checked') ) {
+            uncheck = true;
+          }
+        });
+
+        if ( uncheck ) {
+          $inputs.prop('checked', 'checked');
+          $inputs.attr('checked', 'checked');
+        } else {
+          $inputs.prop('checked', '');
+          $inputs.removeAttr('checked');
+        }
+
+        $inputs.first().trigger('change');
+
+      });
+
+    });
+  };
+
+  //
   // Siblings
   //
   $.fn.kptcp_siblings = function() {
@@ -3429,6 +3463,7 @@
 
         // Field Checkbox
         $this.children('.kptcp-field-checkbox').find('.kptcp-checkbox').kptcp_checkbox();
+        $this.children('.kptcp-field-checkbox').find('.kptcp-checkbox-all').kptcp_checkbox_all();
 
         // Field Siblings
         $this.children('.kptcp-field-button_set').find('.kptcp-siblings').kptcp_siblings();

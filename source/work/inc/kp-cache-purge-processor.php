@@ -59,7 +59,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
             unset( $this -> options, $this -> actions );
 
             // throw an action here
-            do_action( 'tcp_pre_purge' );
+            do_action( 'tcp_post_purge' );
 
         }
 
@@ -77,9 +77,12 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
          * 
         */
         public function process( ) : void {
-            
+
             // make sure we have the actions before we do anything further
             if( $this -> actions ) {
+
+                // on settings
+                $_on_plugin_settings = filter_var( ( $this -> options -> on_plugin_settings ) ?? false, FILTER_VALIDATE_BOOLEAN );
 
                 // on menu
                 $_on_menu = filter_var( ( $this -> options -> on_menu ) ?? false, FILTER_VALIDATE_BOOLEAN );
@@ -214,7 +217,7 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
                     }
 
                     // we need to process on settings
-                    if( $_cat == 'settings' ) {
+                    if( ( $_cat == 'settings' ) && $_on_plugin_settings ) {
 
                         // purge on settings
                         $this -> purge_on_action( 'settings', $_actions );
@@ -487,13 +490,6 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
 
                     }
 
-                    // make sure this isn't fired on the rest request
-                    if( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-
-                        // we dont need this to run, so just return
-                        return;
-                    }
-
                     // make sure this isn't fired when saving a post as trash
                     if ( 'trash' === $_post -> post_status ) {
 
@@ -618,72 +614,6 @@ if( ! class_exists( 'KP_Cache_Purge_Processor' ) ) {
                 unset( $_cp );                  
 
             }, PHP_INT_MAX );
-
-        }
-
-        /** 
-         * get_current_post
-         * 
-         * Private method for getting the current poost
-         * 
-         * @since 7.4
-         * @access public
-         * @static
-         * @author Kevin Pirnie <me@kpirnie.com>
-         * @package The Cache Purger
-         * 
-         * @return WP_Post Returns a nullable WP_post object for the current post being browsed
-         * 
-        */
-        private function get_current_post( ) : ?WP_Post {
-
-            // let's get our post global
-            global $post;
-
-            // if it's empty, let's try to retrieve it based on the post querystring
-            if ( empty( $post ) && is_array( $_GET ) ) {
-
-                $post = get_post( ( $_GET['post'] ) ?? null );
-            }
-
-            // Optional: get an empty post object from the post_type
-            if ( empty( $post ) && is_array( $_GET ) ) {
-
-                // default standard class object
-                $object = new stdClass( );
-                
-                // set the objects post type
-                $object -> post_type = ( $_GET['post_type'] ) ?? null;
-                
-                // return a new WP Post object
-                $post = WP_Post( $object );
-            }
-
-            // now... if our post object is still empty, let's try to figure it out via the URL
-            if ( empty( $post ) ) {
-
-                // grab our WP global
-                global $wp;
-
-                // try to get the current URL
-                $current_url = home_url( add_query_arg( array( ), $wp -> request ) );
-
-                // try to get the post ID, from the URL
-                $current_post_id = url_to_postid( $current_url );
-
-                // get the post
-                $post = get_post( $current_post_id );
-            }
-
-            // one more check if post is still empty.  generally this means we're on the configured blog page
-            if ( empty( $post ) ) {
-
-                // get the post
-                $post = get_post( ( int ) get_option( 'page_for_posts' ) );
-            }
-
-            // return the WP Post object
-            return $post;
 
         }
 

@@ -125,10 +125,10 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
                 </ul>
             </li>
             <li>
-                <strong><?php _e( 'Excluded Posts', 'the-cache-purger' ); ?></strong>
+                <strong><?php _e( 'Ignored Posts', 'the-cache-purger' ); ?></strong>
                 <ul>
                     <li><?php _e( 'Option(s) Name:', 'the-cache-purger' ); ?> <code>on_post_exclude</code></li>
-                    <li><?php _e( 'Select the posts you wish to exclude from the cache purge actions.', 'the-cache-purger' ); ?></li>
+                    <li><?php _e( 'Select the posts you wish to ignore from the cache purge actions.', 'the-cache-purger' ); ?></li>
                 </ul>
             </li>
             <li>
@@ -139,10 +139,10 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
                 </ul>
             </li>
             <li>
-                <strong><?php _e( 'Excluded Pages', 'the-cache-purger' ); ?></strong>
+                <strong><?php _e( 'Ignored Pages', 'the-cache-purger' ); ?></strong>
                 <ul>
                     <li><?php _e( 'Option(s) Name:', 'the-cache-purger' ); ?> <code>on_page_exclude</code></li>
-                    <li><?php _e( 'Select the pages you wish to exclude from the cache purge actions.', 'the-cache-purger' ); ?></li>
+                    <li><?php _e( 'Select the pages you wish to ignore from the cache purge actions.', 'the-cache-purger' ); ?></li>
                 </ul>
             </li>
             <li>
@@ -153,10 +153,10 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
                 </ul>
             </li>
             <li>
-                <strong><?php _e( 'Exclude CPT', 'the-cache-purger' ); ?></strong>
+                <strong><?php _e( 'Ignore CPT', 'the-cache-purger' ); ?></strong>
                 <ul>
                     <li><?php _e( 'Option(s) Name:', 'the-cache-purger' ); ?> <code>on_cpt_exclude</code></li>
-                    <li><?php _e( 'Select the custom post types you wish to exclude from the cache purge actions.', 'the-cache-purger' ); ?></li>
+                    <li><?php _e( 'Select the custom post types you wish to ignore from the cache purge actions.', 'the-cache-purger' ); ?></li>
                 </ul>
             </li>
             <li>
@@ -196,10 +196,10 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
                 </ul>
             </li>
             <li>
-                <strong><?php _e( 'Exclude Forms', 'the-cache-purger' ); ?></strong>
+                <strong><?php _e( 'Ignore Forms', 'the-cache-purger' ); ?></strong>
                 <ul>
                     <li><?php _e( 'Option(s) Name:', 'the-cache-purger' ); ?> <code>on_form_exclude</code></li>
-                    <li><?php _e( 'Select the forms you wish to exclude from the cache purge actions.', 'the-cache-purger' ); ?></li>
+                    <li><?php _e( 'Select the forms you wish to ignore from the cache purge actions.', 'the-cache-purger' ); ?></li>
                     <li><em><?php _e( 'This option is only available if you have GravityForms installed and active on your site.', 'the-cache-purger' ); ?></em></li>
                 </ul>
             </li>
@@ -212,10 +212,10 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
                 </ul>
             </li>
             <li>
-                <strong><?php _e( 'Exclude Field Group', 'the-cache-purger' ); ?></strong>
+                <strong><?php _e( 'Ignore Field Group', 'the-cache-purger' ); ?></strong>
                 <ul>
                     <li><?php _e( 'Option(s) Name:', 'the-cache-purger' ); ?> <code>on_acf_exclude</code></li>
-                    <li><?php _e( 'Select the field groups you wish to exclude from the cache purge actions.', 'the-cache-purger' ); ?></li>
+                    <li><?php _e( 'Select the field groups you wish to ignore from the cache purge actions.', 'the-cache-purger' ); ?></li>
                     <li><em><?php _e( 'This option is only available if you have Advanced Custom Fields installed and active on your site.', 'the-cache-purger' ); ?></em></li>
                 </ul>
             </li>

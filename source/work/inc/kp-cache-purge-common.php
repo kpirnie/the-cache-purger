@@ -341,9 +341,9 @@ if( ! class_exists( 'KP_Cache_Purge_Common' ) ) {
             // return the array
             return array(
                 'menu' => array( 'wp_update_nav_menu', 'wp_delete_nav_menu' ),
-                'post' => array( 'save_post', 'trashed_post' ),
-                'page' => array( 'save_post', 'trashed_post' ),
-                'cpt' => array( 'save_post', 'trashed_post' ),
+                'post' => array( 'save_post', 'edit_post', 'trashed_post' ),
+                'page' => array( 'save_post', 'edit_post', 'trashed_post' ),
+                'cpt' => array( 'save_post', 'edit_post', 'trashed_post' ),
                 'tax' => array( 'saved_term', 'delete_term' ),
                 'cat' => array( 'saved_category', 'delete_category' ),
                 'widget' => array( 'wp_ajax_save-widget', 'wp_ajax_widgets-order', 'sidebar_admin_setup' ),

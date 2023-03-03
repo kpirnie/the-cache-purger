@@ -102,7 +102,7 @@ if( ! trait_exists( 'API' ) ) {
             if( $_key && $_secret ) {
 
                 // start log for it
-                KPCPC::write_log( "\tSUCURI PURGE");
+                KPCPC::write_log( "\t\tSUCURI PURGE");
 
                 // create the request URL
                 $_url = sprintf(
@@ -121,12 +121,12 @@ if( ! trait_exists( 'API' ) ) {
                 if( strpos( $_req, 'OK' ) !== false ) {
 
                     // log it
-                    KPCPC::write_log( "\t\tSUCCESS");
+                    KPCPC::write_log( "\t\t\tSUCCESS");
 
                 } else {
 
                     // it actually failed, so log it
-                    KPCPC::write_log( "\t\tFAILED - " . trim( preg_replace( '/\s+/', ' ', $_req ) ) );
+                    KPCPC::write_log( "\t\t\tFAILED - " . trim( preg_replace( '/\s+/', ' ', $_req ) ) );
 
                 }
 
@@ -156,7 +156,7 @@ if( ! trait_exists( 'API' ) ) {
             if( $_token && $_zone ) {
 
                 // start log for it
-                KPCPC::write_log( "\tCLOUDFLARE PURGE");
+                KPCPC::write_log( "\t\tCLOUDFLARE PURGE");
 
                 // setup our arguments
                 $_args = array(
@@ -191,19 +191,19 @@ if( ! trait_exists( 'API' ) ) {
                     if( ! $_json['success'] ) {
 
                         // log it
-                        KPCPC::write_log( "\t\tFAILED - " . $_json['errors'][0]['message'] );
+                        KPCPC::write_log( "\t\t\tFAILED - " . $_json['errors'][0]['message'] );
 
                     } else {
 
                         // log it
-                        KPCPC::write_log( "\t\tSUCCESS");
+                        KPCPC::write_log( "\t\t\tSUCCESS");
 
                     }
 
                 } else {
 
                     // log it
-                    KPCPC::write_log( "\t\tFAILED - EMPTY RESPONSE, CHECK CLOUDFLARE LOGS" );
+                    KPCPC::write_log( "\t\t\tFAILED - EMPTY RESPONSE, CHECK CLOUDFLARE LOGS" );
 
                 }
 

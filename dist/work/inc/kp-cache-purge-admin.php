@@ -66,7 +66,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'sticky_header' => false,  
                     'ajax_save' => false,           
                     'framework_title' => __( 'The Cache Purger <small>by Kevin C. Pirnie</small>', 'the-cache-purger' ),
-                    'footer_credit' => __( '<a href="https://kevinpirnie.com/" target="_blank">Kevin C. Pirnie</a>', 'the-cache-purger' )
+                    'footer_text' => __( 'Thank you for utilizing <strong>The Cache Purger</strong> by: <a href="https://kevinpirnie.com/" target="_blank">Kevin C. Pirnie</a>', 'the-cache-purger' )
                 ) );
 
                 // Settings
@@ -93,6 +93,30 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     )
                 );
 
+                // get our options
+                $_opts = KPCPC::get_options( );
+
+                // get the admin page we need to be on
+                $_uri = get_admin_url( get_current_blog_id( ), 'admin.php?page=kpcp_settings&the_log_purge=true#tab=the-purge-log' );
+
+                // check the settings to see if we're actually logging
+                if( filter_var( ( $_opts -> should_log ) ?? false, FILTER_VALIDATE_BOOLEAN ) ) {
+
+                    // the log
+                    KPTCP::createSection( $_cp_settings_id, 
+                        array(
+                            'title'  => __( 'The Purge Log', 'the-cache-purger' ),
+                            'fields' => array(
+                                array(
+                                    'type' => 'content',
+                                    'content' => '<textarea class="kpcp_log_textarea" readonly>' . $this -> kpcp_purge_log( ) . '</textarea><a href="' . $_uri . '" class="button button-primary kptcp-clear-log" id="kptcp_clear_log" title="Clear The Log">Clear The Log</a><p><strong></strong> You will need to hard refresh this page after clicking this button.</p>',
+                                )
+                            ),
+                        )
+                    );
+
+                }
+
                 // Documentation
                 KPTCP::createSection( $_cp_settings_id, 
                     array(
@@ -101,8 +125,8 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                             array(
                                 'type' => 'content',
                                 'content' => $this -> kpcp_docs( ),
-                            )
-                        ),
+                            ),
+                        )
                     )
                 );
 
@@ -121,17 +145,22 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 // on settings save, clear cache if we are configured to do so
                 add_action( 'kptcp_' . $_cp_settings_id . '_save_after', function( ) use( $_cp_settings_id ) : void {
 
-                    // setup the cache purger
-                    $_cp = new KP_Cache_Purge( );
+                    // make sure we are allowed to do this
+                    if( filter_var( ( $_opts -> on_plugin_settings ) ?? false, FILTER_VALIDATE_BOOLEAN ) ) {
 
-                    // purge
-                    $_cp -> kp_do_purge( );
+                        // setup the cache purger
+                        $_cp = new KP_Cache_Purge( );
 
-                    // log the purge
-                    KPCPC::write_log( "Settings Cache Cleared on: " . 'kptcp_' . $_cp_settings_id . '_save_after' );
+                        // purge
+                        $_cp -> kp_do_purge( );
 
-                    // clean it up
-                    unset( $_cp );
+                        // log the purge
+                        KPCPC::write_log( "Settings Cache Cleared on: " . 'kptcp_' . $_cp_settings_id . '_save_after' );
+
+                        // clean it up
+                        unset( $_cp );
+
+                    }
 
                 }, PHP_INT_MAX );
 
@@ -193,6 +222,36 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
         */
         private function kpcp_cron_settings( ) : array {
 
+            // get our options
+            $_opts = KPCPC::get_options( );
+
+            // extra fields
+            $_extras = array( );
+
+            // check the settings to see if we're actually logging
+            if( filter_var( ( $_opts -> should_log ) ?? false, FILTER_VALIDATE_BOOLEAN ) ) {
+
+                // log purge allowed?
+                $_extras[] = array(
+                    'id' => 'cron_log_purge_allowed',
+                    'type' => 'switcher',
+                    'title' => __( 'Purge the log?', 'the-cache-purger' ),
+                    'desc' => __( 'Do you want to allow scheduled log purges?', 'the-cache-purger' ),
+                    'default' => false,
+                );
+
+                // existing schedules
+                $_extras[] = array(
+                    'id' => 'cron_log_purge_schedule',
+                    'type' => 'select',
+                    'title' => __( 'Purge Schedule', 'the-cache-purger' ),
+                    'desc' => __( 'Select a purge schedule to use.', 'the-cache-purger' ),
+                    'options' => $this -> get_current_schedules( ),
+                    'dependency' => array( 'cron_log_purge_allowed', '==', 'true' ),
+                );
+
+            }
+
             // hold the returnable array
             $_ret = array(
 
@@ -200,8 +259,8 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 array(
                     'id' => 'cron_schedule_allowed',
                     'type' => 'switcher',
-                    'title' => __( 'Allow Scheduled Purges?', 'the-cache-purger' ),
-                    'desc' => __( 'Do you want to allow scheduled cache purges?', 'the-cache-purger' ),
+                    'title' => __( 'Scheduled your Purges?', 'the-cache-purger' ),
+                    'desc' => __( 'Do you want schedule cache purges?', 'the-cache-purger' ),
                     'default' => false,
                 ),
 
@@ -209,13 +268,16 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                 array(
                     'id' => 'cron_schedule_builtin',
                     'type' => 'select',
-                    'title' => __( 'Built-In Schedule', 'the-cache-purger' ),
-                    'desc' => __( 'Select a built-in schedule to use for the scheduled cache flushes.', 'the-cache-purger' ),
+                    'title' => __( 'Purge Schedule', 'the-cache-purger' ),
+                    'desc' => __( 'Select a purge schedule to use.', 'the-cache-purger' ),
                     'options' => $this -> get_current_schedules( ),
                     'dependency' => array( 'cron_schedule_allowed', '==', 'true' ),
                 ),
 
             );
+
+            // let's add in the extra fields
+            $_ret = array_merge( $_ret, $_extras );
 
             // return it
             return $_ret;
@@ -245,7 +307,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'remote_redis',
                     'type' => 'switcher',
                     'title' => __( 'Remote Redis server?', 'the-cache-purger' ),
-                    'desc' => __( 'Please only switch this on if you utilize a remote Redis Server.', 'the-cache-purger' ),
+                    'desc' => __( 'Please only switch this on if you utilize remote Redis Servers.', 'the-cache-purger' ),
                     'default' => false,
                 ),
 
@@ -285,11 +347,11 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'remote_memcache',
                     'type' => 'switcher',
                     'title' => __( 'Remote Memcache server?', 'the-cache-purger' ),
-                    'desc' => __( 'Please only switch this on if you utilize a remote Memcache Server.', 'the-cache-purger' ),
+                    'desc' => __( 'Please only switch this on if you utilize remote Memcache Servers.', 'the-cache-purger' ),
                     'default' => false,
                 ),
                 
-                // remote memcached servers
+                // remote memcache servers
                 array(
                     'id' => 'remote_memcache_servers',
                     'type' => 'repeater',
@@ -325,7 +387,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'remote_memcached',
                     'type' => 'switcher',
                     'title' => __( 'Remote Memcached server?', 'the-cache-purger' ),
-                    'desc' => __( 'Please only switch this on if you utilize a remote Memcached Server.', 'the-cache-purger' ),
+                    'desc' => __( 'Please only switch this on if you utilize remote Memcached Servers.', 'the-cache-purger' ),
                     'default' => false,
                 ),
                 
@@ -359,7 +421,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                         ),
                     ),
                 ),
-
+                
                 // api keys
                 array(
                     'id' => 'service_api_keys',
@@ -448,7 +510,16 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'should_log',
                     'type' => 'switcher',
                     'title' => __( 'Log Purge Actions?', 'the-cache-purger' ),
-                    'desc' => __( 'This will attempt to write a log of all purge actions performed.<br />The file location is: <code>' . ABSPATH . 'wp-content/purge.log</code>', 'the-cache-purger' ),
+                    'desc' => __( 'This will attempt to write a log of all purge actions performed.<br />The file location is: <code>' . ABSPATH . 'wp-content/purge.log</code><br /><strong>NOTE: </strong>Make sure you hard refresh this page once you save the settings.', 'the-cache-purger' ),
+                    'default' => false,
+                ),
+
+                // purge on plugin settings
+                array(
+                    'id' => 'on_plugin_settings',
+                    'type' => 'switcher',
+                    'title' => __( 'Purge on settings save?', 'the-cache-purger' ),
+                    'desc' => __( 'This will attempt to purge all caches for settings save actions.<br /><strong>NOTE:</strong>You need to hard refresh this page after saving this setting in order for this to take effect.', 'the-cache-purger' ),
                     'default' => false,
                 ),
 
@@ -476,9 +547,9 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'type' => 'select',
                     'chosen' => true,
                     'multiple' => true,
-                    'title' => __( 'Excluded Posts', 'the-cache-purger' ),
-                    'placeholder' => __( 'Please select the exclusions...', 'the-cache-purger' ),
-                    'desc' => __( 'Posts to exclude from the purger.', 'the-cache-purger' ),
+                    'title' => __( 'Ignored Posts', 'the-cache-purger' ),
+                    'placeholder' => __( 'Please select the posts to ignore...', 'the-cache-purger' ),
+                    'desc' => __( 'Posts to ignore from the purger. This will simply ignore the purge action when the selected posts get updated.', 'the-cache-purger' ),
                     'options' => KPCPC::get_posts_for_select( 'posts' ),
                     'default' => array( 0 ),
                     'dependency' => array( 'on_post', '==', true ),
@@ -499,9 +570,9 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'type' => 'select',
                     'chosen' => true,
                     'multiple' => true,
-                    'title' => __( 'Excluded Pages', 'the-cache-purger' ),
-                    'placeholder' => __( 'Please select the exclusions...', 'the-cache-purger' ),
-                    'desc' => __( 'Pages to exclude from the purger.', 'the-cache-purger' ),
+                    'title' => __( 'Ignored Pages', 'the-cache-purger' ),
+                    'placeholder' => __( 'Please select the pages to ignore...', 'the-cache-purger' ),
+                    'desc' => __( 'Pages to ignore from the purger. This will simply ignore the purge action when the selected pages get updated.', 'the-cache-purger' ),
                     'options' => KPCPC::get_posts_for_select( 'pages' ),
                     'default' => array( 0 ),
                     'dependency' => array( 'on_page', '==', true ),
@@ -522,9 +593,9 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'type' => 'select',
                     'chosen' => true,
                     'multiple' => true,
-                    'title' => __( 'Excluded CPTs', 'the-cache-purger' ),
-                    'placeholder' => __( 'Please select the exclusions...', 'the-cache-purger' ),
-                    'desc' => __( 'CPTs to exclude from the purger.', 'the-cache-purger' ),
+                    'title' => __( 'Ignored CPTs', 'the-cache-purger' ),
+                    'placeholder' => __( 'Please select the cpts to ignore...', 'the-cache-purger' ),
+                    'desc' => __( 'CPTs to ignore from the purger. This will simply ignore the purge action when the selected CPT get updated.', 'the-cache-purger' ),
                     'options' => KPCPC::get_post_types_for_select( ),
                     'default' => array( 0 ),
                     'dependency' => array( 'on_cpt', '==', true ),
@@ -586,9 +657,9 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'type' => 'select',
                     'chosen' => true,
                     'multiple' => true,
-                    'title' => __( 'Excluded Forms', 'the-cache-purger' ),
-                    'placeholder' => __( 'Please select the exclusions...', 'the-cache-purger' ),
-                    'desc' => __( 'Forms to exclude from the purger.', 'the-cache-purger' ),
+                    'title' => __( 'Ignored Forms', 'the-cache-purger' ),
+                    'placeholder' => __( 'Please select the forms to ignore...', 'the-cache-purger' ),
+                    'desc' => __( 'Forms to ignore from the purger. This will simply ignore the purge action when the selected forms get updated.', 'the-cache-purger' ),
                     'options' => $this -> get_our_forms( ),
                     'default' => array( 0 ),
                     'dependency' => array( 'on_form', '==', true ),
@@ -607,16 +678,16 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'desc' => __( 'This will attempt to purge all caches for every "advanced custom field" group update, save, or delete.', 'the-cache-purger' ),
                     'default' => false,
                 );
-
+ 
                 // for exclusions
                 $_tmp[] = array(
                     'id' => 'on_acf_exclude',
                     'type' => 'select',
                     'chosen' => true,
                     'multiple' => true,
-                    'title' => __( 'Excluded Field Groups', 'the-cache-purger' ),
-                    'placeholder' => __( 'Please select the exclusions...', 'the-cache-purger' ),
-                    'desc' => __( 'Field Groups to exclude from the purger.', 'the-cache-purger' ),
+                    'title' => __( 'Ignored Field Groups', 'the-cache-purger' ),
+                    'placeholder' => __( 'Please select the field groupd to ignore...', 'the-cache-purger' ),
+                    'desc' => __( 'Field Groups to ignore from the purger. This will simply ignore the purge action when the selected field groups get updated.', 'the-cache-purger' ),
                     'options' => $this -> get_our_field_groups( ),
                     'default' => array( 0 ),
                     'dependency' => array( 'on_acf', '==', true ),
@@ -672,6 +743,48 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
 
         }
 
+        /** 
+         * kpcp_purge_log
+         * 
+         * Private method pull in the purge log for display in the backend
+         * 
+         * @since 7.4
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return string Returns the string content of the purge log
+         * 
+        */
+        private function kpcp_purge_log( ) : string {
+
+            // hold the return
+            $_ret = '';
+
+            // setup the path
+            $_path = ABSPATH . 'wp-content/purge.log';
+
+            // if the file exists
+            if( @is_readable( $_path ) ) {
+
+                // start the output buffer
+                ob_start( );
+                
+                // include the doc file
+                include $_path;
+                
+                // include the documentation
+                $_ret = ob_get_contents();
+                
+                // clean and end the output buffer
+                ob_end_clean( );
+
+            }
+
+            // return it
+            return $_ret;
+
+        }
 
         /** 
          * get_forms

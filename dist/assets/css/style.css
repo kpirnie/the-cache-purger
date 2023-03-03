@@ -23,3 +23,8 @@
 }
 .kptcp-doc-content h2 {font-size:1.7em;}
 .kptcp-doc-content h3 {font-size:1.25em;}
+.kpcp_log_textarea {
+    width:100% !important;
+    height:480px !important;
+    margin-bottom:15px !important;
+}
