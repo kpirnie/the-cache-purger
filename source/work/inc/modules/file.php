@@ -46,20 +46,6 @@ if( ! trait_exists( 'FILE' ) ) {
             // implement hook
             do_action( 'tcp_pre_file_purge' );
 
-            // let's utilize wordpress's filesystem global
-            global $wp_filesystem;
-
-            // if we do not have the global yet
-            if( empty( $wp_filesystem ) ) {
-
-                // require the file
-                require_once ABSPATH . '/wp-admin/includes/file.php';
-
-                // initialize the wordpress filesystem
-                WP_Filesystem( );
-
-            }
-
             // hold our built cache path variable
             $_cache_path = '';
 
@@ -80,25 +66,68 @@ if( ! trait_exists( 'FILE' ) ) {
             // log it
             KPCPC::write_log( "\tFILE PURGE" );
 
-            // if it exists
-            if( file_exists( $_cache_path ) ) {
-                    
-                // map the glob location of the cached files and delete them
-                array_map( 'unlink', glob( $_cache_path . "*/*/*" ) );
+            // fire up our internal deleter
+            $this -> full_delete( $_cache_path );
 
-                // delete the parent
-                array_map( 'rmdir', glob( $_cache_path . "*/*" ) );
-
-                // delete the grandparent
-                array_map( 'rmdir', glob( $_cache_path . "*" ) );
-
-                // log the path cleared
-                KPCPC::write_log( "\t\t" . $_cache_path . " Purged" );
-
-            }
+            // log the path cleared
+            KPCPC::write_log( "\t\tPath: " . $_cache_path );
             
             // implement hook
             do_action( 'tcp_post_file_purge' );
+
+        }
+
+        /** 
+         * full_delete
+         * 
+         * This method does the actual file or folder removal
+         * also works recursively
+         * 
+         * @since 7.4
+         * @access private
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        private function full_delete( string $_path ) : void {
+
+            // make sure the path exists
+            if ( file_exists( $_path ) ) {
+
+                // setup the path iterators
+                $_it = new RecursiveDirectoryIterator( $_path, FilesystemIterator::SKIP_DOTS );
+                $_it = new RecursiveIteratorIterator( $_it, RecursiveIteratorIterator::CHILD_FIRST );
+                
+                // loop over them
+                foreach( $_it as $_file ) {
+                    
+                    // make sure we're not a . or ..
+                    if( ! $_file -> isDot( ) ) {
+
+                        // check if it's a directory
+                        if ( $_file -> isDir( ) ) {
+
+                            // attempt to remove it
+                            @rmdir( $_file -> getPathname( ) );
+                        
+                        // it's actually a file    
+                        } else {
+                        
+                            // try to delete it
+                            @unlink( $_file -> getPathname( ) );
+                        
+                        }
+
+                    }
+                
+                }
+                
+                // now try to dump the parent
+                @rmdir( $_path );
+
+            }
 
         }
 

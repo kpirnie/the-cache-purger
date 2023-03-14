@@ -5,7 +5,7 @@ Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.5
 Tested up to: 6.1.2
 Requires PHP: 7.4
-Stable tag: 1.5.12
+Stable tag: 1.5.22
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -64,6 +64,11 @@ Even if you don't, there are still some server based caches that need to be purg
 5. Logged Purged Object
 
 == Changelog ==
+
+= 1.5.22 =
+* Fix: File caches clearing properly
+  * Better performance
+  * Supresses warnings
 
 = 1.5.12 =
 * Add: option to clear caches on plugin settings save
