@@ -97,29 +97,24 @@ if( ! trait_exists( 'FILE' ) ) {
             if ( file_exists( $_path ) ) {
 
                 // setup the path iterators
-                $_it = new RecursiveDirectoryIterator( $_path, FilesystemIterator::SKIP_DOTS );
+                $_it = new RecursiveDirectoryIterator( $_path, FilesystemIterator::SKIP_DOTS ); // ensures no . or .. files
                 $_it = new RecursiveIteratorIterator( $_it, RecursiveIteratorIterator::CHILD_FIRST );
                 
                 // loop over them
                 foreach( $_it as $_file ) {
                     
-                    // make sure we're not a . or ..
-                    if( ! $_file -> isDot( ) ) {
+                    // check if it's a directory
+                    if ( $_file -> isDir( ) ) {
 
-                        // check if it's a directory
-                        if ( $_file -> isDir( ) ) {
-
-                            // attempt to remove it
-                            @rmdir( $_file -> getPathname( ) );
-                        
-                        // it's actually a file    
-                        } else {
-                        
-                            // try to delete it
-                            @unlink( $_file -> getPathname( ) );
-                        
-                        }
-
+                        // attempt to remove it
+                        @rmdir( $_file -> getPathname( ) );
+                    
+                    // it's actually a file    
+                    } else {
+                    
+                        // try to delete it
+                        @unlink( $_file -> getPathname( ) );
+                    
                     }
                 
                 }

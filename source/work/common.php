@@ -196,7 +196,7 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
             $_opts = KPCPC::get_options( );
 
             // set if it's allowed 
-            $_allowed = filter_var( $_opts -> cron_schedule_allowed, FILTER_VALIDATE_BOOLEAN );
+            $_allowed = filter_var( ( $_opts -> cron_schedule_allowed ) ?? false, FILTER_VALIDATE_BOOLEAN );
             $_l_allowed = filter_var( ( $_opts -> should_log ) ?? false, FILTER_VALIDATE_BOOLEAN );
             $_lp_allowed = filter_var( ( $_opts -> cron_log_purge_allowed ) ?? false, FILTER_VALIDATE_BOOLEAN );
 

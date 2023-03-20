@@ -111,19 +111,19 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // let's attempt to clear out memory/ram based caches
             $this -> purge_memory_caches( );
 
+            // do the long purges
+            $this -> kp_do_long_purge( );
+
             // make sure we're only scheduling this once
-            if( ! wp_next_scheduled( 'kpcpc_long_purges' ) ) {
+//            if( ! wp_next_scheduled( 'kpcpc_long_purges' ) ) {
 
                 // create a hook the next purges
-                add_action( 'kpcpc_long_purges', function( ) : void {
-
-                    
-                }, PHP_INT_MAX );
+//                add_action( 'kpcpc_long_purges', array( $this, 'kp_do_long_purge' ), PHP_INT_MAX );
 
                 // now schedule it to be run in 1 minute
-                wp_schedule_single_event( time( ) + MINUTE_IN_SECONDS, 'kpcpc_long_purges' );
+//                wp_schedule_single_event( time( ) + MINUTE_IN_SECONDS, 'kpcpc_long_purges' );
 
-            }
+//            }
 
         }
 
