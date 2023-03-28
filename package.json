@@ -6,9 +6,9 @@
   "main": "gulpfile.js",
   "source": "source",
   "distribution": "dist",
-  "production" : {
+  "production": {
     "shouldcopy": false,
-    "path" : "/home/kpirnie/SVN/the-cache-purger/trunk/"
+    "path": "/home/kpirnie/SVN/the-cache-purger/trunk/"
   },
   "license": "GPL-3.0",
   "repository": {

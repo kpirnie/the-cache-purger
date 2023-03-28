@@ -3,7 +3,7 @@ Contributors: kevp75
 Donate link: https://paypal.me/kevinpirnie
 Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.5
-Tested up to: 6.1.2
+Tested up to: 6.2
 Requires PHP: 7.4
 Stable tag: 1.5.99
 License: GPLv3
@@ -51,9 +51,11 @@ Purges are configurable in the settings, and include the following saves/updates
 
 = Why would I need this plugin? =
 
-Do you need to manually clear your server-side caches everytime you modify your site?  If yes, then this is for you.  It automates this process for you.
+Do you need to manually clear your server-side caches everytime you modify your site, what about automating it, or need to do it in CLI?  If yes, then this is for you.  
 
-Even if you don't, there are still some server based caches that need to be purged that this plugin attempts to take care of.
+= How do I utilize the CLI cache clearing? =
+
+Shell into your server and run the command `wp the_cache purge`.  Please note that if you are a root user, you may need to add the `--allow-root` argument.  Also note, that if yout site is a network, you will need to add the url argument for the site you want to purge... `--url=http(s)://yoursite.com`
 
 == Screenshots ==
 
@@ -66,8 +68,13 @@ Even if you don't, there are still some server based caches that need to be purg
 == Changelog ==
 
 = 1.5.99 =
+* Update: FAQ
+* Verify: Core 6.2 Compatibility
 * Fix: cron schedule check
 * Fix: issue where the file cache clearing may cause a Fatal Error in some circumstances
+* Fix: long purge actions
+  * remove from admin ajax
+  * set as a wp cron job 1 time action created when the purges take place
 
 = 1.5.22 =
 * Fix: File caches clearing properly

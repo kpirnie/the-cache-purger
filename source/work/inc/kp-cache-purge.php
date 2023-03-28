@@ -111,19 +111,19 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
             // let's attempt to clear out memory/ram based caches
             $this -> purge_memory_caches( );
 
-            // do the long purges
-            $this -> kp_do_long_purge( );
+            // we're only concerned about doing this when we aren't in CLI
+            if( ! defined( 'WP_CLI' ) ) {
 
-            // make sure we're only scheduling this once
-//            if( ! wp_next_scheduled( 'kpcpc_long_purges' ) ) {
+                // hold a "doing purge" flag
+                set_transient( 'is_doing_cache_purge', true, MINUTE_IN_SECONDS );
 
-                // create a hook the next purges
-//                add_action( 'kpcpc_long_purges', array( $this, 'kp_do_long_purge' ), PHP_INT_MAX );
+            // otherwise
+            } else {
 
-                // now schedule it to be run in 1 minute
-//                wp_schedule_single_event( time( ) + MINUTE_IN_SECONDS, 'kpcpc_long_purges' );
+                // we can run it now that we are in CLI
+                $this -> kp_do_long_purge( );
 
-//            }
+            }
 
         }
 
@@ -144,7 +144,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
 
             // log the purge
             KPCPC::write_log( "\tLONG PURGES" );
-            
+                            
             // now we'll try to purge pagespeed mod caches
             $this -> purge_pagespeed_caches( );
 

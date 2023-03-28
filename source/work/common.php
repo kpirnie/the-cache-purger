@@ -260,6 +260,39 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
 
             }
 
+            // see if we're purging
+            $_is_purging = filter_var( ( get_transient( 'is_doing_cache_purge' ) ) ?? false, FILTER_VALIDATE_BOOLEAN );
+
+            // if we are purging
+            if( $_is_purging ) {
+
+                // create a hook for the clearing to occurr in 
+                add_action( 'kptcp_long_purge', function( ) : void {
+
+                    // fire up the cache purge
+                    $_cp = new KP_Cache_Purge( );
+
+                    // run the long runner
+                    $_cp -> kp_do_long_purge( );
+
+                    // clean up
+                    unset( $_cp );
+
+                } );
+
+                // check if the long purge task already exists
+                if( ! wp_next_scheduled( 'kptcp_long_purge' ) ){
+
+                    // schedule it to run once
+                    wp_schedule_single_event( time( ) + 5, 'kptcp_long_purge' );
+
+                    // now spawn the task to run
+                    spawn_cron( );
+
+                }
+
+            }
+
         }, PHP_INT_MAX );
         
         // fire up the processor class here.  Inside it are the proper hooks where the purging will take place
