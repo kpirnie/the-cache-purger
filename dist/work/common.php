@@ -243,7 +243,7 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
                     $_l_path = ABSPATH . 'wp-content/purge.log';
 
                     // unfortunately we cannot utilize wordpress's built-in file methods, but let's clear the log
-                    file_put_contents( $_path, '', LOCK_EX );
+                    file_put_contents( $_l_path, '', LOCK_EX );
 
                 } );
 

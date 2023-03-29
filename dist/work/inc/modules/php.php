@@ -131,14 +131,19 @@ if( ! trait_exists( 'PHP' ) ) {
                     // attempt to reset it
                     opcache_reset( );
 
-                    // now try to clear the php file cache
-                    foreach( $_status['scripts'] as $_k => $_v ) {
+                    // check if the scripts are set
+                    if( isset( $_status['scripts'] ) ) {
 
-                        // set the directories
-                        $dirs[dirname( $_k )][basename( $_k )] = $_v;
-                        
-                        // invalidate it
-                        opcache_invalidate( $_v['full_path'] , $force = true );
+                        // they are so try to clear the php file cache
+                        foreach( $_status['scripts'] as $_k => $_v ) {
+
+                            // set the directories
+                            $dirs[dirname( $_k )][basename( $_k )] = $_v;
+                            
+                            // invalidate it
+                            opcache_invalidate( $_v['full_path'] , $force = true );
+
+                        }
 
                     }
 
