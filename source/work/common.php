@@ -56,39 +56,8 @@ register_deactivation_hook( $_pi_path, function( ) : void {
 // let's make sure the plugin is activated
 if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 
-    // setup our autoload
-    spl_autoload_register( function( $_cls )  : void {
-
-        // reformat the class name to match the file name for inclusion
-        $_class = strtolower( str_ireplace( '_', '-', $_cls ) );
-
-        // pull in our classes based on the file path
-        $_path = TCP_PATH . "/work/inc/$_class.php";
-
-        // check if it's our field framework
-        if( $_cls === 'KPTCP' ) {
-
-            // setup the proper path
-            $_path = TCP_PATH . '/vendor/custom-fields/classes/setup.class.php';
-
-        }
-
-        // check if our class is a CLI only class
-        if( strpos( $_cls, 'CLI' ) !== false ) {
-
-            // set the CLI class path
-            $_path = TCP_PATH . "/cli/$_class.php";
-
-        }
-        
-        // if the file exists
-        if( @is_readable( $_path ) ) {
-
-            // include it once
-            include $_path;
-        }
-
-    } );
+    // include our autoloader
+    include TCP_PATH . '/vendor/autoload.php';
 
     // let's see if we're in CLI or not
     if( ! defined( 'WP_CLI' ) ) {

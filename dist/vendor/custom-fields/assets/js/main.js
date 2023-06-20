@@ -2527,7 +2527,7 @@
       if ( $form.attr('id') === 'addtag' ) {
 
         var $submit = $form.find('#submit'),
-            $cloned = $this.find('.kptcp-field').kptcp_clone();
+            $cloned = $this.children('.kptcp-field').kptcp_clone();
 
         $submit.on( 'click', function() {
 

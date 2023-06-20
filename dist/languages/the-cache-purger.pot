@@ -37,7 +37,7 @@ msgstr ""
 msgid "Cannot Network Activate"
 msgstr ""
 
-#: source/work/common.php:168
+#: source/work/common.php:137
 msgid "The cache purge has finished."
 msgstr ""
 

@@ -8,11 +8,13 @@
  *
  */
 if ( ! class_exists( 'KPTCP_Setup' ) ) {
+
+  #[AllowDynamicProperties]
   class KPTCP_Setup {
 
     // Default constants
     public static $premium  = true;
-    public static $version  = '2.2.9';
+    public static $version  = '2.3.0';
     public static $dir      = '';
     public static $url      = '';
     public static $css      = '';

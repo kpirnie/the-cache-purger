@@ -8,6 +8,7 @@
  *
  */
 if ( ! class_exists( 'KPTCP_Abstract' ) ) {
+  #[AllowDynamicProperties]
   abstract class KPTCP_Abstract {
 
     public $abstract   = '';
