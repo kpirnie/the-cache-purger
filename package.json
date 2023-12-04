@@ -16,7 +16,7 @@
     "url": "https://gitlab.com/kp-development/wordpress/plugins/the-cache-purger.git"
   },
   "engines": {
-    "node": ">=16.13.1"
+    "node": ">=21"
   },
   "type": "module",
   "author": {
@@ -30,8 +30,8 @@
   },
   "homepage": "https://kevinpirnie.com/kevin-pirnies-articles/wordpress-plugin-the-cache-purger/",
   "devDependencies": {
-    "del": "latest",
     "gulp": "latest",
+    "gulp-clean": "latest",
     "gulp-concat": "latest",
     "gulp-cssnano": "latest",
     "gulp-imagemin": "latest",

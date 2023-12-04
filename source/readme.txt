@@ -2,10 +2,10 @@
 Contributors: kevp75
 Donate link: https://paypal.me/kevinpirnie
 Tags: remote cache, caching, purge cache, cache purging
-Requires at least: 5.5
-Tested up to: 6.3
+Requires at least: 5.6
+Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.7.11
+Stable tag: 1.7.33
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -66,6 +66,13 @@ Shell into your server and run the command `wp the_cache purge`.  Please note th
 5. Logged Purged Object
 
 == Changelog ==
+
+= 1.7.33 =
+* Verify: Core 6.5 Compatibility
+* Update: Minimum core version 5.6
+
+= 1.7.12 =
+* Fix: missing variable on activation
 
 = 1.7.11 =
 * Optimize: Class loading with Composers autoloader and it's optimizations

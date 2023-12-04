@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
 $_pi_path = TCP_PATH . '/the-cache-purger.php';
 
 // Plugin Activation
-register_activation_hook( $_pi_path, function( ) : void {
+register_activation_hook( $_pi_path, function( $_network ) : void {
         
     // check the PHP version, and deny if lower than 7.4
     if ( version_compare( PHP_VERSION, '7.4', '<=' ) ) {

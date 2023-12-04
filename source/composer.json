@@ -1,0 +1,41 @@
+{
+    "name" : "kevinpirnie/the-cache-purger",
+    "description" : "The Cache Purger",
+    "version" : "1.7.11",
+    "type" : "project",
+    "homepage" : "https://kevinpirnie.com/",
+    "readme" : "readme.txt",
+    "license" : "GPL-3.0-or-later",
+    "prefer-stable": true,
+    "authors" : [
+        {
+            "name" : "Kevin Pirnie",
+            "email" : "me@kpirnie.com",
+            "homepage" : "https://kevinpirnie.com",
+            "role" : "Developer"
+        }
+    ],
+    "support" : {
+        "email" : "support@kpirnie.com",
+        "issues" : "https://gitlab.com/kp-development/wordpress/plugins/the-cache-purger/-/issues",
+        "source" : "https://gitlab.com/kp-development/wordpress/plugins/the-cache-purger"
+    },
+    "funding" : [
+        {
+            "type" : "paypal",
+            "url" : "https://paypal.me/kevinpirnie"
+        }
+    ],
+    "require": {
+        "php" : ">=7.4"
+    },
+    "autoload": {
+        "classmap": [
+            "work/inc/",
+            "work/inc/modules/",
+            "cli/",
+            "vendor/custom-fields/classes/setup.class.php"
+        ]
+    },
+    "optimize-autoloader": true
+}

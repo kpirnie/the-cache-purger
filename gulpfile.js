@@ -1,8 +1,8 @@
 // require gulp
 import gulp from "gulp";
 
-// require delete
-import deleter from "del";
+// requite gulp cleaner
+import cleanc from "gulp-clean";
 
 // require sass plugin
 import dartSass from 'sass';
@@ -25,9 +25,6 @@ import wpPot from "gulp-wp-pot";
 
 // svgs
 import svgo from "gulp-svgo";
-
-// gulp text replacer
-// import replace from "gulp-replace";
 
 // fs
 import fs from "fs";
@@ -98,20 +95,27 @@ const globs = {
             `${src.root}/readme.md`,
         ],
     },
+
 };
 
 /** Setup our tasks to run */
 
 // cleanup
 gulp.task( 'cleanup', function( ) {
+
     console.log( '# Cleaning Up Distribution' );
-    return deleter( [`${dist.root}/**`, `!${dist.root}`] );
+    return gulp.src( [`${dist.root}/**`, `!${dist.root}`], { read: false, allowEmpty: true, force: true } )
+        .pipe( cleanc( ) );
+
 } );
 
 // cleanup concat files
 gulp.task( 'cleanupconcat', function( ) {
+
     console.log( '# Cleaning Up Concatenated Files' );
-    return deleter( [`${dist.css}/concat.css`, `${src.css}/temp.css`, `${dist.js}/concat.js`] );
+    return gulp.src( [`${dist.css}/concat.css`, `${src.css}/temp.css`, `${dist.js}/concat.js`], { read: false, allowEmpty: true, force: true } )
+        .pipe( cleanc( ) );
+
 } );
 
 // sass
@@ -210,22 +214,6 @@ gulp.task( 'debug_assets', function( ) {
         .pipe( gulp.dest( `${dist.js}` ) );
 } );
 
-// replace environment set
-//gulp.task( 'replace-env', function( ) {
-//    console.log( '# Replacing Environment in DIST' );
-//    return gulp.src( `${dist.root}/functions.php` )
-//        .pipe( replace( /staging/g, 'production' ) )
-//        .pipe( gulp.dest( `${dist.root}` ) );
-//} );
-
-// replace the production theme name
-//gulp.task( 'replace-themename', function( ) {
-//    console.log( '# Replacing DIST Theme Name' );
-//    return gulp.src( `${dist.root}/style.css` )
-//        .pipe( replace( /The Base Stage/g, 'The Base WP' ) )
-//        .pipe( gulp.dest( `${dist.root}` ) );
-//} );
-
 // production copy
 gulp.task( 'production_copy', function( done ) {
 
@@ -248,7 +236,6 @@ gulp.task( 'default', gulp.series(
     'javascripts',
     'cleanupconcat',
     [ 'fonts', 'images', 'svgs', 'languages', 'templates', 'customs' ],
-    //[ 'replace-env', 'replace-themename' ],
     'vendor', 
     'debug_assets',
     'production_copy',
