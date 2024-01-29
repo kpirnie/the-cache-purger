@@ -1,4 +1,4 @@
-# Copyright (C) 2023 The Cache Purger
+# Copyright (C) 2024 The Cache Purger
 # This file is distributed under the same license as the The Cache Purger package.
 msgid ""
 msgstr ""
@@ -6,6 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-01-29 14:20+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -38,7 +39,7 @@ msgid "Cannot Network Activate"
 msgstr ""
 
 #: source/work/common.php:137
-msgid "The cache purge has finished."
+msgid "<p>The cache purge has initialized.</p><p>The majority is run in the background, so please wait around 2 minutes for it to complete.</p>"
 msgstr ""
 
 #: source/work/doc.php:20

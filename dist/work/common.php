@@ -134,7 +134,7 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
 
                     ?>
                     <div class="notice notice-success is-dismissible">
-                        <p><?php _e( "The cache purge has finished.", 'the-cache-purger' ); ?></p>
+                        <p><?php _e( "<p>The cache purge has initialized.</p><p>The majority is run in the background, so please wait around 2 minutes for it to complete.</p>", 'the-cache-purger' ); ?></p>
                     </div>
                     <?php
 

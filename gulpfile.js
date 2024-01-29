@@ -104,7 +104,7 @@ const globs = {
 gulp.task( 'cleanup', function( ) {
 
     console.log( '# Cleaning Up Distribution' );
-    return gulp.src( [`${dist.root}/**`, `!${dist.root}`], { read: false, allowEmpty: true, force: true } )
+    return gulp.src( [`${dist.root}/`], { read: false, allowEmpty: true, force: true } )
         .pipe( cleanc( ) );
 
 } );
