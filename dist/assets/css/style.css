@@ -1,9 +1,13 @@
 .kptcp-half-field {
     width:45% !important;
     display:inline-block !important;
-} .kptcp-half-field input {width:100%;}
-.kptcp-half-field .kptcp-title{width:15%;}
-.kptcp-half-field .kptcp-fieldset{width:calc(85% - 20px);}
+} .kptcp-half-field input, .kptcp-full-field input {width:100%;}
+.kptcp-half-field .kptcp-title, .kptcp-full-field .kptcp-title{width:15%;}
+.kptcp-half-field .kptcp-fieldset, .kptcp-full-field .kptcp-fieldset{width:calc(85% - 20px);}
+.kptcp-full-field {
+    width:90% !important;
+    display:inline-block !important;
+}
 .kptcp-nav-background, .kptcp-tab-item, .kptcp-theme-dark .kptcp-nav ul li a,
 .kptcp-theme-dark .kptcp-header-inner, .kptcp-theme-dark .kptcp-footer {
     background: #01123c !important;

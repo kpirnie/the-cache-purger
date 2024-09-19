@@ -209,9 +209,9 @@ gulp.task( 'vendor', function( ) {
 gulp.task( 'debug_assets', function( ) {
     console.log( '# Copying in Debug Assets' );
     return gulp.src( globs.src.css, { allowEmpty: true } )
-        .pipe( gulp.dest( `${dist.css}` ) ),
-        gulp.src( globs.src.js, { allowEmpty: true } )
-        .pipe( gulp.dest( `${dist.js}` ) );
+        .pipe( gulp.dest( `${dist.css}` ) );//,
+        //gulp.src( globs.src.js, { allowEmpty: true } )
+        //.pipe( gulp.dest( `${dist.js}` ) );
 } );
 
 // production copy
@@ -231,11 +231,16 @@ gulp.task( 'production_copy', function( done ) {
 // setup our default task to run our build sequencing
 gulp.task( 'default', gulp.series(
     'cleanup',
-    'sass',
+    //'sass',
     'stylesheets',
-    'javascripts',
+    //'javascripts',
     'cleanupconcat',
-    [ 'fonts', 'images', 'svgs', 'languages', 'templates', 'customs' ],
+    //'fonts', 
+    //'images', 
+    //'svgs', 
+    'languages', 
+    'templates', 
+    'customs',
     'vendor', 
     'debug_assets',
     'production_copy',

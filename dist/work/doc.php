@@ -32,53 +32,18 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
         <ul>
             <li><strong><?php _e( 'Plugins/Themes', 'the-cache-purger' ); ?></strong>
                 <ul>
-                    <li><?php _e( 'SiteGround Optimizer', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Nginx Helper', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'LiteSpeed Cache', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Cachify', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Autoptimize', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Fast Velocity Minify', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'WP Rocket', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Swift Performance', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Comet Cache', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Hummingbird', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'WP Fastest Cache', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'WP Super Cache', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'W3 Total Cache', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Hyper Cache', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'WP Optimize', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Cache Enabler', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Divi', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Elementor', 'the-cache-purger' ); ?></li>
+                    <li><?php _e( 'Flying Press', 'the-cache-purger' ); ?>, <?php _e( 'SiteGround Optimizer', 'the-cache-purger' ); ?>, <?php _e( 'Nginx Helper', 'the-cache-purger' ); ?>, <?php _e( 'LiteSpeed Cache', 'the-cache-purger' ); ?>, <?php _e( 'Cachify', 'the-cache-purger' ); ?>, <?php _e( 'Autoptimize', 'the-cache-purger' ); ?>, <?php _e( 'Fast Velocity Minify', 'the-cache-purger' ); ?>, <?php _e( 'WP Rocket', 'the-cache-purger' ); ?>, <?php _e( 'Swift Performance', 'the-cache-purger' ); ?>, <?php _e( 'Comet Cache', 'the-cache-purger' ); ?>, <?php _e( 'Hummingbird', 'the-cache-purger' ); ?>, <?php _e( 'WP Fastest Cache', 'the-cache-purger' ); ?>, <?php _e( 'WP Super Cache', 'the-cache-purger' ); ?>, <?php _e( 'W3 Total Cache', 'the-cache-purger' ); ?>, <?php _e( 'Hyper Cache', 'the-cache-purger' ); ?>, <?php _e( 'WP Optimize', 'the-cache-purger' ); ?>, <?php _e( 'Cache Enabler', 'the-cache-purger' ); ?>, <?php _e( 'Divi', 'the-cache-purger' ); ?>, <?php _e( 'Elementor', 'the-cache-purger' ); ?></li>
                 </ul>
             </li>
             <li><strong><?php _e( 'Hosting / CDN', 'the-cache-purger' ); ?></strong>
                 <ul>
-                    <li><?php _e( 'WPEngine', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Kinsta', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'GoDaddy', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Pantheon', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'CloudFlare', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Sucuri', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'RunCloud', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Siteground', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Bluehost', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Breezeway', 'the-cache-purger' ); ?></li>
+                    <li><?php _e( 'WPEngine', 'the-cache-purger' ); ?>, <?php _e( 'SpinupWP', 'the-cache-purger' ); ?>, <?php _e( 'Kinsta', 'the-cache-purger' ); ?>, <?php _e( 'GoDaddy', 'the-cache-purger' ); ?>, <?php _e( 'Pantheon', 'the-cache-purger' ); ?>, <?php _e( 'CloudFlare', 'the-cache-purger' ); ?>, <?php _e( 'Sucuri', 'the-cache-purger' ); ?>, <?php _e( 'RunCloud', 'the-cache-purger' ); ?>, <?php _e( 'Siteground', 'the-cache-purger' ); ?>, <?php _e( 'Bluehost', 'the-cache-purger' ); ?>, <?php _e( 'Breezeway', 'the-cache-purger' ); ?></li>
                     <li><em><?php _e( 'Some of these are dependant on separate plugins.  Please see your provider if it is necessary, or already included', 'the-cache-purger' ); ?></em></li>
                 </ul>
             </li>
             <li><strong><?php _e( 'Server Based', 'the-cache-purger' ); ?></strong>
                 <ul>
-                    <li><?php _e( 'PHP FPM', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Zend Opcache', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'APC and APCU', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'WinCache', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Pagespeed Module', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Memcache', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Memcached', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Redis', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'nGinx', 'the-cache-purger' ); ?></li>
-                    <li><?php _e( 'Static File Caches', 'the-cache-purger' ); ?></li>
+                    <li><?php _e( 'Fastly CDN', 'the-cache-purger' ); ?>, <?php _e( 'PHP FPM', 'the-cache-purger' ); ?>, <?php _e( 'Zend Opcache', 'the-cache-purger' ); ?>, <?php _e( 'APC and APCU', 'the-cache-purger' ); ?>, <?php _e( 'WinCache', 'the-cache-purger' ); ?>, <?php _e( 'Pagespeed Module', 'the-cache-purger' ); ?>, <?php _e( 'Memcache', 'the-cache-purger' ); ?>, <?php _e( 'Memcached', 'the-cache-purger' ); ?>, <?php _e( 'Redis', 'the-cache-purger' ); ?>, <?php _e( 'nGinx', 'the-cache-purger' ); ?>, <?php _e( 'Static File Caches', 'the-cache-purger' ); ?></li>
                 </ul>
             </li>
             <li><strong><?php _e( 'Wordpress Built-In', 'the-cache-purger' ); ?></strong> <?php _e( 'object caching and persistent object caching', 'the-cache-purger' ); ?></li>
@@ -86,19 +51,7 @@ defined( 'ABSPATH' ) || die( 'No direct script access allowed' );
         
         <h3><?php _e( 'Purges are configurable in the settings, and include the following saves/updates/trashes:', 'the-cache-purger' ); ?></h3>
         <ul>
-            <li><?php _e( 'Posts', 'the-cache-purger' ); ?></li>
-            <li><?php _e( 'Pages', 'the-cache-purger' ); ?></li>
-            <li><?php _e( 'Custom Post Types', 'the-cache-purger' ); ?></li>
-            <li><?php _e( 'Categories', 'the-cache-purger' ); ?></li>
-            <li><?php _e( 'Taxonomies', 'the-cache-purger' ); ?></li>
-            <li><?php _e( 'Widgets', 'the-cache-purger' ); ?></li>
-            <li><?php _e( 'Menus', 'the-cache-purger' ); ?></li>
-            <li><?php _e( 'Plugins', 'the-cache-purger' ); ?></li>
-            <li><?php _e( 'Updates', 'the-cache-purger' ); ?></li>
-            <li><?php _e( 'Settings & Options', 'the-cache-purger' ); ?></li>
-            <li><?php _e( 'GravityForms', 'the-cache-purger' ); ?> (<em><?php _e( 'if installed and activated', 'the-cache-purger' ); ?></em>)</li>
-            <li><?php _e( 'Advanced Custom Fields', 'the-cache-purger' ); ?> (<em><?php _e( 'if installed and activated', 'the-cache-purger' ); ?></em>)</li>
-            <li><?php _e( 'WooCommerce Settings', 'the-cache-purger' ); ?> (<em><?php _e( 'if installed and activated', 'the-cache-purger' ); ?></em>)</li>
+            <li><?php _e( 'Posts', 'the-cache-purger' ); ?>, <?php _e( 'Pages', 'the-cache-purger' ); ?>, <?php _e( 'Custom Post Types', 'the-cache-purger' ); ?>, <?php _e( 'Categories', 'the-cache-purger' ); ?>, <?php _e( 'Taxonomies', 'the-cache-purger' ); ?>, <?php _e( 'Widgets', 'the-cache-purger' ); ?>, <?php _e( 'Menus', 'the-cache-purger' ); ?>, <?php _e( 'Plugins', 'the-cache-purger' ); ?>, <?php _e( 'Updates', 'the-cache-purger' ); ?>, <?php _e( 'Settings & Options', 'the-cache-purger' ); ?>, <?php _e( 'GravityForms', 'the-cache-purger' ); ?> (<em><?php _e( 'if installed and activated', 'the-cache-purger' ); ?></em>), <?php _e( 'Advanced Custom Fields', 'the-cache-purger' ); ?> (<em><?php _e( 'if installed and activated', 'the-cache-purger' ); ?></em>), <?php _e( 'WooCommerce Settings', 'the-cache-purger' ); ?> (<em><?php _e( 'if installed and activated', 'the-cache-purger' ); ?></em>)</li>
         </ul>
         <h2 id="kpcp_settings"><?php _e( 'Settings', 'the-cache-purger' ); ?></h2>
         <p class="kpcp_nav"><a href="#kpcp_top"><?php _e( 'TOP', 'the-cache-purger' ); ?></a> | <a href="#kpcp_desc"><?php _e( 'DESCRIPTION', 'the-cache-purger' ); ?></a> | <a href="#kpcp_features"><?php _e( 'FEATURES', 'the-cache-purger' ); ?></a> | <a href="#kpcp_settings"><?php _e( 'SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_api_settings"><?php _e( 'API/SERVER SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_cron_settings"><?php _e( 'CRON Action SETTINGS', 'the-cache-purger' ); ?></a> | <a href="#kpcp_in_the_works"><?php _e( 'IN THE WORKS', 'the-cache-purger' ); ?></a></p>

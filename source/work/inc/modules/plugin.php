@@ -54,6 +54,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
             'purge_plugin_divi',
             'purge_plugin_wprestcache',
             'purge_plugin_nitropack',
+            'purge_plugin_flyingpress',
         );
 
         /** 
@@ -931,7 +932,39 @@ if( ! trait_exists( 'PLUGIN' ) ) {
                 nitropack_sdk_purge( NULL, NULL, '' );
 
                 // log the purge
-                KPCPC::write_log( "\t\tNitroPack  Cache" );
+                KPCPC::write_log( "\t\tNitroPack Cache" );
+
+            }
+
+        }
+
+        /** 
+         * purge_plugin_flyingpress
+         * 
+         * This method attempts to utilize the purge methods
+         * of flyingpress plugin to purge it's caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_plugin_flyingpress( ) : void {
+
+            // make sure the plugin is installed and active 
+            if( class_exists( 'FlyingPress\\Purge' ) ) {
+
+                // purge all pages
+                FlyingPress\Purge::purge_pages( );
+
+                // now, just in case... purge everything
+                FlyingPress\Purge::purge_everything( );
+
+                // log the purge
+                KPCPC::write_log( "\t\tFlyingPress Cache" );
 
             }
 

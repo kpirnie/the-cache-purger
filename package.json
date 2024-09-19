@@ -1,7 +1,7 @@
 {
   "name": "the-cache-purger",
   "package": "The Cache Purger",
-  "version": "1.3.11",
+  "version": "2.0.11",
   "description": "Server-side cache purging plugin incorporating a slew of plugin, hosting, and general server based cache purges.",
   "main": "gulpfile.js",
   "source": "source",

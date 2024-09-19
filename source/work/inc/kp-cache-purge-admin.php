@@ -66,8 +66,8 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'sticky_header' => false,  
                     'ajax_save' => false,           
                     'framework_title' => __( 'The Cache Purger <small>by Kevin C. Pirnie</small>', 'the-cache-purger' ),
-                    'footer_text' => __( 'Thank you for utilizing <strong>The Cache Purger</strong> by: <a href="https://kevinpirnie.com/" target="_blank">Kevin C. Pirnie</a>', 'the-cache-purger' )
-                ) );
+                    'footer_text' => '<a href="https://kevinpirnie.com" target="_blank"><img src="https://cdn.kevp.cc/kp/kevinpirnie-logo-color.svg" alt="Kevin Pirnie: https://kevinpirnie.com" style="width:250px !important;" /></a>',
+                    ) );
 
                 // Settings
                 KPTCP::createSection( $_cp_settings_id, 
@@ -470,6 +470,25 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                             'class' => 'kptcp-half-field',
                         ),
 
+                        // fastly token
+                        array(
+                            'id' => 'fastly_token',
+                            'type' => 'text',
+                            'title' => __( 'Fastly Token', 'the-cache-purger' ),
+                            'desc' => __( 'Enter your Fastly CDN Token. If you do not have one, you can find it in your account here: <a href="https://manage.fastly.com/account/personal/tokens" target="_blank">https://manage.fastly.com/account/personal/tokens</a>. You will need to make sure to select a service when you create your token.<br /><strong>NOTE: </strong>This is stored in plain-text.', 'the-cache-purger' ),
+                            'attributes'  => array( 'type' => 'password', ),
+                            'class' => 'kptcp-half-field',
+                        ),
+
+                        // Service ID
+                        array(
+                            'id' => 'fastly_service_id',
+                            'type' => 'text',
+                            'title' => __( 'Fastly Service ID', 'the-cache-purger' ),
+                            'desc' => __( 'Enter your Fastly Service ID. If you do not have one, you can find it in your account here: <a href="https://manage.fastly.com/account/tokens" target="_blank">https://manage.fastly.com/account/tokens</a>. You will need to make sure to select a service when you create your token.<br /><strong>NOTE: </strong>This is stored in plain-text.', 'the-cache-purger' ),
+                            'attributes'  => array( 'type' => 'password', ),
+                            'class' => 'kptcp-half-field',
+                        ),
 
                     ),
                 ),
@@ -505,6 +524,24 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
             // return the array of fields
             $_ret = array(
 
+                // cache types to purge
+                array(
+                    'id' => 'caches_to_purge',
+                    'title' => __( 'Caches To Purge', 'the-cache-purger' ),
+                    'desc' => __( 'Select which caches should be purged?', 'the-cache-purger' ),
+                    'type' => 'button_set',
+                    'options' => array(
+                        1 => __( 'Plugin Caches', 'the-cache-purger' ),
+                        2 => __( 'Wordpress Caches', 'the-cache-purger' ),
+                        3 => __( 'Server Caches', 'the-cache-purger' ),
+                        4 => __( 'Memory Caches', 'the-cache-purger' ),
+                        5 => __( 'API Caches', 'the-cache-purger' ),
+                    ),
+                    'inline' => true,
+                    'multiple' => true,
+                    'default' => array( 1, 2, 3, 4 ),
+                ),
+
                 // log the purge actions
                 array(
                     'id' => 'should_log',
@@ -519,7 +556,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'on_plugin_settings',
                     'type' => 'switcher',
                     'title' => __( 'Purge on settings save?', 'the-cache-purger' ),
-                    'desc' => __( 'This will attempt to purge all caches for settings save actions.<br /><strong>NOTE:</strong>You need to hard refresh this page after saving this setting in order for this to take effect.', 'the-cache-purger' ),
+                    'desc' => __( 'This will attempt to purge all configured caches for settings save actions.<br /><strong>NOTE:</strong>You need to hard refresh this page after saving this setting in order for this to take effect.', 'the-cache-purger' ),
                     'default' => false,
                 ),
 
@@ -528,7 +565,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'on_menu',
                     'type' => 'switcher',
                     'title' => __( 'Purge on Menu Save/Delete?', 'the-cache-purger' ),
-                    'desc' => __( 'This will attempt to purge all caches for every menu update, save, or delete.', 'the-cache-purger' ),
+                    'desc' => __( 'This will attempt to purge all configured caches for every menu update, save, or delete.', 'the-cache-purger' ),
                     'default' => false,
                 ),
                 
@@ -537,7 +574,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'on_post',
                     'type' => 'switcher',
                     'title' => __( 'Purge on Post Save/Delete?', 'the-cache-purger' ),
-                    'desc' => __( 'This will attempt to purge all caches for every post update, save, or delete.', 'the-cache-purger' ),
+                    'desc' => __( 'This will attempt to purge all configured caches for every post update, save, or delete.', 'the-cache-purger' ),
                     'default' => false,
                 ),
 
@@ -560,7 +597,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'on_page',
                     'type' => 'switcher',
                     'title' => __( 'Purge on Page Save/Delete?', 'the-cache-purger' ),
-                    'desc' => __( 'This will attempt to purge all caches for every page update, save, or delete.', 'the-cache-purger' ),
+                    'desc' => __( 'This will attempt to purge all configured caches for every page update, save, or delete.', 'the-cache-purger' ),
                     'default' => false,
                 ),
 
@@ -583,7 +620,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'on_cpt',
                     'type' => 'switcher',
                     'title' => __( 'Purge on Custom Post Type Save/Delete?', 'the-cache-purger' ),
-                    'desc' => __( 'This will attempt to purge all caches for every custom post type update, save, or delete.', 'the-cache-purger' ),
+                    'desc' => __( 'This will attempt to purge all configured caches for every custom post type update, save, or delete.', 'the-cache-purger' ),
                     'default' => false,
                 ),
 
@@ -606,7 +643,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'on_taxonomy',
                     'type' => 'switcher',
                     'title' => __( 'Purge on Taxonomy/Term Save/Delete?', 'the-cache-purger' ),
-                    'desc' => __( 'This will attempt to purge all caches for every taxonomy/term update, save, or delete.', 'the-cache-purger' ),
+                    'desc' => __( 'This will attempt to purge all configured caches for every taxonomy/term update, save, or delete.', 'the-cache-purger' ),
                     'default' => false,
                 ),
 
@@ -615,7 +652,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'on_category',
                     'type' => 'switcher',
                     'title' => __( 'Purge on Category Save/Delete?', 'the-cache-purger' ),
-                    'desc' => __( 'This will attempt to purge all caches for every category update, save, or delete.', 'the-cache-purger' ),
+                    'desc' => __( 'This will attempt to purge all configured caches for every category update, save, or delete.', 'the-cache-purger' ),
                     'default' => false,
                 ),
 
@@ -624,7 +661,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'on_widget',
                     'type' => 'switcher',
                     'title' => __( 'Purge on Widget Save/Delete?', 'the-cache-purger' ),
-                    'desc' => __( 'This will attempt to purge all caches for every widget update, save, or delete.', 'the-cache-purger' ),
+                    'desc' => __( 'This will attempt to purge all configured caches for every widget update, save, or delete.', 'the-cache-purger' ),
                     'default' => false,
                 ),
 
@@ -633,7 +670,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'on_customizer',
                     'type' => 'switcher',
                     'title' => __( 'Purge on Customizer Save?', 'the-cache-purger' ),
-                    'desc' => __( 'This will attempt to purge all caches for every customizer update or save.', 'the-cache-purger' ),
+                    'desc' => __( 'This will attempt to purge all configured caches for every customizer update or save.', 'the-cache-purger' ),
                     'default' => false,
                 ),
                 
@@ -647,7 +684,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                         'id' => 'on_form',
                         'type' => 'switcher',
                         'title' => __( 'Purge on Form Save/Delete?', 'the-cache-purger' ),
-                        'desc' => __( 'This will attempt to purge all caches for every form update, save, or delete.', 'the-cache-purger' ),
+                        'desc' => __( 'This will attempt to purge all configured caches for every form update, save, or delete.', 'the-cache-purger' ),
                         'default' => false,
                     );
 
@@ -675,7 +712,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'id' => 'on_acf',
                     'type' => 'switcher',
                     'title' => __( 'Purge on ACF Save/Delete?', 'the-cache-purger' ),
-                    'desc' => __( 'This will attempt to purge all caches for every "advanced custom field" group update, save, or delete.', 'the-cache-purger' ),
+                    'desc' => __( 'This will attempt to purge all configured caches for every "advanced custom field" group update, save, or delete.', 'the-cache-purger' ),
                     'default' => false,
                 );
  

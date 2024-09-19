@@ -62,6 +62,17 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
     // let's see if we're in CLI or not
     if( ! defined( 'WP_CLI' ) ) {
 
+        // action scheduler not loading workaround
+        if ( ! class_exists( 'ActionScheduler', false ) || ! ActionScheduler::is_initialized( ) ) {
+
+            // require the class
+            require_once( TCP_PATH . '/vendor/woocommerce/action-scheduler/classes/abstracts/ActionScheduler.php' );
+
+            // no initialize the library
+            ActionScheduler::init( TCP_PATH . '/vendor/woocommerce/action-scheduler/action-scheduler.php' );
+
+        }
+
         // set us up a class alias for the common class
         class_alias( 'KP_Cache_Purge_Common', 'KPCPC' );
 
@@ -164,6 +175,9 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
             // get our options
             $_opts = KPCPC::get_options( );
 
+            // get our wp cron info
+            $_cron_info = wp_get_schedules( );
+
             // set if it's allowed 
             $_allowed = filter_var( ( $_opts -> cron_schedule_allowed ) ?? false, FILTER_VALIDATE_BOOLEAN );
             $_l_allowed = filter_var( ( $_opts -> should_log ) ?? false, FILTER_VALIDATE_BOOLEAN );
@@ -173,31 +187,20 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
             if( $_allowed ) {
 
                 // setup our action and create the job for it
-                add_action( 'kpcpc_the_purge', function( ) : void {
-            
-                    // run the purge!
-                    $_cp = new KP_Cache_Purge( );
-
-                    // purge
-                    $_cp -> kp_do_purge( );
-
-                    // log the purge
-                    KPCPC::write_log( "CRONJOB Cache Cleared" );
-
-                    // clean it up
-                    unset( $_cp );
-                    
-                } );
+                add_action( 'kpcpc_the_purge', 'do_the_actual_purge' );
 
                 // make sure we're only scheduling this once
-                if( ! wp_next_scheduled( 'kpcpc_the_purge' ) ) {
+                if( ! as_has_scheduled_action( 'kpcpc_the_purge' ) ) {
+
+                    // throw a hook here
+                    do_action( 'tcp_cron_cache_purge' );
 
                     // get our schedule options
                     $_bi_schedule = ( $_opts -> cron_schedule_builtin ) ?? 'hourly';
 
                     // schedule the event
-                    wp_schedule_event( time( ), $_bi_schedule, 'kpcpc_the_purge' );  
-                
+                    as_schedule_recurring_action( time( ), $_cron_info[ $_bi_schedule ]['interval'], 'kpcpc_the_purge' );
+
                 }
 
             }
@@ -206,25 +209,20 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
             if( $_l_allowed && $_lp_allowed ) {
 
                 // setup the action to be performed
-                add_action( 'kpcpc_the_log_purge', function( ) : void {
-
-                    // get the logs path
-                    $_l_path = ABSPATH . 'wp-content/purge.log';
-
-                    // unfortunately we cannot utilize wordpress's built-in file methods, but let's clear the log
-                    file_put_contents( $_l_path, '', LOCK_EX );
-
-                } );
+                add_action( 'kpcpc_the_log_purge', 'do_log_purge' );
 
                 // make sure we're only scheduling this once
-                if( ! wp_next_scheduled( 'kpcpc_the_log_purge' ) ) {
+                if( ! as_has_scheduled_action( 'kpcpc_the_log_purge' ) ) {
+
+                    // throw a hook here
+                    do_action( 'tcp_cron_log_purge' );
 
                     // get our schedule options
                     $_bi_schedule = ( $_opts -> cron_log_purge_schedule ) ?? 'weekly';
 
                     // schedule the event
-                    wp_schedule_event( time( ), $_bi_schedule, 'kpcpc_the_log_purge' );  
-                
+                    as_schedule_recurring_action( time( ), $_cron_info[ $_bi_schedule ]['interval'], 'kpcpc_the_log_purge' );
+
                 }
 
             }
@@ -236,27 +234,16 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
             if( $_is_purging ) {
 
                 // create a hook for the clearing to occurr in 
-                add_action( 'kptcp_long_purge', function( ) : void {
-
-                    // fire up the cache purge
-                    $_cp = new KP_Cache_Purge( );
-
-                    // run the long runner
-                    $_cp -> kp_do_long_purge( );
-
-                    // clean up
-                    unset( $_cp );
-
-                } );
+                add_action( 'kptcp_long_purge', 'do_the_long_purge' );
 
                 // check if the long purge task already exists
-                if( ! wp_next_scheduled( 'kptcp_long_purge' ) ){
+                if( ! as_next_scheduled_action( 'kptcp_long_purge' ) ) {
 
-                    // schedule it to run once
-                    wp_schedule_single_event( time( ) + 5, 'kptcp_long_purge' );
+                    // throw a hook here
+                    do_action( 'tcp_long_cache_purge' );
 
-                    // now spawn the task to run
-                    spawn_cron( );
+                    // schedule it to run once as soon as possible
+                    as_schedule_single_action( time( ) + 5, 'kptcp_long_purge' );
 
                 }
 
@@ -278,6 +265,47 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
 
         // just fire up the main CLI class
         new KP_Cache_Purge_CLI( );
+
+    }
+
+    function do_the_long_purge( ) : void {
+
+        // fire up the cache purge
+        $_cp = new KP_Cache_Purge( );
+
+        // run the long runner
+        $_cp -> kp_do_long_purge( );
+
+        // clean up
+        unset( $_cp );
+
+    }
+
+    
+    function do_log_purge( ) : void {
+
+        // get the logs path
+        $_l_path = ABSPATH . 'wp-content/purge.log';
+
+        // unfortunately we cannot utilize wordpress's built-in file methods, but let's clear the log
+        file_put_contents( $_l_path, '', LOCK_EX );
+
+    }
+
+
+    function do_the_actual_purge( ) : void {
+
+        // run the purge!
+        $_cp = new KP_Cache_Purge( );
+
+        // purge
+        $_cp -> kp_do_purge( );
+
+        // log the purge
+        KPCPC::write_log( "CRONJOB Cache Cleared" );
+
+        // clean it up
+        unset( $_cp );
 
     }
 

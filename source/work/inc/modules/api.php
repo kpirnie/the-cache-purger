@@ -59,6 +59,12 @@ if( ! trait_exists( 'API' ) ) {
             // get the sucuri secret
             $_sucuri_secret = ( $_opt -> service_api_keys['sucuri_secret'] ) ?? null;
 
+            // get the fastly token
+            $_fastly_token = ( $_opt -> service_api_keys['fastly_token'] ) ?? null;
+
+            // get the fastly service id
+            $_fastly_service_id = ( $_opt -> service_api_keys['fastly_service_id'] ) ?? null;
+
             // make sure we have keys for cloudflare
             if( $_cf_token && $_cf_zone ) {
 
@@ -75,8 +81,71 @@ if( ! trait_exists( 'API' ) ) {
 
             }
 
+            // make sure we have a token and service id for fastly
+            if( $_fastly_token && $_fastly_service_id ) {
+
+                // fastly purge
+                $this -> purge_api_fastly( $_fastly_token, $_fastly_service_id );
+
+            }
+
             // we dont need the option anymore so dump it
             unset( $_opt );
+
+        }
+
+        /** 
+         * purge_api_fastly
+         * 
+         * This method attempts to purge the fastly cdn caches
+         * 
+         * @since 7.4
+         * @access protected
+         * @author Kevin Pirnie <me@kpirnie.com>
+         * @package The Cache Purger
+         * 
+         * @param string $_token The fastly cdn token
+         * 
+         * @return void This method does not return anything
+         * 
+        */
+        protected function purge_api_fastly( string $_token = '', string $_service_id = '' ) : void {
+
+            // make sure it actually exists
+            if( $_token && $_service_id ) {
+
+                // start log for it
+                KPCPC::write_log( "\t\tFASTLY CDN PURGE");
+
+                // setup the config
+                $_conf = Fastly\Configuration::getDefaultConfiguration( ) -> setApiToken( sanitize_text_field( $_token ) );
+
+                // hold the api instance
+                $_api = new Fastly\Api\PurgeApi( null, $_conf );
+                
+                // now hold the service ID option
+                $_opt = array(
+                    'service_id' => sanitize_text_field( $_service_id ),
+                );
+
+                // rty and catch an exception
+                try {
+
+                    // purge all!
+                    $_api -> purgeAll( $_opt );
+
+                    // we're golden
+                    KPCPC::write_log( "\t\t\tSUCCESS");
+
+                // whoops there was an issue
+                } catch (Exception $e) {
+
+                    // log the issue
+                    KPCPC::write_log( "\t\t\tFAILED - " . $e -> getMessage( ) );
+
+                }
+
+            }
 
         }
 

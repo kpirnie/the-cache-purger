@@ -3,9 +3,9 @@ Contributors: kevp75
 Donate link: https://paypal.me/kevinpirnie
 Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.6
-Tested up to: 6.5
+Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.8.01
+Stable tag: 2.0.11
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -24,10 +24,11 @@ Built in automatic cache purging for the following caches:
 
 * Plugins
     * SiteGround Optimizer, Nginx Helper, LiteSpeed Cache, Cachify, Autoptimize, Fast Velocity Minify, WP Rocket, Swift Performance,
-      Comet Cache, Hummingbird, WP Fastest Cache, WP Super Cache, W3 Total Cache, Hyper Cache, WP Optimize, Cache Enabler, NitroPack
+      Comet Cache, Hummingbird, WP Fastest Cache, WP Super Cache, W3 Total Cache, Hyper Cache, WP Optimize, Cache Enabler, NitroPack,
+      Flying Press, etc...
     * Check the changelog below for new additions...
 * Hosting / CDN
-    * WPEngine, Kinsta, GoDaddy Managed Wordpress, Pantheon, Bluehost, Cloudways, Siteground, RunCloud
+    * WPEngine, Kinsta, GoDaddy Managed Wordpress, Pantheon, Bluehost, Cloudways, Siteground, RunCloud, Fastly, etc...
         * Some of these are dependant on separate plugins.  Please see your provider if it is necessary, or already included
         * Check the changelog below for new additions...
 * Server Based
@@ -66,6 +67,36 @@ Shell into your server and run the command `wp the_cache purge`.  Please note th
 5. Logged Purged Object
 
 == Changelog ==
+
+= 2.0.11 =
+* Add: SpinUpWP Support
+* Update: Documentation with the latest additions, and a little formatting
+* Update: Fastly CDN library
+* Update: Action Scheduler library
+* Fix: Action Scheduler calls for background jobs
+* Fix: Shameless plug
+
+= 1.9.89 =
+* Verify: Core 6.7 Compatibility
+* Fix: Null check for purge types
+* Add: Fastly CDN Purge
+  * https://packagist.org/packages/fastly/fastly
+  * Understand, this brought along a PHP 8 notice about Dynamic Properties.  There is nothing that I can or will do about it until Fastly fixes their library.
+* Replace: Cron with WooCommerce's Action Scheduler
+  * https://packagist.org/packages/woocommerce/action-scheduler
+* Add: Some new hooks   
+  * `tcp_cron_cache_purge`
+    * fires when the cron cache purge is scheduled
+  * `tcp_cron_log_purge`
+    * fires when the cron log purge is scheduled
+  * `tcp_long_cache_purge`
+    * fires when the long cache purge is fired off
+
+= 1.9.27 =
+* Verify: Core 6.6 Compatibility
+* Add: Support for Flying Press plugin
+* Add: New setting for type of caches to be purged
+* Add: Selfless plug ;)
 
 = 1.8.01 =
 * Verify: PHP 8.3 Compatibility
