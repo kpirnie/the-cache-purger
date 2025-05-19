@@ -1069,7 +1069,7 @@ class AclsInComputeApi
      *
      * @throws \Fastly\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Fastly\Model\ComputeAclCreateAclsResponse[]
+     * @return \Fastly\Model\ComputeAclList
      */
     public function computeAclListAcls($options)
     {
@@ -1090,7 +1090,7 @@ class AclsInComputeApi
      *
      * @throws \Fastly\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Fastly\Model\ComputeAclCreateAclsResponse[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Fastly\Model\ComputeAclList, HTTP status code, HTTP response headers (array of strings)
      */
     public function computeAclListAclsWithHttpInfo($options)
     {
@@ -1145,20 +1145,20 @@ class AclsInComputeApi
 
             switch($statusCode) {
                 case 200:
-                    if ('\Fastly\Model\ComputeAclCreateAclsResponse[]' === '\SplFileObject') {
+                    if ('\Fastly\Model\ComputeAclList' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string) $response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Fastly\Model\ComputeAclCreateAclsResponse[]', []),
+                        ObjectSerializer::deserialize($content, '\Fastly\Model\ComputeAclList', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Fastly\Model\ComputeAclCreateAclsResponse[]';
+            $returnType = '\Fastly\Model\ComputeAclList';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -1176,7 +1176,7 @@ class AclsInComputeApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Fastly\Model\ComputeAclCreateAclsResponse[]',
+                        '\Fastly\Model\ComputeAclList',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1226,7 +1226,7 @@ class AclsInComputeApi
      */
     public function computeAclListAclsAsyncWithHttpInfo($options)
     {
-        $returnType = '\Fastly\Model\ComputeAclCreateAclsResponse[]';
+        $returnType = '\Fastly\Model\ComputeAclList';
         $request = $this->computeAclListAclsRequest($options);
 
         return $this->client
@@ -2033,7 +2033,7 @@ class AclsInComputeApi
      * URL: https://api.fastly.com
      *
      * @param  string $acl_id acl_id (required)
-     * @param  \Fastly\Model\ComputeAclUpdateEntry[] $compute_acl_update_entry compute_acl_update_entry (optional)
+     * @param  \Fastly\Model\ComputeAclUpdate $compute_acl_update compute_acl_update (optional)
      *
      * @throws \Fastly\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2055,7 +2055,7 @@ class AclsInComputeApi
      * URL: https://api.fastly.com
      *
      * @param  string $acl_id (required)
-     * @param  \Fastly\Model\ComputeAclUpdateEntry[] $compute_acl_update_entry (optional)
+     * @param  \Fastly\Model\ComputeAclUpdate $compute_acl_update (optional)
      *
      * @throws \Fastly\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2132,7 +2132,7 @@ class AclsInComputeApi
      * URL: https://api.fastly.com
      *
      * @param  string $acl_id (required)
-     * @param  \Fastly\Model\ComputeAclUpdateEntry[] $compute_acl_update_entry (optional)
+     * @param  \Fastly\Model\ComputeAclUpdate $compute_acl_update (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2158,7 +2158,7 @@ class AclsInComputeApi
      * URL: https://api.fastly.com
      *
      * @param  string $acl_id (required)
-     * @param  \Fastly\Model\ComputeAclUpdateEntry[] $compute_acl_update_entry (optional)
+     * @param  \Fastly\Model\ComputeAclUpdate $compute_acl_update (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2200,7 +2200,7 @@ class AclsInComputeApi
      * URL: https://api.fastly.com
      *
      * @param  string $acl_id (required)
-     * @param  \Fastly\Model\ComputeAclUpdateEntry[] $compute_acl_update_entry (optional)
+     * @param  \Fastly\Model\ComputeAclUpdate $compute_acl_update (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2209,7 +2209,7 @@ class AclsInComputeApi
     {
         // unbox the parameters from the associative array
         $acl_id = array_key_exists('acl_id', $options) ? $options['acl_id'] : null;
-        $compute_acl_update_entry = array_key_exists('compute_acl_update_entry', $options) ? $options['compute_acl_update_entry'] : null;
+        $compute_acl_update = array_key_exists('compute_acl_update', $options) ? $options['compute_acl_update'] : null;
 
         // verify the required parameter 'acl_id' is set
         if ($acl_id === null || (is_array($acl_id) && count($acl_id) === 0)) {
@@ -2249,11 +2249,11 @@ class AclsInComputeApi
         }
 
         // for model (json/xml)
-        if (isset($compute_acl_update_entry)) {
+        if (isset($compute_acl_update)) {
             if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($compute_acl_update_entry));
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($compute_acl_update));
             } else {
-                $httpBody = $compute_acl_update_entry;
+                $httpBody = $compute_acl_update;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {

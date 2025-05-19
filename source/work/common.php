@@ -101,18 +101,8 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
         // hack in some styling
         add_action( 'admin_enqueue_scripts', function( ) : void {
 
-            // check if we're in debug more or not
-            if( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-
-                // we are, so queue up our unminified assets
-                wp_register_style( 'kpcp_css', plugins_url( '/assets/css/style.css?_=' . time( ), TCP_PATH . '/' . TCP_FILENAME ), null, null );
-
-            } else {
-                
-                // we're not, queue up the minified assets
-                wp_register_style( 'kpcp_css', plugins_url( '/assets/css/style.min.css?_=' . time( ), TCP_PATH . '/' . TCP_FILENAME ), null, null );
-
-            }
+            // we are, so queue up our unminified assets
+            wp_register_style( 'kpcp_css', plugins_url( '/assets/css/style.css?_=' . time( ), TCP_PATH . '/' . TCP_FILENAME ), null, null );
 
             // enqueue it
             wp_enqueue_style( 'kpcp_css' );
@@ -259,6 +249,21 @@ if( in_array( TCP_DIRNAME . '/' . TCP_FILENAME, apply_filters( 'active_plugins',
 
         // clean up
         unset( $_processor );
+
+        // we'll need a message in wp-admin for PHP 8 compatibility
+        add_action( 'admin_notices', function( ) : void {
+
+            // if the site is under PHP 8.1
+            if ( version_compare( PHP_VERSION, '8.1', '<=' ) ) {
+
+                // show this notice
+                ?>
+                <div class="notice notice-info is-dismissible">
+                    <p><?php _e( "<h3>PHP Upgrade Notice</h3><p>To maintain optimal security standards, this will be the final version that supports PHP versions lower than 8.1. Your site must be upgraded in order to update the plugin to future versions.</p><p>Please see here for up to date PHP version information: <a href='https://www.php.net/supported-versions.php' target='_blank'>https://www.php.net/supported-versions.php</a></p>", 'the-cache-purger' ); ?></p>
+                </div>
+            <?php
+            }
+        }, PHP_INT_MAX );
 
     // we've hit the CLI, let's make sure we're only processing based on that
     } else {

@@ -317,7 +317,7 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                     'type' => 'repeater',
                     'title' => __( 'Redis Servers', 'the-cache-purger' ),
                     'max' => 10,
-                    'class' => 'inlinable-container',
+                    #'class' => 'inlinable-container',
                     'button_title' => __( 'Add New Server', 'the-cache-purger' ),
                     'dependency' => array( 'remote_redis', '==', true ),
                     'fields' => array(
@@ -339,6 +339,34 @@ if( ! class_exists( 'KP_Cache_Purge_Admin' ) ) {
                             'class' => 'kptcp-half-field',
                             'desc' => __( 'Enter the Port number of the server.', 'the-cache-purger' ),
                         ),
+
+                        // auth username
+                        array(
+                            'id' => 'remote_redis_auth_user',
+                            'title' => __( 'Username', 'the-cache-purger' ),
+                            'type' => 'text',
+                            'class' => 'kptcp-half-field',
+                            'desc' => __( 'Enter your redis username', 'the-cache-purger' ),
+                        ),
+                        // auth password
+                        array(
+                            'id' => 'remote_redis_auth_pass',
+                            'title' => __( 'Password', 'the-cache-purger' ),
+                            'type' => 'text',
+                            'attributes'  => array( 'type' => 'password', ),
+                            'class' => 'kptcp-half-field',
+                            'desc' => __( 'Enter your redis password', 'the-cache-purger' ),
+                        ),
+
+                        // database id
+                        array(
+                            'id' => 'remote_redis_db_id',
+                            'title' => __( 'Database ID', 'the-cache-purger' ),
+                            'type' => 'text',
+                            'class' => 'kptcp-half-field',
+                            'desc' => __( 'Enter your database ID', 'the-cache-purger' ),
+                        ),
+
                     ),
                 ),
 

@@ -3,9 +3,9 @@ Contributors: kevp75
 Donate link: https://paypal.me/kevinpirnie
 Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.6
-Tested up to: 6.7
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.0.11
+Stable tag: 2.1.01
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -67,6 +67,14 @@ Shell into your server and run the command `wp the_cache purge`.  Please note th
 5. Logged Purged Object
 
 == Changelog ==
+
+= 2.1.01 =
+* Verify: Core 6.9 Compatibility
+* Verify: PHP 8.4 Compatibility
+* Add: Redis database id and auth
+* Update: Fastly CDN library
+* Update: Action Scheduler library
+* Added: Notice for PHP 8.0 and lower
 
 = 2.0.11 =
 * Add: SpinUpWP Support

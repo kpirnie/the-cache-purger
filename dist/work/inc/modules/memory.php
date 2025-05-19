@@ -100,8 +100,38 @@ if( ! trait_exists( 'MEMORY' ) ) {
                             // try to trap an exception
                             try {
 
-                                // connect
-                                $_redis -> connect( $_server['remote_redis_server'], $_server['remote_redis_port'] );
+                                // setup the config
+                                $_cfg = array(
+                                    'host' => $_server['remote_redis_server'], 
+                                    'port' => $_server['remote_redis_port'],
+                                );
+
+                                // if there's a database specified
+                                if( ! empty( $_server['remote_redis_db_id'] ) ) {
+                                    $_cfg['database'] = $_server['remote_redis_db_id'];
+                                }
+
+                                // if there's a redis auth username and password
+                                if( ! empty( $_server['remote_redis_auth_user'] ) && ! empty( $_server['remote_redis_auth_pass'] ) ) {
+                                    $_cfg['auth'] = array(
+                                        $_server['remote_redis_auth_user'],
+                                        $_server['remote_redis_auth_pass']
+                                    );
+                                }
+                                
+                                // older than PHP 8.0 support
+                                if ( version_compare( PHP_VERSION, '8.0', '<=' ) ) {
+
+                                    // connect
+                                    call_user_func_array( [$_redis, 'connect'], $_cfg );
+
+                                // otherwise
+                                } else {
+
+                                    // connect
+                                    $_redis -> connect( ...$_cfg );
+
+                                }
 
                                 // now flush
                                 $_redis -> flushAll( );

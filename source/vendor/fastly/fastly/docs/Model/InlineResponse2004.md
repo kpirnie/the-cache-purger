@@ -4,8 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | **string[]** |  | [optional] 
-**meta** | [**\Fastly\Model\InlineResponse2004Meta**](InlineResponse2004Meta.md) |  | [optional] 
+**expires_at** | **string** | Time-stamp (GMT) when the domain_ownership validation will expire. | [optional] [readonly] 
 
 
 [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

@@ -41,19 +41,20 @@ $options['auto_loadbalance'] = True; // bool | Whether or not this backend shoul
 $options['between_bytes_timeout'] = 56; // int | Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using `bereq.between_bytes_timeout`.
 $options['client_cert'] = 'client_cert_example'; // string | Unused.
 $options['comment'] = 'comment_example'; // string | A freeform descriptive note.
-$options['connect_timeout'] = 56; // int | Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthethic `503` response will be presented instead. May be set at runtime using `bereq.connect_timeout`.
-$options['first_byte_timeout'] = 56; // int | Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthethic `503` response will be presented instead. May be set at runtime using `bereq.first_byte_timeout`.
+$options['connect_timeout'] = 56; // int | Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.connect_timeout`.
+$options['first_byte_timeout'] = 56; // int | Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.first_byte_timeout`.
 $options['healthcheck'] = 'healthcheck_example'; // string | The name of the healthcheck to use with this backend.
 $options['hostname'] = 'hostname_example'; // string | The hostname of the backend. May be used as an alternative to `address` to set the backend location.
 $options['ipv4'] = 'ipv4_example'; // string | IPv4 address of the backend. May be used as an alternative to `address` to set the backend location.
 $options['ipv6'] = 'ipv6_example'; // string | IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
-$options['keepalive_time'] = 56; // int | How long in seconds to keep a persistent connection to the backend between requests.
+$options['keepalive_time'] = 56; // int | How long in seconds to keep a persistent connection to the backend between requests. By default, Varnish keeps connections open as long as it can.
 $options['max_conn'] = 56; // int | Maximum number of concurrent connections this backend will accept.
 $options['max_tls_version'] = 'max_tls_version_example'; // string | Maximum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
 $options['min_tls_version'] = 'min_tls_version_example'; // string | Minimum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
 $options['name'] = 'name_example'; // string | The name of the backend.
 $options['override_host'] = 'override_host_example'; // string | If set, will replace the client-supplied HTTP `Host` header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing `bereq.http.Host` in VCL.
 $options['port'] = 56; // int | Port on which the backend server is listening for connections from Fastly. Setting `port` to 80 or 443 will also set `use_ssl` automatically (to false and true respectively), unless explicitly overridden by setting `use_ssl` in the same request.
+$options['prefer_ipv6'] = True; // bool | Prefer IPv6 connections for DNS hostname lookups.
 $options['request_condition'] = 'request_condition_example'; // string | Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any `auto_loadbalance` setting. By default, the first backend added to a service is selected for all requests.
 $options['share_key'] = 'share_key_example'; // string | Value that when shared across backends will enable those backends to share the same health check.
 $options['shield'] = 'shield_example'; // string | Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding).
@@ -92,19 +93,20 @@ Name | Type | Description  | Notes
 **between_bytes_timeout** | **int** | Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using `bereq.between_bytes_timeout`. | [optional]
 **client_cert** | **string** | Unused. | [optional]
 **comment** | **string** | A freeform descriptive note. | [optional]
-**connect_timeout** | **int** | Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthethic `503` response will be presented instead. May be set at runtime using `bereq.connect_timeout`. | [optional]
-**first_byte_timeout** | **int** | Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthethic `503` response will be presented instead. May be set at runtime using `bereq.first_byte_timeout`. | [optional]
+**connect_timeout** | **int** | Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.connect_timeout`. | [optional]
+**first_byte_timeout** | **int** | Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.first_byte_timeout`. | [optional]
 **healthcheck** | **string** | The name of the healthcheck to use with this backend. | [optional]
 **hostname** | **string** | The hostname of the backend. May be used as an alternative to `address` to set the backend location. | [optional]
 **ipv4** | **string** | IPv4 address of the backend. May be used as an alternative to `address` to set the backend location. | [optional]
 **ipv6** | **string** | IPv6 address of the backend. May be used as an alternative to `address` to set the backend location. | [optional]
-**keepalive_time** | **int** | How long in seconds to keep a persistent connection to the backend between requests. | [optional]
+**keepalive_time** | **int** | How long in seconds to keep a persistent connection to the backend between requests. By default, Varnish keeps connections open as long as it can. | [optional]
 **max_conn** | **int** | Maximum number of concurrent connections this backend will accept. | [optional]
 **max_tls_version** | **string** | Maximum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated. | [optional]
 **min_tls_version** | **string** | Minimum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated. | [optional]
 **name** | **string** | The name of the backend. | [optional]
 **override_host** | **string** | If set, will replace the client-supplied HTTP `Host` header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing `bereq.http.Host` in VCL. | [optional]
 **port** | **int** | Port on which the backend server is listening for connections from Fastly. Setting `port` to 80 or 443 will also set `use_ssl` automatically (to false and true respectively), unless explicitly overridden by setting `use_ssl` in the same request. | [optional]
+**prefer_ipv6** | **bool** | Prefer IPv6 connections for DNS hostname lookups. | [optional]
 **request_condition** | **string** | Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any `auto_loadbalance` setting. By default, the first backend added to a service is selected for all requests. | [optional]
 **share_key** | **string** | Value that when shared across backends will enable those backends to share the same health check. | [optional]
 **shield** | **string** | Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). | [optional]
@@ -260,19 +262,20 @@ $options['auto_loadbalance'] = True; // bool | Whether or not this backend shoul
 $options['between_bytes_timeout'] = 56; // int | Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using `bereq.between_bytes_timeout`.
 $options['client_cert'] = 'client_cert_example'; // string | Unused.
 $options['comment'] = 'comment_example'; // string | A freeform descriptive note.
-$options['connect_timeout'] = 56; // int | Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthethic `503` response will be presented instead. May be set at runtime using `bereq.connect_timeout`.
-$options['first_byte_timeout'] = 56; // int | Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthethic `503` response will be presented instead. May be set at runtime using `bereq.first_byte_timeout`.
+$options['connect_timeout'] = 56; // int | Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.connect_timeout`.
+$options['first_byte_timeout'] = 56; // int | Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.first_byte_timeout`.
 $options['healthcheck'] = 'healthcheck_example'; // string | The name of the healthcheck to use with this backend.
 $options['hostname'] = 'hostname_example'; // string | The hostname of the backend. May be used as an alternative to `address` to set the backend location.
 $options['ipv4'] = 'ipv4_example'; // string | IPv4 address of the backend. May be used as an alternative to `address` to set the backend location.
 $options['ipv6'] = 'ipv6_example'; // string | IPv6 address of the backend. May be used as an alternative to `address` to set the backend location.
-$options['keepalive_time'] = 56; // int | How long in seconds to keep a persistent connection to the backend between requests.
+$options['keepalive_time'] = 56; // int | How long in seconds to keep a persistent connection to the backend between requests. By default, Varnish keeps connections open as long as it can.
 $options['max_conn'] = 56; // int | Maximum number of concurrent connections this backend will accept.
 $options['max_tls_version'] = 'max_tls_version_example'; // string | Maximum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
 $options['min_tls_version'] = 'min_tls_version_example'; // string | Minimum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated.
 $options['name'] = 'name_example'; // string | The name of the backend.
 $options['override_host'] = 'override_host_example'; // string | If set, will replace the client-supplied HTTP `Host` header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing `bereq.http.Host` in VCL.
 $options['port'] = 56; // int | Port on which the backend server is listening for connections from Fastly. Setting `port` to 80 or 443 will also set `use_ssl` automatically (to false and true respectively), unless explicitly overridden by setting `use_ssl` in the same request.
+$options['prefer_ipv6'] = True; // bool | Prefer IPv6 connections for DNS hostname lookups.
 $options['request_condition'] = 'request_condition_example'; // string | Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any `auto_loadbalance` setting. By default, the first backend added to a service is selected for all requests.
 $options['share_key'] = 'share_key_example'; // string | Value that when shared across backends will enable those backends to share the same health check.
 $options['shield'] = 'shield_example'; // string | Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding).
@@ -312,19 +315,20 @@ Name | Type | Description  | Notes
 **between_bytes_timeout** | **int** | Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using `bereq.between_bytes_timeout`. | [optional]
 **client_cert** | **string** | Unused. | [optional]
 **comment** | **string** | A freeform descriptive note. | [optional]
-**connect_timeout** | **int** | Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthethic `503` response will be presented instead. May be set at runtime using `bereq.connect_timeout`. | [optional]
-**first_byte_timeout** | **int** | Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthethic `503` response will be presented instead. May be set at runtime using `bereq.first_byte_timeout`. | [optional]
+**connect_timeout** | **int** | Maximum duration in milliseconds to wait for a connection to this backend to be established. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.connect_timeout`. | [optional]
+**first_byte_timeout** | **int** | Maximum duration in milliseconds to wait for the server response to begin after a TCP connection is established and the request has been sent. If exceeded, the connection is aborted and a synthetic `503` response will be presented instead. May be set at runtime using `bereq.first_byte_timeout`. | [optional]
 **healthcheck** | **string** | The name of the healthcheck to use with this backend. | [optional]
 **hostname** | **string** | The hostname of the backend. May be used as an alternative to `address` to set the backend location. | [optional]
 **ipv4** | **string** | IPv4 address of the backend. May be used as an alternative to `address` to set the backend location. | [optional]
 **ipv6** | **string** | IPv6 address of the backend. May be used as an alternative to `address` to set the backend location. | [optional]
-**keepalive_time** | **int** | How long in seconds to keep a persistent connection to the backend between requests. | [optional]
+**keepalive_time** | **int** | How long in seconds to keep a persistent connection to the backend between requests. By default, Varnish keeps connections open as long as it can. | [optional]
 **max_conn** | **int** | Maximum number of concurrent connections this backend will accept. | [optional]
 **max_tls_version** | **string** | Maximum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated. | [optional]
 **min_tls_version** | **string** | Minimum allowed TLS version on SSL connections to this backend. If your backend server is not able to negotiate a connection meeting this constraint, a synthetic `503` error response will be generated. | [optional]
 **name** | **string** | The name of the backend. | [optional]
 **override_host** | **string** | If set, will replace the client-supplied HTTP `Host` header on connections to this backend. Applied after VCL has been processed, so this setting will take precedence over changing `bereq.http.Host` in VCL. | [optional]
 **port** | **int** | Port on which the backend server is listening for connections from Fastly. Setting `port` to 80 or 443 will also set `use_ssl` automatically (to false and true respectively), unless explicitly overridden by setting `use_ssl` in the same request. | [optional]
+**prefer_ipv6** | **bool** | Prefer IPv6 connections for DNS hostname lookups. | [optional]
 **request_condition** | **string** | Name of a Condition, which if satisfied, will select this backend during a request. If set, will override any `auto_loadbalance` setting. By default, the first backend added to a service is selected for all requests. | [optional]
 **share_key** | **string** | Value that when shared across backends will enable those backends to share the same health check. | [optional]
 **shield** | **string** | Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding). | [optional]

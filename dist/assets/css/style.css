@@ -1,5 +1,5 @@
 .kptcp-half-field {
-    width:45% !important;
+    width:40% !important;
     display:inline-block !important;
 } .kptcp-half-field input, .kptcp-full-field input {width:100%;}
 .kptcp-half-field .kptcp-title, .kptcp-full-field .kptcp-title{width:15%;}
