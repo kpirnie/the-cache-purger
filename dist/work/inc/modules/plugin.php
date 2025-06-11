@@ -4,7 +4,7 @@
  * 
  * This file contains the plugin purge methods
  * 
- * @since 7.4
+ * @since 8.1
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
      *
      * This trait contains the plugin purge methods
      *
-     * @since 7.4
+     * @since 8.1
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
      *
@@ -63,7 +63,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods 
          * of the most common caching plugins
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -101,7 +101,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Cloudflare plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -140,7 +140,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Sucuri plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -172,7 +172,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Siteground plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -201,7 +201,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of nGinx Helper plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -229,7 +229,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Lightspeed plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -260,7 +260,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Cachify plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -288,7 +288,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Autoptimize plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -319,7 +319,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Fast Velocity plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -347,7 +347,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of WP Rocket plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -376,7 +376,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Swift plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -405,7 +405,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Comet Cache plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -433,7 +433,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Hummingbird Cache plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -464,7 +464,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of WP Fastest Cache plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -495,7 +495,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of WP Fastest Cache (newer) plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -524,7 +524,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of WP Super Cache plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -562,7 +562,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of W3 Total Cache plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -593,7 +593,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Hyper Cache plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -624,7 +624,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of WP Optimize plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -668,7 +668,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of WP Optimize (newer version) plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -713,7 +713,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Cache Enabler plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -745,7 +745,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Elementor plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -774,7 +774,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of Divi plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -855,7 +855,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of WP Rest Cache plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -898,7 +898,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of nitropack plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -944,7 +944,7 @@ if( ! trait_exists( 'PLUGIN' ) ) {
          * This method attempts to utilize the purge methods
          * of flyingpress plugin to purge it's caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger

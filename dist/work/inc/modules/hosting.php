@@ -4,7 +4,7 @@
  * 
  * This file contains the hosting purge methods
  * 
- * @since 7.4
+ * @since 8.1
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
      *
      * This trait contains the hosting purge methods
      *
-     * @since 7.4
+     * @since 8.1
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
      *
@@ -45,7 +45,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge methods 
          * of the most common hosting environments
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -83,7 +83,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * wpengine caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -129,7 +129,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * kinsta caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -164,7 +164,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * godaddy caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -198,7 +198,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * bluehost caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -227,7 +227,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * cloudways caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -258,7 +258,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * pantheon caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -287,7 +287,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * siteground caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -331,7 +331,7 @@ if( ! trait_exists( 'HOSTING' ) ) {
          * This method attempts to utilize the purge the 
          * runcloud caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger

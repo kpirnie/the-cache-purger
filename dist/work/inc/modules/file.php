@@ -4,7 +4,7 @@
  * 
  * This file contains the file purge methods
  * 
- * @since 7.4
+ * @since 8.1
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! trait_exists( 'FILE' ) ) {
      *
      * This trait contains the file purge methods
      *
-     * @since 7.4
+     * @since 8.1
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
      *
@@ -33,7 +33,7 @@ if( ! trait_exists( 'FILE' ) ) {
          * 
          * This method attempts to delete the file based caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -83,7 +83,7 @@ if( ! trait_exists( 'FILE' ) ) {
          * This method does the actual file or folder removal
          * also works recursively
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger

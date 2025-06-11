@@ -4,7 +4,7 @@
  * 
  * Process the uninstalling of this plugin
  * 
- * @since 7.4
+ * @since 8.1
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 

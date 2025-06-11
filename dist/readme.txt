@@ -68,6 +68,16 @@ Shell into your server and run the command `wp the_cache purge`.  Please note th
 
 == Changelog ==
 
+= 2.1.36 =
+* Update: vendor libraries
+* Update: PHP 8.1 requirement
+* Remove: CLI clearing
+* Restructure: Common functionality
+  * Better structured for me, slightly better purging performance
+* Add: Redis prefix/key
+* Fix: Redis Database flush
+* Fix: load_textdomain notice
+
 = 2.1.01 =
 * Verify: Core 6.9 Compatibility
 * Verify: PHP 8.4 Compatibility

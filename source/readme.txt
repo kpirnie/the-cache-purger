@@ -5,7 +5,7 @@ Tags: remote cache, caching, purge cache, cache purging
 Requires at least: 5.6
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.1.01
+Stable tag: 2.1.36
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -67,6 +67,16 @@ Shell into your server and run the command `wp the_cache purge`.  Please note th
 5. Logged Purged Object
 
 == Changelog ==
+
+= 2.1.36 =
+* Update: vendor libraries
+* Update: PHP 8.1 requirement
+* Remove: CLI clearing
+* Restructure: Common functionality
+  * Better structured for me, slightly better purging performance
+* Add: Redis prefix/key
+* Fix: Redis Database flush
+* Fix: load_textdomain notice
 
 = 2.1.01 =
 * Verify: Core 6.9 Compatibility

@@ -1081,7 +1081,6 @@ class ComposerStaticInita8aaed53ba4ac6636f45369518318671
         'KPTCP_Setup' => __DIR__ . '/..' . '/custom-fields/classes/setup.class.php',
         'KP_Cache_Purge' => __DIR__ . '/../..' . '/work/inc/kp-cache-purge.php',
         'KP_Cache_Purge_Admin' => __DIR__ . '/../..' . '/work/inc/kp-cache-purge-admin.php',
-        'KP_Cache_Purge_CLI' => __DIR__ . '/../..' . '/cli/kp-cache-purge-cli.php',
         'KP_Cache_Purge_Common' => __DIR__ . '/../..' . '/work/inc/kp-cache-purge-common.php',
         'KP_Cache_Purge_Processor' => __DIR__ . '/../..' . '/work/inc/kp-cache-purge-processor.php',
         'MEMORY' => __DIR__ . '/../..' . '/work/inc/modules/memory.php',

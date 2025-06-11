@@ -4,7 +4,7 @@
  * 
  * This file contains cache purging methods
  * 
- * @since 7.4
+ * @since 8.1
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -35,7 +35,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
      * 
      * Class for attempting to purge all caches
      * 
-     * @since 7.4
+     * @since 8.1
      * @access public
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
@@ -84,7 +84,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
          * Public method attempting to purge the sites caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access public
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -159,7 +159,7 @@ if( ! class_exists( 'KP_Cache_Purge' ) ) {
          * 
          * Public method attempting to run the long running purges
          * 
-         * @since 7.4
+         * @since 8.1
          * @access public
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger

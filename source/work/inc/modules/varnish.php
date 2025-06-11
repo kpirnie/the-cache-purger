@@ -4,7 +4,7 @@
  * 
  * This file contains the varnish purge methods
  * 
- * @since 7.4
+ * @since 8.1
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! trait_exists( 'VARNISH' ) ) {
      *
      * This trait contains the varnish purge methods
      *
-     * @since 7.4
+     * @since 8.1
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
      *
@@ -33,7 +33,7 @@ if( ! trait_exists( 'VARNISH' ) ) {
          * 
          * This method attempts to delete the varnish based caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger

@@ -1028,7 +1028,6 @@ return array(
     'KPTCP_Setup' => $vendorDir . '/custom-fields/classes/setup.class.php',
     'KP_Cache_Purge' => $baseDir . '/work/inc/kp-cache-purge.php',
     'KP_Cache_Purge_Admin' => $baseDir . '/work/inc/kp-cache-purge-admin.php',
-    'KP_Cache_Purge_CLI' => $baseDir . '/cli/kp-cache-purge-cli.php',
     'KP_Cache_Purge_Common' => $baseDir . '/work/inc/kp-cache-purge-common.php',
     'KP_Cache_Purge_Processor' => $baseDir . '/work/inc/kp-cache-purge-processor.php',
     'MEMORY' => $baseDir . '/work/inc/modules/memory.php',

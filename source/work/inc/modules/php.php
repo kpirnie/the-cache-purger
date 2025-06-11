@@ -4,7 +4,7 @@
  * 
  * This file contains the php purge methods
  * 
- * @since 7.4
+ * @since 8.1
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! trait_exists( 'PHP' ) ) {
      *
      * This trait contains the php purge methods
      *
-     * @since 7.4
+     * @since 8.1
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
      *
@@ -42,7 +42,7 @@ if( ! trait_exists( 'PHP' ) ) {
          * This method attempts to purge php based caches
          * if they exist; wincache, opcache, apc and apcu
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -80,7 +80,7 @@ if( ! trait_exists( 'PHP' ) ) {
          * This method attempts to utilize the purge the 
          * php wincaches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -109,7 +109,7 @@ if( ! trait_exists( 'PHP' ) ) {
          * This method attempts to utilize the purge the 
          * php Zend opcaches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -162,7 +162,7 @@ if( ! trait_exists( 'PHP' ) ) {
          * This method attempts to utilize the purge the 
          * php apc caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -194,7 +194,7 @@ if( ! trait_exists( 'PHP' ) ) {
          * This method attempts to utilize the purge the 
          * php xcache
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger

@@ -4,7 +4,7 @@
  * 
  * This file contains the wordpress purge methods
  * 
- * @since 7.4
+ * @since 8.1
  * @author Kevin Pirnie <me@kpirnie.com>
  * @package The Cache Purger
  * 
@@ -21,7 +21,7 @@ if( ! trait_exists( 'WORDPRESS' ) ) {
      *
      * This trait contains the wordpress purge methods
      *
-     * @since 7.4
+     * @since 8.1
      * @author Kevin Pirnie <me@kpirnie.com>
      * @package The Cache Purger
      *
@@ -42,7 +42,7 @@ if( ! trait_exists( 'WORDPRESS' ) ) {
          * This method attempts to utilize the purge methods 
          * builtin to Wordpress
          * 
-         * @since 7.4
+         * @since 8.1
          * @access private
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -80,7 +80,7 @@ if( ! trait_exists( 'WORDPRESS' ) ) {
          * This method attempts to utilize the purge the 
          * wordpress object caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -104,7 +104,7 @@ if( ! trait_exists( 'WORDPRESS' ) ) {
          * This method attempts to utilize the purge the 
          * wordpress option caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
@@ -144,7 +144,7 @@ if( ! trait_exists( 'WORDPRESS' ) ) {
          * This method attempts to utilize the purge the 
          * wordpress transient caches
          * 
-         * @since 7.4
+         * @since 8.1
          * @access protected
          * @author Kevin Pirnie <me@kpirnie.com>
          * @package The Cache Purger
