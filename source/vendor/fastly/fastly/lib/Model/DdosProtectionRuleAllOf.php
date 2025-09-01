@@ -55,7 +55,7 @@ class DdosProtectionRuleAllOf implements ModelInterface, ArrayAccess, \JsonSeria
     protected static $fastlyTypes = [
         'id' => 'string',
         'name' => 'string',
-        'action' => '\Fastly\Model\DdosProtectionAction',
+        'action' => 'string',
         'customer_id' => 'string',
         'service_id' => 'string',
         'source_ip' => 'string',
@@ -224,7 +224,7 @@ class DdosProtectionRuleAllOf implements ModelInterface, ArrayAccess, \JsonSeria
     {
         $this->container['id'] = $data['id'] ?? null;
         $this->container['name'] = $data['name'] ?? null;
-        $this->container['action'] = $data['action'] ?? null;
+        $this->container['action'] = $data['action'] ?? 'default';
         $this->container['customer_id'] = $data['customer_id'] ?? null;
         $this->container['service_id'] = $data['service_id'] ?? null;
         $this->container['source_ip'] = $data['source_ip'] ?? null;
@@ -310,7 +310,7 @@ class DdosProtectionRuleAllOf implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Gets action
      *
-     * @return \Fastly\Model\DdosProtectionAction|null
+     * @return string|null
      */
     public function getAction()
     {
@@ -320,7 +320,7 @@ class DdosProtectionRuleAllOf implements ModelInterface, ArrayAccess, \JsonSeria
     /**
      * Sets action
      *
-     * @param \Fastly\Model\DdosProtectionAction|null $action action
+     * @param string|null $action Action types for a rule. Supported action values are default, block, log, off. The default action value follows the current protection mode of the associated service.
      *
      * @return self
      */

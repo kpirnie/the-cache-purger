@@ -54,7 +54,8 @@ class TlsCertificateDataAttributes implements ModelInterface, ArrayAccess, \Json
       */
     protected static $fastlyTypes = [
         'cert_blob' => 'string',
-        'name' => 'string'
+        'name' => 'string',
+        'allow_untrusted_root' => 'bool'
     ];
 
     /**
@@ -66,7 +67,8 @@ class TlsCertificateDataAttributes implements ModelInterface, ArrayAccess, \Json
       */
     protected static $fastlyFormats = [
         'cert_blob' => null,
-        'name' => null
+        'name' => null,
+        'allow_untrusted_root' => null
     ];
 
     /**
@@ -97,7 +99,8 @@ class TlsCertificateDataAttributes implements ModelInterface, ArrayAccess, \Json
      */
     protected static $attributeMap = [
         'cert_blob' => 'cert_blob',
-        'name' => 'name'
+        'name' => 'name',
+        'allow_untrusted_root' => 'allow_untrusted_root'
     ];
 
     /**
@@ -107,7 +110,8 @@ class TlsCertificateDataAttributes implements ModelInterface, ArrayAccess, \Json
      */
     protected static $setters = [
         'cert_blob' => 'setCertBlob',
-        'name' => 'setName'
+        'name' => 'setName',
+        'allow_untrusted_root' => 'setAllowUntrustedRoot'
     ];
 
     /**
@@ -117,7 +121,8 @@ class TlsCertificateDataAttributes implements ModelInterface, ArrayAccess, \Json
      */
     protected static $getters = [
         'cert_blob' => 'getCertBlob',
-        'name' => 'getName'
+        'name' => 'getName',
+        'allow_untrusted_root' => 'getAllowUntrustedRoot'
     ];
 
     /**
@@ -179,6 +184,7 @@ class TlsCertificateDataAttributes implements ModelInterface, ArrayAccess, \Json
     {
         $this->container['cert_blob'] = $data['cert_blob'] ?? null;
         $this->container['name'] = $data['name'] ?? null;
+        $this->container['allow_untrusted_root'] = $data['allow_untrusted_root'] ?? null;
     }
 
     /**
@@ -249,6 +255,30 @@ class TlsCertificateDataAttributes implements ModelInterface, ArrayAccess, \Json
     public function setName($name)
     {
         $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets allow_untrusted_root
+     *
+     * @return bool|null
+     */
+    public function getAllowUntrustedRoot()
+    {
+        return $this->container['allow_untrusted_root'];
+    }
+
+    /**
+     * Sets allow_untrusted_root
+     *
+     * @param bool|null $allow_untrusted_root Indicates that the supplied certificate was not signed by a trusted CA.
+     *
+     * @return self
+     */
+    public function setAllowUntrustedRoot($allow_untrusted_root)
+    {
+        $this->container['allow_untrusted_root'] = $allow_untrusted_root;
 
         return $this;
     }

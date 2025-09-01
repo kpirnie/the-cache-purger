@@ -378,9 +378,9 @@ class Backend implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->container['ssl_hostname'] = $data['ssl_hostname'] ?? null;
         $this->container['ssl_sni_hostname'] = $data['ssl_sni_hostname'] ?? null;
         $this->container['tcp_keepalive_enable'] = $data['tcp_keepalive_enable'] ?? null;
-        $this->container['tcp_keepalive_interval'] = $data['tcp_keepalive_interval'] ?? null;
-        $this->container['tcp_keepalive_probes'] = $data['tcp_keepalive_probes'] ?? null;
-        $this->container['tcp_keepalive_time'] = $data['tcp_keepalive_time'] ?? null;
+        $this->container['tcp_keepalive_interval'] = $data['tcp_keepalive_interval'] ?? 10;
+        $this->container['tcp_keepalive_probes'] = $data['tcp_keepalive_probes'] ?? 3;
+        $this->container['tcp_keepalive_time'] = $data['tcp_keepalive_time'] ?? 300;
         $this->container['use_ssl'] = $data['use_ssl'] ?? null;
         $this->container['weight'] = $data['weight'] ?? null;
     }
@@ -474,7 +474,7 @@ class Backend implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets between_bytes_timeout
      *
-     * @param int|null $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, the response received so far will be considered complete and the fetch will end. May be set at runtime using `bereq.between_bytes_timeout`.
+     * @param int|null $between_bytes_timeout Maximum duration in milliseconds that Fastly will wait while receiving no data on a download from a backend. If exceeded, for Delivery services, the response received so far will be considered complete and the fetch will end. For Compute services, timeout expiration is treated as a failure of the backend connection, and an error is generated. May be set at runtime using `bereq.between_bytes_timeout`.
      *
      * @return self
      */
@@ -858,7 +858,7 @@ class Backend implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets prefer_ipv6
      *
-     * @param bool|null $prefer_ipv6 Prefer IPv6 connections for DNS hostname lookups.
+     * @param bool|null $prefer_ipv6 Prefer IPv6 connections to origins for hostname backends. Default is 'false' for Delivery services and 'true' for Compute services.
      *
      * @return self
      */
@@ -935,7 +935,7 @@ class Backend implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets shield
      *
-     * @param string|null $shield Identifier of the POP to use as a [shield](https://docs.fastly.com/en/guides/shielding).
+     * @param string|null $shield Identifier of the POP to use as a [shield](https://www.fastly.com/documentation/guides/getting-started/hosts/shielding/).
      *
      * @return self
      */

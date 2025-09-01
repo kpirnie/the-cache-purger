@@ -56,7 +56,8 @@ class LoggingCommonResponseAllOf implements ModelInterface, ArrayAccess, \JsonSe
         'name' => 'string',
         'placement' => 'string',
         'response_condition' => 'string',
-        'format' => 'string'
+        'format' => 'string',
+        'log_processing_region' => 'string'
     ];
 
     /**
@@ -70,7 +71,8 @@ class LoggingCommonResponseAllOf implements ModelInterface, ArrayAccess, \JsonSe
         'name' => null,
         'placement' => null,
         'response_condition' => null,
-        'format' => null
+        'format' => null,
+        'log_processing_region' => null
     ];
 
     /**
@@ -103,7 +105,8 @@ class LoggingCommonResponseAllOf implements ModelInterface, ArrayAccess, \JsonSe
         'name' => 'name',
         'placement' => 'placement',
         'response_condition' => 'response_condition',
-        'format' => 'format'
+        'format' => 'format',
+        'log_processing_region' => 'log_processing_region'
     ];
 
     /**
@@ -115,7 +118,8 @@ class LoggingCommonResponseAllOf implements ModelInterface, ArrayAccess, \JsonSe
         'name' => 'setName',
         'placement' => 'setPlacement',
         'response_condition' => 'setResponseCondition',
-        'format' => 'setFormat'
+        'format' => 'setFormat',
+        'log_processing_region' => 'setLogProcessingRegion'
     ];
 
     /**
@@ -127,7 +131,8 @@ class LoggingCommonResponseAllOf implements ModelInterface, ArrayAccess, \JsonSe
         'name' => 'getName',
         'placement' => 'getPlacement',
         'response_condition' => 'getResponseCondition',
-        'format' => 'getFormat'
+        'format' => 'getFormat',
+        'log_processing_region' => 'getLogProcessingRegion'
     ];
 
     /**
@@ -172,8 +177,10 @@ class LoggingCommonResponseAllOf implements ModelInterface, ArrayAccess, \JsonSe
     }
 
     const PLACEMENT_NONE = 'none';
-    const PLACEMENT_WAF_DEBUG = 'waf_debug';
     const PLACEMENT_NULL = 'null';
+    const LOG_PROCESSING_REGION_NONE = 'none';
+    const LOG_PROCESSING_REGION_EU = 'eu';
+    const LOG_PROCESSING_REGION_US = 'us';
 
     /**
      * Gets allowable values of the enum
@@ -184,8 +191,21 @@ class LoggingCommonResponseAllOf implements ModelInterface, ArrayAccess, \JsonSe
     {
         return [
             self::PLACEMENT_NONE,
-            self::PLACEMENT_WAF_DEBUG,
             self::PLACEMENT_NULL,
+        ];
+    }
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getLogProcessingRegionAllowableValues()
+    {
+        return [
+            self::LOG_PROCESSING_REGION_NONE,
+            self::LOG_PROCESSING_REGION_EU,
+            self::LOG_PROCESSING_REGION_US,
         ];
     }
 
@@ -208,6 +228,7 @@ class LoggingCommonResponseAllOf implements ModelInterface, ArrayAccess, \JsonSe
         $this->container['placement'] = $data['placement'] ?? null;
         $this->container['response_condition'] = $data['response_condition'] ?? null;
         $this->container['format'] = $data['format'] ?? '%h %l %u %t "%r" %&gt;s %b';
+        $this->container['log_processing_region'] = $data['log_processing_region'] ?? 'none';
     }
 
     /**
@@ -224,6 +245,15 @@ class LoggingCommonResponseAllOf implements ModelInterface, ArrayAccess, \JsonSe
             $invalidProperties[] = sprintf(
                 "invalid value '%s' for 'placement', must be one of '%s'",
                 $this->container['placement'],
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getLogProcessingRegionAllowableValues();
+        if (!is_null($this->container['log_processing_region']) && !in_array($this->container['log_processing_region'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value '%s' for 'log_processing_region', must be one of '%s'",
+                $this->container['log_processing_region'],
                 implode("', '", $allowedValues)
             );
         }
@@ -338,13 +368,47 @@ class LoggingCommonResponseAllOf implements ModelInterface, ArrayAccess, \JsonSe
     /**
      * Sets format
      *
-     * @param string|null $format A Fastly [log format string](https://docs.fastly.com/en/guides/custom-log-formats).
+     * @param string|null $format A Fastly [log format string](https://www.fastly.com/documentation/guides/integrations/streaming-logs/custom-log-formats/).
      *
      * @return self
      */
     public function setFormat($format)
     {
         $this->container['format'] = $format;
+
+        return $this;
+    }
+
+    /**
+     * Gets log_processing_region
+     *
+     * @return string|null
+     */
+    public function getLogProcessingRegion()
+    {
+        return $this->container['log_processing_region'];
+    }
+
+    /**
+     * Sets log_processing_region
+     *
+     * @param string|null $log_processing_region The geographic region where the logs will be processed before streaming. Valid values are `us`, `eu`, and `none` for global.
+     *
+     * @return self
+     */
+    public function setLogProcessingRegion($log_processing_region)
+    {
+        $allowedValues = $this->getLogProcessingRegionAllowableValues();
+        if (!is_null($log_processing_region) && !in_array($log_processing_region, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value '%s' for 'log_processing_region', must be one of '%s'",
+                    $log_processing_region,
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['log_processing_region'] = $log_processing_region;
 
         return $this;
     }
